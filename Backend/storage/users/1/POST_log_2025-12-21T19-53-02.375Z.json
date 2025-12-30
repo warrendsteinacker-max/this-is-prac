@@ -1,0 +1,18 @@
+{
+  "timestamp": "12/21/2025, 2:53:02 PM",
+  "action": "POST",
+  "data": {
+    "weekData": {
+      "Monday": "4",
+      "Tuesday": "5",
+      "Wednesday": 0,
+      "Thursday": 0,
+      "Friday": 0,
+      "Saturday": 0,
+      "Sunday": "4"
+    },
+    "rate": 25,
+    "totalPay": "325.00",
+    "timestamp": "2025-12-21T19:53:01.748Z"
+  }
+}
