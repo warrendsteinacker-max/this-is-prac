@@ -11,7 +11,13 @@
 // const db = JSONFileSyncPreset('db.json', defaultData);
 import express from 'express';
 import cors from 'cors';
-import AI from './AIconfig/AI.js;'
+// import AI from './AI.js;'
+
+import {GoogleGenAI} from '@google/genai';
+
+const ai = new GoogleGenAI({
+    apiKey: 
+});
 
 
 
@@ -27,11 +33,18 @@ app.use(cors({
 app.use(express.json()); 
 // app.use(cookieParser());
 
+app.get('/', (req, res) => {
+    res.status(200).json({message: "Welcome to the Backend Server!"});
+});
+
 app.post('/AIsandT', async (req, res) => {
     const {Q} = req.body
 
-    const data = await AI.generateContent(Q)
-    res.status(200).json({data})
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: Q})
+
+     res.status(200).json({answer: response.text})
 })
 
 const PORT = 3000;
