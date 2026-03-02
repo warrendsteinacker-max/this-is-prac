@@ -16,7 +16,7 @@ import cors from 'cors';
 import {GoogleGenAI} from '@google/genai';
 
 const ai = new GoogleGenAI({
-    apiKey: 'AIzaSyDwCHfgA0QkF8_-17HIdTBNJLa6HZYPjuE'
+    apiKey: 
 });
 
 
