@@ -1,0 +1,128 @@
+/* General Layout and Box Model Reset */
+* {
+  box-sizing: border-box; /* The "Junior-to-Senior" Essential */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f7f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Container for Login and Main App */
+.app-container {
+  background: white;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+h1, h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Form Elements */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Day Rows (Flexbox) */
+.day-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.day-row label {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Summary Box */
+.summary-box {
+  margin-top: 25px;
+  background: #eef2f3;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.total-pay {
+  font-size: 1.5rem;
+  color: #27ae60;
+  display: block;
+}
+
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* The Warning Section */
+.warning-zone {
+  margin-top: 40px;
+  border: 3px dashed #ff0000;
+  padding: 20px;
+  background-color: #fff1f1;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.btn-danger {
+  background-color: #d00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.status-text {
+  margin-top: 20px;
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}

@@ -1,14 +1,14 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-require('dotenv').config();
+// const express = require('express');
+// const jwt = require('jsonwebtoken');
+// const fs = require('fs');
+// const path = require('path');
+// const cookieParser = require('cookie-parser');
+// const cors = require('cors');
+// require('dotenv').config();
 
-const { JSONFileSyncPreset } = require('lowdb/node');
-const defaultData = { users: [] }; 
-const db = JSONFileSyncPreset('db.json', defaultData);
+// const { JSONFileSyncPreset } = require('lowdb/node');
+// const defaultData = { users: [] }; 
+// const db = JSONFileSyncPreset('db.json', defaultData);
 
 const app = express();
 
