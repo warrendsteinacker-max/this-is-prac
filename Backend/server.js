@@ -9,49 +9,122 @@
 // const { JSONFileSyncPreset } = require('lowdb/node');
 // const defaultData = { users: [] }; 
 // const db = JSONFileSyncPreset('db.json', defaultData);
-import express from 'express';
-import cors from 'cors';
-// import AI from './AI.js;'
+// import express from 'express';
+// import cors from 'cors';
+// // import AI from './AI.js;'
 
-import {GoogleGenAI} from '@google/genai';
+// import {GoogleGenAI} from '@google/genai';
 
-const ai = new GoogleGenAI({
-    apiKey: 
-});
-
+// const ai = new GoogleGenAI({
+//     apiKey: 'AIzaSyDwCHfgA0QkF8_-17HIdTBNJLa6HZYPjuE'});
 
 
-const app = express();
 
-// --- 1. RELAXED CORS CONFIG ---
-// Allows the React Frontend (port 5173) to talk to this Server (port 3000)
-app.use(cors({
-    origin: '*',
-    credentials: true 
-}));
 
-app.use(express.json()); 
-// app.use(cookieParser());
+// import puppeteer from 'puppeteer';
 
-app.get('/', (req, res) => {
-    res.status(200).json({message: "Welcome to the Backend Server!"});
-});
+// const generatePdfInMemory = async (html) => {
+//     const browser = await puppeteer.launch({ headless: "new" });
+//     const page = await browser.newPage();
+//     await page.setContent(html, { waitUntil: 'networkidle0' });
+//     const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+//     await browser.close();
+//     return pdfBuffer;
+// };
 
-app.post('/AIsandT', async (req, res) => {
-    const {Q} = req.body
 
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: Q})
 
-     res.status(200).json({answer: response.text})
-})
+// async function createAiReportPdf(prompt) {
+//     // 1. AI writes the HTML structure
+//     const response = await ai.models.generateContent({
+//         model: 'gemini-3-flash-preview',
+//         contents: `Generate a clean, professional HTML/CSS string for a PDF report. Topic: ${prompt}. Only return the HTML.`
+//     });
+    
+//     // 2. Pass HTML to the PDF generator
+//     const html = response.text;
+//     const buffer = await generatePdfInMemory(html);
+    
+//     return buffer; // Returns the binary PDF data
+// }
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Backend Server running on port ${PORT}`);
-});
 
+
+// import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+// import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+// import { z } from "zod";
+
+// const server = new McpServer({ name: "ai-doc-gen", version: "1.0.0" });
+
+// server.tool("generate_ai_pdf", "Create a PDF using AI content", 
+//     { prompt: z.string() }, 
+//     async ({ prompt }) => {
+//         await createAiReportPdf(prompt);
+//         return { content: [{ type: "text", text: "PDF generated in memory." }] };
+//     }
+// );
+
+// await server.connect(new StdioServerTransport());
+
+
+
+
+// import express from 'express';
+// import { createAiReportPdf } from '../mcp/tools.js';
+
+// const app = express();
+// app.use(express.json());
+
+// // Frontend calls this to get the download
+// app.post('/api/download-report', async (req, res) => {
+//     try {
+//         const { prompt } = req.body;
+//         const pdfBuffer = await createAiReportPdf(prompt);
+        
+//         res.setHeader('Content-Type', 'application/pdf');
+//         res.setHeader('Content-Disposition', 'attachment; filename=report.pdf');
+//         res.send(pdfBuffer);
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//     }
+// });
+
+// app.listen(3000, () => console.log('Backend listening on port 3000'));
+
+
+
+
+
+// const app = express();
+
+// // --- 1. RELAXED CORS CONFIG ---
+// // Allows the React Frontend (port 5173) to talk to this Server (port 3000)
+// app.use(cors({
+//     origin: '*',
+//     credentials: true 
+// }));
+
+// app.use(express.json()); 
+// // app.use(cookieParser());
+
+// app.get('/', (req, res) => {
+//     res.status(200).json({message: "Welcome to the Backend Server!"});
+// });
+
+// app.post('/AIsandT', async (req, res) => {
+//     const {Q} = req.body
+
+//     const response = await ai.models.generateContent({
+//         model: 'gemini-2.5-flash',
+//         contents: Q})
+
+//      res.status(200).json({answer: response.text})
+// })
+
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//     console.log(`Backend Server running on port ${PORT}`);
+// });
 
 
 
@@ -141,3 +214,89 @@ app.listen(PORT, () => {
 // });
 
 // --- 3. LISTEN ON ALL INTERFACES ---
+
+// server.js
+// server.js
+import express from 'express';
+import cors from 'cors';
+import { createAiReportPdf, generateOnlyHtml } from './tools.js';
+
+const app = express();
+
+app.use(cors({origin: '*'}));
+// Force the limit for both JSON and URL-encoded data
+app.use(express.json({ limit: '50mb' })); 
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+app.post('/api/preview-report', async (req, res) => {
+    // You MUST pull the new parameters from req.body
+    const { prompt, bgImage, style } = req.body; 
+    
+    // Pass them into the function!
+    const html = await generateOnlyHtml(prompt, bgImage, style); 
+    res.json({ html });
+});
+
+app.post('/api/download-report', async (req, res) => {
+    try {
+        // Pull them here too
+        const { prompt, bgImage, style } = req.body; 
+        const pdfBuffer = await createAiReportPdf(prompt, bgImage, style);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.send(pdfBuffer);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.listen(3000, () => console.log('Backend listening on port 3000'));
+
+
+
+const obj = {
+    prompt: "Generate a PDF report about the impact of AI on education.",
+    getP() {
+        const getp = () => { return console.log(this.prompt) }
+        return getp();
+    }
+}
+
+
+setTimeout(() => {
+    obj.getP();
+}, 3000)
+
+setTimeout(() => {
+    function callGetP() {
+        obj.getP();
+    }
+    callGetP();
+}, 3000)
+
+
+for(let i = 0; i < 5; i++) {
+    function createC(index){
+        setTimeout(() => {
+            console.log(index)
+        }, index*1000)
+    }
+    createC(i);
+}
+
+
+const c = () => {
+    let a = []
+
+    for(let i =0; i<1000; i++){
+        a[i] = i*i
+    }
+
+    return function(index) {
+        console.log(a[index])
+    }
+}
+
+const func = c();
+func(10);
+func(999);
+
