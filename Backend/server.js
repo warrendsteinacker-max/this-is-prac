@@ -300,3 +300,11 @@ const func = c();
 func(10);
 func(999);
 
+
+
+
+const word = "abcdefg"
+
+
+console.log(word.charAt(0))
+

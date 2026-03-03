@@ -21,3 +21,10 @@ server.tool("generate_ai_pdf", "Create a PDF with custom background and style",
 
 await server.connect(new StdioServerTransport());
 console.log("MCP Server connected successfully via Stdio.");
+
+
+
+const word = "abcdefg"
+
+
+console.log(word.charAt(0))
