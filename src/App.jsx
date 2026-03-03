@@ -247,51 +247,112 @@
 
 
 
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
-const App = () => {
-    const pass = "password";
-    const [display, setDisplay] = useState(Array(pass.length).fill(""));
+// const App = () => {
+//     const pass = "password";
+//     const [display, setDisplay] = useState(Array(pass.length).fill(""));
 
-    useEffect(() => {
-        // 1. Define the function outside so add/remove use the same reference
-        const handleKeyDown = (e) => {
-            const index = e.target.id;
-            // Ensure index is valid and within range
-            if (index !== "" && pass[index] && e.key === pass.charAt(index)) {
-                setDisplay((prev) => {
-                    const newDisplay = [...prev];
-                    newDisplay[index] = e.key;
-                    return newDisplay;
-                });
-            }
-        };
+//     useEffect(() => {
+//         // 1. Define the function outside so add/remove use the same reference
+//         const handleKeyDown = (e) => {
+//             const index = e.target.id;
+//             // Ensure index is valid and within range
+//             if (index !== "" && pass[index] && e.key === pass.charAt(index)) {
+//                 setDisplay((prev) => {
+//                     const newDisplay = [...prev];
+//                     newDisplay[index] = e.key;
+//                     return newDisplay;
+//                 });
+//             }
+//         };
 
-        document.addEventListener("keydown", handleKeyDown);
-        // 2. Clean up using the SAME function reference
-        return () => document.removeEventListener("keydown", handleKeyDown);
-    }, []); // Empty dependency array is fine now because we use functional updates
+//         document.addEventListener("keydown", handleKeyDown);
+//         // 2. Clean up using the SAME function reference
+//         return () => document.removeEventListener("keydown", handleKeyDown);
+//     }, []); // Empty dependency array is fine now because we use functional updates
 
-    return (
-        <div style={{ display: 'flex', flexDirection: 'row', width: 'fit-content' }}>
-            {display.map((_, i) => (
-                <div 
-                    key={i} 
-                    id={i} 
-                    // 3. tabIndex="0" makes the div focusable so it can be the event target
-                    tabIndex="0" 
-                    style={{ 
-                        width: '100px', 
-                        height: '100px', 
-                        border: '5px solid black',
-                        cursor: 'pointer'
-                    }}
-                >
-                    {display[i]}
-                </div>
-            ))}
-        </div>
-    );
-};
+//     return (
+//         <div style={{ display: 'flex', flexDirection: 'row', width: 'fit-content' }}>
+//             {display.map((_, i) => (
+//                 <div 
+//                     key={i} 
+//                     id={i} 
+//                     // 3. tabIndex="0" makes the div focusable so it can be the event target
+//                     tabIndex="0" 
+//                     style={{ 
+//                         width: '100px', 
+//                         height: '100px', 
+//                         border: '5px solid black',
+//                         cursor: 'pointer'
+//                     }}
+//                 >
+//                     {display[i]}
+//                 </div>
+//             ))}
+//         </div>
+//     );
+// };
 
-export default App;
+// export default App;
+
+
+import {useState, useEffect, useRef} from 'react'
+
+
+
+
+// const App = () => { 
+//     const ref = useRef(null)
+//     const [index, setI] = useState(0)
+//     var words = ["can", "fart", "man", "fan", "luke", "skywalker"]
+//     var word = words.at(index)
+//     const [d, setD] = useState(Array(word.length).fill(null))
+//     const [i, setIi] = useState(0)
+
+
+
+//     useEffect(() => {
+//         setD(Array(words.at(index).length).fill(null))
+//     }, [index])
+
+
+//     const ONKEYDOWN = (e) => {
+
+//         const newd = [...d]
+
+//         if(e.key.length === 1 && word.charAt((i)) === e.key){
+
+//                 newd[i] = e.key
+//                 var nexti = i + 1
+
+//                 if(word.length === nexti){
+//                     setIi(0)
+//                     setI(Math.floor(Math.random() * words.length))
+//                 }
+//                 else{
+//                     setIi(nexti)
+//                     setD(newd) 
+//                 }
+//             }
+
+//         //     if(ref.current){
+//         //         ref.current.value = ""
+//         //     }
+//         }
+    
+
+       
+         
+
+
+//     return (<>
+    
+//             <div style={{border: '5px solid black', width: 'fit-content', height: '100px', display: 'flex', flexDirection: 'row'}}>{d.map((item, i) => <div key={i} style={{border: '5px solid black', width: '50px', height: '100px'}}>{item}</div>)}</div>
+//             <input ref={ref} onKeyDown={ONKEYDOWN}/>
+
+//             </>)
+// }
+
+
+// export default App
