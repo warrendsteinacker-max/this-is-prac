@@ -356,3 +356,146 @@ import {useState, useEffect, useRef} from 'react'
 
 
 // export default App
+
+
+
+
+// const App = () => { 
+
+//     var words = ["can", "luke", "skywalker"]
+//     const [index, setI] = useState(0)
+//     var word = words.at(index)
+//     const [count, setC] = useState(0)   
+//     const [d, setD] = useState(Array(words[index].length).fill(null))
+
+
+//     useEffect(() => {
+
+//         const ONKEYDOWN = (e) => {
+
+//         if(e.key.length === 1 && word.charAt(count) === e.key){
+//             const newd = [...d]
+//             if(count === word.length - 1){
+//                 setC(0)
+//                 setI(Math.floor(Math.random() * words.length))
+//             }
+//             else{
+//                 newd[count] = e.key
+//                 setD(newd)
+//                 setC((pre) => pre + 1)
+//             }
+//         }
+
+//     }
+
+//      window.addEventListener("keydown", ONKEYDOWN)
+
+//      return () => window.removeEventListener("keydown", ONKEYDOWN)
+
+//     }, [count])
+
+
+   
+   
+   
+   
+//     useEffect(() => {
+//         setD(Array(words[index].length).fill(null))
+//     }, [index])
+
+
+
+
+//         return (<>
+    
+//             <div style={{border: '5px solid black', width: 'fit-content', height: '100px', display: 'flex', flexDirection: 'row'}}>{d.map((item, i) => <div key={i} style={{border: '5px solid black', width: '50px', height: '100px'}}>{item}</div>)}</div>
+
+//             </>)
+
+
+
+
+// }
+
+// export default App
+
+
+
+
+const App = () => {
+
+    const [d, setD] = useState(Array(9).fill(null))
+    const [c, setC] = useState(0)
+    const [XO, setXO] = useState(false)
+    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    
+
+    // useEffect(() => {
+
+    // }, [])
+
+
+    const ONCLICK = (i) => {
+ 
+    
+
+
+            // if(XO){
+            //     if(c = 8){
+            //        setC(0)
+            //         setD(Array(9).fill(null))
+            //         alert("There was a draw")
+            //     }
+            //     d[i] = "X"
+            //     setXO(false)
+            //     setC((pre) => pre + 1)
+            //     }
+            // else{
+            //     if(c = 8){
+            //         setC(0)
+            //         setD(Array(9).fill(null))
+            //         alert("There was a draw")
+            //     }
+            //     d[i] = "O"
+            //     setXO(true)
+            //     setC((pre) => pre + 1)
+            //     }
+
+        
+
+//         if(d[i]){
+//             return null
+//         }
+//         if(c === 8){
+//             alert("There was a draw")
+//         }
+//         for(let i = 0; i < win.length; i++){
+//             if(d[win[i][0]] && d[win[i][0]] === d[win[i][1]] && d[win[i][0]] === d[win[i][2]]){
+//                 const message = XO ? "O":"X"
+//                 alert(`Player ${message} wins!`)
+//                 setC(0)
+//                 setD(Array(9).fill(null))
+//                 return null
+//             }
+//         }
+//         const newd = [...d]
+//         newd[i] = XO ? "X":"O"
+//         setD(newd)
+//         setC((pre)=> pre+1)
+//         setXO(!XO)
+               
+//     }
+
+
+
+
+
+//     return(<>
+    
+//             <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", width: "fit-content", height: "300px"}}>{d.map((item, i) => <div onClick={() => ONCLICK(i)} key={i} style={{border: "5px solid black", width: "100px", height: "100px"}}>{item}</div>)}</div>
+
+//             </>)
+// }
+
+// export default App
+
