@@ -238,8 +238,33 @@
 </footer>
   <script>
 
+    var turn = true
+    var c = 0
 
-    
+    const ONCLICK = (e) => {
+
+      var el = document.getElementById(`${e.target.id}`);
+      if(el.textContent === "X" || el.textContent === "O"){
+        return
+      }
+      turn = !turn
+      var symbol = turn ? "X" : "O"
+      el.textContent = symbol;
+      c = c + 1
+
+      if(c === 8){
+        alert("there was a draw")
+          c = 0
+          for(let i = 0; i < 9; i++){
+            document.getElementById(`${i}`).textContent = ""; 
+          }
+        }
+      }
+      
+
+
+
+
     for(let i = 0; i < 9; i++){
 
       const con = document.getElementById("d");
@@ -248,14 +273,27 @@
       neww.style.border = "5px solid black";
       neww.style.height = "100px";
       neww.style.width = "100px";
+      neww.id = `${i}`
+      neww.addEventListener("click", ONCLICK);
       con.appendChild(neww);
     }
 
-    setInterval(() => {
-      const con = document.getElementById("d")
-      con.style.top = `${Math.random() * 100}px`
-      con.style.left = `${Math.random() * 100}px`
-    }, 1000)
+    for(let i = 0; i < 9; i++){
+      const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[8,4,1]]
+      const wincombo = win[i]
+      console.log(wincombo)
+      const el = document.getElementById(`${wincombo[0]}`)
+      const ell = document.getElementById(`${wincombo[1]}`)
+      const elll = document.getElementById(`${wincombo[2]}`)
+      if(el.textContent !== "" && ell.textContent !== "" && elll.textContent !== ""){
+        turn ? alert("O won") : alert("X won")
+        c = 0
+        for(let i = 0; i < 9; i++){
+          document.getElementById(`${i}`).textContent = ""; 
+        }
+      }
+    }
+
 
   </script>
 </body>
