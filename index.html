@@ -226,6 +226,9 @@
   </table>
 </div>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis necessitatibus molestias nam facere, ad autem illo doloremque laborum quis perspiciatis pariatur. Aliquid quasi incidunt quae officiis corporis molestiae quaerat dignissimos.</p>
+
+<div id="d" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); width: fit-content; height: 300px;"></div>
+
 </main>
 
 <hr>
@@ -233,7 +236,28 @@
 <footer id="c" style="border: 5px solid black; text-align: center;">
   <p>Copyright 2024</p>
 </footer>
-  
+  <script>
+
+
+    
+    for(let i = 0; i < 9; i++){
+
+      const con = document.getElementById("d");
+      const neww = document.createElement("div");
+      con.style.position = "absolute";
+      neww.style.border = "5px solid black";
+      neww.style.height = "100px";
+      neww.style.width = "100px";
+      con.appendChild(neww);
+    }
+
+    setInterval(() => {
+      const con = document.getElementById("d")
+      con.style.top = `${Math.random() * 100}px`
+      con.style.left = `${Math.random() * 100}px`
+    }, 1000)
+
+  </script>
 </body>
 
 
