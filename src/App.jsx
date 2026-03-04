@@ -475,51 +475,114 @@ import {useState, useEffect} from 'react'
 
 
 
+// const App = () => {
+
+
+//     const [id, setId] = useState(0)
+//     const [d, setD] = useState([])
+//     const [e, setE] = useState(false)
+//     const [l, setL] = useState(false)
+    
+//     const Submite = async(e) => {
+//         e.preventDefault()
+//         try{
+//             const res = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`, {method: "GET"})
+//             if(!res.ok){
+//                 throw new Error("res bad")
+//             } 
+//             const data = await res.json()
+//             setD(data)
+//             setE(false)
+//         }
+//         catch(error){
+//             console.error("Error submitting form:", error.message)
+//             setE(true)
+//         }
+//         finally{
+//             setL(false)
+//         }
+//     }
+
+
+//     if(l){
+//         return <div>...Loading</div>
+//     }
+
+//     return(<>
+//             {d.length > 0 && d.map((item) => <div key={item.id}>{item.body}</div>)}
+//             <form onSubmit={Submite}>
+//                 <select onChange={(e) => setId(e.target.value)}>
+//                     <option value={0}>0</option>
+//                     <option value={1}>1</option>
+//                     <option value={2}>2</option>    
+//                 </select>
+//                 <button type="submit">Submit</button>
+//             </form>
+//             </>)
+
+// }
+
+// export default App
+
+
 const App = () => {
 
 
-    const [id, setId] = useState(0)
-    const [d, setD] = useState([])
-    const [e, setE] = useState(false)
-    const [l, setL] = useState(false)
-    
-    const Submite = async(e) => {
-        e.preventDefault()
-        try{
-            const res = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`, {method: "GET"})
-            if(!res.ok){
-                throw new Error("res bad")
-            } 
-            const data = await res.json()
-            setD(data)
-            setE(false)
-        }
-        catch(error){
-            console.error("Error submitting form:", error.message)
-            setE(true)
-        }
-        finally{
-            setL(false)
-        }
+    const [data, setD] = useState([])
+    const [title, setT] = useState("")
+    const [content, setC] = useState("")
+    const [Utitle, setTu] = useState("")
+    const [Ucontent, setCu] = useState("")
+    const pload = {title: title, content: content}   
+
+    const deletef = (id) => {
+        const newd = data.filter((item) => item.id !== id)
+        localStorage.setItem('data', JSON.stringify(newd))   
+        setD(newd)
+    }
+    const updatef = (paylode) => {
+        const {id} = paylode
+        const newd = data.map((item) => item.id === id ? {...payload} : item)
+        localStorage.setItem('data', JSON.stringify(newd))
+        setD(newd)
+    }
+   
+    const tooglef = (id) => {
+        const newd = data.map((item) => item.id === id ? {...item, state: !item.state} : item)
+        localStorage.setItem('data', JSON.stringify(newd))
+        setD(newd)
     }
 
-
-    if(l){
-        return <div>...Loading</div>
+    const makep = (payload) => {
+        const id = data.length + 1
+        const newd = [...data, {...payload, id: id}]
+        localStorage.setItem('data', JSON.stringify(newd))
+        setD(newd)    
     }
 
     return(<>
-            {d.length > 0 && d.map((item) => <div key={item.id}>{item.body}</div>)}
-            <form onSubmit={Submite}>
-                <select onChange={(e) => setId(e.target.value)}>
-                    <option value={0}>0</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>    
-                </select>
-                <button type="submit">Submit</button>
-            </form>
-            </>)
 
+        {data.length > 0 && data.map((item) => 
+        <div style={{border: "5px solid black", width: '300px', height: '300px', backgroundColor: item.state ? 'green': 'red'}}>
+            
+            <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
+                <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
+                <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
+                <button type="submit">update</button>
+            </form>
+            <button onClick={() => deletef(item.id)}>Delete</button>
+            <button onClick={() => tooglef(item.id)}>{item.state ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
+        </div>)}
+
+        <form onSubmit={() => makep(pload)}>
+            <input type="text" value={content} onChange={(e) => setC(e.target.value)}/>
+            <input type="text" value={title} onChange={(e) => setT(e.target.value)}/>
+            <button type="submit">make todo</button>
+        </form>
+        
+        </>
+        )
 }
+
 
 export default App
