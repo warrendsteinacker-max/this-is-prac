@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,7 +14,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html> -->
+</html>
 
 
 <!-- 
@@ -178,7 +178,7 @@
  -->
 
 
-<!doctype html>
+<!-- <!doctype html>
 
 <html>
 
@@ -335,9 +335,41 @@
 })()
 
 
-    document.getElementById("E").addEventListener("keydown", (e) => {
-      if(e.key.length === 1 && e.key === word.charAt(c)){
-        ONKEYDOWN(e)
+
+const y = 0
+const x = 0
+
+const newel = document.createElement("div")
+
+newel.width = "500px"
+newel.height = "100px"
+newel.style.position = "absolute"
+newel.style.top = `${y}px`
+newel.style.left = `${x}px`
+newel.style.border = "5px solid black"
+newel.style.backgroundColor = "green"
+
+document.appendChild(newel)
+
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key.startsWith("Arrow")){
+        switch(e.key){
+          case "Arrow up":
+            newel.style.top = `${y - 10}px`
+            break;
+          case "Arrow down":
+            newel.styles.top = `${y + 10}px`
+            break;
+          case "Arrow left":
+            newel.styles.left = `${x - 10}px`
+            break
+          case "Arrow right":
+            newel.styles.left = `${x + 10}px`
+            break
+          default: 
+            break
+        }
       }
     })
 
@@ -347,4 +379,14 @@
 </body>
 
 
-</html>
+</html> -->
+
+
+
+
+<!-- 
+    document.getElementById("E").addEventListener("keydown", (e) => {
+      if(e.key.length === 1 && e.key === word.charAt(c)){
+        ONKEYDOWN(e)
+      }
+    }) -->

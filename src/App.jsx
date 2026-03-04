@@ -297,7 +297,7 @@
 // export default App;
 
 
-import {useState, useEffect, useRef} from 'react'
+// import {useState, useEffect, useRef} from 'react'
 
 
 
@@ -420,82 +420,106 @@ import {useState, useEffect, useRef} from 'react'
 // export default App
 
 
+import {useState, useEffect} from 'react'
+
+
+// const App = () => {
+
+//     const [y, seTy] = useState(0)
+//     const [x, seTx] = useState(0)
+
+
+//     const ONKEYDOWN = (e) => {
+
+//         if(e.key.startsWith("Arrow") && x >= 0 && y >= 0){
+//             switch(e.key){
+//                 case "ArrowUp":
+//                     console.log(e.key)
+//                     seTy((pre) => pre - 10)
+//                     console.log(y)
+//                     break;
+//                 case "ArrowDown":
+//                     seTy((pre) => pre + 10)
+//                     break;
+//                 case "ArrowLeft":
+//                     seTx((pre) => pre - 10)
+//                     break;
+//                 case "ArrowRight":
+//                     seTx((pre) => pre + 10)
+//                     break;
+//                 default: 
+//                     break;
+//             }
+//         }
+
+//     }
+
+//     useEffect(() => {
+//         window.addEventListener("keydown", ONKEYDOWN)
+
+//         return () => window.removeEventListener("keydown", ONKEYDOWN)
+//     }, [y, x])
+
+
+
+// return(<>
+
+//             <div style={{position: "absolute", top: `${y}px`, left: `${x}px`}}>hello</div>
+
+//         </>)
+
+// }
+
+
+// export default App
+
 
 
 const App = () => {
 
-    const [d, setD] = useState(Array(9).fill(null))
-    const [c, setC] = useState(0)
-    const [XO, setXO] = useState(false)
-    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+
+    const [id, setId] = useState(0)
+    const [d, setD] = useState([])
+    const [e, setE] = useState(false)
+    const [l, setL] = useState(false)
     
-
-    // useEffect(() => {
-
-    // }, [])
-
-
-    const ONCLICK = (i) => {
- 
-    
-
-
-            // if(XO){
-            //     if(c = 8){
-            //        setC(0)
-            //         setD(Array(9).fill(null))
-            //         alert("There was a draw")
-            //     }
-            //     d[i] = "X"
-            //     setXO(false)
-            //     setC((pre) => pre + 1)
-            //     }
-            // else{
-            //     if(c = 8){
-            //         setC(0)
-            //         setD(Array(9).fill(null))
-            //         alert("There was a draw")
-            //     }
-            //     d[i] = "O"
-            //     setXO(true)
-            //     setC((pre) => pre + 1)
-            //     }
-
-        
-
-//         if(d[i]){
-//             return null
-//         }
-//         if(c === 8){
-//             alert("There was a draw")
-//         }
-//         for(let i = 0; i < win.length; i++){
-//             if(d[win[i][0]] && d[win[i][0]] === d[win[i][1]] && d[win[i][0]] === d[win[i][2]]){
-//                 const message = XO ? "O":"X"
-//                 alert(`Player ${message} wins!`)
-//                 setC(0)
-//                 setD(Array(9).fill(null))
-//                 return null
-//             }
-//         }
-//         const newd = [...d]
-//         newd[i] = XO ? "X":"O"
-//         setD(newd)
-//         setC((pre)=> pre+1)
-//         setXO(!XO)
-               
-//     }
+    const Submite = async(e) => {
+        e.preventDefault()
+        try{
+            const res = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`, {method: "GET"})
+            if(!res.ok){
+                throw new Error("res bad")
+            } 
+            const data = await res.json()
+            setD(data)
+            setE(false)
+        }
+        catch(error){
+            console.error("Error submitting form:", error.message)
+            setE(true)
+        }
+        finally{
+            setL(false)
+        }
+    }
 
 
+    if(l){
+        return <div>...Loading</div>
+    }
 
+    return(<>
+            {d.length > 0 && d.map((item) => <div key={item.id}>{item.body}</div>)}
+            <form onSubmit={Submite}>
+                <select onChange={(e) => setId(e.target.value)}>
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>    
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+            </>)
 
+}
 
-//     return(<>
-    
-//             <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", width: "fit-content", height: "300px"}}>{d.map((item, i) => <div onClick={() => ONCLICK(i)} key={i} style={{border: "5px solid black", width: "100px", height: "100px"}}>{item}</div>)}</div>
-
-//             </>)
-// }
-
-// export default App
-
+export default App
