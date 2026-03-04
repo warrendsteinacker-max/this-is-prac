@@ -227,8 +227,9 @@
 </div>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis necessitatibus molestias nam facere, ad autem illo doloremque laborum quis perspiciatis pariatur. Aliquid quasi incidunt quae officiis corporis molestiae quaerat dignissimos.</p>
 
-<div id="d" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); width: fit-content; height: 300px;"></div>
+<div id="d" style="display: flex; width: fit-content; height: 100px; border: 5px solid black"></div>
 
+<input type="text" id="E">
 </main>
 
 <hr>
@@ -238,8 +239,13 @@
 </footer>
   <script>
 
+
     var turn = true
+
+
     var c = 0
+    var words = ["man", "fan", "hand", "ham", "fart", "sign", "sing"]
+    var word = words.at(Math.floor(Math.random() * words.length))
 
     const ONCLICK = (e) => {
 
@@ -259,40 +265,82 @@
             document.getElementById(`${i}`).textContent = ""; 
           }
         }
-      }
       
-
-
-
-
-    for(let i = 0; i < 9; i++){
-
-      const con = document.getElementById("d");
-      const neww = document.createElement("div");
-      con.style.position = "absolute";
-      neww.style.border = "5px solid black";
-      neww.style.height = "100px";
-      neww.style.width = "100px";
-      neww.id = `${i}`
-      neww.addEventListener("click", ONCLICK);
-      con.appendChild(neww);
-    }
-
-    for(let i = 0; i < 9; i++){
+      for(let i = 0; i < 9; i++){
       const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[8,4,1]]
       const wincombo = win[i]
       console.log(wincombo)
       const el = document.getElementById(`${wincombo[0]}`)
       const ell = document.getElementById(`${wincombo[1]}`)
       const elll = document.getElementById(`${wincombo[2]}`)
-      if(el.textContent !== "" && ell.textContent !== "" && elll.textContent !== ""){
-        turn ? alert("O won") : alert("X won")
+      if(el.textContent === "X" && ell.textContent === "X" && elll.textContent === "X"){
+        alert("X won")
         c = 0
         for(let i = 0; i < 9; i++){
           document.getElementById(`${i}`).textContent = ""; 
         }
       }
+      if(el.textContent === "O" && ell.textContent === "O" && elll.textContent === "O"){
+        alert("O won")
+        c = 0
+        for(let i = 0; i < 9; i++){
+          document.getElementById(`${i}`).textContent = ""; 
+        }
+      }
+    }    
+      
+  }
+      
+    const ONKEYDOWN = (e) => {
+      console.log(word)      
+      console.log(e.key)
+      console.log(word.charAt(c))
+      if(e.key === word.charAt(c))
+      document.getElementById(c).textContent = `${e.key}`
+      c = c + 1
+      if(c === word.length){
+        for(let i = 0; i < word.length; i++){
+          const el = document.getElementById(`${i}`)
+          const elholder = document.getElementById('d')
+          elholder.removeChild(el)
+        }
+        c = 0
+        word = words.at(Math.floor(Math.random() * words.length))
+        for(let i = 0; i < word.length; i++){
+          const con = document.getElementById("d");
+          const neww = document.createElement("div");
+          neww.style.border = "5px solid black";
+          neww.style.height = "100px";
+          neww.style.width = "100px";
+          neww.id = `${i}`;
+          con.appendChild(neww);
+          
+        }
+      }
     }
+
+
+(function(){
+    for(let i = 0; i < word.length; i++){
+
+      const con = document.getElementById("d");
+      const neww = document.createElement("div");
+      neww.style.border = "5px solid black";
+      neww.style.height = "100px";
+      neww.style.width = "100px";
+      neww.id = `${i}`;
+      console.log(neww.id)
+      con.appendChild(neww);
+    }
+})()
+
+
+    document.getElementById("E").addEventListener("keydown", (e) => {
+      if(e.key.length === 1 && e.key === word.charAt(c)){
+        ONKEYDOWN(e)
+      }
+    })
+
 
 
   </script>
