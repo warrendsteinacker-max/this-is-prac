@@ -525,99 +525,202 @@ import {useState, useEffect} from 'react'
 // export default App
 
 
+// const App = () => {
+
+
+//     const [data, setD] = useState([])
+//     const [title, setT] = useState("")
+//     const [content, setC] = useState("")
+//     const [Utitle, setTu] = useState("")
+//     const [Ucontent, setCu] = useState("")
+//     const pload = {title: title, content: content}   
+
+//     const deletef = (id) => {
+//         const newd = data.filter((item) => item.id !== id)
+//         localStorage.setItem('data', JSON.stringify(newd))   
+//         setD(newd)
+//     }
+//     const updatef = (paylode) => {
+//         const {id} = paylode
+//         const newd = data.map((item) => item.id === id ? {...payload} : item)
+//         localStorage.setItem('data', JSON.stringify(newd))
+//         setD(newd)
+//     }
+//     const tooglef = (id) => {
+//         const newd = data.map((item) => item.id === id ? {...item, state: !item.state} : item)
+//         localStorage.setItem('data', JSON.stringify(newd))
+//         setD(newd)
+//     }
+
+//     const makep = (payload) => {
+//         const id = data.length + 1
+//         const newd = [...data, {...payload, id: id}]
+//         localStorage.setItem('data', JSON.stringify(newd))
+//         setD(newd)    
+//     }
+
+
+
+//     const [search, setSearch] = useState("")
+
+   
+//         // const searchd = data.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()) || item.content.toLowerCase().includes(search.toLowerCase()))
+        
+//         const searchd = data.map((item) => item.title.toLowerCase() === search.toLowerCase() ? item : null)
+
+
+
+
+//     useEffect(() => {
+//         const data = JSON.parse(localStorage.getItem('data'))
+//         if(data){
+//             setD(data)
+//         }
+
+//     }, [])
+
+
+
+//     return(<>
+
+
+//         <input type="text" placeholder="search" value={search} onChange={(e) => setSearch(e.target.value)}></input>
+
+//         {searchd.length > 0 && searchd.map((item) => 
+//         <div key={item.id} style={{border: "5px solid black", width: '100px', height: '100px', backgroundColor: item.state ? 'green': 'red'}}>
+//             <h3>{item.title}</h3>
+//             <p>{item.content}</p>
+//             <button onClick={() => deletef(item.id)}>Delete</button>
+//             <button onClick={() => tooglef(item.id)}>{item.state ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
+//         </div>)}
+
+//         <form onSubmit={() => makep(pload)}>
+//             <label>Content:</label>
+//             <input type="text" value={content} onChange={(e) => setC(e.target.value)}/>
+//             <label>Title:</label>
+//             <input type="text" value={title} onChange={(e) => setT(e.target.value)}/>
+//             <button type="submit">make todo</button>
+//         </form>
+
+
+//         {data.length > 0 && data.map((item) => 
+//         <div key={item.id} style={{border: "5px solid black", width: '100px', height: '100px', backgroundColor: item.state ? 'green': 'red'}}>
+//             <h3>{item.title}</h3>
+//             <p>{item.content}</p>
+//             <button onClick={() => deletef(item.id)}>Delete</button>
+//             <button onClick={() => tooglef(item.id)}>{item.state ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
+//         </div>)}
+
+//         {/* <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
+//             <label>Title:</label>
+//             <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
+//             <label>Content:</label>
+//             <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
+//             <button type="submit">update</button>
+//         </form> */}
+        
+
+//         {/* {data.length > 0 && data.map((item) => 
+        
+//         <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
+//             <label>Title:</label>
+//             <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
+//             <label>Content:</label>
+//             <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
+//             <button type="submit">update</button>
+//         </form>
+
+
+//         )} */}
+
+//         </>
+//         )
+// }
+
+
+// export default App
+
+
+
+
+
+// const data = [{item: "item1", content: "content1"}, {item: "item2", content: "content2"}, {item: "item3", content: "content3"}]
+
+// const App = () => {
+
+//     const [search, setSearch] = useState("")
+
+//     const filterd = data.filter((item) => item.item.toLowerCase().includes(search.toLowerCase()) || item.content.toLowerCase().includes(search.toLowerCase()))
+
+//     return(<>
+    
+//             <input type="text" placeholder="search" value={search} onChange={(e) => setSearch(e.target.value)}/>
+//             {filterd.map((item, i) => 
+//             <div key={i}>
+//                 <h3>{item.item}</h3>
+//                 <p>{item.content}</p>
+//             </div>)}
+            
+//             </>)
+// }
+
+// export default App
+
+
 const App = () => {
+    const [d, setD] = useState(Array(9).fill(""))
+    const [turn, setT] = useState(true)
+    const [c, setC] = useState(0)
+    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
+    const ONCLICK = (i) => {
 
-    const [data, setD] = useState([])
-    const [title, setT] = useState("")
-    const [content, setC] = useState("")
-    const [Utitle, setTu] = useState("")
-    const [Ucontent, setCu] = useState("")
-    const pload = {title: title, content: content}   
+        if(d[i] === "") {
 
-    const deletef = (id) => {
-        const newd = data.filter((item) => item.id !== id)
-        localStorage.setItem('data', JSON.stringify(newd))   
-        setD(newd)
-    }
-    const updatef = (paylode) => {
-        const {id} = paylode
-        const newd = data.map((item) => item.id === id ? {...payload} : item)
-        localStorage.setItem('data', JSON.stringify(newd))
-        setD(newd)
-    }
-    const tooglef = (id) => {
-        const newd = data.map((item) => item.id === id ? {...item, state: !item.state} : item)
-        localStorage.setItem('data', JSON.stringify(newd))
-        setD(newd)
-    }
+            return null
 
-    const makep = (payload) => {
-        const id = data.length + 1
-        const newd = [...data, {...payload, id: id}]
-        localStorage.setItem('data', JSON.stringify(newd))
-        setD(newd)    
-    }
-
-
-
-    const [search, setSearch] = useState()
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('data'))
-        if(data){
-            setD(data)
         }
-        console.log(data.title.toLowerCase().includes(search.toLowerCase()))
-    }, [search])
 
+        if(c === 9){
+            alert("There was a draw")
+            setD(Array(9).fill(""))
+            setC(0)
+        }
+
+        const symbol = turn ? "X" : "O"
+        d[i] = symbol
+        setC((pre) => pre + 1)
+        setT(!turn)
+
+        for(let i = 0; i < 10; i++){
+            const [a,b,c] = win[i]
+            if(d[a] === "X" && d[b] === "X" && d[c] === "X"){
+                alert("X won")
+                setD(Array(9).fill(""))
+                setC(0)
+        }
+            if(d[a] === "O" && d[b] === "O" && d[c] === "O"){
+                alert("X won")
+                setD(Array(9).fill(""))
+                setC(0)
+        }
+
+    }
+}
 
 
     return(<>
+    
+            <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", width: "fit-content", height: "fit-content", border: "5px solid black"}}>
 
+                {d.map((item, i) => 
+                <div style={{width: "100px", height: "100px", border: "5px solid black"}} key={i} onClick={() => ONCLICK(i)}>
+                    {item}
+                </div>)}
 
-        <input type="text" placeholder="search" value={search} onChange={(e) => setSearch(e.target.value)}></input>
+            </div>
 
-        {data.length > 0 && data.map((item) => 
-        <div key={item.id} style={{border: "5px solid black", width: '300px', height: '300px', backgroundColor: item.state ? 'green': 'red'}}>
-            <h3>{item.title}</h3>
-            <p>{item.content}</p>
-            <button onClick={() => deletef(item.id)}>Delete</button>
-            <button onClick={() => tooglef(item.id)}>{item.state ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
-        </div>)}
-
-        <form onSubmit={() => makep(pload)}>
-            <label>Content:</label>
-            <input type="text" value={content} onChange={(e) => setC(e.target.value)}/>
-            <label>Title:</label>
-            <input type="text" value={title} onChange={(e) => setT(e.target.value)}/>
-            <button type="submit">make todo</button>
-        </form>
-
-        {/* <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
-            <label>Title:</label>
-            <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
-            <label>Content:</label>
-            <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
-            <button type="submit">update</button>
-        </form> */}
-        
-
-        {/* {data.length > 0 && data.map((item) => 
-        
-        <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
-            <label>Title:</label>
-            <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
-            <label>Content:</label>
-            <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
-            <button type="submit">update</button>
-        </form>
-
-
-        )} */}
-
-        </>
-        )
+            </>)
 }
 
 
