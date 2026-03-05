@@ -420,7 +420,7 @@
 // export default App
 
 
-import {useState, useEffect} from 'react'
+// import {useState, useEffect} from 'react'
 
 
 // const App = () => {
@@ -667,60 +667,185 @@ import {useState, useEffect} from 'react'
 // export default App
 
 
-const App = () => {
-    const [d, setD] = useState(Array(9).fill(null))
-    const [turn, setT] = useState(true)
-    const [c, setC] = useState(0)
-    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+// const App = () => {
+//     const [d, setD] = useState(Array(9).fill(null))
+//     const [turn, setT] = useState(true)
+//     const [c, setC] = useState(0)
+//     const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
-    const ONCLICK = (i) => {
+//     const ONCLICK = (i) => {
 
-        if(d[i]) {
+//         if(d[i]) {
 
+//             return null
+
+//         }
+
+//         if(c === 9){
+//             alert("There was a draw")
+//             setD(Array(9).fill(""))
+//             setC(0)
+//         }
+
+//         const symbol = turn ? "X" : "O"
+//         d[i] = symbol
+//         setC((pre) => pre + 1)
+//         setT(!turn)
+
+//         for(let i = 0; i < 10; i++){
+//             const [a,b,c] = win[i]
+//             if(d[a] === "X" && d[b] === "X" && d[c] === "X"){
+//                 alert("X won")
+//                 setD(Array(9).fill(""))
+//                 setC(0)
+//         }
+//             if(d[a] === "O" && d[b] === "O" && d[c] === "O"){
+//                 alert("O won")
+//                 setD(Array(9).fill(""))
+//                 setC(0)
+//         }
+
+//     }
+// }
+
+
+//     return(<>
+    
+//             <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", width: "fit-content", height: "fit-content", border: "5px solid black"}}>
+
+//                 {d.map((item, i) => 
+//                 <div style={{width: "100px", height: "100px", border: "5px solid black"}} key={i} onClick={() => ONCLICK(i)}>
+//                     {item}
+//                 </div>)}
+
+//             </div>
+
+//             </>)
+// }
+
+
+// export default App
+
+
+
+
+// const App = () => {
+
+//     const words = ["cat", "dart", "fan", "fart", "heart"]
+//     const [index, setI] = useState(Math.floor(Math.random() * words.length))
+//     const word = words.at(index)
+//     const [c, setC] = useState(0)
+//     const [d, setD] = useState(Array(word.length).fill(null))
+
+
+
+
+
+//     const ONKEYDOWN = (e) => {
+
+//         if(e.key.length === 1){
+//             if(e.key === word.charAt(c)){
+//                 const newd = [...d]
+//                 newd[c] = e.key
+//                 setD(newd)
+//                 setC((c) => c+1)
+//             }
+//             if(c === word.length - 1){
+//                 setI(Math.floor(Math.random() * words.length))
+//                 setC(0)
+//             }
+//         }
+
+//     }
+
+//     useEffect(() => {
+//         window.addEventListener("keydown", ONKEYDOWN)
+
+//         return () => window.removeEventListener("keydown", ONKEYDOWN)
+//     }, [c])
+
+
+//     useEffect(() => {
+//         setD(Array(word.length).fill(null))
+//     }, [index])
+
+    
+
+//     return(<>
+    
+//             <div style={{width: "fit-content", height: "fit-content", border: "5px solid black", display: "flex", flexDirection: "row"}}>
+//                 {d.map((item, i) => <div style={{width: "100px", height: "100px", border: "5px solid black"}} key={i}>{item}</div>)}
+//             </div>
+//             {/* <input onKeyDown={ONKEYDOWN}/> */}
+
+//             </>)
+
+
+// }
+
+// export default App
+
+import {useState, useEffect, useCallback} from 'react'
+
+const th = (fn, t) => {
+    let time = false
+
+    return (...args) => {
+        if(time){
             return null
-
         }
-
-        if(c === 9){
-            alert("There was a draw")
-            setD(Array(9).fill(""))
-            setC(0)
-        }
-
-        const symbol = turn ? "X" : "O"
-        d[i] = symbol
-        setC((pre) => pre + 1)
-        setT(!turn)
-
-        for(let i = 0; i < 10; i++){
-            const [a,b,c] = win[i]
-            if(d[a] === "X" && d[b] === "X" && d[c] === "X"){
-                alert("X won")
-                setD(Array(9).fill(""))
-                setC(0)
-        }
-            if(d[a] === "O" && d[b] === "O" && d[c] === "O"){
-                alert("O won")
-                setD(Array(9).fill(""))
-                setC(0)
-        }
-
+        fn(...args)
+        setTimeout(() => {
+            time = false
+        }, t)
     }
 }
 
+const App = () => {
 
-    return(<>
-    
-            <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", width: "fit-content", height: "fit-content", border: "5px solid black"}}>
+    const [offset, setO] = useState(1)
+    const [d, setD] = useState([])
 
-                {d.map((item, i) => 
-                <div style={{width: "100px", height: "100px", border: "5px solid black"}} key={i} onClick={() => ONCLICK(i)}>
-                    {item}
-                </div>)}
+    useEffect(() => {
+        fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => setD((pre) => [...pre, data]))
+    }, [])
 
-            </div>
+    const fetchd = useCallback(() => {
+        fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => setD((pre) => [...pre, data]))
+    }, [offset])
 
-            </>)
+    const handleScroll = useCallback(
+    th(() => {
+      const { clientHeight, scrollHeight, scrollTop } = document.documentElement;
+      
+      // Check if we are near the bottom
+      if (clientHeight + scrollTop >= scrollHeight - 5) {
+        setO((pre) => pre + 1);
+        fetchd();
+      }
+    }, 1000),
+    [fetchd] // Dependencies for the callback
+  );
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [handleScroll])
+
+
+
+return (
+  <>
+    {d.map((post, i) => (
+      <div key={i} style={{ border: "1px solid #ccc", padding: "500px", margin: "500px" }}>
+        <h3>{post.title}</h3>
+        <p>{post.body}</p>
+      </div>
+    ))}
+  </>
+);
+
+
 }
 
 
