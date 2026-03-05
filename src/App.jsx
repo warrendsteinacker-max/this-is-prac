@@ -857,40 +857,67 @@
 // export default App
 
 
-import {useEffect, useState} from  "react"
+// import {useState} from  "react"
 
-const db = (fn, t) => {
-    let timer;
+// const db = (fn, t) => {
+//     let timer;
 
-    return (...args) =>{
-        clearTimeout(timer)
+//     return (...args) =>{
+//         clearTimeout(timer)
 
-        timer = setTimeout(() => {
-            fn(...args)
-        }, t)
-    }
-}
+//         timer = setTimeout(() => {
+//             fn(...args)
+//         }, t)
+//     }
+// }
 
-const data = [{name: "hhhhhhhhhhhhhhhh"},{name: "ggggggggggggggggggg"},{name: "fffffffffffffffffff"}]
+// const data = [{name: "hhhhhhhhhhhhhhhh"},{name: "ggggggggggggggggggg"},{name: "fffffffffffffffffff"}]
+
+// const App = () => {
+
+
+//     const [S, setS] = useState("")    
+
+//     const search = data.filter((item) => item.name.toLowerCase().includes(S.toLowerCase()))
+
+//     const func = db((e) => {
+//         setS(e.target.value)
+//     }, 3000)
+
+//     return(<>
+    
+//             {search.map((item, i) => <div key={i}>{item.name}</div>)}
+//             <input placeholder="search" onChange={func}/>
+    
+//             </>)
+// } 
+
+
+// export default App
+
+
 
 const App = () => {
 
+    const d = Array(9).fill({state: false}) 
 
-    const [S, setS] = useState("")    
+    const func = () => {
 
-    const search = data.filter((item) => item.name.toLowerCase().includes(S.toLowerCase()))
-
-    const func = db((e) => {
-        setS(e.target.value)
-    }, 3000)
-
+    }
+    
     return(<>
     
-            {search.map((item, i) => <div key={i}>{item.name}</div>)}
-            <input placeholder="search" onChange={func}/>
+            <div style={{width: "fit-content", height: "fit-content", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", gap: "10px"}}>
+
+                {d.map((_, i) => <div key={i} style={{width: "100px", height: "100px", border: i !== 4 ? "5px solid black": "none"}} {i !== 4 ? OnMouseEnter={}:}></div>)}
+
+            </div>
     
             </>)
-} 
+
+
+}
+
 
 
 export default App
