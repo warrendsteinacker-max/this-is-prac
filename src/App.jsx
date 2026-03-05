@@ -668,14 +668,14 @@ import {useState, useEffect} from 'react'
 
 
 const App = () => {
-    const [d, setD] = useState(Array(9).fill(""))
+    const [d, setD] = useState(Array(9).fill(null))
     const [turn, setT] = useState(true)
     const [c, setC] = useState(0)
     const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
     const ONCLICK = (i) => {
 
-        if(d[i] === "") {
+        if(d[i]) {
 
             return null
 
@@ -700,7 +700,7 @@ const App = () => {
                 setC(0)
         }
             if(d[a] === "O" && d[b] === "O" && d[c] === "O"){
-                alert("X won")
+                alert("O won")
                 setD(Array(9).fill(""))
                 setC(0)
         }
