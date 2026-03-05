@@ -896,20 +896,54 @@
 // export default App
 
 
+import {useState} from "react"
 
 const App = () => {
 
-    const d = Array(9).fill({state: false}) 
+    const [d, setD] = useState(Array(9).fill({state: false}))
+    const [indexes, seTindexes] = useState([]) 
 
-    const func = () => {
+    const func = (i) => {
 
+        const curry = (i) => {
+            const newd = [...d]
+
+            newd[i] = {state: true}
+
+            setD(newd)
+            
+            seTindexes(pre => [...pre, i])
+
+            console.log(indexes)
+
+            if(indexes.length === 8){
+                for(let i = 0; i < 8; i++){
+                    const f = (ivar) => {
+                        const index = indexes[ivar]
+                        const newd = [...d]
+                        const copyis = [...indexes]
+                        const newis = copyis.splice(i) 
+                        newd[ivar] = {state: false}
+                        setTimeout(() => {
+                            setD(newd)
+                            seTindexes(newis)
+                        }, 2000)
+                    }
+
+                    f(i)
+                }
+            }
+
+        }
+
+        curry(i)
     }
-    
+
     return(<>
     
             <div style={{width: "fit-content", height: "fit-content", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", gap: "10px"}}>
 
-                {d.map((_, i) => <div key={i} style={{width: "100px", height: "100px", border: i !== 4 ? "5px solid black": "none"}} {i !== 4 ? OnMouseEnter={}:}></div>)}
+                {d.map((item, i) => <div key={i} style={{width: "100px", height: "100px", border: i !== 4 ? "5px solid black": "none", backgroundColor: item.state ? "green":"white"}} onMouseEnter={() => {if(i !== 4){func(i)}}}></div>)}
 
             </div>
     
@@ -920,7 +954,7 @@ const App = () => {
 
 
 
-export default App
+export default 
 
 
 
