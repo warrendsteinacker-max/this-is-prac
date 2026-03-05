@@ -785,68 +785,118 @@
 
 // export default App
 
-import {useState, useEffect, useCallback} from 'react'
+// import {useState, useEffect, useCallback} from 'react'
 
-const th = (fn, t) => {
-    let time = false
+// // const th = (fn, t) => {
+// //     let time = false
 
-    return (...args) => {
-        if(time){
-            return null
-        }
-        fn(...args)
-        setTimeout(() => {
-            time = false
+// //     return (...args) => {
+// //         if(time){
+// //             return null
+// //         }
+// //         fn(...args)
+// //         setTimeout(() => {
+// //             time = false
+// //         }, t)
+// //     }
+// // }
+
+// const App = () => {
+
+//     const [offset, setO] = useState(1)
+//     const [d, setD] = useState({})
+
+//     useEffect(() => {
+//         fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => {console.log(data); setD(data);})    
+//     }, [offset])
+
+
+//     const fetchdf = () => {
+//         setO((pre) => pre + 1)
+//     }
+
+//     const fetchdb = () => {
+//         setO((pre) => pre - 1)
+//     }
+//     // const fetchd = useCallback(() => {
+
+//     //     fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => setD(data))
+//     // }, [offset])
+
+// //     const handleclick = useCallback(
+// //     th(() => {
+      
+// //         setO((pre) => pre + 1)
+
+// //     }, 1000),
+// //     [fetchd] // Dependencies for the callback
+// //   );
+
+//     // useEffect(() => {
+//     //     window.addEventListener('scroll', handleScroll);
+//     //     return () => window.removeEventListener('scroll', handleScroll);
+//     // }, [handleScroll])
+
+
+
+// return (
+//   <>
+//       <div style={{ border: "1px solid #ccc", padding: "500px", margin: "500px" }}>
+//         <h3>{d.title}</h3>
+//         <p>{d.body}</p>
+//         <button onClick={fetchdf}>next</button>
+//         <button onClick={fetchdb}>back</button>
+//       </div>
+//   </>
+// );
+
+
+// }
+
+
+// export default App
+
+
+import {useEffect, useState} from  "react"
+
+const db = (fn, t) => {
+    let timer;
+
+    return (...args) =>{
+        clearTimeout(timer)
+
+        timer = setTimeout(() => {
+            fn(...args)
         }, t)
     }
 }
 
+const data = [{name: "hhhhhhhhhhhhhhhh"},{name: "ggggggggggggggggggg"},{name: "fffffffffffffffffff"}]
+
 const App = () => {
 
-    const [offset, setO] = useState(1)
-    const [d, setD] = useState([])
 
-    useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => setD((pre) => [...pre, data]))
-    }, [])
+    const [S, setS] = useState("")    
 
-    const fetchd = useCallback(() => {
-        fetch(`https://jsonplaceholder.typicode.com/posts/${offset}`).then((res) => { return res.json()}).then((data) => setD((pre) => [...pre, data]))
-    }, [offset])
+    const search = data.filter((item) => item.name.toLowerCase().includes(S.toLowerCase()))
 
-    const handleScroll = useCallback(
-    th(() => {
-      const { clientHeight, scrollHeight, scrollTop } = document.documentElement;
-      
-      // Check if we are near the bottom
-      if (clientHeight + scrollTop >= scrollHeight - 5) {
-        setO((pre) => pre + 1);
-        fetchd();
-      }
-    }, 1000),
-    [fetchd] // Dependencies for the callback
-  );
+    const func = db((e) => {
+        setS(e.target.value)
+    }, 3000)
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll])
-
-
-
-return (
-  <>
-    {d.map((post, i) => (
-      <div key={i} style={{ border: "1px solid #ccc", padding: "500px", margin: "500px" }}>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-      </div>
-    ))}
-  </>
-);
-
-
-}
+    return(<>
+    
+            {search.map((item, i) => <div key={i}>{item.name}</div>)}
+            <input placeholder="search" onChange={func}/>
+    
+            </>)
+} 
 
 
 export default App
+
+
+
+
+
+
