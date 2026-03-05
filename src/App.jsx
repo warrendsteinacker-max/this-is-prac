@@ -546,7 +546,6 @@ const App = () => {
         localStorage.setItem('data', JSON.stringify(newd))
         setD(newd)
     }
-   
     const tooglef = (id) => {
         const newd = data.map((item) => item.id === id ? {...item, state: !item.state} : item)
         localStorage.setItem('data', JSON.stringify(newd))
@@ -560,26 +559,63 @@ const App = () => {
         setD(newd)    
     }
 
+
+
+    const [search, setSearch] = useState()
+
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem('data'))
+        if(data){
+            setD(data)
+        }
+        console.log(data.title.toLowerCase().includes(search.toLowerCase()))
+    }, [search])
+
+
+
     return(<>
 
+
+        <input type="text" placeholder="search" value={search} onChange={(e) => setSearch(e.target.value)}></input>
+
         {data.length > 0 && data.map((item) => 
-        <div style={{border: "5px solid black", width: '300px', height: '300px', backgroundColor: item.state ? 'green': 'red'}}>
-            
-            <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
-                <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
-                <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
-                <button type="submit">update</button>
-            </form>
+        <div key={item.id} style={{border: "5px solid black", width: '300px', height: '300px', backgroundColor: item.state ? 'green': 'red'}}>
+            <h3>{item.title}</h3>
+            <p>{item.content}</p>
             <button onClick={() => deletef(item.id)}>Delete</button>
             <button onClick={() => tooglef(item.id)}>{item.state ? 'Mark as Incomplete' : 'Mark as Complete'}</button>
         </div>)}
 
         <form onSubmit={() => makep(pload)}>
+            <label>Content:</label>
             <input type="text" value={content} onChange={(e) => setC(e.target.value)}/>
+            <label>Title:</label>
             <input type="text" value={title} onChange={(e) => setT(e.target.value)}/>
             <button type="submit">make todo</button>
         </form>
+
+        {/* <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
+            <label>Title:</label>
+            <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
+            <label>Content:</label>
+            <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
+            <button type="submit">update</button>
+        </form> */}
         
+
+        {/* {data.length > 0 && data.map((item) => 
+        
+        <form onSubmit={() => updatef({id: item.id, title: Utitle, content: Ucontent})}>
+            <label>Title:</label>
+            <input value={Utitle} type="text" onChange={(e) => setTu(e.target.value)}/>
+            <label>Content:</label>
+            <input value={Ucontent} type="text" onChange={(e) => setCu(e.target.value)}/>
+            <button type="submit">update</button>
+        </form>
+
+
+        )} */}
+
         </>
         )
 }
