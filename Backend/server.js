@@ -220,6 +220,47 @@
 
 
 
+// import express from 'express';
+// import cors from 'cors';
+// import { generateReportHtml, renderPdfFromHtml } from './tools.js';
+
+// const app = express();
+// app.use(cors());
+// app.use(express.json({ limit: '50mb' }));
+
+// app.post('/api/generate-preview', async (req, res) => {
+//     const { topic } = req.body;
+//     try {
+//         const html = await generateReportHtml(topic);
+//         res.json({ html });
+//     } catch (err) {
+//         // This will print the full error details to your terminal
+//         console.error("DEBUG ERROR:", err); 
+//         res.status(500).json({ 
+//             error: err.message, 
+//             details: err.stack // This line is key
+//         });
+//     }
+// });
+
+// app.post('/api/render-pdf', async (req, res) => {
+//     const { html } = req.body;
+//     try {
+//         const buffer = await renderPdfFromHtml(html);
+//         res.setHeader('Content-Type', 'application/pdf');
+//         res.send(buffer);
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//         console.log("render bad")
+//     }
+// });
+
+// app.listen(3000, () => console.log('Backend running on port 3000'));
+
+
+
+
+
 import express from 'express';
 import cors from 'cors';
 import { generateReportHtml, renderPdfFromHtml } from './tools.js';
@@ -231,27 +272,26 @@ app.use(express.json({ limit: '50mb' }));
 app.post('/api/generate-preview', async (req, res) => {
     const { topic } = req.body;
     try {
-        const html = await generateReportHtml(topic);
-        res.json({ html });
+        // Now returns { html: "...", styleManifesto: {...} }
+        const reportData = await generateReportHtml(topic);
+        res.json(reportData); 
     } catch (err) {
-        // This will print the full error details to your terminal
         console.error("DEBUG ERROR:", err); 
-        res.status(500).json({ 
-            error: err.message, 
-            details: err.stack // This line is key
-        });
+        res.status(500).json({ error: err.message });
     }
 });
 
 app.post('/api/render-pdf', async (req, res) => {
-    const { html } = req.body;
+    // Expecting both the HTML string and the manifesto from the frontend
+    const { html, styleManifesto } = req.body;
     try {
-        const buffer = await renderPdfFromHtml(html);
+        // Pass both to the updated tool
+        const buffer = await renderPdfFromHtml(html, styleManifesto);
         res.setHeader('Content-Type', 'application/pdf');
         res.send(buffer);
     } catch (err) {
+        console.error("PDF Render Error:", err);
         res.status(500).send(err.message);
-        console.log("render bad")
     }
 });
 

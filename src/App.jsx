@@ -1134,150 +1134,149 @@
 
 
 
-import { useState } from 'react';
-import { Download, Wand2, Settings2, Image as ImageIcon } from 'lucide-react';
+// import { useState } from 'react';
+// import { Download, Wand2, Settings2, Image as ImageIcon } from 'lucide-react';
+
+// function App() {
+//   const [topic, setTopic] = useState('');
+//   const [html, setHtml] = useState('');
+//   const [loading, setLoading] = useState(false);
+  
+//   // States
+//   const [bgColor, setBgColor] = useState('#ffffff');
+//   const [fontColor, setFontColor] = useState('#333333');
+//   const [imageUrl, setImageUrl] = useState('');
+
+//   const handleGenerate = async () => {
+//     if (!topic) return alert("Please enter a topic");
+//     setLoading(true);
+//     try {
+//       const res = await fetch('http://localhost:3000/api/generate-preview', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ topic })
+//       });
+//       const data = await res.json();
+//       setHtml(data.html); 
+//     } catch (err) {
+//       console.error(err);
+//       alert("Failed to generate report");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleDownloadPdf = async () => {
+//     // We inject the styles directly into the document structure for the PDF engine
+//     const fullContent = `
+//       <html>
+//         <head>
+//           <style>
+//             body { 
+//               background-color: ${bgColor} !important; 
+//               color: ${fontColor} !important;
+//               font-family: sans-serif;
+//               padding: 40px;
+//               -webkit-print-color-adjust: exact !important; 
+//               print-color-adjust: exact !important;
+//             }
+//             img { max-width: 100%; display: block; margin: 20px 0; }
+//           </style>
+//         </head>
+//         <body>
+//           ${html}
+//           ${imageUrl ? `<img src="${imageUrl}" alt="User content" />` : ''}
+//         </body>
+//       </html>`;
+    
+//     const res = await fetch('http://localhost:3000/api/render-pdf', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ html: fullContent })
+//     });
+    
+//     const blob = await res.blob();
+//     const url = window.URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = "report.pdf";
+//     a.click();
+//   };
+
+//   return (
+//     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif' }}>
+//       <h1>AI Report Generator</h1>
+      
+//       <div style={{ marginBottom: '30px', display: 'flex', gap: '10px' }}>
+//         <input style={{ flexGrow: 1, padding: '12px' }} placeholder="Enter topic..." value={topic} onChange={(e) => setTopic(e.target.value)} />
+//         <button onClick={handleGenerate} disabled={loading} style={{ padding: '10px 20px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px' }}>
+//           {loading ? 'Generating...' : <><Wand2 size={16}/> Generate</>}
+//         </button>
+//       </div>
+
+//       <div style={{ display: 'flex', gap: '30px', height: '70vh' }}>
+//         <div style={{ width: '30%', padding: '20px', border: '1px solid #eee', borderRadius: '8px' }}>
+//           <h3><Settings2 size={18}/> Appearance</h3>
+//           {/* /////notes want other tags to render conditionaly based on what the ai sends back via a message about the styles it used to create the pdf all posssible styles
+//           /////maby like {img ? <>display tag to amiplate postion and page that img is on</> : null} if it used this */ }
+//           {/* ////////add any other possible things to be rendeer if the ai said it used them to make pdf in message sent back with seprate message apart from the html */}
+//           //////I also want it to be obves what styles the AI did not use by hilighting the ones it dod not use 
+//           <div style={{ marginBottom: '15px' }}>
+//             <label>BG Color: </label>
+//             <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+//           </div>
+//           <div style={{ marginBottom: '20px' }}>
+//             <label>Text Color: </label>
+//             <input type="color" value={fontColor} onChange={(e) => setFontColor(e.target.value)} />
+//           </div>
+          
+//           <h3><ImageIcon size={18}/> Add Image</h3>
+//           <input style={{ width: '100%', marginBottom: '20px' }} placeholder="Paste Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          
+//           <button onClick={handleDownloadPdf} style={{ width: '100%', padding: '12px', backgroundColor: '#2c3e50', color: 'white', border: 'none', borderRadius: '4px' }}>
+//             <Download size={16}/> Download PDF
+//           </button>
+//         </div>
+        
+        
+//         {/* ///////this iframe is not showing the background colors that I ask to be used in pdf or text colors fix it
+//          */}
+//         <div style={{ width: '70%', border: '1px solid #ccc', borderRadius: '4px', overflow: 'hidden' }}>
+//           {html ? (
+//             <iframe 
+//               srcDoc={`<style>body { background-color: ${bgColor}; color: ${fontColor}; font-family: sans-serif; padding: 20px; } img { max-width: 100%; }</style>${html}${imageUrl ? `<img src="${imageUrl}" />` : ''}`} 
+//               style={{ width: '100%', height: '100%', border: 'none' }} 
+//               title="Preview"
+//             />
+//           ) : (
+//             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#aaa' }}>
+//               Enter a topic to generate your report
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ReportBuilder from './components/ReportBuilder';
+import DesignMatrix from './components/DesignMatrix';
 
 function App() {
-  const [topic, setTopic] = useState('');
-  const [html, setHtml] = useState('');
-  const [loading, setLoading] = useState(false);
-  
-  // States
-  const [bgColor, setBgColor] = useState('#ffffff');
-  const [fontColor, setFontColor] = useState('#333333');
-  const [imageUrl, setImageUrl] = useState('');
-
-  const handleGenerate = async () => {
-    if (!topic) return alert("Please enter a topic");
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:3000/api/generate-preview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic })
-      });
-      const data = await res.json();
-      setHtml(data.html); 
-    } catch (err) {
-      console.error(err);
-      alert("Failed to generate report");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDownloadPdf = async () => {
-    // We inject the styles directly into the document structure for the PDF engine
-    const fullContent = `
-      <html>
-        <head>
-          <style>
-            body { 
-              background-color: ${bgColor} !important; 
-              color: ${fontColor} !important;
-              font-family: sans-serif;
-              padding: 40px;
-              -webkit-print-color-adjust: exact !important; 
-              print-color-adjust: exact !important;
-            }
-            img { max-width: 100%; display: block; margin: 20px 0; }
-          </style>
-        </head>
-        <body>
-          ${html}
-          ${imageUrl ? `<img src="${imageUrl}" alt="User content" />` : ''}
-        </body>
-      </html>`;
-    
-    const res = await fetch('http://localhost:3000/api/render-pdf', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ html: fullContent })
-    });
-    
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = "report.pdf";
-    a.click();
-  };
-
   return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif' }}>
-      <h1>AI Report Generator</h1>
-      
-      <div style={{ marginBottom: '30px', display: 'flex', gap: '10px' }}>
-        <input style={{ flexGrow: 1, padding: '12px' }} placeholder="Enter topic..." value={topic} onChange={(e) => setTopic(e.target.value)} />
-        <button onClick={handleGenerate} disabled={loading} style={{ padding: '10px 20px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px' }}>
-          {loading ? 'Generating...' : <><Wand2 size={16}/> Generate</>}
-        </button>
-      </div>
-
-      <div style={{ display: 'flex', gap: '30px', height: '70vh' }}>
-        <div style={{ width: '30%', padding: '20px', border: '1px solid #eee', borderRadius: '8px' }}>
-          <h3><Settings2 size={18}/> Appearance</h3>
-          {/* /////notes want other tags to render conditionaly based on what the ai sends back via a message about the styles it used to create the pdf all posssible styles
-          /////maby like {img ? <>display tag to amiplate postion and page that img is on</> : null} if it used this */ }
-          {/* ////////add any other possible things to be rendeer if the ai said it used them to make pdf in message sent back with seprate message apart from the html */}
-          //////I also want it to be obves what styles the AI did not use by hilighting the ones it dod not use 
-          <div style={{ marginBottom: '15px' }}>
-            <label>BG Color: </label>
-            <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
-          </div>
-          <div style={{ marginBottom: '20px' }}>
-            <label>Text Color: </label>
-            <input type="color" value={fontColor} onChange={(e) => setFontColor(e.target.value)} />
-          </div>
-          
-          <h3><ImageIcon size={18}/> Add Image</h3>
-          <input style={{ width: '100%', marginBottom: '20px' }} placeholder="Paste Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-          
-          <button onClick={handleDownloadPdf} style={{ width: '100%', padding: '12px', backgroundColor: '#2c3e50', color: 'white', border: 'none', borderRadius: '4px' }}>
-            <Download size={16}/> Download PDF
-          </button>
-        </div>
-        
-        
-        {/* ///////this iframe is not showing the background colors that I ask to be used in pdf or text colors fix it
-         */}
-        <div style={{ width: '70%', border: '1px solid #ccc', borderRadius: '4px', overflow: 'hidden' }}>
-          {html ? (
-            <iframe 
-              srcDoc={`<style>body { background-color: ${bgColor}; color: ${fontColor}; font-family: sans-serif; padding: 20px; } img { max-width: 100%; }</style>${html}${imageUrl ? `<img src="${imageUrl}" />` : ''}`} 
-              style={{ width: '100%', height: '100%', border: 'none' }} 
-              title="Preview"
-            />
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#aaa' }}>
-              Enter a topic to generate your report
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ReportBuilder />} />
+        <Route path="/matrix" element={<DesignMatrix />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-
-
-
-// import React, { Suspense, lazy } from 'react';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-// const ReportBuilder = lazy(() => import('./components/ReportBuilder'));
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Suspense fallback={<div>Loading Application...</div>}>
-//         <Routes>
-//           <Route path="/" element={<ReportBuilder />} />
-//         </Routes>
-//       </Suspense>
-//     </BrowserRouter>
-//   );
-// }
-// export default App;
