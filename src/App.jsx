@@ -896,70 +896,388 @@
 // export default App
 
 
-import {useState} from "react"
 
-const App = () => {
 
-    const [d, setD] = useState(Array(9).fill({state: false}))
-    const [indexes, seTindexes] = useState([]) 
 
-    const func = (i) => {
+/////////////////////do this later
 
-        const curry = (i) => {
-            const newd = [...d]
 
-            newd[i] = {state: true}
 
-            setD(newd)
+
+// import {useState} from "react"
+
+// const App = () => {
+
+//     const [d, setD] = useState(Array(9).fill({state: false}))
+//     const [indexes, seTindexes] = useState([]) 
+
+//     const func = (i) => {
+
+//         // if(d[i].state === true){
+//         //     return null
+//         // }
+
+//         const curry = (i) => {
+//             const newd = [...d]
+
+//             newd[i] = {state: true}
+
+//             setD(newd)
             
-            seTindexes(pre => [...pre, i])
+//             seTindexes(pre => [...pre, i])
 
-            console.log(indexes)
+//             console.log(indexes)
 
-            if(indexes.length === 8){
-                for(let i = 0; i < 8; i++){
-                    const f = (ivar) => {
-                        const index = indexes[ivar]
-                        const newd = [...d]
-                        const copyis = [...indexes]
-                        const newis = copyis.splice(i) 
-                        newd[ivar] = {state: false}
-                        setTimeout(() => {
-                            setD(newd)
-                            seTindexes(newis)
-                        }, 2000)
-                    }
+//             if(indexes.length === 7){
+//                 for(let i = 0; i < 8; i++){
+//                     const f = (ivar) => {
+//                         const index = indexes[ivar]
+//                         const newd = [...d]
+//                         const copyis = [...indexes]
+//                         const newis = copyis.splice(i) 
+//                         newd[ivar] = {state: false}
+//                         setTimeout(() => {
+//                             setD(newd)
+//                             seTindexes(newis)
+//                         }, 2000)
+//                     }
 
-                    f(i)
-                }
-            }
+//                     f(i)
+//                 }
+//             }
 
-        }
+//         }
 
-        curry(i)
+//         curry(i)
+//     }
+
+//     return(<>
+    
+//             <div style={{width: "fit-content", height: "fit-content", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", gap: "10px"}}>
+
+//                 {d.map((item, i) => <div key={i} style={{width: "100px", height: "100px", border: i !== 4 ? "5px solid black": "none", backgroundColor: item.state ? "green":"white"}} onMouseEnter={() => {if(i !== 4){func(i)}}}></div>)}
+
+//             </div>
+    
+//             </>)
+
+
+// }
+
+
+
+
+// export default App
+
+
+
+
+
+// import {useState, useRef} from 'react'
+
+// const App = () => {
+
+
+
+//     const [pas, setP] = useState("")
+//     const [N, setN] = useState("")
+//     const [E, setE] = useState(false)
+//     const [L, setL] = useState(false)
+
+// const makep = async (e) => {
+//     e.preventDefault(); // 1. Stop the page from refreshing
+
+//     try {
+//         if (pas && N) {
+//             setL(true)
+//             // 2. Correct fetch configuration
+//             const response = await fetch("http://localhost:3000/a", {
+//                 method: "POST", // Specify the method
+//                 headers: {
+//                     "Content-Type": "application/json" // Tell backend we are sending JSON
+//                 },
+//                 body: JSON.stringify({ password: pas, name: N }) // Stringify the body
+//             });
+
+//             if (response.ok) {
+//                 // Clear the inputs using the refs
+//                 // Reset your state variables
+//                 setP("");
+//                 setN("");
+//                 setE(false)
+//             }
+//         }
+//     } catch (error) {
+//         console.error(error.message);
+//         setE(true)
+//     }
+//     finally{
+//         setL(false)
+//     }
+// };
+
+//     return(<>
+
+//             {E && <h3>There has benn a error</h3>}
+//             {L ? <h3>...Loding</h3> : <form onSubmit={makep} style={{backgroundColor: "red", display: "grid", justifyContent: "center", alignItmes: "center", width: "500px", height: "500px", padding: "25px", borderRadius: "10px"}}>
+//                 <lable for="n">Name:</lable>
+//                 <input style={{width: "250px", height: "15px", backgroundColor: "black", color: "white", borderRadius: "5px"}} type="text" name="n" placeholder="Make a name" onChange={(e) => setN(e.target.value)}/>
+//                 <lable for="p">Password:</lable>
+//                 <input style={{width: "250px", height: "15px", backgroundColor: "black", color: "white", borderRadius: "5px"}} type="text" name="p" placeholder="Make a password" onChange={(e) => setP(e.target.value)}/>
+//                 <button type="submit" style={{width: "100px", height: "60px"}}>make acount</button>
+//             </form>}
+
+//             </>)
+// }
+
+
+
+// export default App
+
+
+
+
+
+// import { useState } from 'react';
+
+// function App() {
+//   const [topic, setTopic] = useState('');
+//   const [html, setHtml] = useState('');
+//   const [loading, setLoading] = useState(false);
+
+//   // Step 1: Request AI to generate the report HTML
+//   const handleGeneratePreview = async () => {
+//     if (!topic) return alert("Please enter a topic");
+//     setLoading(true);
+//     try {
+//       const res = await fetch('http://localhost:3000/api/generate-preview', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ topic })
+//       });
+//       const data = await res.json();
+//       setHtml(data.html);
+//     } catch (err) {
+//       console.error(err);
+//       alert("Failed to generate preview");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   // Step 2: Send the displayed HTML to the server to render the PDF
+//   const handleDownloadPdf = async () => {
+//     try {
+//       const res = await fetch('http://localhost:3000/api/render-pdf', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ html })
+//       });
+      
+//       const blob = await res.blob();
+//       const url = window.URL.createObjectURL(blob);
+//       const a = document.createElement('a');
+//       a.href = url;
+//       a.download = `${topic.replace(/\s+/g, '_')}_report.pdf`;
+//       document.body.appendChild(a);
+//       a.click();
+//       a.remove();
+//     } catch (err) {
+//       console.error(err);
+//       alert("Failed to download PDF");
+//     }
+//   };
+
+//   return (
+//     <div style={{ padding: '40px', maxWidth: '900px', margin: '0 auto' }}>
+//       <h1>AI Report Generator</h1>
+//       <div style={{ marginBottom: '20px' }}>
+//         <input 
+//           value={topic} 
+//           onChange={(e) => setTopic(e.target.value)} 
+//           placeholder="Enter a report topic (e.g., '2026 Space Exploration Trends')"
+//           style={{ width: '70%', padding: '10px' }}
+//         />
+//         <button onClick={handleGeneratePreview} disabled={loading} style={{ padding: '10px 20px' }}>
+//           {loading ? 'Generating...' : 'Generate Preview'}
+//         </button>
+//       </div>
+
+//       {html && (
+//         <div style={{ border: '1px solid #ccc', padding: '10px' }}>
+//           <div style={{ marginBottom: '10px' }}>
+//             <button onClick={handleDownloadPdf} style={{ backgroundColor: '#2c3e50', color: 'white', padding: '10px' }}>
+//               Download as PDF
+//             </button>
+//           </div>
+//           <iframe 
+//             srcDoc={html} 
+//             style={{ width: '100%', height: '70vh', border: 'none' }} 
+//             title="Report Preview"
+//           />
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+///////////////////////////////////////
+
+
+
+
+import { useState } from 'react';
+import { Download, Wand2, Settings2, Image as ImageIcon } from 'lucide-react';
+
+function App() {
+  const [topic, setTopic] = useState('');
+  const [html, setHtml] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  // States
+  const [bgColor, setBgColor] = useState('#ffffff');
+  const [fontColor, setFontColor] = useState('#333333');
+  const [imageUrl, setImageUrl] = useState('');
+
+  const handleGenerate = async () => {
+    if (!topic) return alert("Please enter a topic");
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:3000/api/generate-preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic })
+      });
+      const data = await res.json();
+      setHtml(data.html); 
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate report");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return(<>
+  const handleDownloadPdf = async () => {
+    // We inject the styles directly into the document structure for the PDF engine
+    const fullContent = `
+      <html>
+        <head>
+          <style>
+            body { 
+              background-color: ${bgColor} !important; 
+              color: ${fontColor} !important;
+              font-family: sans-serif;
+              padding: 40px;
+              -webkit-print-color-adjust: exact !important; 
+              print-color-adjust: exact !important;
+            }
+            img { max-width: 100%; display: block; margin: 20px 0; }
+          </style>
+        </head>
+        <body>
+          ${html}
+          ${imageUrl ? `<img src="${imageUrl}" alt="User content" />` : ''}
+        </body>
+      </html>`;
     
-            <div style={{width: "fit-content", height: "fit-content", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridTemplateRows: "repeat(3, 1fr)", border: "5px solid black", gap: "10px"}}>
+    const res = await fetch('http://localhost:3000/api/render-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ html: fullContent })
+    });
+    
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "report.pdf";
+    a.click();
+  };
 
-                {d.map((item, i) => <div key={i} style={{width: "100px", height: "100px", border: i !== 4 ? "5px solid black": "none", backgroundColor: item.state ? "green":"white"}} onMouseEnter={() => {if(i !== 4){func(i)}}}></div>)}
+  return (
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif' }}>
+      <h1>AI Report Generator</h1>
+      
+      <div style={{ marginBottom: '30px', display: 'flex', gap: '10px' }}>
+        <input style={{ flexGrow: 1, padding: '12px' }} placeholder="Enter topic..." value={topic} onChange={(e) => setTopic(e.target.value)} />
+        <button onClick={handleGenerate} disabled={loading} style={{ padding: '10px 20px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px' }}>
+          {loading ? 'Generating...' : <><Wand2 size={16}/> Generate</>}
+        </button>
+      </div>
 
+      <div style={{ display: 'flex', gap: '30px', height: '70vh' }}>
+        <div style={{ width: '30%', padding: '20px', border: '1px solid #eee', borderRadius: '8px' }}>
+          <h3><Settings2 size={18}/> Appearance</h3>
+          {/* /////notes want other tags to render conditionaly based on what the ai sends back via a message about the styles it used to create the pdf all posssible styles
+          /////maby like {img ? <>display tag to amiplate postion and page that img is on</> : null} if it used this */ }
+          {/* ////////add any other possible things to be rendeer if the ai said it used them to make pdf in message sent back with seprate message apart from the html */}
+          //////I also want it to be obves what styles the AI did not use by hilighting the ones it dod not use 
+          <div style={{ marginBottom: '15px' }}>
+            <label>BG Color: </label>
+            <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <label>Text Color: </label>
+            <input type="color" value={fontColor} onChange={(e) => setFontColor(e.target.value)} />
+          </div>
+          
+          <h3><ImageIcon size={18}/> Add Image</h3>
+          <input style={{ width: '100%', marginBottom: '20px' }} placeholder="Paste Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          
+          <button onClick={handleDownloadPdf} style={{ width: '100%', padding: '12px', backgroundColor: '#2c3e50', color: 'white', border: 'none', borderRadius: '4px' }}>
+            <Download size={16}/> Download PDF
+          </button>
+        </div>
+        
+        
+        {/* ///////this iframe is not showing the background colors that I ask to be used in pdf or text colors fix it
+         */}
+        <div style={{ width: '70%', border: '1px solid #ccc', borderRadius: '4px', overflow: 'hidden' }}>
+          {html ? (
+            <iframe 
+              srcDoc={`<style>body { background-color: ${bgColor}; color: ${fontColor}; font-family: sans-serif; padding: 20px; } img { max-width: 100%; }</style>${html}${imageUrl ? `<img src="${imageUrl}" />` : ''}`} 
+              style={{ width: '100%', height: '100%', border: 'none' }} 
+              title="Preview"
+            />
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#aaa' }}>
+              Enter a topic to generate your report
             </div>
-    
-            </>)
-
-
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-
-
-
-export default App
-
+export default App;
 
 
 
 
+// import React, { Suspense, lazy } from 'react';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+// const ReportBuilder = lazy(() => import('./components/ReportBuilder'));
 
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Suspense fallback={<div>Loading Application...</div>}>
+//         <Routes>
+//           <Route path="/" element={<ReportBuilder />} />
+//         </Routes>
+//       </Suspense>
+//     </BrowserRouter>
+//   );
+// }
+// export default App;

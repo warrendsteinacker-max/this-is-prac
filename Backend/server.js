@@ -217,94 +217,42 @@
 
 // server.js
 // server.js
+
+
+
 import express from 'express';
 import cors from 'cors';
-import { createAiReportPdf, generateOnlyHtml } from './tools.js';
+import { generateReportHtml, renderPdfFromHtml } from './tools.js';
 
 const app = express();
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
 
-app.use(cors({origin: '*'}));
-// Force the limit for both JSON and URL-encoded data
-app.use(express.json({ limit: '50mb' })); 
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
-app.post('/api/preview-report', async (req, res) => {
-    // You MUST pull the new parameters from req.body
-    const { prompt, bgImage, style } = req.body; 
-    
-    // Pass them into the function!
-    const html = await generateOnlyHtml(prompt, bgImage, style); 
-    res.json({ html });
+app.post('/api/generate-preview', async (req, res) => {
+    const { topic } = req.body;
+    try {
+        const html = await generateReportHtml(topic);
+        res.json({ html });
+    } catch (err) {
+        // This will print the full error details to your terminal
+        console.error("DEBUG ERROR:", err); 
+        res.status(500).json({ 
+            error: err.message, 
+            details: err.stack // This line is key
+        });
+    }
 });
 
-app.post('/api/download-report', async (req, res) => {
+app.post('/api/render-pdf', async (req, res) => {
+    const { html } = req.body;
     try {
-        // Pull them here too
-        const { prompt, bgImage, style } = req.body; 
-        const pdfBuffer = await createAiReportPdf(prompt, bgImage, style);
+        const buffer = await renderPdfFromHtml(html);
         res.setHeader('Content-Type', 'application/pdf');
-        res.send(pdfBuffer);
+        res.send(buffer);
     } catch (err) {
         res.status(500).send(err.message);
+        console.log("render bad")
     }
 });
 
-app.listen(3000, () => console.log('Backend listening on port 3000'));
-
-
-
-const obj = {
-    prompt: "Generate a PDF report about the impact of AI on education.",
-    getP() {
-        const getp = () => { return console.log(this.prompt) }
-        return getp();
-    }
-}
-
-
-setTimeout(() => {
-    obj.getP();
-}, 3000)
-
-setTimeout(() => {
-    function callGetP() {
-        obj.getP();
-    }
-    callGetP();
-}, 3000)
-
-
-for(let i = 0; i < 5; i++) {
-    function createC(index){
-        setTimeout(() => {
-            console.log(index)
-        }, index*1000)
-    }
-    createC(i);
-}
-
-
-const c = () => {
-    let a = []
-
-    for(let i =0; i<1000; i++){
-        a[i] = i*i
-    }
-
-    return function(index) {
-        console.log(a[index])
-    }
-}
-
-const func = c();
-func(10);
-func(999);
-
-
-
-
-const word = "abcdefg"
-
-
-console.log(word.charAt(0))
-
+app.listen(3000, () => console.log('Backend running on port 3000'));

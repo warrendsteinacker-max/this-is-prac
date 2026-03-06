@@ -126,3 +126,9 @@ input:focus {
   font-style: italic;
   color: #666;
 }
+
+.buttonforf{
+  width: 30px;
+  height: 30px;
+  font-size: 1rem
+}
