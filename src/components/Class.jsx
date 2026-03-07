@@ -3,7 +3,10 @@ import { Component } from "react";
 
 class Me extends Component{
 
-    state = {count: 1}
+    constructor(props){
+    super(props)
+    this.state = {count: 1}
+    }
 
     increment = () => {
         
@@ -18,7 +21,7 @@ class Me extends Component{
     render() {
         return(
         <>
-        <div>hello {this.state.count}</div>
+        <div>hello {this.props.what} {this.state.count}</div>
         <button onClick={this.increment}>increment</button>
         <><button onClick={this.dec}>dec</button></>
         </>

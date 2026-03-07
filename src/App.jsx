@@ -1274,7 +1274,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ReportBuilder />} />
         <Route path="/matrix" element={<DesignMatrix />} />
-        <Route path="/Me" element={<Me what={"what"} you={"you"}/>} />
+        <Route path="/Me" element={<Me what="what" you={{y: "you"}}/>} />
       </Routes>
     </BrowserRouter>
   );
