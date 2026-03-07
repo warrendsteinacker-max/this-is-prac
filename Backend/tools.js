@@ -135,7 +135,7 @@
 import { GoogleGenAI } from '@google/genai';
 import puppeteer from 'puppeteer';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyBQSJrwi7SO4GYm5fWxw0fCe00RwRFiXjw" });
 
 /**
  * Generates report HTML and a Style Manifesto.
