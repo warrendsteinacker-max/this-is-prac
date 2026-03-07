@@ -8,6 +8,18 @@ class Me extends Component{
     this.state = {count: 1}
     }
 
+    componentDidMount(){
+        console.log('mounted')
+    }
+
+    componentDidUpdate(){
+        console.log('update')
+    }
+
+    componentWillUnmount(){
+        console.log('unmounted')
+    }
+
     increment = () => {
         
         this.setState({count: this.state.count + 1})
