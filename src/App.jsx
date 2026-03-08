@@ -1262,19 +1262,21 @@
 // export default App;
 
 
-import Me from "./components/Class"
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ReportBuilder from './components/ReportBuilder';
-import DesignMatrix from './components/DesignMatrix';
+import ReportBuilder  from './components/ReportBuilder';
+import DesignMatrix   from './components/DesignMatrix';
+import PdfEditor      from './components/PdfEditor';
+import StyleArchitect from './components/StyleArchitect';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ReportBuilder />} />
-        <Route path="/matrix" element={<DesignMatrix />} />
-        <Route path="/Me" element={<Me what="what" you={{y: "you"}}/>} />
+        <Route path="/"          element={<ReportBuilder />}  />
+        <Route path="/matrix"    element={<DesignMatrix />}   />
+        <Route path="/editor"    element={<PdfEditor />}      />
+        <Route path="/architect" element={<StyleArchitect />} />
       </Routes>
     </BrowserRouter>
   );

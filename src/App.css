@@ -1,38 +1,26 @@
-/* General Layout and Box Model Reset */
-* {
-  box-sizing: border-box; /* The "Junior-to-Senior" Essential */
-  margin: 0;
-  padding: 0;
-}
+/*
+  App.css — ONLY contains utility classes used by specific small views
+  (login pages, centered forms, etc.)
 
-body {
-  background-color: #f4f7f6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: #333;
-}
+  DO NOT put global resets, h1/h2 color rules, or body layout here.
+  Those belong in index.css only. Global rules here bleed into every
+  route component and override inline styles on ReportBuilder,
+  StyleArchitect, PdfEditor, and DesignMatrix.
+*/
 
-/* Container for Login and Main App */
+/* ── Small centered views (login, onboarding, etc.) ── */
 .app-container {
   background: white;
   padding: 30px;
   max-width: 500px;
   width: 90%;
+  margin: 40px auto;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 
-/* Typography */
-h1, h2 {
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: center;
-}
-
-/* Form Elements */
+/* ── Form elements (scoped to .app-container use cases) ── */
 .input-group {
   display: flex;
   flex-direction: column;
@@ -40,20 +28,7 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
-input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-input:focus {
-  outline: none;
-  border-color: #007bff;
-}
-
-/* Day Rows (Flexbox) */
+/* ── Day rows ── */
 .day-row {
   display: flex;
   justify-content: space-between;
@@ -67,7 +42,7 @@ input:focus {
   color: #555;
 }
 
-/* Summary Box */
+/* ── Summary box ── */
 .summary-box {
   margin-top: 25px;
   background: #eef2f3;
@@ -82,7 +57,7 @@ input:focus {
   display: block;
 }
 
-/* Buttons */
+/* ── Buttons ── */
 .btn-primary {
   width: 100%;
   padding: 14px;
@@ -100,7 +75,7 @@ input:focus {
   background-color: #0056b3;
 }
 
-/* The Warning Section */
+/* ── Warning zone ── */
 .warning-zone {
   margin-top: 40px;
   border: 3px dashed #ff0000;
@@ -127,8 +102,8 @@ input:focus {
   color: #666;
 }
 
-.buttonforf{
+.buttonforf {
   width: 30px;
   height: 30px;
-  font-size: 1rem
+  font-size: 1rem;
 }

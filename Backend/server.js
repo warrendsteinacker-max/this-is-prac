@@ -262,37 +262,98 @@
 
 
 import express from 'express';
-import cors from 'cors';
+import cors    from 'cors';
 import { generateReportHtml, renderPdfFromHtml } from './tools.js';
 
-const app = express();
+// ── API key error classifier ──────────────────────────────────────────────
+function classifyError(err) {
+  const msg = err.message ?? '';
+  if (msg.startsWith('API_KEY_LEAKED'))   return { status: 403, code: 'API_KEY_LEAKED',   message: msg.replace('API_KEY_LEAKED: ', '') };
+  if (msg.startsWith('API_KEY_EXPIRED'))  return { status: 403, code: 'API_KEY_EXPIRED',  message: msg.replace('API_KEY_EXPIRED: ', '') };
+  if (msg.startsWith('API_KEY_INVALID'))  return { status: 403, code: 'API_KEY_INVALID',  message: msg.replace('API_KEY_INVALID: ', '') };
+  if (msg.includes('malformed JSON'))     return { status: 422, code: 'PARSE_ERROR',       message: msg };
+  return { status: 500, code: 'SERVER_ERROR', message: msg };
+}
+
+
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/generate-preview
+// Body: { topic, userPrompt, styleManifest }
+// Returns: { html, styleManifesto }
+// ─────────────────────────────────────────────────────────────────────────────
 app.post('/api/generate-preview', async (req, res) => {
-    const { topic } = req.body;
-    try {
-        // Now returns { html: "...", styleManifesto: {...} }
-        const reportData = await generateReportHtml(topic);
-        res.json(reportData); 
-    } catch (err) {
-        console.error("DEBUG ERROR:", err); 
-        res.status(500).json({ error: err.message });
-    }
+  const { topic, userPrompt = '', styleManifest = {} } = req.body;
+
+  if (!topic?.trim()) {
+    return res.status(400).json({ error: 'Topic is required.' });
+  }
+
+  try {
+    const reportData = await generateReportHtml(topic, userPrompt, styleManifest);
+    res.json(reportData);
+  } catch (err) {
+    const { status, code, message } = classifyError(err);
+    console.error(`[${code}]`, message);
+    res.status(status).json({ error: message, code });
+  }
 });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/render-pdf
+// Body: { html, styleManifest }
+// Returns: application/pdf binary
+// ─────────────────────────────────────────────────────────────────────────────
 app.post('/api/render-pdf', async (req, res) => {
-    // Expecting both the HTML string and the manifesto from the frontend
-    const { html, styleManifesto } = req.body;
-    try {
-        // Pass both to the updated tool
-        const buffer = await renderPdfFromHtml(html, styleManifesto);
-        res.setHeader('Content-Type', 'application/pdf');
-        res.send(buffer);
-    } catch (err) {
-        console.error("PDF Render Error:", err);
-        res.status(500).send(err.message);
-    }
+  const { html, styleManifest = {} } = req.body;
+
+  if (!html?.trim()) {
+    return res.status(400).json({ error: 'HTML content is required.' });
+  }
+
+  try {
+    const buffer = await renderPdfFromHtml(html, styleManifest);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="report.pdf"');
+    res.send(buffer);
+  } catch (err) {
+    const { status, code, message } = classifyError(err);
+    console.error(`[${code}]`, message);
+    res.status(status).json({ error: message, code });
+  }
 });
 
-app.listen(3000, () => console.log('Backend running on port 3000'));
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/render-pdf-raw
+// For the PdfEditor — sends already-complete HTML (with CSS injected by
+// the editor's override system) directly to Puppeteer, no CSS re-injection.
+// Body: { html, styleManifest }
+// ─────────────────────────────────────────────────────────────────────────────
+app.post('/api/render-pdf-raw', async (req, res) => {
+  const { html, styleManifest = {} } = req.body;
+
+  if (!html?.trim()) {
+    return res.status(400).json({ error: 'HTML content is required.' });
+  }
+
+  try {
+    // For editor output the HTML is already complete — wrap minimally
+    const { pageSize = 'A4', orientation = 'Portrait' } = styleManifest;
+    const browser = (await import('puppeteer')).default;
+    const b   = await browser.launch({ headless:'new', args:['--no-sandbox','--disable-setuid-sandbox'] });
+    const pg  = await b.newPage();
+    await pg.setContent(html, { waitUntil:'networkidle0' });
+    const buf = await pg.pdf({ format:pageSize, landscape:orientation==='Landscape', printBackground:true });
+    await b.close();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="report-edited.pdf"');
+    res.send(buf);
+  } catch (err) {
+    console.error('Raw PDF render error:', err);
+    res.status(500).send(err.message);
+  }
+});
+
+app.listen(3000, () => console.log('Backend running on http://localhost:3000'));
