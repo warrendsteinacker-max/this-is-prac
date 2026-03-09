@@ -1264,7 +1264,8 @@
 
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ReportBuilder  from './components/ReportBuilder';
+import Prac from './Prac'
+// import ReportBuilder  from './components/ReportBuilder';
 import DesignMatrix   from './components/DesignMatrix';
 import PdfEditor      from './components/PdfEditor';
 import StyleArchitect from './components/StyleArchitect';
@@ -1274,7 +1275,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* <Route path="/"          element={<ReportBuilder />}  /> */}
-        <Route path="/" element={</>} />
+        <Route path="/" element={<Prac />} />
         <Route path="/matrix"    element={<DesignMatrix />}   />
         <Route path="/editor"    element={<PdfEditor />}      />
         <Route path="/architect" element={<StyleArchitect />} />
