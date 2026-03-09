@@ -261,39 +261,41 @@
 
 
 
-import express from 'express';
-import cors    from 'cors';
-import { generateReportHtml, renderPdfFromHtml } from './tools.js';
+import express  from 'express';
+import cors     from 'cors';
+import multer   from 'multer';
+import { generateReportHtml, generateReportHtmlFromFile, renderPdfFromHtml } from './tools.js';
+
+// ── Multer — keep files in memory, max 20 MB ──────────────────────────────
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits:  { fileSize: 20 * 1024 * 1024 },
+});
 
 // ── API key error classifier ──────────────────────────────────────────────
 function classifyError(err) {
   const msg = err.message ?? '';
-  if (msg.startsWith('API_KEY_LEAKED'))   return { status: 403, code: 'API_KEY_LEAKED',   message: msg.replace('API_KEY_LEAKED: ', '') };
-  if (msg.startsWith('API_KEY_EXPIRED'))  return { status: 403, code: 'API_KEY_EXPIRED',  message: msg.replace('API_KEY_EXPIRED: ', '') };
-  if (msg.startsWith('API_KEY_INVALID'))  return { status: 403, code: 'API_KEY_INVALID',  message: msg.replace('API_KEY_INVALID: ', '') };
-  if (msg.includes('malformed JSON'))     return { status: 422, code: 'PARSE_ERROR',       message: msg };
-  return { status: 500, code: 'SERVER_ERROR', message: msg };
+  if (msg.startsWith('API_KEY_LEAKED'))  return { status:403, code:'API_KEY_LEAKED',  message: msg.replace('API_KEY_LEAKED: ','') };
+  if (msg.startsWith('API_KEY_EXPIRED')) return { status:403, code:'API_KEY_EXPIRED', message: msg.replace('API_KEY_EXPIRED: ','') };
+  if (msg.startsWith('API_KEY_INVALID')) return { status:403, code:'API_KEY_INVALID', message: msg.replace('API_KEY_INVALID: ','') };
+  if (msg.includes('malformed JSON'))    return { status:422, code:'PARSE_ERROR',     message: msg };
+  return { status:500, code:'SERVER_ERROR', message: msg };
 }
 
-
+const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
 // ─────────────────────────────────────────────────────────────────────────────
-// POST /api/generate-preview
+// POST /api/generate-preview  —  text-based generation (original flow)
 // Body: { topic, userPrompt, styleManifest }
-// Returns: { html, styleManifesto }
 // ─────────────────────────────────────────────────────────────────────────────
 app.post('/api/generate-preview', async (req, res) => {
   const { topic, userPrompt = '', styleManifest = {} } = req.body;
-
-  if (!topic?.trim()) {
-    return res.status(400).json({ error: 'Topic is required.' });
-  }
-
+  if (!topic?.trim()) return res.status(400).json({ error: 'Topic is required.' });
   try {
-    const reportData = await generateReportHtml(topic, userPrompt, styleManifest);
-    res.json(reportData);
+    const data = await generateReportHtml(topic, userPrompt, styleManifest);
+    res.json(data);
   } catch (err) {
     const { status, code, message } = classifyError(err);
     console.error(`[${code}]`, message);
@@ -302,17 +304,60 @@ app.post('/api/generate-preview', async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// POST /api/render-pdf
+// POST /api/generate-from-file  —  file-based generation
+// Accepts multipart/form-data:
+//   file        — the uploaded file (PDF, image, text, CSV, JSON…)
+//   topic       — optional string
+//   userPrompt  — optional string
+//   styleManifest — optional JSON string
+// ─────────────────────────────────────────────────────────────────────────────
+app.post('/api/generate-from-file', upload.single('file'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ code:'NO_FILE', error:'No file uploaded.' });
+
+  const { topic = '', userPrompt = '' } = req.body;
+
+  // styleManifest arrives as a JSON string in FormData
+  let styleManifest = {};
+  try {
+    if (req.body.styleManifest) styleManifest = JSON.parse(req.body.styleManifest);
+  } catch { /* ignore malformed manifest */ }
+
+  const { mimetype, buffer, originalname } = req.file;
+
+  // Validate supported types
+  const supported = [
+    'application/pdf',
+    'image/png','image/jpeg','image/gif','image/webp','image/bmp',
+    'text/plain','text/csv','text/html','text/markdown',
+    'application/json',
+  ];
+  const ok = supported.includes(mimetype) || mimetype.startsWith('text/');
+  if (!ok) {
+    return res.status(400).json({
+      code:  'UNSUPPORTED_FILE',
+      error: `File type "${mimetype}" is not supported. Use PDF, images, or text/CSV/JSON files.`,
+    });
+  }
+
+  try {
+    const data = await generateReportHtmlFromFile(
+      buffer, mimetype, originalname, topic, userPrompt, styleManifest
+    );
+    res.json(data);
+  } catch (err) {
+    const { status, code, message } = classifyError(err);
+    console.error(`[${code}]`, message);
+    res.status(status).json({ error: message, code });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/render-pdf  —  renders HTML body + re-injects full CSS via tools.js
 // Body: { html, styleManifest }
-// Returns: application/pdf binary
 // ─────────────────────────────────────────────────────────────────────────────
 app.post('/api/render-pdf', async (req, res) => {
   const { html, styleManifest = {} } = req.body;
-
-  if (!html?.trim()) {
-    return res.status(400).json({ error: 'HTML content is required.' });
-  }
-
+  if (!html?.trim()) return res.status(400).json({ error: 'HTML content is required.' });
   try {
     const buffer = await renderPdfFromHtml(html, styleManifest);
     res.setHeader('Content-Type', 'application/pdf');
@@ -326,33 +371,30 @@ app.post('/api/render-pdf', async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// POST /api/render-pdf-raw
-// For the PdfEditor — sends already-complete HTML (with CSS injected by
-// the editor's override system) directly to Puppeteer, no CSS re-injection.
+// POST /api/render-pdf-raw  —  for PdfEditor: HTML is already complete with CSS
 // Body: { html, styleManifest }
 // ─────────────────────────────────────────────────────────────────────────────
 app.post('/api/render-pdf-raw', async (req, res) => {
   const { html, styleManifest = {} } = req.body;
-
-  if (!html?.trim()) {
-    return res.status(400).json({ error: 'HTML content is required.' });
-  }
-
+  if (!html?.trim()) return res.status(400).json({ error: 'HTML content is required.' });
   try {
-    // For editor output the HTML is already complete — wrap minimally
     const { pageSize = 'A4', orientation = 'Portrait' } = styleManifest;
-    const browser = (await import('puppeteer')).default;
-    const b   = await browser.launch({ headless:'new', args:['--no-sandbox','--disable-setuid-sandbox'] });
-    const pg  = await b.newPage();
-    await pg.setContent(html, { waitUntil:'networkidle0' });
-    const buf = await pg.pdf({ format:pageSize, landscape:orientation==='Landscape', printBackground:true });
-    await b.close();
+    const puppeteer = (await import('puppeteer')).default;
+    const browser   = await puppeteer.launch({ headless:'new', args:['--no-sandbox','--disable-setuid-sandbox'] });
+    const page      = await browser.newPage();
+    await page.setContent(html, { waitUntil:'networkidle0' });
+    const buffer = await page.pdf({
+      format:          pageSize,
+      landscape:       orientation === 'Landscape',
+      printBackground: true,
+    });
+    await browser.close();
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="report-edited.pdf"');
-    res.send(buf);
+    res.send(buffer);
   } catch (err) {
     console.error('Raw PDF render error:', err);
-    res.status(500).send(err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 

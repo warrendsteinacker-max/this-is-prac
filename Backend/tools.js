@@ -218,570 +218,68 @@
 
 
 
-
-
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import puppeteer from 'puppeteer';
 
-if (!process.env.GEMINI_API_KEY) {
-  console.error('FATAL: GEMINI_API_KEY environment variable is not set.');
-  process.exit(1);
-}
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const ai = new GoogleGenAI({ apiKey: "" });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BUILD FULL SYSTEM PROMPT FROM STYLE MANIFEST
-// Converts every frontend control into concrete AI instructions
+// BUILD CSS + INSTRUCTION PROMPT FROM STYLE MANIFEST
 // ─────────────────────────────────────────────────────────────────────────────
 function buildSystemPrompt(styleManifest = {}) {
   const {
-    // Brand
     primaryColor = '#3498db', bgColor = '#ffffff',
-    // Heading colors
     h1Color = '#111111', h2Color = '#222222', h3Color = '#333333',
     pColor = '#444444', linkColor = '#3498db',
-    // Cover
     coverBg = '#1a1a2e', coverText = '#ffffff',
-    // Header/footer
     headers = [], footers = [],
     footerBg = '#f5f5f5', footerText = '#888888',
-    // Typography
     bodyFont = 'system-ui, sans-serif', headingFont = 'system-ui, sans-serif',
     baseFontSize = 14, h1Size = 32, h2Size = 24, h3Size = 18,
     lineHeight = 1.6, letterSpacing = 0, paragraphSpacing = 16,
     textAlign = 'left', headingBorderStyle = 'none', headingBorderColor = '#3498db',
-    // Page layout
     pageSize = 'A4', orientation = 'Portrait', margin = '20mm',
     columnCount = 1, columnGap = 20,
     sectionPadding = 24, listIndent = 20, sectionDivider = 'solid',
-    // Tables array
-    tables = [],
-    // Cards array
-    cards = [],
-    // Callouts array
-    callouts = [],
-    // Watermark
+    tables = [], cards = [], callouts = [],
     watermarkText = '', watermarkOpacity = 0.08,
-    // Style directives
-    activeStyles = [],
-    // Custom instructions
-    customText = '',
+    activeStyles = [], customText = '',
   } = styleManifest;
 
   const pageW = orientation === 'Landscape' ? 'landscape' : 'portrait';
 
-  // ── Table CSS generator ──────────────────────────────────────────────────
-  const tableCSS = tables.map((t, i) => `
-  /* Table ${i + 1}: ${t.name} */
-  .report-table-${i + 1} {
-    width: 100%;
-    border-collapse: collapse;
-    break-inside: avoid;
-    margin-bottom: ${paragraphSpacing}px;
-    ${t.colWidths ? '' : ''}
-  }
-  ${t.hasHeader ? `
-  .report-table-${i + 1} thead tr {
-    background: ${t.headerBg};
-    color: ${t.headerText};
-    font-weight: 700;
-  }
-  .report-table-${i + 1} thead th {
-    padding: 10px 14px;
-    ${t.bordered ? `border: 1px solid ${t.borderColor};` : ''}
-    text-align: left;
-  }` : ''}
-  .report-table-${i + 1} tbody td {
-    padding: 8px 14px;
-    ${t.bordered ? `border: 1px solid ${t.borderColor};` : ''}
-  }
-  ${t.striped ? `
-  .report-table-${i + 1} tbody tr:nth-child(even) {
-    background: ${t.stripeBg};
-  }` : ''}
-  ${t.caption ? `
-  .report-table-${i + 1} caption {
-    caption-side: top;
-    text-align: left;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: ${h2Color};
-  }` : ''}`).join('\n');
-
-  // ── Card CSS generator ───────────────────────────────────────────────────
-  const cardCSS = cards.map((c, i) => {
-    const gridMap = {
-      'Single Column':      'grid-template-columns: 1fr;',
-      'Two Column Grid':    'grid-template-columns: repeat(2, 1fr);',
-      'Three Column Grid':  'grid-template-columns: repeat(3, 1fr);',
-      'Bento (mixed sizes)':'grid-template-columns: repeat(3, 1fr);',
-      'Full Width Banner':  'grid-template-columns: 1fr;',
-      'Sidebar + Content':  'grid-template-columns: 220px 1fr;',
-    };
-    return `
-  /* Card Group ${i + 1}: ${c.name} — ${c.layout} */
-  .card-group-${i + 1} {
-    display: grid;
-    ${gridMap[c.layout] || 'grid-template-columns: 1fr;'}
-    gap: 16px;
-    margin-bottom: ${paragraphSpacing}px;
-  }
-  .card-group-${i + 1} .card {
-    background: ${c.bg};
-    color: ${c.textColor};
-    border-radius: ${c.radius}px;
-    padding: ${c.padding}px;
-    ${c.shadow ? 'box-shadow: 0 2px 12px rgba(0,0,0,0.08);' : ''}
-    ${c.borderStyle !== 'none' ? `border: ${c.borderWidth ?? 1}px ${c.borderStyle} ${c.borderColor};` : ''}
-    break-inside: avoid;
-  }
-  .card-group-${i + 1} .card .card-accent {
-    width: 100%;
-    height: 4px;
-    background: ${c.accentColor};
-    border-radius: 2px;
-    margin-bottom: 10px;
-  }`;
-  }).join('\n');
-
-  // ── Callout CSS generator ────────────────────────────────────────────────
-  const calloutCSS = callouts.map((c, i) => {
-    const borderProp = c.borderSide === 'all'
-      ? `border: ${c.borderWidth}px solid ${c.borderColor};`
-      : `border-${c.borderSide}: ${c.borderWidth}px solid ${c.borderColor};`;
-    return `
-  /* Callout ${i + 1}: ${c.type} */
-  .callout-${i + 1} {
-    background: ${c.bg};
-    color: ${c.textColor};
-    ${borderProp}
-    border-radius: ${c.radius}px;
-    padding: ${c.padding ?? 14}px;
-    margin-bottom: ${paragraphSpacing}px;
-    break-inside: avoid;
-  }`;
-  }).join('\n');
-
-  // ── Header/footer runners ────────────────────────────────────────────────
-  const headerRunner = headers.filter(h => h.text?.trim()).length > 0 ? `
-  .page-header {
-    background: ${footerBg};
-    color: ${footerText};
-    padding: 8px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    border-bottom: 1px solid #ddd;
-    position: running(pageHeader);
-  }
-  @page { @top-center { content: element(pageHeader); } }` : '';
-
-  const footerRunner = footers.filter(f => f.text?.trim()).length > 0 ? `
-  .page-footer {
-    background: ${footerBg};
-    color: ${footerText};
-    padding: 8px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    border-top: 1px solid #ddd;
-    position: running(pageFooter);
-  }
-  @page { @bottom-center { content: element(pageFooter); } }` : '';
-
-  // ── Watermark ────────────────────────────────────────────────────────────
-  const watermarkCSS = watermarkText?.trim() ? `
-  body::before {
-    content: "${watermarkText}";
-    position: fixed;
-    top: 42%;
-    left: 8%;
-    font-size: 5rem;
-    font-weight: 900;
-    color: rgba(0,0,0,${watermarkOpacity});
-    transform: rotate(-35deg);
-    pointer-events: none;
-    z-index: 0;
-    white-space: nowrap;
-    -webkit-print-color-adjust: exact;
-  }` : '';
-
-  // ── Active style directives → extra CSS ─────────────────────────────────
-  const directiveCSS = (activeStyles || []).map(s => {
-    switch (s.id) {
-      case 'dark':     return `body { filter: none; } :root { color-scheme: dark; }`;
-      case 'gradient': return `header, .report-header { background: linear-gradient(135deg, ${primaryColor}, #ffffff) !important; }`;
-      case 'bento':    return `.bento-grid { display: grid; grid-template-columns: repeat(3,1fr); gap:16px; } .bento-grid > * { aspect-ratio: 1/1; }`;
-      case 'serif':    return `h1,h2,h3,h4 { font-family: Georgia, serif !important; }`;
-      case 'toc':      return `.toc { margin-bottom: 32px; } .toc a { display:flex; justify-content:space-between; } .toc a::after { content: leader('.') target-counter(attr(href), page); }`;
-      default:         return '';
-    }
-  }).filter(Boolean).join('\n');
-
-  // ── Full CSS block ───────────────────────────────────────────────────────
-  const fullCSS = `
-@page {
-  size: ${pageSize} ${pageW};
-  margin: ${margin};
-}
-
-@media print {
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-}
-
-*, *::before, *::after { box-sizing: border-box; }
-
-body {
-  background-color: ${bgColor};
-  color: ${pColor};
-  font-family: ${bodyFont};
-  font-size: ${baseFontSize}px;
-  line-height: ${lineHeight};
-  letter-spacing: ${letterSpacing}px;
-  text-align: ${textAlign};
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-h1 { font-family: ${headingFont}; font-size: ${h1Size}px; color: ${h1Color}; margin-bottom: ${paragraphSpacing}px; text-wrap: balance;
-  ${headingBorderStyle !== 'none' ? `border-bottom: 2px ${headingBorderStyle} ${headingBorderColor}; padding-bottom: 6px;` : ''} }
-h2 { font-family: ${headingFont}; font-size: ${h2Size}px; color: ${h2Color}; margin-bottom: ${paragraphSpacing * 0.75}px; text-wrap: balance;
-  ${headingBorderStyle !== 'none' ? `border-bottom: 1px ${headingBorderStyle} ${headingBorderColor}; padding-bottom: 4px;` : ''} }
-h3 { font-family: ${headingFont}; font-size: ${h3Size}px; color: ${h3Color}; margin-bottom: ${paragraphSpacing * 0.5}px; }
-h4, h5, h6 { font-family: ${headingFont}; color: ${h3Color}; }
-
-p { margin-bottom: ${paragraphSpacing}px; orphans: 3; widows: 3; }
-a { color: ${linkColor}; }
-
-ul, ol { padding-left: ${listIndent}px; margin-bottom: ${paragraphSpacing}px; }
-li { margin-bottom: 4px; }
-
-section, .section {
-  padding: ${sectionPadding}px;
-  break-inside: avoid;
-}
-
-hr {
-  border: none;
-  border-top: 1px ${sectionDivider} #ddd;
-  margin: ${sectionPadding}px 0;
-}
-
-${columnCount > 1 ? `
-main, .main-content {
-  column-count: ${columnCount};
-  column-gap: ${columnGap}px;
-}` : ''}
-
-/* Cover page */
-.cover-page {
-  background: ${coverBg};
-  color: ${coverText};
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 40px;
-  break-after: page;
-}
-.cover-page h1 { color: ${coverText}; border: none; }
-
-/* Page breaks */
-.page-break { break-before: page; }
-figure, blockquote { break-inside: avoid; }
-
-/* Blockquote */
-blockquote {
-  border-left: 5px solid ${primaryColor};
-  padding-left: 20px;
-  color: #555;
-  font-style: italic;
-  margin: ${paragraphSpacing}px 0;
-  break-inside: avoid;
-}
-
-/* SVG figures */
-figure {
-  margin: ${paragraphSpacing}px 0;
-  text-align: center;
-}
-figcaption {
-  font-size: 0.85em;
-  color: #888;
-  margin-top: 6px;
-}
-
-${tableCSS}
-${cardCSS}
-${calloutCSS}
-${headerRunner}
-${footerRunner}
-${watermarkCSS}
-${directiveCSS}
-`;
-
-  // ── Table HTML instruction block for AI ─────────────────────────────────
-  const tableInstructions = tables.map((t, i) => `
-TABLE ${i + 1} — "${t.name}":
-  - Use class "report-table-${i + 1}" on the <table> element
-  - Size: ${t.rows} data rows × ${t.cols} columns
-  ${t.hasHeader ? `- Include <thead> with ${t.cols} <th> elements` : '- No header row'}
-  ${t.striped ? '- Stripe every even tbody row' : ''}
-  ${t.bordered ? `- All cells have borders (color: ${t.borderColor})` : '- Borderless'}
-  ${t.colWidths ? `- Column widths: ${t.colWidths}` : ''}
-  ${t.caption ? `- Add <caption>${t.caption}</caption>` : ''}
-  ${t.notes ? `- Content context: ${t.notes}` : ''}
-`).join('\n');
-
-  // ── Card HTML instruction block for AI ──────────────────────────────────
-  const cardInstructions = cards.map((c, i) => `
-CARD GROUP ${i + 1} — "${c.name}":
-  - Wrap all cards in a <div class="card-group-${i + 1}">
-  - Generate exactly ${c.count} <div class="card"> elements inside it
-  - Layout: ${c.layout}
-  ${c.hasIcon ? '- Each card starts with a relevant SVG icon (24×24)' : ''}
-  ${c.hasImage ? '- Each card includes an <img> placeholder' : ''}
-  ${c.hasButton ? `- Each card ends with a <button style="background:${c.accentColor};color:#fff;border:none;padding:6px 14px;border-radius:4px;cursor:pointer">Learn More</button>` : ''}
-  ${c.notes ? `- Content context: ${c.notes}` : ''}
-`).join('\n');
-
-  // ── Callout HTML instruction block for AI ────────────────────────────────
-  const calloutInstructions = callouts.map((c, i) => `
-CALLOUT TYPE ${i + 1} — ${c.type} (×${c.count}):
-  - Use <aside class="callout-${i + 1}"> for each occurrence
-  - Place ${c.count} of these callouts at contextually appropriate points
-  ${c.notes ? `- Content context: ${c.notes}` : ''}
-`).join('\n');
-
-  // ── Header/footer HTML ───────────────────────────────────────────────────
-  const headerHTML = headers.filter(h => h.text?.trim()).length > 0 ? `
-HEADER: Generate a <div class="page-header"> as the first element in <body>:
-${headers.filter(h => h.text?.trim()).map(h => `  - "${h.text}" aligned ${h.position}`).join('\n')}
-` : '';
-
-  const footerHTML = footers.filter(f => f.text?.trim()).length > 0 ? `
-FOOTER: Generate a <div class="page-footer"> as the last element in <body>:
-${footers.filter(f => f.text?.trim()).map(f => `  - "${f.text.replace('{page}', 'Page [auto-number]')}" aligned ${f.position}`).join('\n')}
-` : '';
-
-  // ── Active style directive text instructions ─────────────────────────────
-  const directiveInstructions = (activeStyles || []).map(s => `- ${s.prompt}`).join('\n');
-
-  return `
-You are an expert HTML/CSS document engineer. Generate a complete, print-ready HTML report body.
-
-═══════════════════════════════════════════════
-GLOBAL STYLE LAWS (apply to every element)
-═══════════════════════════════════════════════
-Primary color: ${primaryColor}
-Background: ${bgColor}
-Body text: ${pColor}
-H1: ${h1Color} at ${h1Size}px
-H2: ${h2Color} at ${h2Size}px  
-H3: ${h3Color} at ${h3Size}px
-Links: ${linkColor}
-Body font: ${bodyFont}
-Heading font: ${headingFont}
-Font size: ${baseFontSize}px | Line height: ${lineHeight} | Letter spacing: ${letterSpacing}px
-Text align: ${textAlign} | Paragraph spacing: ${paragraphSpacing}px
-Page: ${pageSize} ${orientation} | Margin: ${margin}
-${columnCount > 1 ? `Columns: ${columnCount} (gap: ${columnGap}px)` : ''}
-
-═══════════════════════════════════════════════
-STRUCTURE DIRECTIVES
-═══════════════════════════════════════════════
-${directiveInstructions || 'Use clean semantic HTML.'}
-${customText ? `\nCUSTOM INSTRUCTIONS:\n${customText}` : ''}
-
-═══════════════════════════════════════════════
-TABLES — generate exactly as specified
-═══════════════════════════════════════════════
-${tableInstructions || 'Include tables where appropriate for the topic.'}
-
-═══════════════════════════════════════════════
-CARD GROUPS — generate exactly as specified
-═══════════════════════════════════════════════
-${cardInstructions || 'Include content cards where appropriate.'}
-
-═══════════════════════════════════════════════
-CALLOUT BOXES — generate exactly as specified
-═══════════════════════════════════════════════
-${calloutInstructions || 'Include callouts for key insights.'}
-
-${headerHTML}
-${footerHTML}
-${watermarkText?.trim() ? `WATERMARK: The CSS already handles the watermark "${watermarkText}" — do not add it in HTML.` : ''}
-
-═══════════════════════════════════════════════
-HTML ENGINEERING RULES
-═══════════════════════════════════════════════
-- Output ONLY the content that goes inside <body> — no <html>, <head>, or <style> tags
-- Use data-feature attributes on major sections: <section data-feature="tables">, <section data-feature="cards"> etc.
-- Use data-section attribute on every top-level section for drag-reorder support
-- Use data-editable="true" and a unique data-id on every editable element
-- Wrap main text content in <main class="main-content"> for column-count support
-- Add class="page-break" on divs that should start a new PDF page
-- Use <figure> + <svg> for any diagrams or charts — pure SVG, no external libs
-- Use break-inside: avoid inline on any element that must not be split across pages
-- Use semantic tags: <main>, <section>, <article>, <aside>, <figure>, <blockquote>
-- All CSS is already injected — only use the class names specified above
-- Generate rich, realistic content appropriate for the topic (not placeholder text)
-`;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// GENERATE REPORT HTML + MANIFESTO
-// ─────────────────────────────────────────────────────────────────────────────
-export async function generateReportHtml(topic, userPrompt = '', styleManifest = {}) {
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
-    generationConfig: { responseMimeType: 'application/json' },
-  });
-
-  const systemPrompt = buildSystemPrompt(styleManifest);
-
-  const prompt = `
-${systemPrompt}
-
-═══════════════════════════════════════════════
-REPORT TOPIC & USER INSTRUCTIONS
-═══════════════════════════════════════════════
-Topic: ${topic}
-User Instructions: ${userPrompt}
-
-Return a JSON object with exactly this structure:
-{
-  "html": "string — full body content as described above",
-  "styleManifesto": {
-    "colors": {
-      "primary": "${styleManifest.primaryColor || '#3498db'}",
-      "bg":      "${styleManifest.bgColor      || '#ffffff'}",
-      "text":    "${styleManifest.pColor        || '#444444'}",
-      "heading": "${styleManifest.h1Color       || '#111111'}",
-      "link":    "${styleManifest.linkColor     || '#3498db'}",
-      "tableHeader": "${styleManifest.tables?.[0]?.headerBg || '#3498db'}"
-    },
-    "typography": {
-      "bodyFont":      "${styleManifest.bodyFont    || 'system-ui, sans-serif'}",
-      "headingFont":   "${styleManifest.headingFont || 'system-ui, sans-serif'}",
-      "baseSize":      ${styleManifest.baseFontSize  || 14},
-      "lineHeight":    ${styleManifest.lineHeight     || 1.6},
-      "sectionPadding":${styleManifest.sectionPadding || 24}
-    },
-    "featuresUsed": ["list every data-feature section name used, e.g. tables, cards, callouts, cover, toc, charts"]
-  }
-}
-`;
-
-  let text = '';
-  try {
-    const result = await model.generateContent(prompt);
-    text = result.response.text();
-  } catch (apiErr) {
-    // Surface Google API key errors clearly
-    const msg = apiErr?.message || '';
-    if (msg.includes('leaked'))   throw new Error('API_KEY_LEAKED: Your Gemini API key has been reported as leaked. Generate a new key at https://aistudio.google.com/app/apikey and update your .env file.');
-    if (msg.includes('expired'))  throw new Error('API_KEY_EXPIRED: Your Gemini API key has expired. Renew it at https://aistudio.google.com/app/apikey and update your .env file.');
-    if (msg.includes('API_KEY'))  throw new Error('API_KEY_INVALID: Your Gemini API key is invalid. Check your .env file.');
-    throw apiErr;
-  }
-
-  // Strip markdown fences if model ignores responseMimeType
-  const cleaned = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
-
-  let parsed;
-  try {
-    parsed = JSON.parse(cleaned);
-  } catch (parseErr) {
-    console.error('Parse failed. Raw AI output (first 800 chars):\n', cleaned.slice(0, 800));
-    throw new Error('AI returned malformed JSON. Try again or simplify your style manifest.');
-  }
-
-  // ── Normalize the manifesto shape ───────────────────────────────────────
-  // The AI sometimes returns a verbose "design system" manifesto instead of
-  // the flat shape the frontend expects. Normalize it here.
-  const raw = parsed.styleManifesto ?? parsed.styleManifest ?? {};
-
-  const colors    = raw.colors    ?? raw.branding   ?? {};
-  const typo      = raw.typography ?? {};
-  const containers= raw.containers ?? raw.components?.card ?? {};
-
-  const normalizedManifesto = {
-    colors: {
-      primary:     colors.primary     ?? colors.primaryColor  ?? styleManifest.primaryColor ?? '#3498db',
-      bg:          colors.bg          ?? colors.background    ?? styleManifest.bgColor      ?? '#ffffff',
-      text:        colors.text        ?? colors.bodyText      ?? styleManifest.pColor       ?? '#444444',
-      heading:     colors.heading     ?? colors.headingColor  ?? styleManifest.h1Color      ?? '#111111',
-      link:        colors.link        ?? colors.linkColor     ?? styleManifest.linkColor    ?? '#3498db',
-      tableHeader: colors.tableHeader ?? styleManifest.tables?.[0]?.headerBg               ?? '#3498db',
-    },
-    typography: {
-      bodyFont:       typo.bodyFont      ?? typo.fontFamily    ?? styleManifest.bodyFont       ?? 'system-ui, sans-serif',
-      headingFont:    typo.headingFont   ?? typo.headingFontFamily ?? styleManifest.headingFont ?? 'system-ui, sans-serif',
-      baseSize:       typeof typo.baseSize === 'number' ? typo.baseSize : parseInt(typo.baseFontSize) || styleManifest.baseFontSize || 14,
-      lineHeight:     typo.lineHeight    ?? styleManifest.lineHeight    ?? 1.6,
-      sectionPadding: typo.sectionPadding ?? styleManifest.sectionPadding ?? 24,
-    },
-    featuresUsed: Array.isArray(parsed.styleManifesto?.featuresUsed)
-      ? parsed.styleManifesto.featuresUsed
-      : [],
-  };
-
-  return { html: parsed.html ?? '', styleManifesto: normalizedManifesto };
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER PDF FROM HTML + STYLE MANIFEST
-// ─────────────────────────────────────────────────────────────────────────────
-export async function renderPdfFromHtml(html, styleManifest = {}) {
-  const {
-    pageSize = 'A4',
-    orientation = 'Portrait',
-    margin = '20mm',
-    primaryColor = '#3498db', bgColor = '#ffffff',
-    pColor = '#444444', h1Color = '#111111', h2Color = '#222222', h3Color = '#333333',
-    linkColor = '#3498db',
-    bodyFont = 'system-ui, sans-serif', headingFont = 'system-ui, sans-serif',
-    baseFontSize = 14, h1Size = 32, h2Size = 24, h3Size = 18,
-    lineHeight = 1.6, letterSpacing = 0, paragraphSpacing = 16,
-    textAlign = 'left', headingBorderStyle = 'none', headingBorderColor = '#3498db',
-    columnCount = 1, columnGap = 20, sectionPadding = 24, listIndent = 20,
-    sectionDivider = 'solid', coverBg = '#1a1a2e', coverText = '#ffffff',
-    footerBg = '#f5f5f5', footerText = '#888888',
-    watermarkText = '', watermarkOpacity = 0.08,
-    tables = [], cards = [], callouts = [], activeStyles = [], customText = '',
-  } = styleManifest;
-
-  // Re-use buildSystemPrompt to get the exact same CSS the AI was told about
-  const cssBlock = buildSystemPrompt(styleManifest)
-    .split('═══')[0]; // we only need the CSS, but easier to regenerate below
-
-  // Build CSS directly for Puppeteer injection (same logic as buildSystemPrompt)
+  // ── CSS generators ───────────────────────────────────────────────────────
   const tableCSS = tables.map((t, i) => `
 .report-table-${i+1} { width:100%; border-collapse:collapse; break-inside:avoid; margin-bottom:${paragraphSpacing}px; }
-${t.hasHeader ? `.report-table-${i+1} thead tr { background:${t.headerBg}; color:${t.headerText}; font-weight:700; }
+${t.hasHeader ? `
+.report-table-${i+1} thead tr { background:${t.headerBg} !important; background-color:${t.headerBg} !important; color:${t.headerText}; font-weight:700; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 .report-table-${i+1} thead th { padding:10px 14px; ${t.bordered?`border:1px solid ${t.borderColor};`:''} text-align:left; }` : ''}
 .report-table-${i+1} tbody td { padding:8px 14px; ${t.bordered?`border:1px solid ${t.borderColor};`:''} }
-${t.striped ? `.report-table-${i+1} tbody tr:nth-child(even) { background:${t.stripeBg}; }` : ''}`).join('');
+.report-table-${i+1} tbody tr:nth-child(even) { ${t.striped?`background:${t.stripeBg} !important; background-color:${t.stripeBg} !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;`:''} }
+${t.caption?`.report-table-${i+1} caption { caption-side:top; text-align:left; font-weight:600; margin-bottom:6px; color:${h2Color}; }`:''}
+`).join('\n');
 
   const cardCSS = cards.map((c, i) => {
-    const gridMap = { 'Single Column':'1fr','Two Column Grid':'repeat(2,1fr)','Three Column Grid':'repeat(3,1fr)','Bento (mixed sizes)':'repeat(3,1fr)','Full Width Banner':'1fr','Sidebar + Content':'220px 1fr' };
-    return `.card-group-${i+1} { display:grid; grid-template-columns:${gridMap[c.layout]||'1fr'}; gap:16px; margin-bottom:${paragraphSpacing}px; }
-.card-group-${i+1} .card { background:${c.bg}; color:${c.textColor}; border-radius:${c.radius}px; padding:${c.padding}px; ${c.shadow?'box-shadow:0 2px 12px rgba(0,0,0,0.08);':''} ${c.borderStyle!=='none'?`border:${c.borderWidth||1}px ${c.borderStyle} ${c.borderColor};`:''} break-inside:avoid; }
-.card-group-${i+1} .card .card-accent { width:100%; height:4px; background:${c.accentColor}; border-radius:2px; margin-bottom:10px; }`;
-  }).join('');
+    const gridMap = {
+      'Single Column':'1fr','Two Column Grid':'repeat(2,1fr)',
+      'Three Column Grid':'repeat(3,1fr)','Bento (mixed sizes)':'repeat(3,1fr)',
+      'Full Width Banner':'1fr','Sidebar + Content':'220px 1fr',
+    };
+    return `
+.card-group-${i+1} { display:grid; grid-template-columns:${gridMap[c.layout]||'1fr'}; gap:16px; margin-bottom:${paragraphSpacing}px; }
+.card-group-${i+1} .card { background:${c.bg} !important; background-color:${c.bg} !important; color:${c.textColor}; border-radius:${c.radius}px; padding:${c.padding}px; -webkit-print-color-adjust:exact; print-color-adjust:exact; ${c.shadow?'box-shadow:0 2px 12px rgba(0,0,0,0.08);':''} ${c.borderStyle!=='none'?`border:${c.borderWidth||1}px ${c.borderStyle} ${c.borderColor};`:''} break-inside:avoid; }
+.card-group-${i+1} .card .card-accent { width:100%; height:4px; background:${c.accentColor} !important; background-color:${c.accentColor} !important; border-radius:2px; margin-bottom:10px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }`;
+  }).join('\n');
 
   const calloutCSS = callouts.map((c, i) => {
-    const bp = c.borderSide==='all' ? `border:${c.borderWidth}px solid ${c.borderColor};` : `border-${c.borderSide}:${c.borderWidth}px solid ${c.borderColor};`;
-    return `.callout-${i+1} { background:${c.bg}; color:${c.textColor}; ${bp} border-radius:${c.radius}px; padding:${c.padding||14}px; margin-bottom:${paragraphSpacing}px; break-inside:avoid; }`;
-  }).join('');
+    const bp = c.borderSide==='all'
+      ? `border:${c.borderWidth}px solid ${c.borderColor};`
+      : `border-${c.borderSide}:${c.borderWidth}px solid ${c.borderColor};`;
+    return `.callout-${i+1} { background:${c.bg} !important; background-color:${c.bg} !important; color:${c.textColor}; ${bp} border-radius:${c.radius}px; padding:${c.padding||14}px; margin-bottom:${paragraphSpacing}px; break-inside:avoid; -webkit-print-color-adjust:exact; print-color-adjust:exact; }`;
+  }).join('\n');
 
-  const watermarkCSS = watermarkText?.trim() ? `body::before { content:"${watermarkText}"; position:fixed; top:42%; left:8%; font-size:5rem; font-weight:900; color:rgba(0,0,0,${watermarkOpacity}); transform:rotate(-35deg); pointer-events:none; z-index:0; white-space:nowrap; -webkit-print-color-adjust:exact; }` : '';
+  const watermarkCSS = watermarkText?.trim() ? `
+body::before { content:"${watermarkText}"; position:fixed; top:42%; left:8%; font-size:5rem; font-weight:900; color:rgba(0,0,0,${watermarkOpacity}); transform:rotate(-35deg); pointer-events:none; z-index:0; white-space:nowrap; -webkit-print-color-adjust:exact; print-color-adjust:exact; }` : '';
 
   const directiveCSS = (activeStyles||[]).map(s => {
     switch(s.id) {
@@ -790,43 +288,335 @@ ${t.striped ? `.report-table-${i+1} tbody tr:nth-child(even) { background:${t.st
       case 'serif':    return `h1,h2,h3,h4{font-family:Georgia,serif!important;}`;
       default:         return '';
     }
-  }).filter(Boolean).join('');
+  }).filter(Boolean).join('\n');
 
-  const fullCSS = `
-@page { size: ${pageSize} ${orientation === 'Landscape' ? 'landscape' : 'portrait'}; margin: ${margin}; }
-@media print { * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
-*, *::before, *::after { box-sizing: border-box; }
-body { background-color:${bgColor}; color:${pColor}; font-family:${bodyFont}; font-size:${baseFontSize}px; line-height:${lineHeight}; letter-spacing:${letterSpacing}px; text-align:${textAlign}; margin:0; padding:0; position:relative; }
+  const cssBlock = `
+@page { size:${pageSize} ${pageW}; margin:${margin}; }
+
+/* ── Force all backgrounds to print ── */
+*, *::before, *::after {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  color-adjust: exact !important;
+  box-sizing: border-box;
+}
+@media print {
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+body {
+  background:       ${bgColor} !important;
+  background-color: ${bgColor} !important;
+  color:      ${pColor};
+  font-family:${bodyFont};
+  font-size:  ${baseFontSize}px;
+  line-height:${lineHeight};
+  letter-spacing:${letterSpacing}px;
+  text-align: ${textAlign};
+  margin:0; padding:0; position:relative;
+}
+/* Catch any wrapper divs that might override body bg */
+body > div, body > main, body > article, body > section, body > .report-wrapper {
+  background:       inherit !important;
+  background-color: inherit !important;
+}
 h1 { font-family:${headingFont}; font-size:${h1Size}px; color:${h1Color}; margin-bottom:${paragraphSpacing}px; text-wrap:balance; ${headingBorderStyle!=='none'?`border-bottom:2px ${headingBorderStyle} ${headingBorderColor};padding-bottom:6px;`:''} }
-h2 { font-family:${headingFont}; font-size:${h2Size}px; color:${h2Color}; margin-bottom:${paragraphSpacing*.75}px; ${headingBorderStyle!=='none'?`border-bottom:1px ${headingBorderStyle} ${headingBorderColor};padding-bottom:4px;`:''} }
-h3 { font-family:${headingFont}; font-size:${h3Size}px; color:${h3Color}; margin-bottom:${paragraphSpacing*.5}px; }
+h2 { font-family:${headingFont}; font-size:${h2Size}px; color:${h2Color}; margin-bottom:${paragraphSpacing*0.75}px; ${headingBorderStyle!=='none'?`border-bottom:1px ${headingBorderStyle} ${headingBorderColor};padding-bottom:4px;`:''} }
+h3 { font-family:${headingFont}; font-size:${h3Size}px; color:${h3Color}; margin-bottom:${paragraphSpacing*0.5}px; }
+h4,h5,h6 { font-family:${headingFont}; color:${h3Color}; }
 p { margin-bottom:${paragraphSpacing}px; orphans:3; widows:3; }
 a { color:${linkColor}; }
 ul,ol { padding-left:${listIndent}px; margin-bottom:${paragraphSpacing}px; }
+li { margin-bottom:4px; }
 section,.section { padding:${sectionPadding}px; break-inside:avoid; }
 hr { border:none; border-top:1px ${sectionDivider} #ddd; margin:${sectionPadding}px 0; }
-${columnCount>1 ? `main,.main-content{column-count:${columnCount};column-gap:${columnGap}px;}` : ''}
-.cover-page { background:${coverBg}; color:${coverText}; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 40px; break-after:page; }
+${columnCount>1?`main,.main-content{column-count:${columnCount};column-gap:${columnGap}px;}`:''}
+.cover-page {
+  background:       ${coverBg} !important;
+  background-color: ${coverBg} !important;
+  color:${coverText};
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:60px 40px; break-after:page;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
 .cover-page h1 { color:${coverText}; border:none; }
 .page-break { break-before:page; }
 figure,blockquote { break-inside:avoid; }
 blockquote { border-left:5px solid ${primaryColor}; padding-left:20px; color:#555; font-style:italic; margin:${paragraphSpacing}px 0; }
 figure { margin:${paragraphSpacing}px 0; text-align:center; }
 figcaption { font-size:0.85em; color:#888; margin-top:6px; }
-.page-footer { background:${footerBg}; color:${footerText}; padding:8px 20px; display:flex; justify-content:space-between; font-size:0.8rem; border-top:1px solid #ddd; }
-.page-header { background:${footerBg}; color:${footerText}; padding:8px 20px; display:flex; justify-content:space-between; font-size:0.8rem; border-bottom:1px solid #ddd; }
+img { max-width:100%; height:auto; border-radius:6px; display:block; margin:0 auto; }
+.page-footer { background:${footerBg} !important; background-color:${footerBg} !important; color:${footerText}; padding:8px 20px; display:flex; justify-content:space-between; font-size:0.8rem; border-top:1px solid #ddd; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.page-header { background:${footerBg} !important; background-color:${footerBg} !important; color:${footerText}; padding:8px 20px; display:flex; justify-content:space-between; font-size:0.8rem; border-bottom:1px solid #ddd; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 ${tableCSS}
 ${cardCSS}
 ${calloutCSS}
 ${watermarkCSS}
-${directiveCSS}
+${directiveCSS}`;
+
+  // ── AI instruction block ─────────────────────────────────────────────────
+  const tableInstructions = tables.length
+    ? tables.map((t, i) => `
+TABLE ${i+1} — "${t.name}":
+  - class="report-table-${i+1}" on <table>
+  - Generate AT LEAST ${t.rows} rows × ${t.cols} columns
+  ${t.hasHeader?`- <thead> with header cells`:'- No header row'}
+  ${t.striped?'- Stripe even tbody rows':''}
+  ${t.bordered?`- All cells bordered`:'- Borderless'}
+  ${t.colWidths?`- Preferred widths: ${t.colWidths}`:''}
+  ${t.caption?`- <caption>${t.caption}</caption>`:''}
+  ${t.notes?`- Content: ${t.notes}`:''}`).join('\n')
+    : 'Include as many tables as the topic needs.';
+
+  const cardInstructions = cards.length
+    ? cards.map((c, i) => `
+CARD GROUP ${i+1} — "${c.name}":
+  - Wrap in <div class="card-group-${i+1}">
+  - Generate exactly ${c.count} <div class="card"> elements
+  - Layout: ${c.layout}
+  ${c.hasIcon?'- Each card: relevant SVG icon':''}
+  ${c.hasImage?'- Each card: <img> with a relevant Unsplash URL':''}
+  ${c.hasButton?`- Each card: <button style="background:${c.accentColor};color:#fff;border:none;padding:6px 14px;border-radius:4px">Learn More</button>`:''}
+  ${c.notes?`- Content: ${c.notes}`:''}`).join('\n')
+    : 'Include content cards where appropriate.';
+
+  const calloutInstructions = callouts.length
+    ? callouts.map((c, i) => `
+CALLOUT ${i+1} — ${c.type} (×${c.count}):
+  - <aside class="callout-${i+1}"> for each
+  ${c.notes?`- Content: ${c.notes}`:''}`).join('\n')
+    : 'Include callout boxes for key insights.';
+
+  const headerHTML = headers.filter(h=>h.text?.trim()).length>0
+    ? `HEADER — <div class="page-header"> as first body element:\n${headers.filter(h=>h.text?.trim()).map(h=>`  "${h.text}" ${h.position}`).join('\n')}` : '';
+
+  const footerHTML = footers.filter(f=>f.text?.trim()).length>0
+    ? `FOOTER — <div class="page-footer"> as last body element:\n${footers.filter(f=>f.text?.trim()).map(f=>`  "${f.text}" ${f.position}`).join('\n')}` : '';
+
+  const instructionBlock = `
+You are an expert HTML/CSS document engineer. Generate a complete, print-ready HTML report body.
+
+CRITICAL COLOR LAWS — apply exactly, no exceptions:
+  background-color of <body>: ${bgColor}
+  All body text: ${pColor}
+  H1: ${h1Color} | H2: ${h2Color} | H3: ${h3Color}
+  Links: ${linkColor} | Primary accent: ${primaryColor}
+
+BACKGROUND COLOR RULES (CRITICAL — PDF will strip backgrounds unless you follow these):
+  - Every element with a background MUST have BOTH "background:#hex" AND "background-color:#hex" in its inline style.
+  - Every element with a background MUST also have "-webkit-print-color-adjust:exact;print-color-adjust:exact;" in its inline style.
+  - Example correct element: <div style="background:#1a73e8;background-color:#1a73e8;-webkit-print-color-adjust:exact;print-color-adjust:exact;color:#fff;padding:20px">
+  - This applies to: cover page, section headers, table header rows, card backgrounds, callout boxes, ANY colored div.
+
+IMAGE RULES (REQUIRED — include at least 2 images per report):
+  - Use Unsplash source URLs in this exact format: https://source.unsplash.com/800x400/?{keyword}
+  - Replace {keyword} with 1-2 words relevant to the topic (e.g. "technology", "climate,earth", "finance,money").
+  - Always wrap in <figure> with a <figcaption>.
+  - Example:
+    <figure style="margin:16px 0;text-align:center">
+      <img src="https://source.unsplash.com/800x400/?technology,innovation" style="max-width:100%;height:auto;border-radius:8px;display:block;margin:0 auto" alt="Technology"/>
+      <figcaption style="color:#888;font-size:0.85em;margin-top:6px">Caption describing the image</figcaption>
+    </figure>
+
+TYPOGRAPHY:
+  Body font: ${bodyFont} at ${baseFontSize}px | Heading font: ${headingFont}
+  H1: ${h1Size}px | H2: ${h2Size}px | H3: ${h3Size}px
+  Line height: ${lineHeight} | Letter spacing: ${letterSpacing}px
+  Text align: ${textAlign} | Paragraph spacing: ${paragraphSpacing}px
+
+PAGE: ${pageSize} ${orientation} | Margin: ${margin}
+${columnCount>1?`Columns: ${columnCount} (gap: ${columnGap}px)`:''}
+
+DIRECTIVES:
+${(activeStyles||[]).map(s=>`- ${s.prompt}`).join('\n')||'Use clean semantic HTML.'}
+${customText?`CUSTOM:\n${customText}`:''}
+
+TABLES: ${tableInstructions}
+CARDS:  ${cardInstructions}
+CALLOUTS: ${calloutInstructions}
+${headerHTML}
+${footerHTML}
+${watermarkText?.trim()?`WATERMARK: CSS handles "${watermarkText}" — do NOT add in HTML.`:''}
+
+HTML RULES:
+- Output ONLY content inside <body> — no <html> <head> <style> tags
+- data-feature on major sections: <section data-feature="tables">
+- data-section on every top-level section for drag-reorder
+- data-editable="true" and unique data-id on EVERY editable element
+- Wrap content in <main class="main-content">
+- <figure>+<svg> for diagrams — pure SVG only
+- Semantic tags: <main> <section> <article> <aside> <figure> <blockquote>
+- All CSS already injected — use only the class names listed above
+- Generate rich realistic content — NO placeholder text
 `;
+
+  return { cssBlock, instructionBlock };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SHARED: call Gemini and parse the JSON response
+// ─────────────────────────────────────────────────────────────────────────────
+async function callGeminiForReport(contents, styleManifest = {}) {
+  const {
+    primaryColor = '#3498db', bgColor = '#ffffff', pColor = '#444444',
+    h1Color = '#111111', linkColor = '#3498db',
+    bodyFont = 'system-ui, sans-serif', headingFont = 'system-ui, sans-serif',
+    baseFontSize = 14, lineHeight = 1.6, sectionPadding = 24,
+    tables = [],
+  } = styleManifest;
+
+  const jsonSchema = `
+Return ONLY this JSON structure — no extra keys, no markdown fences:
+{
+  "html": "<body content here — rich HTML following all rules above>",
+  "styleManifesto": {
+    "colors": {
+      "primary":     "${primaryColor}",
+      "bg":          "${bgColor}",
+      "text":        "${pColor}",
+      "heading":     "${h1Color}",
+      "link":        "${linkColor}",
+      "tableHeader": "${tables?.[0]?.headerBg || primaryColor}"
+    },
+    "typography": {
+      "bodyFont":       "${bodyFont}",
+      "headingFont":    "${headingFont}",
+      "baseSize":       ${baseFontSize},
+      "lineHeight":     ${lineHeight},
+      "sectionPadding": ${sectionPadding}
+    },
+    "featuresUsed": ["tables","cards","callouts","images"]
+  }
+}`;
+
+  let text = '';
+  try {
+    const result = await ai.models.generateContent({
+      model:    'gemini-2.5-flash',
+      contents: typeof contents === 'string'
+        ? contents + '\n\n' + jsonSchema
+        : [...(Array.isArray(contents) ? contents : [contents]),
+           { text: '\n\n' + jsonSchema }],
+      config: { responseMimeType: 'application/json' },
+    });
+    text = typeof result.text === 'function' ? result.text() : result.text;
+  } catch (apiErr) {
+    const msg = apiErr?.message || '';
+    if (msg.includes('leaked'))              throw new Error('API_KEY_LEAKED: Your Gemini API key was reported as leaked. Get a new one at https://aistudio.google.com/app/apikey');
+    if (msg.includes('expired'))             throw new Error('API_KEY_EXPIRED: Your Gemini API key expired. Renew at https://aistudio.google.com/app/apikey');
+    if (msg.includes('API_KEY') || msg.includes('403')) throw new Error('API_KEY_INVALID: Invalid API key. Check your .env file.');
+    throw apiErr;
+  }
+
+  const cleaned = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+  let parsed;
+  try {
+    parsed = JSON.parse(cleaned);
+  } catch {
+    console.error('Parse failed (first 1000 chars):\n', cleaned.slice(0, 1000));
+    throw new Error('AI returned malformed JSON. Try again.');
+  }
+
+  const raw    = parsed.styleManifesto ?? parsed.styleManifest ?? {};
+  const colors = raw.colors  ?? raw.branding ?? {};
+  const typo   = raw.typography ?? {};
+
+  return {
+    html: parsed.html ?? '',
+    styleManifesto: {
+      colors: {
+        primary:     colors.primary     ?? primaryColor,
+        bg:          colors.bg          ?? bgColor,
+        text:        colors.text        ?? pColor,
+        heading:     colors.heading     ?? h1Color,
+        link:        colors.link        ?? linkColor,
+        tableHeader: colors.tableHeader ?? tables?.[0]?.headerBg ?? primaryColor,
+      },
+      typography: {
+        bodyFont:       typo.bodyFont       ?? bodyFont,
+        headingFont:    typo.headingFont    ?? headingFont,
+        baseSize:       typo.baseSize       ?? baseFontSize,
+        lineHeight:     typo.lineHeight     ?? lineHeight,
+        sectionPadding: typo.sectionPadding ?? sectionPadding,
+      },
+      featuresUsed: Array.isArray(raw.featuresUsed) ? raw.featuresUsed : [],
+    },
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GENERATE REPORT HTML — text only
+// ─────────────────────────────────────────────────────────────────────────────
+export async function generateReportHtml(topic, userPrompt = '', styleManifest = {}) {
+  const { instructionBlock } = buildSystemPrompt(styleManifest);
+  const prompt = `${instructionBlock}\n\nTOPIC: ${topic}\nUSER INSTRUCTIONS: ${userPrompt || 'None'}`;
+  return callGeminiForReport(prompt, styleManifest);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GENERATE REPORT HTML — from uploaded file
+// Supports: PDF (base64), images (base64), plain text
+// ─────────────────────────────────────────────────────────────────────────────
+export async function generateReportHtmlFromFile(fileBuffer, mimeType, originalName, topic = '', userPrompt = '', styleManifest = {}) {
+  const { instructionBlock } = buildSystemPrompt(styleManifest);
+
+  const userInstruction = [
+    `Generate a comprehensive, well-structured HTML report based on the content of the uploaded file "${originalName}".`,
+    topic      ? `Report topic/title: ${topic}` : '',
+    userPrompt ? `Additional style instructions: ${userPrompt}` : '',
+    'Extract all key data, facts, and insights from the file. Present them in a polished report with tables, callouts, and relevant images.',
+    '',
+    instructionBlock,
+  ].filter(Boolean).join('\n');
+
+  let contents;
+
+  if (mimeType === 'application/pdf') {
+    // Gemini supports inline PDF as base64
+    contents = [
+      {
+        inlineData: {
+          mimeType: 'application/pdf',
+          data:     fileBuffer.toString('base64'),
+        },
+      },
+      { text: userInstruction },
+    ];
+  } else if (mimeType.startsWith('image/')) {
+    // Vision input
+    contents = [
+      {
+        inlineData: {
+          mimeType,
+          data: fileBuffer.toString('base64'),
+        },
+      },
+      { text: userInstruction },
+    ];
+  } else {
+    // Plain text / CSV / JSON / HTML — embed as text, cap at 50k chars
+    const fileText = fileBuffer.toString('utf8').slice(0, 50000);
+    contents = `File contents of "${originalName}":\n\n${fileText}\n\n${userInstruction}`;
+  }
+
+  return callGeminiForReport(contents, styleManifest);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RENDER PDF
+// ─────────────────────────────────────────────────────────────────────────────
+export async function renderPdfFromHtml(html, styleManifest = {}) {
+  const { cssBlock } = buildSystemPrompt(styleManifest);
+  const { pageSize = 'A4', orientation = 'Portrait' } = styleManifest;
 
   const fullHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <style>${fullCSS}</style>
+  <style>${cssBlock}</style>
 </head>
 <body>${html}</body>
 </html>`;
@@ -835,19 +625,15 @@ ${directiveCSS}
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
-  const page = await browser.newPage();
 
+  const page = await browser.newPage();
   await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
 
-  // Determine paper format or custom size
-  const formatMap = { A4:'A4', A3:'A3', Letter:'Letter', Legal:'Legal', Tabloid:'Tabloid' };
-  const pdfFormat = formatMap[pageSize] || 'A4';
-
   const buffer = await page.pdf({
-    format:          pdfFormat,
-    landscape:       orientation === 'Landscape',
-    printBackground: true,
-    displayHeaderFooter: false, // handled via CSS running elements
+    format:              pageSize,
+    landscape:           orientation === 'Landscape',
+    printBackground:     true,   // ← critical: without this ALL backgrounds are stripped
+    displayHeaderFooter: false,
   });
 
   await browser.close();

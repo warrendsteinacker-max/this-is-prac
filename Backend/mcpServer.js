@@ -29,55 +29,14 @@
 
 
 
+import { McpServer }           from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport }  from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z }                     from "zod";
+import { generateReportHtml, generateReportHtmlFromFile, renderPdfFromHtml } from "./tools.js";
 
-import { McpServer }          from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z }                  from "zod";
-import { generateReportHtml, renderPdfFromHtml } from "./tools.js";
-
-const server = new McpServer({ name: "pdf-report-generator", version: "2.0.0" });
+const server = new McpServer({ name: "pdf-report-generator", version: "2.1.0" });
 
 // ── Shared sub-schemas ────────────────────────────────────────────────────────
-
-const ColorSchema = z.object({
-  primaryColor:    z.string().optional(),
-  bgColor:         z.string().optional(),
-  h1Color:         z.string().optional(),
-  h2Color:         z.string().optional(),
-  h3Color:         z.string().optional(),
-  pColor:          z.string().optional(),
-  linkColor:       z.string().optional(),
-  coverBg:         z.string().optional(),
-  coverText:       z.string().optional(),
-  footerBg:        z.string().optional(),
-  footerText:      z.string().optional(),
-}).optional();
-
-const TypographySchema = z.object({
-  bodyFont:        z.string().optional(),
-  headingFont:     z.string().optional(),
-  baseFontSize:    z.number().optional(),
-  h1Size:          z.number().optional(),
-  h2Size:          z.number().optional(),
-  h3Size:          z.number().optional(),
-  lineHeight:      z.number().optional(),
-  letterSpacing:   z.number().optional(),
-  paragraphSpacing:z.number().optional(),
-  textAlign:       z.enum(['left','center','right','justify']).optional(),
-  headingBorderStyle: z.string().optional(),
-  headingBorderColor: z.string().optional(),
-}).optional();
-
-const PageSchema = z.object({
-  pageSize:        z.enum(['A4','A3','Letter','Legal','Tabloid']).optional(),
-  orientation:     z.enum(['Portrait','Landscape']).optional(),
-  margin:          z.string().optional(),
-  columnCount:     z.number().min(1).max(4).optional(),
-  columnGap:       z.number().optional(),
-  sectionPadding:  z.number().optional(),
-  listIndent:      z.number().optional(),
-  sectionDivider:  z.string().optional(),
-}).optional();
 
 const TableSchema = z.array(z.object({
   id:          z.string().optional(),
@@ -142,21 +101,18 @@ const ActiveStyleSchema = z.array(z.object({
   prompt: z.string(),
 })).optional();
 
-// Full style manifest schema — mirrors every control in StyleArchitect
 const StyleManifestSchema = z.object({
-  // Colors
-  primaryColor: z.string().optional(),
-  bgColor:      z.string().optional(),
-  h1Color:      z.string().optional(),
-  h2Color:      z.string().optional(),
-  h3Color:      z.string().optional(),
-  pColor:       z.string().optional(),
-  linkColor:    z.string().optional(),
-  coverBg:      z.string().optional(),
-  coverText:    z.string().optional(),
-  footerBg:     z.string().optional(),
-  footerText:   z.string().optional(),
-  // Typography
+  primaryColor:     z.string().optional(),
+  bgColor:          z.string().optional(),
+  h1Color:          z.string().optional(),
+  h2Color:          z.string().optional(),
+  h3Color:          z.string().optional(),
+  pColor:           z.string().optional(),
+  linkColor:        z.string().optional(),
+  coverBg:          z.string().optional(),
+  coverText:        z.string().optional(),
+  footerBg:         z.string().optional(),
+  footerText:       z.string().optional(),
   bodyFont:         z.string().optional(),
   headingFont:      z.string().optional(),
   baseFontSize:     z.number().optional(),
@@ -169,33 +125,29 @@ const StyleManifestSchema = z.object({
   textAlign:        z.string().optional(),
   headingBorderStyle: z.string().optional(),
   headingBorderColor: z.string().optional(),
-  // Page
-  pageSize:       z.string().optional(),
-  orientation:    z.string().optional(),
-  margin:         z.string().optional(),
-  columnCount:    z.number().optional(),
-  columnGap:      z.number().optional(),
-  sectionPadding: z.number().optional(),
-  listIndent:     z.number().optional(),
-  sectionDivider: z.string().optional(),
-  // Layouts
-  tables:         TableSchema,
-  cards:          CardSchema,
-  callouts:       CalloutSchema,
-  headers:        HeaderFooterSchema,
-  footers:        HeaderFooterSchema,
-  // Decor
+  pageSize:         z.string().optional(),
+  orientation:      z.string().optional(),
+  margin:           z.string().optional(),
+  columnCount:      z.number().optional(),
+  columnGap:        z.number().optional(),
+  sectionPadding:   z.number().optional(),
+  listIndent:       z.number().optional(),
+  sectionDivider:   z.string().optional(),
+  tables:           TableSchema,
+  cards:            CardSchema,
+  callouts:         CalloutSchema,
+  headers:          HeaderFooterSchema,
+  footers:          HeaderFooterSchema,
   watermarkText:    z.string().optional(),
   watermarkOpacity: z.number().optional(),
-  // Directives
-  activeStyles: ActiveStyleSchema,
-  customText:   z.string().optional(),
+  activeStyles:     ActiveStyleSchema,
+  customText:       z.string().optional(),
 }).optional();
 
-// ── Tool 1: Generate HTML report ─────────────────────────────────────────────
+// ── Tool 1: Generate HTML report (text) ──────────────────────────────────────
 server.tool(
   "create_html_report",
-  "Generates a complete styled HTML report body and style manifesto based on topic, user instructions, and a full style manifest from StyleArchitect",
+  "Generates a complete styled HTML report body and style manifesto based on topic, user instructions, and a full style manifest",
   {
     topic:         z.string().describe("The report topic or subject matter"),
     userPrompt:    z.string().optional().describe("Additional user instructions for content or layout"),
@@ -204,42 +156,63 @@ server.tool(
   async ({ topic, userPrompt = '', styleManifest = {} }) => {
     try {
       const result = await generateReportHtml(topic, userPrompt, styleManifest);
-      return { content: [{ type: "text", text: JSON.stringify(result) }] };
+      return { content: [{ type:"text", text: JSON.stringify(result) }] };
     } catch (err) {
-      return { content: [{ type: "text", text: `Error: ${err.message}` }], isError: true };
+      return { content: [{ type:"text", text: `Error: ${err.message}` }], isError: true };
     }
   }
 );
 
-// ── Tool 2: Render PDF ────────────────────────────────────────────────────────
+// ── Tool 2: Generate HTML report from file ────────────────────────────────────
+server.tool(
+  "create_html_report_from_file",
+  "Generates a styled HTML report by reading an uploaded file (PDF, image, or text). The file is passed as base64.",
+  {
+    fileBase64:    z.string().describe("Base64-encoded file contents"),
+    mimeType:      z.string().describe("MIME type of the file, e.g. 'application/pdf', 'image/png', 'text/plain'"),
+    originalName:  z.string().describe("Original filename, e.g. 'quarterly-report.pdf'"),
+    topic:         z.string().optional().describe("Optional report title or topic"),
+    userPrompt:    z.string().optional().describe("Additional style or content instructions"),
+    styleManifest: StyleManifestSchema,
+  },
+  async ({ fileBase64, mimeType, originalName, topic = '', userPrompt = '', styleManifest = {} }) => {
+    try {
+      const buffer = Buffer.from(fileBase64, 'base64');
+      const result = await generateReportHtmlFromFile(buffer, mimeType, originalName, topic, userPrompt, styleManifest);
+      return { content: [{ type:"text", text: JSON.stringify(result) }] };
+    } catch (err) {
+      return { content: [{ type:"text", text: `Error: ${err.message}` }], isError: true };
+    }
+  }
+);
+
+// ── Tool 3: Render PDF ────────────────────────────────────────────────────────
 server.tool(
   "render_pdf",
-  "Converts an HTML string to a PDF using Puppeteer, applying the full style manifest for accurate CSS injection",
+  "Converts an HTML string to a PDF using Puppeteer, applying the full style manifest for CSS injection",
   {
     html:          z.string().describe("The HTML body content to render"),
-    styleManifest: StyleManifestSchema.describe("Full style manifest — used to inject all CSS into the Puppeteer page"),
+    styleManifest: StyleManifestSchema.describe("Full style manifest for CSS injection"),
   },
   async ({ html, styleManifest = {} }) => {
     try {
       const buffer = await renderPdfFromHtml(html, styleManifest);
-      // Return base64 so the MCP client can handle the binary
-      const base64 = buffer.toString('base64');
       return {
         content: [{
           type: "text",
-          text: JSON.stringify({ success: true, pdfBase64: base64, size: buffer.length }),
+          text: JSON.stringify({ success:true, pdfBase64: buffer.toString('base64'), size: buffer.length }),
         }],
       };
     } catch (err) {
-      return { content: [{ type: "text", text: `Error: ${err.message}` }], isError: true };
+      return { content: [{ type:"text", text: `Error: ${err.message}` }], isError: true };
     }
   }
 );
 
-// ── Tool 3: Generate + render in one shot ────────────────────────────────────
+// ── Tool 4: Generate + render in one shot ────────────────────────────────────
 server.tool(
   "create_and_render_pdf",
-  "Generates a styled HTML report from a topic and immediately renders it to PDF — a single tool call for the full pipeline",
+  "Generates a styled HTML report from a topic and immediately renders it to PDF — single tool call for the full pipeline",
   {
     topic:         z.string().describe("The report topic"),
     userPrompt:    z.string().optional(),
@@ -249,13 +222,12 @@ server.tool(
     try {
       const { html, styleManifesto } = await generateReportHtml(topic, userPrompt, styleManifest);
       const buffer = await renderPdfFromHtml(html, styleManifest);
-      const base64 = buffer.toString('base64');
       return {
         content: [{
           type: "text",
           text: JSON.stringify({
             success:      true,
-            pdfBase64:    base64,
+            pdfBase64:    buffer.toString('base64'),
             size:         buffer.length,
             styleManifesto,
             featuresUsed: styleManifesto.featuresUsed,
@@ -263,11 +235,46 @@ server.tool(
         }],
       };
     } catch (err) {
-      return { content: [{ type: "text", text: `Error: ${err.message}` }], isError: true };
+      return { content: [{ type:"text", text: `Error: ${err.message}` }], isError: true };
+    }
+  }
+);
+
+// ── Tool 5: Generate from file + render PDF in one shot ───────────────────────
+server.tool(
+  "create_and_render_pdf_from_file",
+  "Reads an uploaded file, generates a styled HTML report from it, and immediately renders to PDF — full pipeline in one call",
+  {
+    fileBase64:    z.string().describe("Base64-encoded file contents"),
+    mimeType:      z.string().describe("MIME type, e.g. 'application/pdf', 'image/png', 'text/plain'"),
+    originalName:  z.string().describe("Original filename"),
+    topic:         z.string().optional(),
+    userPrompt:    z.string().optional(),
+    styleManifest: StyleManifestSchema,
+  },
+  async ({ fileBase64, mimeType, originalName, topic = '', userPrompt = '', styleManifest = {} }) => {
+    try {
+      const buffer = Buffer.from(fileBase64, 'base64');
+      const { html, styleManifesto } = await generateReportHtmlFromFile(buffer, mimeType, originalName, topic, userPrompt, styleManifest);
+      const pdfBuffer = await renderPdfFromHtml(html, styleManifest);
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            success:      true,
+            pdfBase64:    pdfBuffer.toString('base64'),
+            size:         pdfBuffer.length,
+            styleManifesto,
+            featuresUsed: styleManifesto.featuresUsed,
+          }),
+        }],
+      };
+    } catch (err) {
+      return { content: [{ type:"text", text: `Error: ${err.message}` }], isError: true };
     }
   }
 );
 
 // ── Connect ───────────────────────────────────────────────────────────────────
 await server.connect(new StdioServerTransport());
-console.log("MCP PDF Server v2 connected — full StyleArchitect manifest support active.");
+console.log("MCP PDF Server v2.1 connected — file upload + full StyleArchitect manifest support active.");

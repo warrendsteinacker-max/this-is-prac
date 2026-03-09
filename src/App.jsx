@@ -1273,7 +1273,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"          element={<ReportBuilder />}  />
+        {/* <Route path="/"          element={<ReportBuilder />}  /> */}
+        <Route path="/" element={</>} />
         <Route path="/matrix"    element={<DesignMatrix />}   />
         <Route path="/editor"    element={<PdfEditor />}      />
         <Route path="/architect" element={<StyleArchitect />} />
