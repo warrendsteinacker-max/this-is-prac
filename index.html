@@ -423,15 +423,26 @@ document.appendChild(newel)
   <option value="4">4</option>
 </select>
 <button type="submit">submit</button>
+
 </form>
+
+<button onclick="func2()">reset</button>
 
 <script>
 
   let dbnum = 1; 
+  let array = [];
  
   const func1 = (event) => {
      dbnum = Number(event.target.value)
      console.log(dbnum)
+  }
+
+  const func2 = () => {
+    for(let i = 0; i < array.length; i++){
+      document.body.removeChild(array[i])
+    }
+    array = []
   }
 
   const func = (event) => {
@@ -448,6 +459,7 @@ document.appendChild(newel)
       el.id = i
       el.margin = "30px"
       el.padding = "20px"
+      array.push(el)
       el.textContent = nums[Math.floor(Math.random() * 6)]
       document.body.appendChild(el)
     }
