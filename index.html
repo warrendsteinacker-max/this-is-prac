@@ -404,47 +404,53 @@ document.appendChild(newel)
   <title>Document</title>
 </head>
 <body>
-<h1 id="target"></h1>
+<!-- <h1 id="target"></h1> -->
+
 <form onsubmit="func(event)">
 <!-- <label for="1">uppercase letters:</label>
 <input id="1" name="buttons" type="radio"> -->
-<label for="2">lowercase letters:</label>
+<!-- <label for="2">lowercase letters:</label>
 <input id="2" name="buttons" type="radio">
 <label for="3">numbers:</label>
 <input id="3" name="buttons" type="radio">
 <label for="4">symbols:</label>
 <input id="4" name="buttons" type="radio">
+ -->
+<select onchange="func1(event)">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
 <button type="submit">submit</button>
 </form>
 
 <script>
 
- const func = (event) => {
+  let dbnum = 1; 
+ 
+  const func1 = (event) => {
+     dbnum = Number(event.target.value)
+     console.log(dbnum)
+  }
+
+  const func = (event) => {
+
+    const nums = [1,2,3,4,5,6]
 
     event.preventDefault()
-    let chars = [];
-<!-- 
--->
-    const ll = document.getElementById("2")
-    const N = document.getElementById("3")
-    const S = document.getElementById("4")
 
-    if(S.checked){
-      chars = ["!","@","#","$","%","^","&","*"]
+    for(let i = 0; i < dbnum; i++){
+      const el = document.createElement("div")
+      el.width = "fit-contnet"
+      el.height = "fit-content"
+      el.style.border = "5px solid black" 
+      el.id = i
+      el.margin = "30px"
+      el.padding = "20px"
+      el.textContent = nums[Math.floor(Math.random() * 6)]
+      document.body.appendChild(el)
     }
-    if(N.checked){
-      chars = ["1","2","3","4","5","6","7","8"]
-    }
-    if(ll.checked){
-      chars = ["a","b","c","d","e","f","g","h"]
-    }
-
-
-    const pas = Array(chars.length).fill(null).map(() => {const ri = Math.floor(Math.random() * chars.length); return chars[ri]}).join("")
-
-    console.log(pas)
-
-    document.getElementById("target").textContent = `${pas}`
 
   }
 
