@@ -121,7 +121,7 @@ const func = (e) => {
 
     const PP = Array(10).fill(null)
 
-    const pas = PP.map((item) => {let R = Math.floor(Math.random() * 10); return chars[R]}).join("")
+    const pas = PP.map(() => {let R = Math.floor(Math.random() * 19); return chars[R]}).join("")
 
     console.log(typeof(pas))
 
@@ -140,8 +140,8 @@ const func = (e) => {
     <input type="checkbox" name="Numbers" onChange={() => setN(!N)}></input>
     {/* <lable for="L"></lable> */}
     <input type="checkbox" name="L" onChange={() => setL(!L)}></input>
-    {/* <lable for="U"></lable> */}
-    <input type="checkbox" name="U" onChange={() => setU(!U)}></input>
+    <lable for="1">lowercase</lable>
+    <input id="1" type="radio" name="U" onChange={() => setU(!U)}></input>
     <button type="submit">make password</button>
     </form>
     </>

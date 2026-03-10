@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html>
+</html> -->
 
 
 <!-- 
@@ -393,3 +393,62 @@ document.appendChild(newel)
         ONKEYDOWN(e)
       }
     }) -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h1 id="target"></h1>
+<form onsubmit="func(event)">
+<!-- <label for="1">uppercase letters:</label>
+<input id="1" name="buttons" type="radio"> -->
+<label for="2">lowercase letters:</label>
+<input id="2" name="buttons" type="radio">
+<label for="3">numbers:</label>
+<input id="3" name="buttons" type="radio">
+<label for="4">symbols:</label>
+<input id="4" name="buttons" type="radio">
+<button type="submit">submit</button>
+</form>
+
+<script>
+
+ const func = (event) => {
+
+    event.preventDefault()
+    let chars = [];
+<!-- 
+-->
+    const ll = document.getElementById("2")
+    const N = document.getElementById("3")
+    const S = document.getElementById("4")
+
+    if(S.checked){
+      chars = ["!","@","#","$","%","^","&","*"]
+    }
+    if(N.checked){
+      chars = ["1","2","3","4","5","6","7","8"]
+    }
+    if(ll.checked){
+      chars = ["a","b","c","d","e","f","g","h"]
+    }
+
+
+    const pas = Array(chars.length).fill(null).map(() => {const ri = Math.floor(Math.random() * chars.length); return chars[ri]}).join("")
+
+    console.log(pas)
+
+    document.getElementById("target").textContent = `${pas}`
+
+  }
+
+
+  </script>
+</body>
+</html> 
