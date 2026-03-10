@@ -99,24 +99,25 @@ const Prac = () => {
 const [N, setN] = useState(false)
 const [L, setL] = useState(false)
 const [U, setU] = useState(false)
-const [Char, setC] = useState([])
+// const [Char, setC] = useState([])
 const [P, setP] = useState(Array(10).fill(null))
 
-const f1 
+
 
 const func = () => {
     
+    const chars = []
     if(N){
-        setC([1,2,3,4,5,6,7,8,9,0])
+        chars = [...chars, 1,2,3,4,5,6,7,8,9,0]
     }
     if(L){
-        setC((pre) => [...pre, ...["A","Q","W","E","R","T","Y","U","I"]])
+        chars = [...chars, "A","Q","W","E","R","T","Y","U","I"]
     }
     // if(U){
 
     // }
 
-    const pas = P.map((item, index) => item = Char[Math.random() * index])
+    const pas = P.map((item, index) => {const item = chars[Math.random() * index]; return item})
 
     console.log(pas)
 
