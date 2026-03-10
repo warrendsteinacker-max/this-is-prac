@@ -100,13 +100,15 @@ const [N, setN] = useState(false)
 const [L, setL] = useState(false)
 const [U, setU] = useState(false)
 // const [Char, setC] = useState([])
-const [P, setP] = useState(Array(10).fill(null))
+const [P, setP] = useState([])
 
 
 
-const func = () => {
+const func = (e) => {
+
+    e.preventDefault()
     
-    const chars = []
+    let chars = []
     if(N){
         chars = [...chars, 1,2,3,4,5,6,7,8,9,0]
     }
@@ -117,15 +119,14 @@ const func = () => {
 
     // }
 
-    const pas = P.map((item, index) => {const item = chars[Math.random() * index]; return item})
+    const PP = Array(10).fill(null)
 
-    console.log(pas)
+    const pas = PP.map((item) => {let R = Math.floor(Math.random() * 10); return chars[R]}).join("")
 
-    const pass = pas.join()
+    console.log(typeof(pas))
 
-    console.log(pass)
 
-    setP(pass)
+    setP(pas)
     
 }
 
@@ -135,11 +136,11 @@ const func = () => {
     <>
     <h1>{P}</h1>
     <form onSubmit={func}>
-    <lable for="Numbers"></lable>
+    {/* <lable for="Numbers"></lable> */}
     <input type="checkbox" name="Numbers" onChange={() => setN(!N)}></input>
-    <lable for="L"></lable>
+    {/* <lable for="L"></lable> */}
     <input type="checkbox" name="L" onChange={() => setL(!L)}></input>
-    <lable for="U"></lable>
+    {/* <lable for="U"></lable> */}
     <input type="checkbox" name="U" onChange={() => setU(!U)}></input>
     <button type="submit">make password</button>
     </form>
