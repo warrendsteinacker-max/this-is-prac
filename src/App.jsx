@@ -1262,23 +1262,24 @@
 // export default App;
 
 
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Prac from './Prac'
 // import ReportBuilder  from './components/ReportBuilder';
 import DesignMatrix   from './components/DesignMatrix';
 import PdfEditor      from './components/PdfEditor';
 import StyleArchitect from './components/StyleArchitect';
+import DiagramBuilder from './components/Diagrambuilder';
+import Prac from "./Prac"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route path="/"          element={<ReportBuilder />}  /> */}
-        <Route path="/" element={<Prac />} />
+        <Route path="/"          element={<Prac />}  />
         <Route path="/matrix"    element={<DesignMatrix />}   />
         <Route path="/editor"    element={<PdfEditor />}      />
         <Route path="/architect" element={<StyleArchitect />} />
+        <Route path="/diagrams"  element={<DiagramBuilder />} />
       </Routes>
     </BrowserRouter>
   );
