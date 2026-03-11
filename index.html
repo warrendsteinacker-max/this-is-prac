@@ -408,10 +408,15 @@ document.appendChild(newel)
 
   const el = document.createElement("div")
 
-  el.width = "fit-contnet"
-  el.height = "fit-contnet"
+  el.style.width = "fit-content"
+  el.style.height = "fit-content"
+  el.style.border = "5px solid black"
+  el.style.gridTemplateColumns = "repeat(3, 1rf)"
+  el.style.gridTemplateRows = "repeat(3, 1rf)"
+  el.style.display = "grid"
 
-  el.display = 
+  document.body.appendChild(el)
+
 </script>
 
 </body>
