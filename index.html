@@ -411,11 +411,32 @@ document.appendChild(newel)
   el.style.width = "fit-content"
   el.style.height = "fit-content"
   el.style.border = "5px solid black"
-  el.style.gridTemplateColumns = "repeat(3, 1rf)"
-  el.style.gridTemplateRows = "repeat(3, 1rf)"
+  el.style.gridTemplateColumns = "repeat(3, 1fr)"
+  el.style.gridTemplateRows = "repeat(3, 1fr)"
   el.style.display = "grid"
 
   document.body.appendChild(el)
+
+
+  for(let i = 0; i < 9; i++){
+
+    const el1 = document.createElement("div")
+
+    if(i === 4){
+      el1.style.width = "100px"
+      el1.style.height = "100px"
+      el.appendChild(el1)
+    }
+    else{
+      el1.style.width = "100px"
+      el1.style.height = "100px"
+      el1.id = i
+      el1.style.backgroundColor = "red"
+      el1.style.border = "5px solid black"
+      el.appendChild(el1)
+    }
+
+  }
 
 </script>
 
