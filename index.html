@@ -408,6 +408,32 @@ document.appendChild(newel)
 
   const el = document.createElement("div")
 
+  let d = []
+
+  function func(e){
+    if(d.includes(Number(e.target.id))){
+      return null
+    }
+    console.log(e.target.id)
+    d.push(Number(e.target.id))
+
+    document.getElementById(Number(e.target.id)).style.backgroundColor = "white"
+
+    if(d.length === 8){
+      for(let i = 0; i<10; i++){
+        if(i === 9){
+          d = []
+        }
+        setTimeout(() => {
+        console.log("hello")
+        const ell = document.getElementById(d[i])
+        ell.style.backgroundColor = "red"
+      }, 1000)
+      }
+    }
+  
+  }
+
   el.style.width = "fit-content"
   el.style.height = "fit-content"
   el.style.border = "5px solid black"
@@ -418,11 +444,11 @@ document.appendChild(newel)
   document.body.appendChild(el)
 
 
-  for(let i = 0; i < 9; i++){
+  for(let i = 1; i < 10; i++){
 
     const el1 = document.createElement("div")
 
-    if(i === 4){
+    if(i === 5){
       el1.style.width = "100px"
       el1.style.height = "100px"
       el.appendChild(el1)
@@ -433,10 +459,13 @@ document.appendChild(newel)
       el1.id = i
       el1.style.backgroundColor = "red"
       el1.style.border = "5px solid black"
+      el1.addEventListener("click", func)
       el.appendChild(el1)
     }
 
   }
+
+
 
 </script>
 
