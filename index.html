@@ -394,8 +394,6 @@ document.appendChild(newel)
       }
     }) -->
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -404,69 +402,20 @@ document.appendChild(newel)
   <title>Document</title>
 </head>
 <body>
-<!-- <h1 id="target"></h1> -->
-
-<form onsubmit="func(event)">
-<!-- <label for="1">uppercase letters:</label>
-<input id="1" name="buttons" type="radio"> -->
-<!-- <label for="2">lowercase letters:</label>
-<input id="2" name="buttons" type="radio">
-<label for="3">numbers:</label>
-<input id="3" name="buttons" type="radio">
-<label for="4">symbols:</label>
-<input id="4" name="buttons" type="radio">
- -->
-<select onchange="func1(event)">
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-</select>
-<button type="submit">submit</button>
-
-</form>
-
-<button onclick="func2()">reset</button>
+  
 
 <script>
 
-  let dbnum = 1; 
-  let array = [];
- 
-  const func1 = (event) => {
-     dbnum = Number(event.target.value)
-     console.log(dbnum)
-  }
+  const el = document.createElement("div")
 
-  const func2 = () => {
-    for(let i = 0; i < array.length; i++){
-      document.body.removeChild(array[i])
-    }
-    array = []
-  }
+  el.width = "fit-contnet"
+  el.height = "fit-contnet"
 
-  const func = (event) => {
+  el.display = 
+</script>
 
-    const nums = [1,2,3,4,5,6]
-
-    event.preventDefault()
-
-    for(let i = 0; i < dbnum; i++){
-      const el = document.createElement("div")
-      el.width = "fit-contnet"
-      el.height = "fit-content"
-      el.style.border = "5px solid black" 
-      el.id = i
-      el.margin = "30px"
-      el.padding = "20px"
-      array.push(el)
-      el.textContent = nums[Math.floor(Math.random() * 6)]
-      document.body.appendChild(el)
-    }
-
-  }
-
-
-  </script>
 </body>
-</html> 
+</html>
+
+
+

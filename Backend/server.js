@@ -530,7 +530,6 @@
 
 
 
-
 import express  from 'express';
 import cors     from 'cors';
 import multer   from 'multer';
@@ -766,6 +765,708 @@ app.post('/api/render-pdf-raw', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ── POST /api/convert-for-viewing ────────────────────────────────────────
+// Converts any office doc to a self-contained styled HTML for the Doc Viewer.
+// Returns: { html, mimeType:'text/html', originalName }
+app.post('/api/convert-for-viewing', upload.single('file'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
+  const { mimetype, buffer, originalname } = req.file;
+  const name = originalname.toLowerCase();
+
+  try {
+    // ── DOCX / DOC ────────────────────────────────────────────────────────
+    if (
+      mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+      mimetype === 'application/msword' ||
+      name.endsWith('.docx') || name.endsWith('.doc')
+    ) {
+      const result = await mammoth.convertToHtml(
+        { buffer },
+        {
+          styleMap: [
+            "p[style-name='Heading 1'] => h1:fresh",
+            "p[style-name='Heading 2'] => h2:fresh",
+            "p[style-name='Heading 3'] => h3:fresh",
+            "p[style-name='Title']     => h1.title:fresh",
+            "b => strong",
+            "i => em",
+            "u => u",
+            "strike => s",
+            "table => table",
+            "tr    => tr",
+            "td    => td",
+          ],
+          convertImage: mammoth.images.imgElement(image => {
+            return image.read('base64').then(imageBuffer => {
+              return { src: `data:${image.contentType};base64,${imageBuffer}` };
+            });
+          }),
+        }
+      );
+
+      const bodyHtml = result.value;
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>${originalname}</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+  .page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 72px 96px;
+    background: #fff;
+    min-height: 100vh;
+  }
+  h1 { font-size: 20pt; font-weight: 700; margin: 18pt 0 6pt; line-height: 1.2; }
+  h2 { font-size: 16pt; font-weight: 700; margin: 14pt 0 4pt; line-height: 1.2; }
+  h3 { font-size: 13pt; font-weight: 700; margin: 12pt 0 4pt; }
+  h4 { font-size: 11pt; font-weight: 700; margin: 10pt 0 4pt; }
+  p  { margin: 0 0 8pt; }
+  p:empty { margin: 0 0 4pt; min-height: 8pt; }
+  ul, ol { margin: 0 0 8pt 22pt; padding: 0; }
+  li { margin-bottom: 3pt; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12pt 0;
+    font-size: 10pt;
+  }
+  td, th {
+    border: 1px solid #000;
+    padding: 4pt 6pt;
+    vertical-align: top;
+    min-width: 30pt;
+  }
+  th {
+    background: #d0d0d0;
+    font-weight: 700;
+    text-align: left;
+  }
+  tr:nth-child(even) td { background: #f8f8f8; }
+  img { max-width: 100%; height: auto; display: block; margin: 8pt auto; }
+  strong, b { font-weight: 700; }
+  em, i { font-style: italic; }
+  u { text-decoration: underline; }
+  s { text-decoration: line-through; }
+  a { color: #1155cc; }
+  /* Checkbox-like spans from DOCX */
+  .checkbox { display: inline-block; width: 11pt; height: 11pt; border: 1px solid #000; vertical-align: middle; margin-right: 4pt; }
+  .checkbox.checked { background: #000; }
+  /* Form blank lines */
+  .blank { display: inline-block; border-bottom: 1px solid #000; min-width: 100pt; margin: 0 3pt; }
+  @media print {
+    .page { padding: 0; }
+    body { margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+${bodyHtml}
+</div>
+</body>
+</html>`;
+      const htmlB64 = Buffer.from(html, 'utf8').toString('base64');
+      return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'docx' });
+    }
+
+    // ── XLSX / XLS ────────────────────────────────────────────────────────
+    if (
+      mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+      mimetype === 'application/vnd.ms-excel' ||
+      name.endsWith('.xlsx') || name.endsWith('.xls')
+    ) {
+      const workbook = xlsx.read(buffer, { type: 'buffer', cellStyles: true, cellDates: true });
+
+      let sheetsHtml = '';
+      for (const sheetName of workbook.SheetNames) {
+        const ws = workbook.Sheets[sheetName];
+        if (!ws || !ws['!ref']) { sheetsHtml += `<div class="sheet-tab empty">${sheetName} (empty)</div>`; continue; }
+
+        const range = xlsx.utils.decode_range(ws['!ref']);
+        const colWidths = ws['!cols'] || [];
+        const rowHeights = ws['!rows'] || [];
+
+        // Build table
+        let tableHtml = '<table>';
+        for (let R = range.s.r; R <= range.e.r; R++) {
+          const rh = rowHeights[R];
+          const rowStyle = rh?.hpx ? `height:${rh.hpx}px;` : '';
+          tableHtml += `<tr style="${rowStyle}">`;
+          for (let C = range.s.c; C <= range.e.c; C++) {
+            const cellAddr = xlsx.utils.encode_cell({ r: R, c: C });
+            const cell = ws[cellAddr];
+            const cw = colWidths[C];
+            const colStyle = cw?.wpx ? `width:${cw.wpx}px;min-width:${cw.wpx}px;` : 'min-width:60px;';
+
+            // Check merge
+            const merges = ws['!merges'] || [];
+            const merge = merges.find(m => m.s.r === R && m.s.c === C);
+            const isMergedAway = merges.find(m => R > m.s.r && R <= m.e.r && C >= m.s.c && C <= m.e.c && !(m.s.r === R && m.s.c === C)) ||
+                                 merges.find(m => C > m.s.c && C <= m.e.c && R >= m.s.r && R <= m.e.r && !(m.s.r === R && m.s.c === C));
+            if (isMergedAway) continue;
+
+            const colspan = merge ? (merge.e.c - merge.s.c + 1) : 1;
+            const rowspan = merge ? (merge.e.r - merge.s.r + 1) : 1;
+            const mergeAttrs = (colspan > 1 ? ` colspan="${colspan}"` : '') + (rowspan > 1 ? ` rowspan="${rowspan}"` : '');
+
+            // Cell value
+            let val = '';
+            if (cell) {
+              if (cell.t === 'd' && cell.v instanceof Date) {
+                val = cell.v.toLocaleDateString();
+              } else if (cell.w !== undefined) {
+                val = cell.w;
+              } else {
+                val = cell.v !== undefined ? String(cell.v) : '';
+              }
+            }
+
+            // Cell styling from xlsx
+            const s = cell?.s || {};
+            let tdStyle = colStyle;
+            if (s.font?.bold || R === range.s.r) tdStyle += 'font-weight:700;';
+            if (s.font?.italic) tdStyle += 'font-style:italic;';
+            if (s.font?.underline) tdStyle += 'text-decoration:underline;';
+            if (s.alignment?.horizontal === 'center') tdStyle += 'text-align:center;';
+            if (s.alignment?.horizontal === 'right')  tdStyle += 'text-align:right;';
+            if (s.fill?.fgColor?.rgb) tdStyle += `background:#${s.fill.fgColor.rgb.slice(-6)};`;
+            if (s.font?.color?.rgb)   tdStyle += `color:#${s.font.color.rgb.slice(-6)};`;
+
+            // Header row gets header style
+            const tag = R === range.s.r ? 'th' : 'td';
+            tableHtml += `<${tag}${mergeAttrs} style="${tdStyle}">${val}</${tag}>`;
+          }
+          tableHtml += '</tr>';
+        }
+        tableHtml += '</table>';
+
+        sheetsHtml += `
+<div class="sheet-wrapper">
+  <div class="sheet-tab">${sheetName}</div>
+  <div class="sheet-content">
+    ${tableHtml}
+  </div>
+</div>`;
+      }
+
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>${originalname}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 10pt; background: #f0f0f0; margin: 0; padding: 16px; }
+  .sheet-wrapper { background: #fff; margin-bottom: 32px; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+  .sheet-tab { background: #217346; color: #fff; font-weight: 700; font-size: 10pt; padding: 6px 16px; letter-spacing: 0.03em; }
+  .sheet-content { overflow-x: auto; padding: 0; }
+  table { border-collapse: collapse; font-size: 10pt; min-width: 100%; }
+  td, th {
+    border: 1px solid #d0d0d0;
+    padding: 3pt 6pt;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+  }
+  th { background: #e8f0e8; font-weight: 700; text-align: left; border-color: #b0b0b0; }
+  tr:hover td { background: #f5f5f5; }
+  .empty { padding: 8px 16px; color: #999; font-style: italic; }
+</style>
+</head>
+<body>
+${sheetsHtml}
+</body>
+</html>`;
+      const htmlB64 = Buffer.from(html, 'utf8').toString('base64');
+      return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'xlsx' });
+    }
+
+    // ── PPTX / PPT ────────────────────────────────────────────────────────
+    if (
+      mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+      mimetype === 'application/vnd.ms-powerpoint' ||
+      name.endsWith('.pptx') || name.endsWith('.ppt')
+    ) {
+      const AdmZip = (await import('adm-zip')).default;
+      const zip    = new AdmZip(buffer);
+      const entries = zip.getEntries();
+
+      // Extract slide dimensions from presentation.xml
+      let slideW = 9144000, slideH = 6858000; // default 10in x 7.5in in EMUs
+      const presEntry = entries.find(e => e.entryName === 'ppt/presentation.xml');
+      if (presEntry) {
+        const presXml = presEntry.getData().toString('utf8');
+        const szMatch = presXml.match(/p:sldSz[^>]+cx="(\d+)"[^>]+cy="(\d+)"/);
+        if (szMatch) { slideW = parseInt(szMatch[1]); slideH = parseInt(szMatch[2]); }
+      }
+      const aspectRatio = slideH / slideW;
+      const displayW = 900;
+      const displayH = Math.round(displayW * aspectRatio);
+
+      // Extract images as base64 map: "ppt/media/imageX.xxx" -> dataUrl
+      const mediaMap = {};
+      for (const e of entries) {
+        if (e.entryName.startsWith('ppt/media/')) {
+          const ext = e.entryName.split('.').pop().toLowerCase();
+          const mimeTypes = { png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', gif:'image/gif', bmp:'image/bmp', svg:'image/svg+xml', webp:'image/webp', emf:'image/x-emf', wmf:'image/x-wmf' };
+          const mt = mimeTypes[ext] || `image/${ext}`;
+          const b64 = e.getData().toString('base64');
+          mediaMap[e.entryName] = `data:${mt};base64,${b64}`;
+        }
+      }
+
+      // Get slide relationship files to map rId -> media path
+      const slideEntries = entries
+        .filter(e => e.entryName.match(/ppt\/slides\/slide\d+\.xml$/) && !e.entryName.includes('_rels'))
+        .sort((a, b) => {
+          const na = parseInt(a.entryName.match(/slide(\d+)/)?.[1] || 0);
+          const nb = parseInt(b.entryName.match(/slide(\d+)/)?.[1] || 0);
+          return na - nb;
+        });
+
+      // Parse slide XML to extract text and images with their approximate positions
+      function parseSlideXml(slideXml, relsXml) {
+        // Parse rels to get media refs
+        const relsMap = {};
+        const relMatches = [...(relsXml || '').matchAll(/<Relationship[^>]+Id="([^"]+)"[^>]+Target="([^"]+)"/g)];
+        for (const m of relMatches) {
+          relsMap[m[1]] = m[2];
+        }
+
+        const elements = [];
+
+        // Extract text shapes with position/size
+        const spRegex = /<p:sp\b[\s\S]*?<\/p:sp>/g;
+        for (const spMatch of slideXml.matchAll(spRegex)) {
+          const sp = spMatch[0];
+
+          // Position (in EMUs)
+          const offMatch = sp.match(/a:off\s+x="(-?\d+)"\s+y="(-?\d+)"/);
+          const extMatch = sp.match(/a:ext\s+cx="(\d+)"\s+cy="(\d+)"/);
+          const x = offMatch ? parseInt(offMatch[1]) : 0;
+          const y = offMatch ? parseInt(offMatch[2]) : 0;
+          const w = extMatch ? parseInt(extMatch[1]) : slideW;
+          const h = extMatch ? parseInt(extMatch[2]) : 200000;
+
+          // Is this a title placeholder?
+          const isTitle = /<p:ph\s+type="title"/.test(sp) || /<p:ph\s+type="ctrTitle"/.test(sp);
+
+          // Extract text runs
+          const paras = [];
+          for (const paraMatch of sp.matchAll(/<a:p\b[\s\S]*?<\/a:p>/g)) {
+            const para = paraMatch[0];
+            let paraText = '';
+            let isBold = false, isItal = false, fontSize = null;
+
+            for (const rMatch of para.matchAll(/<a:r\b[\s\S]*?<\/a:r>/g)) {
+              const r = rMatch[0];
+              const tMatch = r.match(/<a:t>([^<]*)<\/a:t>/);
+              if (!tMatch) continue;
+              const text = tMatch[1]
+                .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+                .replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&#x([0-9A-Fa-f]+);/g,(_,h)=>String.fromCharCode(parseInt(h,16)));
+
+              // Style
+              const bold  = /<a:rPr[^>]*\bb="1"/.test(r) || /<a:rPr[^>]*\bbold="1"/.test(r);
+              const ital  = /<a:rPr[^>]*\bi="1"/.test(r);
+              const szMatch = r.match(/a:rPr[^>]*\bsz="(\d+)"/);
+              if (bold) isBold = true;
+              if (ital) isItal = true;
+              if (szMatch) fontSize = parseInt(szMatch[1]) / 100; // hundredths of a point
+
+              paraText += (bold ? `<strong>${text}</strong>` : '') +
+                          (!bold && ital ? `<em>${text}</em>` : '') +
+                          (!bold && !ital ? text : '');
+            }
+            if (paraText.trim()) paras.push({ text: paraText, fontSize });
+          }
+
+          if (paras.length) {
+            elements.push({ type: 'text', x, y, w, h, paras, isTitle });
+          }
+        }
+
+        // Extract images
+        const picRegex = /<p:pic\b[\s\S]*?<\/p:pic>/g;
+        for (const picMatch of slideXml.matchAll(picRegex)) {
+          const pic = picMatch[0];
+          const offMatch = pic.match(/a:off\s+x="(-?\d+)"\s+y="(-?\d+)"/);
+          const extMatch = pic.match(/a:ext\s+cx="(\d+)"\s+cy="(\d+)"/);
+          const rIdMatch = pic.match(/r:embed="([^"]+)"/);
+          if (!rIdMatch) continue;
+
+          const x = offMatch ? parseInt(offMatch[1]) : 0;
+          const y = offMatch ? parseInt(offMatch[2]) : 0;
+          const w = extMatch ? parseInt(extMatch[1]) : 914400;
+          const h = extMatch ? parseInt(extMatch[2]) : 685800;
+          const rId = rIdMatch[1];
+          const relTarget = relsMap[rId] || '';
+          // Resolve relative path: ../media/image1.png → ppt/media/image1.png
+          const mediaPath = relTarget.startsWith('../')
+            ? 'ppt/' + relTarget.slice(3)
+            : 'ppt/slides/' + relTarget;
+          const dataUrl = mediaMap[mediaPath];
+          if (dataUrl) elements.push({ type: 'img', x, y, w, h, dataUrl });
+        }
+
+        // Sort by y then x for reading order
+        elements.sort((a, b) => a.y !== b.y ? a.y - b.y : a.x - b.x);
+        return elements;
+      }
+
+      // Get slide background colors from slide layout/theme (best-effort)
+      function getSlideBackground(slideXml) {
+        // Check for solid fill on sp tree background
+        const bgMatch = slideXml.match(/<p:bg>[\s\S]*?<a:srgbClr val="([0-9A-Fa-f]{6})"[\s\S]*?<\/p:bg>/);
+        if (bgMatch) return `#${bgMatch[1]}`;
+        // Check for gradient or schemeClr (too complex — use white)
+        return '#ffffff';
+      }
+
+      // Generate slide HTML
+      let slidesHtml = '';
+      let slideIndex = 0;
+      for (const slideEntry of slideEntries) {
+        slideIndex++;
+        const slideXml = slideEntry.getData().toString('utf8');
+
+        // Get rels
+        const relsPath = slideEntry.entryName.replace('ppt/slides/', 'ppt/slides/_rels/') + '.rels';
+        const relsEntry = entries.find(e => e.entryName === relsPath);
+        const relsXml = relsEntry ? relsEntry.getData().toString('utf8') : '';
+
+        const elements = parseSlideXml(slideXml, relsXml);
+        const bgColor  = getSlideBackground(slideXml);
+
+        // Convert EMU coords to percentage of slide
+        function emuToX(v) { return (v / slideW * 100).toFixed(3) + '%'; }
+        function emuToY(v) { return (v / slideH * 100).toFixed(3) + '%'; }
+        function emuToW(v) { return (v / slideW * 100).toFixed(3) + '%'; }
+        function emuToH(v) { return (v / slideH * 100).toFixed(3) + '%'; }
+
+        let elemHtml = '';
+        for (const el of elements) {
+          const left   = emuToX(Math.max(0, el.x));
+          const top    = emuToY(Math.max(0, el.y));
+          const width  = emuToW(Math.min(el.w, slideW - Math.max(0, el.x)));
+          const height = emuToH(Math.min(el.h, slideH - Math.max(0, el.y)));
+          const style  = `position:absolute;left:${left};top:${top};width:${width};height:${height};overflow:hidden;`;
+
+          if (el.type === 'img') {
+            elemHtml += `<div style="${style}"><img src="${el.dataUrl}" style="width:100%;height:100%;object-fit:contain;display:block;" alt=""/></div>`;
+          } else {
+            // Determine text color for readability
+            const bgLum = (() => {
+              const hex = bgColor.replace('#','').padEnd(6,'0');
+              const r=parseInt(hex.slice(0,2),16), g=parseInt(hex.slice(2,4),16), b=parseInt(hex.slice(4,6),16);
+              return (0.299*r + 0.587*g + 0.114*b)/255;
+            })();
+            const textColor = bgLum < 0.5 ? '#ffffff' : '#000000';
+
+            const paragraphs = el.paras.map(p => {
+              const fs = p.fontSize ? `font-size:${Math.max(8, Math.min(p.fontSize, el.isTitle ? 60 : 40))}pt;` : (el.isTitle ? 'font-size:28pt;' : 'font-size:18pt;');
+              return `<p style="margin:0 0 4pt;line-height:1.2;${fs}">${p.text}</p>`;
+            }).join('');
+
+            const fw = el.isTitle ? 'font-weight:700;' : '';
+            elemHtml += `<div style="${style}color:${textColor};${fw}padding:4pt;word-break:break-word;">${paragraphs}</div>`;
+          }
+        }
+
+        slidesHtml += `
+<div class="slide-wrapper">
+  <div class="slide-number">Slide ${slideIndex} of ${slideEntries.length}</div>
+  <div class="slide" style="width:${displayW}px;height:${displayH}px;background:${bgColor};">
+    ${elemHtml}
+  </div>
+</div>`;
+      }
+
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>${originalname}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Calibri', Arial, sans-serif; background: #404040; margin: 0; padding: 24px; min-height: 100vh; }
+  .slide-wrapper { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; }
+  .slide-number { color: #ccc; font-size: 12px; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .slide {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    background: #fff;
+    flex-shrink: 0;
+  }
+  .slide p { user-select: text; }
+  @media (max-width: 960px) {
+    .slide { width: 100% !important; height: auto !important; min-height: 200px; }
+    .slide > div[style*="position:absolute"] { position: relative !important; left: auto !important; top: auto !important; width: 100% !important; height: auto !important; }
+  }
+</style>
+</head>
+<body>
+${slidesHtml}
+</body>
+</html>`;
+      const htmlB64 = Buffer.from(html, 'utf8').toString('base64');
+      return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'pptx', slideCount: slideEntries.length });
+    }
+
+    // ── CSV — render as styled spreadsheet-like table ─────────────────────
+    if (name.endsWith('.csv') || mimetype === 'text/csv' || mimetype === 'text/comma-separated-values') {
+      const text = buffer.toString('utf8');
+      // Parse CSV properly (handles quoted fields with commas/newlines)
+      function parseCsv(str) {
+        const rows = [];
+        let row = [], field = '', inQuote = false;
+        for (let i = 0; i < str.length; i++) {
+          const ch = str[i], next = str[i+1];
+          if (inQuote) {
+            if (ch === '"' && next === '"') { field += '"'; i++; }
+            else if (ch === '"') { inQuote = false; }
+            else { field += ch; }
+          } else {
+            if (ch === '"') { inQuote = true; }
+            else if (ch === ',') { row.push(field); field = ''; }
+            else if (ch === '\n' || (ch === '\r' && next === '\n')) {
+              row.push(field); field = '';
+              if (row.some(c => c.trim())) rows.push(row);
+              row = [];
+              if (ch === '\r') i++;
+            } else if (ch === '\r') {
+              row.push(field); field = '';
+              if (row.some(c => c.trim())) rows.push(row);
+              row = [];
+            } else { field += ch; }
+          }
+        }
+        if (field || row.length) { row.push(field); if (row.some(c => c.trim())) rows.push(row); }
+        return rows;
+      }
+      const rows = parseCsv(text);
+      if (!rows.length) return res.json({ html: '<html><body><p>Empty CSV file.</p></body></html>', originalName: originalname, convertedFrom: 'csv' });
+
+      const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const maxCols = Math.max(...rows.map(r => r.length));
+      // Normalize rows to same column count
+      const norm = rows.map(r => { while(r.length < maxCols) r.push(''); return r; });
+      const header = norm[0];
+      const body   = norm.slice(1);
+
+      const thead = `<thead><tr>${header.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>`;
+      const tbody = `<tbody>${body.map((row,ri) => `<tr class="${ri%2===0?'even':'odd'}">${row.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+
+      const htmlStr = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/>
+<title>${esc(originalname)}</title>
+<style>
+*{box-sizing:border-box;}
+body{font-family:Calibri,'Segoe UI',Arial,sans-serif;font-size:10pt;background:#f0f0f0;margin:0;padding:20px;}
+h3{margin:0 0 10px;font-size:13pt;color:#217346;}
+.info{font-size:9pt;color:#666;margin-bottom:12px;}
+.wrap{background:#fff;border:1px solid #ccc;border-radius:4px;overflow:hidden;}
+.tab-bar{background:#217346;color:#fff;font-weight:700;font-size:10pt;padding:6px 16px;}
+.scroll{overflow-x:auto;}
+table{border-collapse:collapse;font-size:10pt;min-width:100%;white-space:nowrap;}
+th{background:#e8f4ee;font-weight:700;text-align:left;border:1px solid #aaa;padding:4px 10px;position:sticky;top:0;}
+td{border:1px solid #d0d0d0;padding:3px 10px;vertical-align:middle;}
+tr.even td{background:#f9f9f9;}
+tr:hover td{background:#eef7f0;}
+</style></head><body>
+<div class="wrap">
+<div class="tab-bar">📊 ${esc(originalname)}</div>
+<div class="info" style="padding:6px 16px;">${rows.length - 1} rows × ${maxCols} columns</div>
+<div class="scroll"><table>${thead}${tbody}</table></div>
+</div>
+</body></html>`;
+      // Send as base64 to avoid JSON escaping issues with large HTML
+      const htmlB64 = Buffer.from(htmlStr, 'utf8').toString('base64');
+      return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'csv', rows: rows.length - 1, cols: maxCols });
+    }
+
+    // ── TXT / MD / RTF / HTML — styled text viewer ────────────────────────
+    const textTypes = ['text/plain','text/html','text/markdown','application/rtf'];
+    if (textTypes.includes(mimetype) || mimetype.startsWith('text/') || /\.(txt|md|rtf|html|htm)$/.test(name)) {
+      const text = buffer.toString('utf8');
+      // For HTML files, serve as-is
+      if (name.endsWith('.html') || name.endsWith('.htm') || mimetype === 'text/html') {
+        const htmlB64 = buffer.toString('base64');
+        return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'html' });
+      }
+      // Markdown → basic HTML conversion
+      if (name.endsWith('.md') || mimetype === 'text/markdown') {
+        const esc2 = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const md2html = str => str
+          .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+          .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+          .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g, '<em>$1</em>')
+          .replace(/`(.+?)`/g, '<code>$1</code>')
+          .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+          .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/^(?!<[hpuol])/gm, '');
+        const body = md2html(esc2(text));
+        const htmlStr = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${esc2(originalname)}</title>
+<style>body{font-family:'Segoe UI',Arial,sans-serif;font-size:11pt;max-width:820px;margin:0 auto;padding:40px 60px;line-height:1.7;color:#222;}
+h1{font-size:22pt;border-bottom:2px solid #ddd;padding-bottom:8px;}h2{font-size:16pt;}h3{font-size:13pt;}
+code{background:#f4f4f4;padding:2px 5px;border-radius:3px;font-family:Consolas,monospace;}
+ul{margin-left:24px;}li{margin-bottom:4px;}</style>
+</head><body><p>${body}</p></body></html>`;
+        const htmlB64 = Buffer.from(htmlStr,'utf8').toString('base64');
+        return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'markdown' });
+      }
+      // Plain text / RTF
+      const esc2 = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const escaped = esc2(text);
+      const htmlStr = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${esc2(originalname)}</title>
+<style>body{font-family:Consolas,'Courier New',monospace;font-size:12px;background:#1e1e1e;color:#d4d4d4;padding:24px;margin:0;white-space:pre-wrap;word-break:break-word;line-height:1.6;tab-size:4;}</style>
+</head><body>${escaped}</body></html>`;
+      const htmlB64 = Buffer.from(htmlStr,'utf8').toString('base64');
+      return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'text' });
+    }
+
+    return res.status(400).json({ error: `Cannot preview file type: ${mimetype} (${originalname})` });
+
+  } catch (err) {
+    console.error('[convert-for-viewing]', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── POST /api/export-docx ─────────────────────────────────────────────────
+// Converts HTML body content to a .docx download using the docx package.
+app.post('/api/export-docx', async (req, res) => {
+  const { html = '', title = 'document' } = req.body;
+  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
+  try {
+    // Use mammoth-compatible approach: convert HTML → plain paragraphs for docx
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle } = await import('docx');
+
+    // Parse HTML to extract content (server-side DOM parsing via regex for key elements)
+    function htmlToDocxElements(htmlStr) {
+      const elements = [];
+      // Strip style/script tags
+      const clean = htmlStr.replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<script[\s\S]*?<\/script>/gi,'');
+      // Split into block-level chunks
+      const blockRe = /<(h[1-6]|p|li|td|th|div|section|article|aside|blockquote)\b([^>]*)>([\s\S]*?)<\/\1>/gi;
+      const seen = new Set();
+      for (const m of clean.matchAll(blockRe)) {
+        const [full, tag, attrs, inner] = m;
+        if (seen.has(full)) continue; seen.add(full);
+        const text = inner.replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#?\w+;/g,'').replace(/\s+/g,' ').trim();
+        if (!text) continue;
+        const level = { h1: HeadingLevel.HEADING_1, h2: HeadingLevel.HEADING_2, h3: HeadingLevel.HEADING_3, h4: HeadingLevel.HEADING_4 };
+        if (level[tag]) {
+          elements.push(new Paragraph({ text, heading: level[tag] }));
+        } else if (tag === 'li') {
+          elements.push(new Paragraph({ text: '• ' + text }));
+        } else {
+          elements.push(new Paragraph({ children: [ new TextRun({ text }) ] }));
+        }
+      }
+      if (!elements.length) {
+        // Fallback: just strip all tags
+        const plain = clean.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+        plain.split(/\n\n+/).filter(Boolean).forEach(p => {
+          elements.push(new Paragraph({ children: [ new TextRun({ text: p.trim() }) ] }));
+        });
+      }
+      return elements;
+    }
+
+    const doc = new Document({
+      sections: [{ properties: {}, children: htmlToDocxElements(html) }],
+    });
+    const buffer = await Packer.toBuffer(doc);
+    const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'document';
+    res.setHeader('Content-Type','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    res.setHeader('Content-Disposition',`attachment; filename="${safe}.docx"`);
+    res.send(buffer);
+  } catch(err) {
+    console.error('[export-docx]', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── POST /api/export-xlsx ─────────────────────────────────────────────────
+// Extracts all tables from HTML and exports as .xlsx
+app.post('/api/export-xlsx', async (req, res) => {
+  const { html = '', title = 'spreadsheet' } = req.body;
+  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
+  try {
+    const workbook = xlsx.utils.book_new();
+    // Extract tables from HTML
+    const tableRe = /<table[\s\S]*?<\/table>/gi;
+    const tables = [...html.matchAll(tableRe)];
+    if (!tables.length) {
+      // No tables — extract all text as single column
+      const text = html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+      const lines = text.split(/[.!?]\s+/).filter(Boolean).map(s => [s.trim()]);
+      const ws = xlsx.utils.aoa_to_sheet([['Content'], ...lines]);
+      xlsx.utils.book_append_sheet(workbook, ws, 'Content');
+    } else {
+      tables.forEach((tm, idx) => {
+        const tableHtml = tm[0];
+        const rowRe = /<tr[\s\S]*?<\/tr>/gi;
+        const aoa = [];
+        for (const rm of tableHtml.matchAll(rowRe)) {
+          const rowHtml = rm[0];
+          const cellRe = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
+          const cells = [];
+          for (const cm of rowHtml.matchAll(cellRe)) {
+            const val = cm[1].replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#?\w+;/g,'').replace(/\s+/g,' ').trim();
+            cells.push(val);
+          }
+          if (cells.length) aoa.push(cells);
+        }
+        if (aoa.length) {
+          const ws = xlsx.utils.aoa_to_sheet(aoa);
+          xlsx.utils.book_append_sheet(workbook, ws, `Sheet${idx+1}`);
+        }
+      });
+    }
+    const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'spreadsheet';
+    const buffer = xlsx.write(workbook, { type:'buffer', bookType:'xlsx' });
+    res.setHeader('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition',`attachment; filename="${safe}.xlsx"`);
+    res.send(buffer);
+  } catch(err) {
+    console.error('[export-xlsx]', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── POST /api/export-html ─────────────────────────────────────────────────
+// Returns full self-contained HTML file download
+app.post('/api/export-html', async (req, res) => {
+  const { html = '', css = '', title = 'document' } = req.body;
+  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
+  const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'document';
+  const full = html.includes('<!DOCTYPE') ? html : `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>${title}</title>${css ? `<style>${css}</style>` : ''}</head><body>${html}</body></html>`;
+  res.setHeader('Content-Type','text/html; charset=utf-8');
+  res.setHeader('Content-Disposition',`attachment; filename="${safe}.html"`);
+  res.send(full);
 });
 
 // ── POST /api/generate-citations ──────────────────────────────────────────
@@ -1096,9 +1797,13 @@ app.listen(3000, () => {
   console.log('│  Routes ready:                                             │');
   console.log('│   POST /api/generate-preview                               │');
   console.log('│   POST /api/generate-from-file                             │');
+  console.log('│   POST /api/convert-for-viewing  ← Doc preview (b64)      │');
   console.log('│   POST /api/render-pdf                                     │');
   console.log('│   POST /api/render-pdf-form                                │');
   console.log('│   POST /api/render-pdf-raw                                 │');
+  console.log('│   POST /api/export-docx          ← HTML → .docx download  │');
+  console.log('│   POST /api/export-xlsx          ← HTML → .xlsx download  │');
+  console.log('│   POST /api/export-html          ← HTML file download      │');
   console.log('│   POST /api/generate-citations                             │');
   console.log('│   POST /api/update-report                                  │');
   console.log('│   POST /api/regenerate-diagram                             │');

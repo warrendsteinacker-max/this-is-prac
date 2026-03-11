@@ -314,6 +314,341 @@ function SavedPdfsPanel({ accent }) {
   );
 }
 
+// ── UploadDocPanel — View or Edit an existing document ─────────────────────
+
+function getFileViewStrategy(file) {
+  const name = file.name.toLowerCase();
+  const mime = file.type || '';
+  if (name.endsWith('.pdf') || mime === 'application/pdf')                                          return 'pdf';
+  if (name.match(/\.(png|jpe?g|gif|webp|bmp|svg)$/) || mime.startsWith('image/'))                 return 'image';
+  if (name.match(/\.(docx?|doc)$/)  || mime.includes('word'))                                      return 'convert';
+  if (name.match(/\.(xlsx?|xls)$/)  || mime.includes('spreadsheet') || mime.includes('excel'))     return 'convert';
+  if (name.match(/\.(pptx?|ppt)$/)  || mime.includes('presentation') || mime.includes('powerpoint')) return 'convert';
+  if (name.match(/\.(txt|md|csv|rtf|json|xml|html?|htm)$/) || mime.startsWith('text/'))            return 'convert';
+  return 'convert';
+}
+
+function fileIcon(file) {
+  const n = file.name.toLowerCase();
+  if (n.endsWith('.pdf'))                              return '📄';
+  if (n.match(/\.docx?$/))                             return '📝';
+  if (n.match(/\.xlsx?$/) || n.endsWith('.csv'))       return '📊';
+  if (n.match(/\.pptx?$/))                             return '📋';
+  if (n.match(/\.(png|jpe?g|gif|webp|bmp|svg)$/))     return '🖼️';
+  if (n.match(/\.html?$/))                             return '🌐';
+  if (n.match(/\.md$/))                                return '📑';
+  return '📄';
+}
+
+function getFormatLabel(file) {
+  const n = file.name.toLowerCase();
+  if (n.endsWith('.pdf'))   return 'PDF Document';
+  if (n.match(/\.docx?$/)) return 'Word Document';
+  if (n.match(/\.xlsx?$/)) return 'Excel Spreadsheet';
+  if (n.match(/\.pptx?$/)) return 'PowerPoint Presentation';
+  if (n.endsWith('.csv'))   return 'CSV Spreadsheet';
+  if (n.match(/\.html?$/)) return 'HTML Document';
+  if (n.endsWith('.md'))    return 'Markdown File';
+  if (n.endsWith('.txt'))   return 'Text File';
+  return 'Document';
+}
+
+// Full-screen inline doc preview modal
+function DocPreviewModal({ previewState, onClose, accent }) {
+  const { viewType, dataUrl, htmlContent, fileName, convertedFrom, slideCount } = previewState;
+  const [zoom, setZoom] = useState(100);
+
+  const isPdf   = viewType === 'pdf';
+  const isImage = viewType === 'image';
+  const isHtml  = !isPdf && !isImage;
+
+  const handleDownloadPdf = async () => {
+    if (!htmlContent) return;
+    try {
+      const fd = new FormData();
+      fd.append('html', new Blob([htmlContent], { type:'text/html' }), 'doc.html');
+      fd.append('styleManifest', JSON.stringify({}));
+      const res = await fetch('http://localhost:3000/api/render-pdf-form', { method:'POST', body:fd });
+      if (!res.ok) throw new Error('PDF render failed');
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.pdf'; a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { alert('PDF export failed: '+e.message); }
+  };
+
+  const handleDownloadHtml = async () => {
+    if (!htmlContent) return;
+    try {
+      const res = await fetch('http://localhost:3000/api/export-html', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
+      });
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.html'; a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { alert('HTML export failed: '+e.message); }
+  };
+
+  const handleDownloadDocx = async () => {
+    if (!htmlContent) return;
+    try {
+      const res = await fetch('http://localhost:3000/api/export-docx', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
+      });
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.docx'; a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { alert('DOCX export failed: '+e.message); }
+  };
+
+  const handleDownloadXlsx = async () => {
+    if (!htmlContent) return;
+    try {
+      const res = await fetch('http://localhost:3000/api/export-xlsx', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
+      });
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.xlsx'; a.click();
+      URL.revokeObjectURL(url);
+    } catch(e) { alert('XLSX export failed: '+e.message); }
+  };
+
+  const handleDownloadOriginal = () => {
+    if (!dataUrl) return;
+    const a = document.createElement('a'); a.href=dataUrl; a.download=fileName; a.click();
+  };
+
+  const badgeColor = { docx:'#2b5797', xlsx:'#217346', pptx:'#d04423', csv:'#217346', pdf:'#cc0000', image:'#888', html:'#3498db', markdown:'#555', text:'#666' };
+  const bc = badgeColor[convertedFrom] || badgeColor[viewType] || '#555';
+
+  const btnStyle = { padding:'7px 14px', borderRadius:7, border:'none', fontWeight:700, fontSize:'0.78rem', cursor:'pointer', display:'flex', alignItems:'center', gap:5 };
+
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:9999, display:'grid', gridTemplateRows:'48px 1fr', background:'#0d0d1a' }}>
+      {/* Top bar */}
+      <div style={{ display:'flex', alignItems:'center', gap:12, padding:'0 16px', borderBottom:'1px solid #1e1e32', background:'#12121f', flexShrink:0 }}>
+        <button onClick={onClose} style={{ ...btnStyle, background:'#1a1a2e', color:'#aaa', border:'1px solid #333', padding:'5px 12px' }}>← Back</button>
+        <div style={{ display:'flex', alignItems:'center', gap:8, minWidth:0, flex:1 }}>
+          <span style={{ fontSize:'0.85rem', color:'#ddd', fontWeight:600, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{fileName}</span>
+          {convertedFrom && (
+            <span style={{ padding:'2px 8px', borderRadius:4, background:`${bc}22`, border:`1px solid ${bc}44`, color:bc, fontSize:'0.68rem', fontWeight:700, whiteSpace:'nowrap' }}>
+              {convertedFrom === 'docx' ? '📝 Word' : convertedFrom === 'xlsx' ? '📊 Excel' : convertedFrom === 'pptx' ? `📋 PowerPoint${slideCount?` · ${slideCount} slides`:''}` : convertedFrom === 'csv' ? '📊 CSV' : convertedFrom === 'markdown' ? '📑 Markdown' : convertedFrom === 'text' ? '📄 Text' : convertedFrom}
+            </span>
+          )}
+        </div>
+
+        {/* Zoom for HTML views */}
+        {isHtml && (
+          <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+            <span style={{ fontSize:'0.72rem', color:'#555' }}>Zoom</span>
+            <input type="range" min={40} max={150} step={5} value={zoom} onChange={e=>setZoom(+e.target.value)} style={{ width:80, accentColor:accent }}/>
+            <span style={{ fontSize:'0.72rem', color:'#666', fontFamily:'monospace', minWidth:32 }}>{zoom}%</span>
+          </div>
+        )}
+
+        {/* Export buttons */}
+        <div style={{ display:'flex', gap:6, flexShrink:0 }}>
+          {dataUrl && <button onClick={handleDownloadOriginal} style={{ ...btnStyle, background:'#1a1a2e', color:accent, border:`1px solid ${accent}` }}>⬇ Original</button>}
+          {isHtml && <button onClick={handleDownloadPdf} style={{ ...btnStyle, background:'#1a1a2e', color:'#e74c3c', border:'1px solid #e74c3c44' }}>📄 PDF</button>}
+          {isHtml && <button onClick={handleDownloadHtml} style={{ ...btnStyle, background:'#1a1a2e', color:'#3498db', border:'1px solid #3498db44' }}>🌐 HTML</button>}
+          {isHtml && (convertedFrom === 'docx' || convertedFrom === 'text' || convertedFrom === 'markdown') && (
+            <button onClick={handleDownloadDocx} style={{ ...btnStyle, background:'#1a1a2e', color:'#2b5797', border:'1px solid #2b579744' }}>📝 DOCX</button>
+          )}
+          {isHtml && (convertedFrom === 'xlsx' || convertedFrom === 'csv') && (
+            <button onClick={handleDownloadXlsx} style={{ ...btnStyle, background:'#1a1a2e', color:'#217346', border:'1px solid #21734644' }}>📊 XLSX</button>
+          )}
+        </div>
+      </div>
+
+      {/* Document area */}
+      <div style={{ overflow: isPdf||isImage ? 'hidden' : 'auto', background: isPdf?'#525252': isImage?'#1a1a2e': convertedFrom==='pptx'?'#404040':'#e8e8e8', display:'flex', flexDirection:'column' }}>
+        {isPdf && (
+          <object data={dataUrl} type="application/pdf" style={{ width:'100%', height:'100%', border:'none', display:'block' }}>
+            <p style={{ textAlign:'center', padding:40, color:'#aaa' }}>
+              PDF viewer blocked. <a href={dataUrl} download={fileName} style={{ color:accent }}>⬇ Download PDF</a>
+            </p>
+          </object>
+        )}
+        {isImage && (
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', height:'100%', padding:24, overflow:'auto' }}>
+            <img src={dataUrl} alt={fileName} style={{ maxWidth:'100%', maxHeight:'100%', objectFit:'contain', borderRadius:6, boxShadow:'0 4px 32px rgba(0,0,0,0.5)' }}/>
+          </div>
+        )}
+        {isHtml && htmlContent && (
+          <div style={{ transformOrigin:'top center', transform:`scale(${zoom/100})`, width: zoom<100 ? `${10000/zoom}%` : '100%', minHeight:`${10000/zoom}%` }}>
+            <iframe
+              srcDoc={htmlContent}
+              sandbox="allow-same-origin"
+              style={{ width:'100%', minHeight: convertedFrom==='pptx' ? `${(slideCount||1)*820}px` : '100vh', border:'none', display:'block', background:'transparent' }}
+              title="Document Viewer"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function UploadDocPanel({ accent }) {
+  const navigate = useNavigate();
+  const fileRef  = useRef(null);
+  const [file,        setFile]        = useState(null);
+  const [mode,        setMode]        = useState('view');
+  const [loading,     setLoading]     = useState(false);
+  const [loadMsg,     setLoadMsg]     = useState('');
+  const [error,       setError]       = useState(null);
+  const [previewState, setPreviewState] = useState(null); // shows inline overlay
+
+  const handleFile = (e) => {
+    const f = e.target.files?.[0]; if (!f) return;
+    setFile(f); setError(null); setPreviewState(null); e.target.value='';
+  };
+
+  const readAsDataUrl = (f) => new Promise((res,rej) => {
+    const r = new FileReader();
+    r.onload  = e => res(e.target.result);
+    r.onerror = () => rej(new Error('Failed to read file'));
+    r.readAsDataURL(f);
+  });
+
+  const handleOpen = async () => {
+    if (!file) return;
+    setLoading(true); setError(null);
+    try {
+      if (mode === 'view') {
+        const strategy = getFileViewStrategy(file);
+
+        if (strategy === 'pdf') {
+          const dataUrl = await readAsDataUrl(file);
+          setPreviewState({ viewType:'pdf', dataUrl, fileName:file.name });
+
+        } else if (strategy === 'image') {
+          const dataUrl = await readAsDataUrl(file);
+          setPreviewState({ viewType:'image', dataUrl, fileName:file.name });
+
+        } else {
+          // All office formats + text/csv → server convert
+          setLoadMsg('Converting for viewing…');
+          const fd = new FormData();
+          fd.append('file', file);
+          const res  = await fetch('http://localhost:3000/api/convert-for-viewing', { method:'POST', body:fd });
+          // Server returns JSON — must be valid
+          const text = await res.text();
+          let data;
+          try { data = JSON.parse(text); }
+          catch(e) { throw new Error(`Server returned invalid response (not JSON). Raw: ${text.slice(0,200)}`); }
+          if (!res.ok) throw new Error(data.error || `Conversion failed (${res.status})`);
+          // Server sends base64-encoded HTML to avoid JSON escaping issues
+          const htmlContent = data.htmlBase64
+            ? atob(data.htmlBase64)
+            : data.html || '';
+          if (!htmlContent) throw new Error('Server returned empty content');
+          setPreviewState({
+            viewType: 'converted',
+            htmlContent,
+            fileName: file.name,
+            convertedFrom: data.convertedFrom,
+            slideCount: data.slideCount,
+          });
+        }
+
+      } else {
+        // Edit Mode — AI fill/rebuild
+        setLoadMsg('AI is reading your document…');
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('topic', file.name.replace(/\.[^.]+$/, ''));
+        fd.append('userPrompt', 'Reproduce this document as pixel-perfect editable HTML. Match every font size, color, table border, spacing and layout exactly as shown. Preserve all section headings, paragraph text, tables, checkboxes, and form fields. Every text node must have data-editable="true" and a unique data-id.');
+        fd.append('fileMode', 'fill');
+        fd.append('imageMode', 'none');
+        const res  = await fetch('http://localhost:3000/api/generate-from-file', { method:'POST', body:fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `Server error ${res.status}`);
+        if (!data.html) throw new Error('No HTML returned from server');
+        navigate('/editor', { state: { html:data.html, manifesto:data.styleManifesto, sourceFile:file.name } });
+      }
+    } catch (e) { setError(e.message); }
+    finally { setLoading(false); setLoadMsg(''); }
+  };
+
+  const btnStyle = (active) => ({
+    flex:1, padding:'9px 6px', borderRadius:7,
+    border:`1px solid ${active ? accent : '#2a2a3e'}`,
+    background: active ? `rgba(124,111,255,0.15)` : '#1a1a2e',
+    color: active ? accent : '#666',
+    cursor:'pointer', fontWeight:700, fontSize:'0.8rem', transition:'all .15s',
+  });
+
+  return (
+    <>
+      {/* Inline full-screen preview overlay */}
+      {previewState && (
+        <DocPreviewModal
+          previewState={previewState}
+          onClose={() => setPreviewState(null)}
+          accent={accent}
+        />
+      )}
+
+      <div>
+        <input ref={fileRef} type="file"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.html,.htm,.md,.rtf,.csv"
+          onChange={handleFile} style={{display:'none'}}/>
+
+        {!file ? (
+          <button onClick={() => fileRef.current?.click()} style={{ width:'100%', padding:'18px', borderRadius:10, border:`2px dashed ${accent}`, background:'transparent', color:accent, cursor:'pointer', fontWeight:600, fontSize:'0.88rem', display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
+            <span style={{fontSize:'2.2rem'}}>📂</span>
+            Open any document
+            <span style={{fontSize:'0.72rem',color:'#555',fontWeight:400}}>PDF · Word · Excel · PowerPoint · CSV · HTML · TXT</span>
+          </button>
+        ) : (
+          <div style={{background:'#1a1a2e',border:`1px solid ${accent}`,borderRadius:10,padding:14}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
+              <span style={{fontSize:'1.6rem'}}>{fileIcon(file)}</span>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:'0.85rem',color:'#ddd',fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{file.name}</div>
+                <div style={{fontSize:'0.7rem',color:'#555',marginTop:2}}>{getFormatLabel(file)} · {(file.size/1024).toFixed(0)} KB</div>
+              </div>
+              <button onClick={()=>{setFile(null);setError(null);setPreviewState(null);}} style={{background:'none',border:'none',color:'#555',cursor:'pointer',fontSize:'1.1rem',lineHeight:1}}>✕</button>
+            </div>
+
+            <div style={{marginBottom:12}}>
+              <div style={{fontSize:'0.72rem',color:'#888',marginBottom:8,fontWeight:600,textTransform:'uppercase',letterSpacing:'0.06em'}}>Open Mode</div>
+              <div style={{display:'flex',gap:6,marginBottom:10}}>
+                <button onClick={()=>setMode('view')} style={btnStyle(mode==='view')}>👁 View</button>
+                <button onClick={()=>setMode('edit')} style={btnStyle(mode==='edit')}>✏️ Edit with AI</button>
+              </div>
+              <div style={{padding:'9px 11px',borderRadius:7,background:mode==='view'?'rgba(72,219,251,0.06)':'rgba(124,111,255,0.06)',border:`1px solid ${mode==='view'?'#48dbfb33':'#7c6fff33'}`,fontSize:'0.71rem',color:'#888',lineHeight:1.6}}>
+                {mode==='view'
+                  ? <><strong style={{color:'#48dbfb'}}>👁 View</strong> — Converts and displays your file. PDF/Word/Excel/PPTX/CSV all supported. Download as PDF, HTML, DOCX, or XLSX from the preview.</>
+                  : <><strong style={{color:accent}}>✏️ Edit with AI</strong> — AI rebuilds your document as fully editable HTML you can drag, restyle, and export.<br/><span style={{color:'#555'}}>⏱ ~15–30 sec for complex docs</span></>}
+              </div>
+            </div>
+
+            {error && (
+              <div style={{marginBottom:10,padding:'8px 12px',borderRadius:7,background:'rgba(231,76,60,0.08)',border:'1px solid #e74c3c44',fontSize:'0.75rem',color:'#e74c3c',lineHeight:1.5}}>
+                ⚠️ {error}
+              </div>
+            )}
+
+            <button onClick={handleOpen} disabled={loading} style={{width:'100%',padding:'11px',borderRadius:8,border:'none',background:loading?'#333':`linear-gradient(135deg,${accent},#48dbfb)`,color:'white',cursor:loading?'not-allowed':'pointer',fontWeight:700,fontSize:'0.9rem',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+              {loading
+                ? <><span style={{display:'inline-block',animation:'spin 1s linear infinite'}}>⟳</span> {loadMsg||'Loading…'}</>
+                : mode==='view' ? '👁 Open Document' : '✦ Open for Editing'}
+            </button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
 // ── Main component ─────────────────────────────────────────────────────────
 export default function ReportBuilder() {
   const navigate = useNavigate();
@@ -659,6 +994,14 @@ export default function ReportBuilder() {
             </div>
           </div>
         )}
+
+        {/* ── Open Existing Document ── */}
+        <div style={panel}>
+          <div style={{fontSize:'0.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em',color:'#555',marginBottom:10}}>
+            📂 Open Existing Document
+          </div>
+          <UploadDocPanel accent={accent} inp={inp}/>
+        </div>
 
         {/* Topic + prompt */}
         <div style={panel}>

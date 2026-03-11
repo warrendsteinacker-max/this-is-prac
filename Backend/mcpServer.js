@@ -302,8 +302,6 @@
 
 
 
-
-
 import { McpServer }           from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport }  from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z }                     from "zod";
@@ -557,7 +555,6 @@ server.tool(
 // ── Connect ───────────────────────────────────────────────────────────────────
 await server.connect(new StdioServerTransport());
 
-// Use stderr so the message doesn't corrupt the stdio MCP protocol on stdout
 process.stderr.write('\n✅ MCP PDF Server v2.1 connected and ready\n');
 process.stderr.write('   Tools registered:\n');
 process.stderr.write('     • create_html_report\n');

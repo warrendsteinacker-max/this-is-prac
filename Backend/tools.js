@@ -217,7 +217,6 @@
 
 
 
-
 import { GoogleGenAI } from '@google/genai';
 import path from 'path';
 import os from 'os';
@@ -255,8 +254,6 @@ async function geminiWithRetry({ model, contents, config }) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SVG DIAGRAM GENERATION — replaces broken Unsplash URLs
-// Asks Gemini to generate a standalone inline SVG diagram relevant to the topic.
-// The SVG gets data-diagram="true" so PdfEditor can detect and offer editing.
 // ─────────────────────────────────────────────────────────────────────────────
 async function generateSvgDiagram(keyword, topic, bgColor = '#ffffff', primaryColor = '#3498db') {
   const isDark = (() => {
@@ -299,7 +296,6 @@ Return ONLY the raw SVG — no markdown, no explanation, no wrapper.`;
     let svg = typeof result.text === 'function' ? result.text() : result.text;
     svg = svg.replace(/^```(?:svg|xml)?\s*/i, '').replace(/\s*```$/i, '').trim();
     if (!svg.includes('<svg')) return null;
-    // Ensure it starts cleanly at <svg
     svg = svg.slice(svg.indexOf('<svg'));
     return svg;
   } catch (err) {
@@ -310,15 +306,12 @@ Return ONLY the raw SVG — no markdown, no explanation, no wrapper.`;
 
 // Replace all Unsplash placeholder URLs with generated SVG diagrams
 async function replaceImagesWithSvg(html, topic, bgColor, primaryColor) {
-  // Find all <figure> blocks that contain broken img tags (Unsplash or empty src)
   const figureRegex = /<figure[^>]*>[\s\S]*?<\/figure>/gi;
   const figures = [...html.matchAll(figureRegex)];
   if (!figures.length) return html;
 
-  // Also find loose unsplash img tags outside figures
   const unsplashRegex = /https:\/\/source\.unsplash\.com\/[^"'\s]+/g;
 
-  // Extract keywords from alt text, figcaption, or unsplash URL
   const tasks = [];
   for (const fig of figures) {
     const block = fig[0];
@@ -329,12 +322,10 @@ async function replaceImagesWithSvg(html, topic, bgColor, primaryColor) {
     tasks.push({ block, keyword: keyword.slice(0, 80) });
   }
 
-  // Generate all SVGs in parallel
   const svgs = await Promise.all(
     tasks.map(t => generateSvgDiagram(t.keyword, topic, bgColor, primaryColor))
   );
 
-  // Replace each figure with an SVG figure
   let result = html;
   for (let i = 0; i < tasks.length; i++) {
     const svg = svgs[i];
@@ -350,7 +341,6 @@ async function replaceImagesWithSvg(html, topic, bgColor, primaryColor) {
     result = result.replace(block, newFigure);
   }
 
-  // Also clean up any stray unsplash URLs that weren't in figures
   result = result.replace(unsplashRegex, '');
   return result;
 }
@@ -604,7 +594,6 @@ Return ONLY this JSON — no markdown fences:
 
   let html = parsed.html ?? '';
 
-  // Replace image placeholders with generated SVG diagrams
   if (imageMode !== 'none') {
     html = await replaceImagesWithSvg(html, extractedTopic, bgColor, primaryColor);
   }
