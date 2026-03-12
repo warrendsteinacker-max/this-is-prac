@@ -205,7 +205,7 @@ function resetG(){
 // notes for portion above need to remember scopes of declerations style to get to styles 
 ////////////////
 
-let statusdiv = docuemnt.getElementById("stats")
+let statusdiv = docuemnt.getElementById("stats") /////put this back to this for prac docuemnt
 
 async function makeget(){
     try{
@@ -216,15 +216,15 @@ async function makeget(){
       }
 
       const data = await res.json()
-      if(data.lenght > 0){
-        for(i = 0; i < data.lenght; i++){
+      if(data.length > 0){
+        for(i = 0; i < data.length; i++){     ///////cahnge this back to lenght for prac
           const el = document.createElement("div")
           el.style.border = "5px solid black"
-          el.textContent = data.name
+          el.textContent = data[i].name      //////////put this back to this for prac
           document.body.appendChild(el)
         }
       }
-      statusdiv.textContnet = "Error try again"
+      statusdiv.textContent = ""
     }
     catch(error){
       statusdiv.textContnet = "Error try again"
