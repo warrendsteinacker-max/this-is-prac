@@ -231,3 +231,39 @@ async function makeget(){
     }
   }
 
+
+
+
+/////////////////third prac file/////////////////////////////////////
+
+
+let DC;
+
+let GC; 
+
+let Dtracking = [];
+
+let display;
+
+function makeGC(e){
+  GC = Number(e.target.value);
+};
+
+function functionMD(e){
+  if(GC > 0){
+    e.preventDefault();
+    DC = GC * 2
+    const gc = Math.floor(DC/2)
+    const Narray = Array(gc).fill(null).map((_, index) => { return {content: index, status: false}}) ////always include _ in emptey array
+    
+
+  }
+  else{
+    alert("must make a guess count")
+  }
+
+
+}
+
+
+
