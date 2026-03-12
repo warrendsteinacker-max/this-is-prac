@@ -812,47 +812,9 @@ export default function PdfEditor() {
     } finally { setDownloading(false); }
   };
 
-  const handleExportHtml = async () => {
-    try {
-      const title = state?.topic || state?.sourceFile?.replace(/\.[^.]+$/,'') || 'report';
-      const res = await fetch('http://localhost:3000/api/export-html', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: rawHtml, title }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=`${title}.html`; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('HTML export failed: '+e.message); }
-  };
 
-  const handleExportDocx = async () => {
-    try {
-      const title = state?.topic || state?.sourceFile?.replace(/\.[^.]+$/,'') || 'report';
-      const res = await fetch('http://localhost:3000/api/export-docx', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: rawHtml, title }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=`${title}.docx`; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('DOCX export failed: '+e.message); }
-  };
 
-  const handleExportXlsx = async () => {
-    try {
-      const title = state?.topic || state?.sourceFile?.replace(/\.[^.]+$/,'') || 'report';
-      const res = await fetch('http://localhost:3000/api/export-xlsx', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: rawHtml, title }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=`${title}.xlsx`; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('XLSX export failed: '+e.message); }
-  };
+
 
   // ── Styles ──────────────────────────────────────────────────────────────
   const accent = '#7c6fff';
@@ -1206,22 +1168,16 @@ export default function PdfEditor() {
           )}
         </div>
 
-        {/* ── Export buttons ── */}
+        {/* ── Export panel ── */}
         <div style={{padding:'10px',borderTop:'1px solid #1e1e32',flexShrink:0}}>
           <button onClick={handleDownload} disabled={downloading||noHtml} style={{
             width:'100%',padding:'10px',borderRadius:8,border:'none',
             background:noHtml?'#1a1a2e':downloading?'#333':'linear-gradient(135deg,#27ae60,#2ecc71)',
-            color:noHtml?'#444':'white',fontWeight:700,fontSize:'0.88rem',cursor:noHtml?'not-allowed':'pointer',marginBottom:6,
+            color:noHtml?'#444':'white',fontWeight:700,fontSize:'0.88rem',
+            cursor:noHtml?'not-allowed':'pointer',
           }}>
             {downloading?'Rendering PDF…':'⬇ Download PDF'}
           </button>
-          {!noHtml && (
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:5}}>
-              <button onClick={handleExportHtml} style={{padding:'7px 4px',borderRadius:7,border:'1px solid #3498db44',background:'#1a1a2e',color:'#3498db',cursor:'pointer',fontWeight:700,fontSize:'0.72rem'}}>🌐 HTML</button>
-              <button onClick={handleExportDocx} style={{padding:'7px 4px',borderRadius:7,border:'1px solid #2b579744',background:'#1a1a2e',color:'#5b8fc9',cursor:'pointer',fontWeight:700,fontSize:'0.72rem'}}>📝 DOCX</button>
-              <button onClick={handleExportXlsx} style={{padding:'7px 4px',borderRadius:7,border:'1px solid #21734644',background:'#1a1a2e',color:'#5aad7f',cursor:'pointer',fontWeight:700,fontSize:'0.72rem'}}>📊 XLSX</button>
-            </div>
-          )}
         </div>
       </div>
 

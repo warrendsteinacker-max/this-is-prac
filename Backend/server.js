@@ -535,12 +535,14 @@ import cors     from 'cors';
 import multer   from 'multer';
 import mammoth  from 'mammoth';
 import xlsx     from 'xlsx';
+import AdmZip   from 'adm-zip';
 import fs       from 'fs';
 import path     from 'path';
 import os       from 'os';
 import { generateReportHtml, generateReportHtmlFromFile, renderPdfFromHtml, DOCS_DIR } from './tools.js';
 
-// ── Persistent storage ────────────────────────────────────────────────────
+
+
 // ~/Documents/ReportBuilderDocs/  (JSON docs + index)
 const DOCS_INDEX = path.join(DOCS_DIR, 'index.json');
 if (!fs.existsSync(DOCS_INDEX)) fs.writeFileSync(DOCS_INDEX, JSON.stringify([]));
@@ -590,43 +592,63 @@ function classifyError(err) {
 }
 
 // ── File normalizer ───────────────────────────────────────────────────────
+function sniffFileType(buffer, originalname, mimetype) {
+  const name = originalname.toLowerCase();
+  const hex4 = buffer.slice(0,4).toString('hex').toLowerCase();
+  if (hex4 === '25504446') return 'pdf';
+  if (hex4 === '504b0304') {
+    const scan = buffer.slice(0, Math.min(buffer.length, 65536)).toString('binary');
+    if (scan.includes('word/'))  return 'docx';
+    if (scan.includes('xl/'))    return 'xlsx';
+    if (scan.includes('ppt/'))   return 'pptx';
+    // [Content_Types] without specific dir — use extension
+    if (name.endsWith('.docx') || name.endsWith('.doc'))  return 'docx';
+    if (name.endsWith('.xlsx') || name.endsWith('.xls'))  return 'xlsx';
+    if (name.endsWith('.pptx') || name.endsWith('.ppt'))  return 'pptx';
+    return 'docx'; // default ZIP-based → try as docx
+  }
+  if (hex4 === 'd0cf11e0') {
+    if (name.endsWith('.xls') || mimetype.includes('excel'))       return 'xlsx';
+    if (name.endsWith('.ppt') || mimetype.includes('powerpoint'))  return 'pptx';
+    return 'docx';
+  }
+  if (hex4 === '89504e47' || hex4.startsWith('ffd8') || hex4 === '47494638' || hex4 === '52494646') return 'image';
+  if (name.endsWith('.pdf') || mimetype === 'application/pdf') return 'pdf';
+  if (name.match(/\.(png|jpe?g|gif|webp|bmp|svg)$/) || mimetype.startsWith('image/')) return 'image';
+  return 'text';
+}
+
 async function normalizeFile(buffer, mimetype, originalname) {
   const name = originalname.toLowerCase();
+  const sniffed = sniffFileType(buffer, originalname, mimetype);
 
-  if (
-    mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-    mimetype === 'application/msword' ||
-    (mimetype === 'application/octet-stream' && (name.endsWith('.docx') || name.endsWith('.doc'))) ||
-    name.endsWith('.docx') || name.endsWith('.doc')
-  ) {
-    const result = await mammoth.extractRawText({ buffer });
-    return { text: result.value, mimeType: 'text/plain', normalizedBuffer: Buffer.from(result.value, 'utf8') };
-  }
-
-  if (
-    mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-    mimetype === 'application/vnd.ms-excel' ||
-    (mimetype === 'application/octet-stream' && (name.endsWith('.xlsx') || name.endsWith('.xls'))) ||
-    name.endsWith('.xlsx') || name.endsWith('.xls')
-  ) {
-    const workbook = xlsx.read(buffer, { type:'buffer' });
-    const lines = [];
-    workbook.SheetNames.forEach(sheetName => {
-      lines.push(`\n=== Sheet: ${sheetName} ===`);
-      lines.push(xlsx.utils.sheet_to_csv(workbook.Sheets[sheetName]));
-    });
-    const text = lines.join('\n');
-    return { text, mimeType: 'text/plain', normalizedBuffer: Buffer.from(text, 'utf8') };
-  }
-
-  if (
-    mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
-    mimetype === 'application/vnd.ms-powerpoint' ||
-    (mimetype === 'application/octet-stream' && (name.endsWith('.pptx') || name.endsWith('.ppt'))) ||
-    name.endsWith('.pptx') || name.endsWith('.ppt')
-  ) {
+  if (sniffed === 'docx') {
     try {
-      const AdmZip = (await import('adm-zip')).default;
+      const result = await mammoth.extractRawText({ buffer });
+      return { text: result.value, mimeType: 'text/plain', normalizedBuffer: Buffer.from(result.value, 'utf8') };
+    } catch(e) {
+      throw new Error(`UNSUPPORTED_FILE: Could not read Word document "${originalname}": ${e.message}`);
+    }
+  }
+
+  if (sniffed === 'xlsx') {
+    try {
+      const workbook = xlsx.read(buffer, { type:'buffer' });
+      const lines = [];
+      workbook.SheetNames.forEach(sheetName => {
+        lines.push(`\n=== Sheet: ${sheetName} ===`);
+        lines.push(xlsx.utils.sheet_to_csv(workbook.Sheets[sheetName]));
+      });
+      const text = lines.join('\n');
+      return { text, mimeType: 'text/plain', normalizedBuffer: Buffer.from(text, 'utf8') };
+    } catch(e) {
+      throw new Error(`UNSUPPORTED_FILE: Could not read Excel file "${originalname}": ${e.message}`);
+    }
+  }
+
+  if (sniffed === 'pptx') {
+    try {
+      
       const zip    = new AdmZip(buffer);
       const slides = zip.getEntries()
         .filter(e => e.entryName.match(/ppt\/slides\/slide\d+\.xml/))
@@ -643,18 +665,19 @@ async function normalizeFile(buffer, mimetype, originalname) {
     }
   }
 
-  if (mimetype === 'application/pdf' || name.endsWith('.pdf')) {
+  if (sniffed === 'pdf') {
     return { text: null, mimeType: 'application/pdf', normalizedBuffer: buffer };
   }
 
-  if (mimetype.startsWith('image/') || /\.(png|jpe?g|gif|webp|bmp|svg)$/.test(name)) {
-    if (mimetype === 'image/svg+xml' || name.endsWith('.svg')) {
+  if (sniffed === 'image') {
+    if (name.endsWith('.svg') || mimetype === 'image/svg+xml') {
       const svgText = buffer.toString('utf8');
       return { text: svgText, mimeType: 'text/plain', normalizedBuffer: Buffer.from(svgText) };
     }
-    return { text: null, mimeType: mimetype, normalizedBuffer: buffer };
+    return { text: null, mimeType: mimetype || 'image/png', normalizedBuffer: buffer };
   }
 
+  // Text-based fallback
   const textTypes = ['text/plain','text/csv','text/html','text/markdown','text/xml','application/json','application/xml','application/rtf'];
   if (textTypes.includes(mimetype) || mimetype.startsWith('text/') || /\.(txt|md|csv|json|html|xml|rtf)$/.test(name)) {
     const text = buffer.toString('utf8').slice(0, 80000);
@@ -769,42 +792,127 @@ app.post('/api/render-pdf-raw', async (req, res) => {
 
 // ── POST /api/convert-for-viewing ────────────────────────────────────────
 // Converts any office doc to a self-contained styled HTML for the Doc Viewer.
-// Returns: { html, mimeType:'text/html', originalName }
+// Returns: { htmlBase64, convertedFrom, originalName, ... }
 app.post('/api/convert-for-viewing', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
   const { mimetype, buffer, originalname } = req.file;
   const name = originalname.toLowerCase();
 
+  // ── Magic-byte + ZIP-content file type detection ─────────────────────────
+  function detectType(buf, fileName, mime) {
+    const hex4 = buf.slice(0,4).toString('hex').toLowerCase();
+    const hex8 = buf.slice(0,8).toString('hex').toLowerCase();
+
+    // PDF: %PDF
+    if (hex4 === '25504446') return 'pdf';
+
+    // ZIP-based Office formats (DOCX, XLSX, PPTX all start with PK\x03\x04)
+    if (hex4 === '504b0304') {
+      // Scan ZIP local file headers for directory markers
+      // Local file headers store filename immediately after PK\x03\x04 signature
+      // Search up to first 64KB for the marker strings
+      const scanLen = Math.min(buf.length, 65536);
+      const zipStr = buf.slice(0, scanLen).toString('binary');
+      if (zipStr.includes('word/'))                                                                  return 'docx';
+      if (zipStr.includes('xl/') || zipStr.includes('[Content_Types]') && fileName.endsWith('.xlsx')) return 'xlsx';
+      if (zipStr.includes('ppt/'))                                                                   return 'pptx';
+      // If [Content_Types].xml found but no specific dir — check extension
+      if (zipStr.includes('[Content_Types]')) {
+        if (fileName.endsWith('.docx') || fileName.endsWith('.doc'))  return 'docx';
+        if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls'))  return 'xlsx';
+        if (fileName.endsWith('.pptx') || fileName.endsWith('.ppt'))  return 'pptx';
+      }
+      // Fall back to extension / MIME
+      if (fileName.endsWith('.docx'))                                                               return 'docx';
+      if (fileName.endsWith('.xlsx'))                                                               return 'xlsx';
+      if (fileName.endsWith('.pptx'))                                                               return 'pptx';
+      if (fileName.endsWith('.doc')  || mime.includes('word'))                                      return 'docx';
+      if (fileName.endsWith('.xls')  || mime.includes('spreadsheet') || mime.includes('excel'))    return 'xlsx';
+      if (fileName.endsWith('.ppt')  || mime.includes('presentation') || mime.includes('powerpoint')) return 'pptx';
+      return 'zip-unknown';
+    }
+
+    // Legacy OLE2 compound doc (old .doc, .xls, .ppt — D0CF11E0A1B11AE1)
+    if (hex4 === 'd0cf11e0') {
+      if (fileName.endsWith('.xls') || mime.includes('excel'))       return 'xlsx';
+      if (fileName.endsWith('.ppt') || mime.includes('powerpoint'))  return 'pptx';
+      return 'docx'; // .doc / unknown OLE2
+    }
+
+    // Images
+    if (hex4 === '89504e47')            return 'image'; // PNG
+    if (hex4.startsWith('ffd8'))        return 'image'; // JPEG
+    if (hex4 === '47494638')            return 'image'; // GIF
+    if (hex4 === '52494646')            return 'image'; // WEBP/RIFF
+    if (hex4.startsWith('424d'))        return 'image'; // BMP
+    if (buf.slice(0,5).toString('ascii') === '<svg ') return 'image'; // SVG
+
+    // Text-based formats (no magic bytes — use extension / MIME)
+    if (fileName.endsWith('.csv') || mime === 'text/csv')            return 'csv';
+    if (fileName.endsWith('.md')  || mime === 'text/markdown')       return 'markdown';
+    if (fileName.endsWith('.html') || fileName.endsWith('.htm') || mime === 'text/html') return 'html';
+    if (fileName.endsWith('.txt') || fileName.endsWith('.rtf'))      return 'text';
+    if (mime === 'application/pdf')                                   return 'pdf';
+    if (mime.startsWith('image/'))                                    return 'image';
+    if (mime.startsWith('text/'))                                     return 'text';
+
+    // Last resort: check if it looks like readable UTF-8 text
+    try {
+      const sample = buf.slice(0, 512).toString('utf8');
+      if (/^[\x09\x0a\x0d\x20-\x7e\u00a0-\ufffd]+$/.test(sample))  return 'text';
+    } catch { /* binary */ }
+
+    return 'unknown';
+  }
+
+  const detectedType = detectType(buffer, name, mimetype);
+  console.log(`[convert-for-viewing] "${originalname}" mime="${mimetype}" detected="${detectedType}"`);
+
+  // Guard: if it's a PDF or image, tell client to handle it natively
+  if (detectedType === 'pdf') {
+    return res.status(400).json({ error: 'PDF files should be viewed natively — no server conversion needed.', hint: 'pdf' });
+  }
+  if (detectedType === 'image') {
+    return res.status(400).json({ error: 'Image files should be viewed natively — no server conversion needed.', hint: 'image' });
+  }
+  if (detectedType === 'zip-unknown') {
+    return res.status(400).json({ error: `Cannot determine Office format for "${originalname}". Please ensure the file extension is .docx, .xlsx, or .pptx.` });
+  }
+  if (detectedType === 'unknown') {
+    return res.status(400).json({ error: `"${originalname}" is an unrecognised binary format that cannot be previewed.` });
+  }
+
   try {
     // ── DOCX / DOC ────────────────────────────────────────────────────────
-    if (
-      mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-      mimetype === 'application/msword' ||
-      name.endsWith('.docx') || name.endsWith('.doc')
-    ) {
-      const result = await mammoth.convertToHtml(
-        { buffer },
-        {
-          styleMap: [
-            "p[style-name='Heading 1'] => h1:fresh",
-            "p[style-name='Heading 2'] => h2:fresh",
-            "p[style-name='Heading 3'] => h3:fresh",
-            "p[style-name='Title']     => h1.title:fresh",
-            "b => strong",
-            "i => em",
-            "u => u",
-            "strike => s",
-            "table => table",
-            "tr    => tr",
-            "td    => td",
-          ],
-          convertImage: mammoth.images.imgElement(image => {
-            return image.read('base64').then(imageBuffer => {
-              return { src: `data:${image.contentType};base64,${imageBuffer}` };
-            });
-          }),
-        }
-      );
+    if (detectedType === 'docx') {
+      let result;
+      try {
+        result = await mammoth.convertToHtml(
+          { buffer },
+          {
+            styleMap: [
+              "p[style-name='Heading 1'] => h1:fresh",
+              "p[style-name='Heading 2'] => h2:fresh",
+              "p[style-name='Heading 3'] => h3:fresh",
+              "p[style-name='Title']     => h1.title:fresh",
+              "b => strong",
+              "i => em",
+              "u => u",
+              "strike => s",
+              "table => table",
+              "tr    => tr",
+              "td    => td",
+            ],
+            convertImage: mammoth.images.imgElement(image => {
+              return image.read('base64').then(imageBuffer => {
+                return { src: `data:${image.contentType};base64,${imageBuffer}` };
+              });
+            }),
+          }
+        );
+      } catch(mammothErr) {
+        return res.status(400).json({ error: `"${originalname}" could not be read as a Word document: ${mammothErr.message}` });
+      }
 
       const bodyHtml = result.value;
       const html = `<!DOCTYPE html>
@@ -885,11 +993,7 @@ ${bodyHtml}
     }
 
     // ── XLSX / XLS ────────────────────────────────────────────────────────
-    if (
-      mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-      mimetype === 'application/vnd.ms-excel' ||
-      name.endsWith('.xlsx') || name.endsWith('.xls')
-    ) {
+    if (detectedType === 'xlsx') {
       const workbook = xlsx.read(buffer, { type: 'buffer', cellStyles: true, cellDates: true });
 
       let sheetsHtml = '';
@@ -999,14 +1103,15 @@ ${sheetsHtml}
     }
 
     // ── PPTX / PPT ────────────────────────────────────────────────────────
-    if (
-      mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
-      mimetype === 'application/vnd.ms-powerpoint' ||
-      name.endsWith('.pptx') || name.endsWith('.ppt')
-    ) {
-      const AdmZip = (await import('adm-zip')).default;
-      const zip    = new AdmZip(buffer);
-      const entries = zip.getEntries();
+    if (detectedType === 'pptx') {
+      
+      let zip, entries;
+      try {
+        zip = new AdmZip(buffer);
+        entries = zip.getEntries();
+      } catch (zipErr) {
+        return res.status(400).json({ error: `"${originalname}" does not appear to be a valid PowerPoint file. ${zipErr.message}` });
+      }
 
       // Extract slide dimensions from presentation.xml
       let slideW = 9144000, slideH = 6858000; // default 10in x 7.5in in EMUs
@@ -1233,7 +1338,7 @@ ${slidesHtml}
     }
 
     // ── CSV — render as styled spreadsheet-like table ─────────────────────
-    if (name.endsWith('.csv') || mimetype === 'text/csv' || mimetype === 'text/comma-separated-values') {
+    if (detectedType === 'csv') {
       const text = buffer.toString('utf8');
       // Parse CSV properly (handles quoted fields with commas/newlines)
       function parseCsv(str) {
@@ -1304,16 +1409,15 @@ tr:hover td{background:#eef7f0;}
     }
 
     // ── TXT / MD / RTF / HTML — styled text viewer ────────────────────────
-    const textTypes = ['text/plain','text/html','text/markdown','application/rtf'];
-    if (textTypes.includes(mimetype) || mimetype.startsWith('text/') || /\.(txt|md|rtf|html|htm)$/.test(name)) {
+    if (detectedType === 'html' || detectedType === 'markdown' || detectedType === 'text') {
       const text = buffer.toString('utf8');
       // For HTML files, serve as-is
-      if (name.endsWith('.html') || name.endsWith('.htm') || mimetype === 'text/html') {
+      if (detectedType === 'html') {
         const htmlB64 = buffer.toString('base64');
         return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'html' });
       }
       // Markdown → basic HTML conversion
-      if (name.endsWith('.md') || mimetype === 'text/markdown') {
+      if (detectedType === 'markdown') {
         const esc2 = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const md2html = str => str
           .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -1346,127 +1450,12 @@ ul{margin-left:24px;}li{margin-bottom:4px;}</style>
       return res.json({ htmlBase64: htmlB64, originalName: originalname, convertedFrom: 'text' });
     }
 
-    return res.status(400).json({ error: `Cannot preview file type: ${mimetype} (${originalname})` });
+    return res.status(400).json({ error: `Cannot preview "${originalname}" — unsupported file type (detected: ${detectedType}, mime: ${mimetype})` });
 
   } catch (err) {
     console.error('[convert-for-viewing]', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: `Failed to convert "${originalname}": ${err.message}` });
   }
-});
-
-// ── POST /api/export-docx ─────────────────────────────────────────────────
-// Converts HTML body content to a .docx download using the docx package.
-app.post('/api/export-docx', async (req, res) => {
-  const { html = '', title = 'document' } = req.body;
-  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
-  try {
-    // Use mammoth-compatible approach: convert HTML → plain paragraphs for docx
-    const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle } = await import('docx');
-
-    // Parse HTML to extract content (server-side DOM parsing via regex for key elements)
-    function htmlToDocxElements(htmlStr) {
-      const elements = [];
-      // Strip style/script tags
-      const clean = htmlStr.replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<script[\s\S]*?<\/script>/gi,'');
-      // Split into block-level chunks
-      const blockRe = /<(h[1-6]|p|li|td|th|div|section|article|aside|blockquote)\b([^>]*)>([\s\S]*?)<\/\1>/gi;
-      const seen = new Set();
-      for (const m of clean.matchAll(blockRe)) {
-        const [full, tag, attrs, inner] = m;
-        if (seen.has(full)) continue; seen.add(full);
-        const text = inner.replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#?\w+;/g,'').replace(/\s+/g,' ').trim();
-        if (!text) continue;
-        const level = { h1: HeadingLevel.HEADING_1, h2: HeadingLevel.HEADING_2, h3: HeadingLevel.HEADING_3, h4: HeadingLevel.HEADING_4 };
-        if (level[tag]) {
-          elements.push(new Paragraph({ text, heading: level[tag] }));
-        } else if (tag === 'li') {
-          elements.push(new Paragraph({ text: '• ' + text }));
-        } else {
-          elements.push(new Paragraph({ children: [ new TextRun({ text }) ] }));
-        }
-      }
-      if (!elements.length) {
-        // Fallback: just strip all tags
-        const plain = clean.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-        plain.split(/\n\n+/).filter(Boolean).forEach(p => {
-          elements.push(new Paragraph({ children: [ new TextRun({ text: p.trim() }) ] }));
-        });
-      }
-      return elements;
-    }
-
-    const doc = new Document({
-      sections: [{ properties: {}, children: htmlToDocxElements(html) }],
-    });
-    const buffer = await Packer.toBuffer(doc);
-    const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'document';
-    res.setHeader('Content-Type','application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    res.setHeader('Content-Disposition',`attachment; filename="${safe}.docx"`);
-    res.send(buffer);
-  } catch(err) {
-    console.error('[export-docx]', err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ── POST /api/export-xlsx ─────────────────────────────────────────────────
-// Extracts all tables from HTML and exports as .xlsx
-app.post('/api/export-xlsx', async (req, res) => {
-  const { html = '', title = 'spreadsheet' } = req.body;
-  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
-  try {
-    const workbook = xlsx.utils.book_new();
-    // Extract tables from HTML
-    const tableRe = /<table[\s\S]*?<\/table>/gi;
-    const tables = [...html.matchAll(tableRe)];
-    if (!tables.length) {
-      // No tables — extract all text as single column
-      const text = html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-      const lines = text.split(/[.!?]\s+/).filter(Boolean).map(s => [s.trim()]);
-      const ws = xlsx.utils.aoa_to_sheet([['Content'], ...lines]);
-      xlsx.utils.book_append_sheet(workbook, ws, 'Content');
-    } else {
-      tables.forEach((tm, idx) => {
-        const tableHtml = tm[0];
-        const rowRe = /<tr[\s\S]*?<\/tr>/gi;
-        const aoa = [];
-        for (const rm of tableHtml.matchAll(rowRe)) {
-          const rowHtml = rm[0];
-          const cellRe = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
-          const cells = [];
-          for (const cm of rowHtml.matchAll(cellRe)) {
-            const val = cm[1].replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#?\w+;/g,'').replace(/\s+/g,' ').trim();
-            cells.push(val);
-          }
-          if (cells.length) aoa.push(cells);
-        }
-        if (aoa.length) {
-          const ws = xlsx.utils.aoa_to_sheet(aoa);
-          xlsx.utils.book_append_sheet(workbook, ws, `Sheet${idx+1}`);
-        }
-      });
-    }
-    const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'spreadsheet';
-    const buffer = xlsx.write(workbook, { type:'buffer', bookType:'xlsx' });
-    res.setHeader('Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition',`attachment; filename="${safe}.xlsx"`);
-    res.send(buffer);
-  } catch(err) {
-    console.error('[export-xlsx]', err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ── POST /api/export-html ─────────────────────────────────────────────────
-// Returns full self-contained HTML file download
-app.post('/api/export-html', async (req, res) => {
-  const { html = '', css = '', title = 'document' } = req.body;
-  if (!html.trim()) return res.status(400).json({ error: 'HTML required.' });
-  const safe = title.replace(/[^a-z0-9]/gi,'_').slice(0,60) || 'document';
-  const full = html.includes('<!DOCTYPE') ? html : `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>${title}</title>${css ? `<style>${css}</style>` : ''}</head><body>${html}</body></html>`;
-  res.setHeader('Content-Type','text/html; charset=utf-8');
-  res.setHeader('Content-Disposition',`attachment; filename="${safe}.html"`);
-  res.send(full);
 });
 
 // ── POST /api/generate-citations ──────────────────────────────────────────
@@ -1794,25 +1783,18 @@ app.listen(3000, () => {
   console.log('');
   console.log('┌────────────────────────────────────────────────────────────┐');
   console.log('│  ✅ Backend running on http://localhost:3000                │');
-  console.log('│  Routes ready:                                             │');
+  console.log('│  Export routes (Puppeteer-rendered, edits captured):       │');
+  console.log('│  ─────────────────────────────────────────────────────     │');
   console.log('│   POST /api/generate-preview                               │');
   console.log('│   POST /api/generate-from-file                             │');
-  console.log('│   POST /api/convert-for-viewing  ← Doc preview (b64)      │');
-  console.log('│   POST /api/render-pdf                                     │');
-  console.log('│   POST /api/render-pdf-form                                │');
-  console.log('│   POST /api/render-pdf-raw                                 │');
-  console.log('│   POST /api/export-docx          ← HTML → .docx download  │');
-  console.log('│   POST /api/export-xlsx          ← HTML → .xlsx download  │');
-  console.log('│   POST /api/export-html          ← HTML file download      │');
+  console.log('│   POST /api/convert-for-viewing                            │');
+  console.log('│   POST /api/render-pdf / render-pdf-form / render-pdf-raw  │');
   console.log('│   POST /api/generate-citations                             │');
   console.log('│   POST /api/update-report                                  │');
   console.log('│   POST /api/regenerate-diagram                             │');
-  console.log('│   POST /api/generate-diagram-ai   ← DiagramBuilder AI     │');
+  console.log('│   POST /api/generate-diagram-ai                            │');
   console.log('│   GET/POST/PUT/DELETE /api/documents                       │');
-  console.log('│   GET  /api/pdfs                       ← PDF library       │');
-  console.log('│   GET  /api/pdfs/:filename             ← PDF download      │');
-  console.log(`│  📁 Docs: ~/Documents/ReportBuilderDocs/                   │`);
-  console.log(`│  📄 PDFs: ~/Documents/ReportBuilderDocs/pdfs/              │`);
+  console.log('│   GET  /api/pdfs  /api/pdfs/:filename                      │');
   console.log('└────────────────────────────────────────────────────────────┘');
   console.log('');
 });

@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,11 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html> -->
+</html>
+
+
+
+
 
 
 <!-- 
@@ -394,11 +398,12 @@ document.appendChild(newel)
       }
     }) -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="src/index.css">
   <title>Document</title>
 </head>
 <body>
@@ -420,16 +425,14 @@ document.appendChild(newel)
     document.getElementById(Number(e.target.id)).style.backgroundColor = "white"
 
     if(d.length === 8){
-      for(let i = 0; i<10; i++){
-        if(i === 9){
-          d = []
-        }
-        setTimeout(() => {
-        console.log("hello")
-        const ell = document.getElementById(d[i])
-        ell.style.backgroundColor = "red"
-      }, 1000)
+        for(let i = 0; i<9; i++){
+          setTimeout(() => {
+          console.log("hello")
+          const ell = document.getElementById(d[i])
+          ell.style.backgroundColor = "red"
+        }, 1000*i)
       }
+
     }
   
   }
@@ -473,4 +476,4 @@ document.appendChild(newel)
 </html>
 
 
-
+ -->

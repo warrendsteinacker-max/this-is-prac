@@ -377,47 +377,8 @@ function DocPreviewModal({ previewState, onClose, accent }) {
     } catch(e) { alert('PDF export failed: '+e.message); }
   };
 
-  const handleDownloadHtml = async () => {
-    if (!htmlContent) return;
-    try {
-      const res = await fetch('http://localhost:3000/api/export-html', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.html'; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('HTML export failed: '+e.message); }
-  };
 
-  const handleDownloadDocx = async () => {
-    if (!htmlContent) return;
-    try {
-      const res = await fetch('http://localhost:3000/api/export-docx', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.docx'; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('DOCX export failed: '+e.message); }
-  };
 
-  const handleDownloadXlsx = async () => {
-    if (!htmlContent) return;
-    try {
-      const res = await fetch('http://localhost:3000/api/export-xlsx', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ html: htmlContent, title: fileName.replace(/\.[^.]+$/,'') }),
-      });
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href=url; a.download=fileName.replace(/\.[^.]+$/,'')+'.xlsx'; a.click();
-      URL.revokeObjectURL(url);
-    } catch(e) { alert('XLSX export failed: '+e.message); }
-  };
 
   const handleDownloadOriginal = () => {
     if (!dataUrl) return;
@@ -456,13 +417,6 @@ function DocPreviewModal({ previewState, onClose, accent }) {
         <div style={{ display:'flex', gap:6, flexShrink:0 }}>
           {dataUrl && <button onClick={handleDownloadOriginal} style={{ ...btnStyle, background:'#1a1a2e', color:accent, border:`1px solid ${accent}` }}>⬇ Original</button>}
           {isHtml && <button onClick={handleDownloadPdf} style={{ ...btnStyle, background:'#1a1a2e', color:'#e74c3c', border:'1px solid #e74c3c44' }}>📄 PDF</button>}
-          {isHtml && <button onClick={handleDownloadHtml} style={{ ...btnStyle, background:'#1a1a2e', color:'#3498db', border:'1px solid #3498db44' }}>🌐 HTML</button>}
-          {isHtml && (convertedFrom === 'docx' || convertedFrom === 'text' || convertedFrom === 'markdown') && (
-            <button onClick={handleDownloadDocx} style={{ ...btnStyle, background:'#1a1a2e', color:'#2b5797', border:'1px solid #2b579744' }}>📝 DOCX</button>
-          )}
-          {isHtml && (convertedFrom === 'xlsx' || convertedFrom === 'csv') && (
-            <button onClick={handleDownloadXlsx} style={{ ...btnStyle, background:'#1a1a2e', color:'#217346', border:'1px solid #21734644' }}>📊 XLSX</button>
-          )}
         </div>
       </div>
 
@@ -538,12 +492,25 @@ function UploadDocPanel({ accent }) {
           const fd = new FormData();
           fd.append('file', file);
           const res  = await fetch('http://localhost:3000/api/convert-for-viewing', { method:'POST', body:fd });
-          // Server returns JSON — must be valid
+          // Always parse as text first to avoid JSON parse errors
           const text = await res.text();
           let data;
           try { data = JSON.parse(text); }
-          catch(e) { throw new Error(`Server returned invalid response (not JSON). Raw: ${text.slice(0,200)}`); }
+          catch(e) { throw new Error(`Server returned invalid response. Raw: ${text.slice(0,300)}`); }
+
+          // Server may redirect us: PDF/image should be handled natively
+          if (!res.ok && data.hint === 'pdf') {
+            const dataUrl = await readAsDataUrl(file);
+            setPreviewState({ viewType:'pdf', dataUrl, fileName:file.name });
+            return;
+          }
+          if (!res.ok && data.hint === 'image') {
+            const dataUrl = await readAsDataUrl(file);
+            setPreviewState({ viewType:'image', dataUrl, fileName:file.name });
+            return;
+          }
           if (!res.ok) throw new Error(data.error || `Conversion failed (${res.status})`);
+
           // Server sends base64-encoded HTML to avoid JSON escaping issues
           const htmlContent = data.htmlBase64
             ? atob(data.htmlBase64)
