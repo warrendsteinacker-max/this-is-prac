@@ -189,12 +189,12 @@ function resetG(){
     for(let i = 0; i < tracking.length; i++){
       const el = docuemnt.getElementById(tracking[i])
       
-      // document.body.removeElement(el)
+      // document.body.removeElement(el) add this back when done testing
     }
       start = true;
       reset = false;
       dNum = 0
-      // tracking = []
+      // tracking = [] add this back when done testing
   }
   else{
     alert("you must start a game")
@@ -220,7 +220,7 @@ async function makeget(){
         for(i = 0; i < data.length; i++){     ///////cahnge this back to lenght for prac
           const el = document.createElement("div")
           el.style.border = "5px solid black"
-          el.textContent = data[i].name      //////////put this back to this for prac
+          el.textContent = data[i].name      //////////put this back to this for prac data.name
           document.body.appendChild(el)
         }
       }
@@ -268,14 +268,15 @@ function functionMD(e){
     e.preventDefault();
     DC = GC * 2
     const gc = Math.floor(DC/2)
-    const Narray = Array(gc).fill(null).map((_, index) => { return {content: index, status: false}}) ////always include _ in emptey array
-    const display = [...Narray, ...Narray].sort(() => Math.random() - 0.5)
+    const Narray = Array(gc).fill(null).map((_, index) => { return {I: index, status: false}}) ////always include _ in emptey array
+    display = [...Narray, ...Narray].sort(() => Math.random() - 0.5)
 
     for(let i = 0; 0 < display.length; i++){
       const el = document.createElement("div");
       el.style.width = "100px"
       el.style.height = "100px"
       el.style.border = "5px solid black"
+      el.id = i
       // el.textContent = 
       el.textContent = ""
     }
@@ -283,9 +284,35 @@ function functionMD(e){
   else{
     alert("must make a guess count")
   }
-
-
 }
+
+
+function showorhide(item){
+  if(display[e.target.id].I === disiplay[Dtracking[0]].I){
+    for(let i =0; i < Dtracking.length; i++){  
+      if(item.I === display[e.target.id].I){
+        return
+      }
+      else if(item.I === display[Dtracking[0]].I){
+
+      }
+    }
+  }
+}
+
+
+
+function funcgameplay(e){
+  if(Dtracking.length === 1){
+    const newd = display.map((item) => {return showorhide(item)})
+  }
+  else{
+
+  }
+}
+
+
+
 
 
 
