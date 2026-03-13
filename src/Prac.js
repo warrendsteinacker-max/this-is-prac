@@ -233,13 +233,27 @@ async function makeget(){
 
 
 
-
+////////////////////////////////////////////////////////////////////
 /////////////////third prac file/////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
+const ell = document.createElement("div")
+
+ell.style.width = "fit-content"
+ell.style.height = "fit-content"
+ell.style.border = "5px solid black"
+ell.style.display = "grid"
+ell.style.gridTemplateColumns = "repeat(3, 1rf)" 
+ell.style.gridTemplateRows = "repeat(3, 1rf)"
+ell.id = "game"
+
+document.body.appendChild(ell)
 
 let DC;
 
 let GC; 
+
+let turnC = []
 
 let Dtracking = [];
 
@@ -255,8 +269,16 @@ function functionMD(e){
     DC = GC * 2
     const gc = Math.floor(DC/2)
     const Narray = Array(gc).fill(null).map((_, index) => { return {content: index, status: false}}) ////always include _ in emptey array
-    
+    const display = [...Narray, ...Narray].sort(() => Math.random() - 0.5)
 
+    for(let i = 0; 0 < display.length; i++){
+      const el = document.createElement("div");
+      el.style.width = "100px"
+      el.style.height = "100px"
+      el.style.border = "5px solid black"
+      // el.textContent = 
+      el.textContent = ""
+    }
   }
   else{
     alert("must make a guess count")
