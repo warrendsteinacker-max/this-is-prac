@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html>
+</html> -->
 
 
 
@@ -477,3 +477,70 @@ document.appendChild(newel)
 
 
  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+<script>
+
+  let tracking = [];
+  let display;
+  let Gcount;  
+
+  function setnum(e){
+    Gcount = Number(e.target.value)
+    <!-- console.log(Gcount) -->
+  }
+
+  const el = document.createElement("div")
+  el.style.border = "5px solid black"
+  el.style.width = "fit-content"
+  el.style.height = "fit-content"
+
+  const selectel = document.createElement("input")
+
+  selectel.type = "number"
+  selectel.min = "1"
+  selectel.max = "10"
+  selectel.addEventListener("click", setnum)
+
+  document.body.appendChild(el)
+  document.body.appendChild(selectel)
+
+
+  function startG(){
+    let empteypofD = Array(Gcount).fill("")
+    let pofD = empteypofD.map((_, index) => index)
+    display = [...pofD, ...pofD].sort(() => Math.random() - 0.5)
+    for(let i = 0; i < 10; i++){
+      const ell = document.getElementById(i)
+        if(ell){
+            el.removeChild(ell)
+        }
+    }
+    for(let i = 0; i < display.length; i++){
+      const newel = document.createElement("div")
+      newel.style.width = "100px"
+      newel.style.height = "100px"
+      newel.style.border = "5px solid black"
+      newel.id = i
+      el.appendChild(newel)
+    } 
+  }
+
+  const b = document.createElement("button")
+  b.addEventListener("click", startG)
+  b.textContent = "start game"
+  document.body.appendChild(b)
+
+</script>
+</body>
+</html>
