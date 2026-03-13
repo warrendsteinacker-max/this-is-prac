@@ -287,12 +287,17 @@ function functionMD(e){
 }
 
 
-function showorhide(item){
+function showorhide(item, e){
   if(display[e.target.id].I === disiplay[Dtracking[0]].I){
+  const fnewD = display.map((item) => { return display[e.target.id].I === item.I ? {I: item.index, status: true} : {I: item.index, status: false}})
     for(let i = 0; i < display.length; i++){  
-      if(item.I === display[e.target.id].I){
-        const fnewD = display.map((item) => { return display[e.target.id].I === item.I ? {I: item.index, status: true}})
-
+      if(display[i].I === display[e.target.id].I || Dtracking[0].I === display[i].I){
+        // const fnewD = display.map((item) => { return display[e.target.id].I === item.I ? {I: item.index, status: true} : {I: item.index, status: false}})
+          // for(let i = 0; i < fnewD.length; i++){
+          //   const el = document.getElementById(i)
+          //   ell.removeChild(el)
+          //   const document.createElement("div")
+          // }
       }
     }
   }
@@ -301,11 +306,11 @@ function showorhide(item){
 
 
 function funcgameplay(e){
-  else if(){
-    
+  if(Dtracking.length === 0){
+    const newd = 
   }
   if(Dtracking.length === 1){
-    const newd = display.map((item) => {return showorhide(item)})
+    const newd = display.map((item) => {return showorhide(item, e)})
   }
 }
 
