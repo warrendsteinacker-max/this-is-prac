@@ -289,11 +289,9 @@ function functionMD(e){
 
 function showorhide(item){
   if(display[e.target.id].I === disiplay[Dtracking[0]].I){
-    for(let i =0; i < Dtracking.length; i++){  
+    for(let i = 0; i < display.length; i++){  
       if(item.I === display[e.target.id].I){
-        return
-      }
-      else if(item.I === display[Dtracking[0]].I){
+        const fnewD = display.map((item) => { return display[e.target.id].I === item.I ? {I: item.index, status: true}})
 
       }
     }
@@ -303,11 +301,11 @@ function showorhide(item){
 
 
 function funcgameplay(e){
+  else if(){
+    
+  }
   if(Dtracking.length === 1){
     const newd = display.map((item) => {return showorhide(item)})
-  }
-  else{
-
   }
 }
 
