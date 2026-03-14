@@ -593,7 +593,7 @@ document.appendChild(newel)
 </html> -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -617,23 +617,26 @@ document.appendChild(newel)
         const el = document.getElementById(i)
         
         if(el){
-          document.removeChild(el)
+          el.remove()  //////add child for prac
           console.log(i + " erase")
         }
 
-      for(let i = 0; i < 3; i++){
+      }
+
+      for(let i = 0; i < diceC; i++){
         console.log(diceC)
         const newel = document.createElement("div")
-        newel.textContent = dice[Math.random() * 6]
+        newel.textContent = dice[Math.floor(Math.random() * 6)] /////change this for prac
         console.log(newel.textContent)
         newel.style.border = "5px solid black" 
         newel.style.height = "100px"
         newel.style.width = "100px"
+        newel.id = i                    ///get rid of this for prac
         document.body.appendChild(newel)
         console.log(i + " make")
       }
+
     }
-  }
 
   const b = document.createElement("button")
 
@@ -656,4 +659,9 @@ document.appendChild(newel)
   document.body.appendChild(b)
   </script>
 </body>
-</html>
+</html> -->
+
+
+async function fetchd(){
+  
+}
