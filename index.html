@@ -479,7 +479,7 @@ document.appendChild(newel)
  -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -502,7 +502,6 @@ document.appendChild(newel)
 
   function setnum(e){
     Gcount = Number(e.target.value)
-    <!-- console.log(Gcount) -->
   }
 
   const el = document.createElement("div")
@@ -590,5 +589,71 @@ document.appendChild(newel)
   document.body.appendChild(b)
 
 </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+
+    let dice = [1,2,3,4,5,6]
+    let diceC;
+
+    function setDC(e){
+      diceC = e.target.value
+      console.log(diceC)
+    }
+
+    function makeR(){
+      for(let i = 0; i < 6; i++){
+        const el = document.getElementById(i)
+        
+        if(el){
+          document.removeChild(el)
+          console.log(i + " erase")
+        }
+
+      for(let i = 0; i < 3; i++){
+        console.log(diceC)
+        const newel = document.createElement("div")
+        newel.textContent = dice[Math.random() * 6]
+        console.log(newel.textContent)
+        newel.style.border = "5px solid black" 
+        newel.style.height = "100px"
+        newel.style.width = "100px"
+        document.body.appendChild(newel)
+        console.log(i + " make")
+      }
+    }
+  }
+
+  const b = document.createElement("button")
+
+  const NC = document.createElement("input")
+
+  b.textContent = "make role"
+
+  b.addEventListener("click", makeR)
+
+  NC.type = "number"
+
+  NC.min = "1"
+
+  NC.max = "10"
+
+  NC.addEventListener("click", setDC)
+
+  document.body.appendChild(NC)
+
+  document.body.appendChild(b)
+  </script>
 </body>
 </html>
