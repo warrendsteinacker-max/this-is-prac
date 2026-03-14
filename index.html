@@ -661,7 +661,12 @@ document.appendChild(newel)
 </body>
 </html> -->
 
+ 
 
 async function fetchd(){
-  
+  const res = await fetch('url')
+  const data = await res.json() 
+  for(let i = 0; i < data.length; i++){
+    
+  }
 }
