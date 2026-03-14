@@ -493,7 +493,12 @@ document.appendChild(newel)
 
   let tracking = [];
   let display;
-  let Gcount;  
+  let Gcount; 
+  let stat = false; 
+
+
+  
+
 
   function setnum(e){
     Gcount = Number(e.target.value)
@@ -501,9 +506,12 @@ document.appendChild(newel)
   }
 
   const el = document.createElement("div")
-  el.style.border = "5px solid black"
+
   el.style.width = "fit-content"
   el.style.height = "fit-content"
+  el.style.display = "grid"
+  el.style.gridTemplateColumns = "repeat(3, 1fr)"
+  el.style.gridTemplateRows = "repeat(3, 1fr)"
 
   const selectel = document.createElement("input")
 
@@ -515,12 +523,51 @@ document.appendChild(newel)
   document.body.appendChild(el)
   document.body.appendChild(selectel)
 
+  function makeG(e){
+
+    if(stat){
+      return null
+      console.log("in session")
+    }
+    else if(tracking.length = 1){
+      console.log(e.target.value)
+      console.log(tracking[0].value)
+      console.log(e.target.id)
+      e.target.textContent = e.target.value      
+      if(tracking[0].value !== e.target.value){
+        const el1 = document.getElementById(e.target.id)
+        const el2 = document.getElementById(tracking[0].id)
+        console.log(e.target.value)
+        console.log(tracking[0].value + " in else if")
+        console.log(e.target.id)
+        stat = true
+        console.log("not match")
+        setTimeout(() => {
+          el1.textContent = ""
+          el2.textContent = ""
+          stat = false
+          tracking = []
+        }, 3000)
+      }
+      else{
+        return null
+        console.log("match")
+      }
+    }
+
+    e.target.textContent = e.target.value
+    cons
+    console.log(e.target.value)
+    tracking.push({value: e.target.value, id: e.target.id})
+    console.log({value: e.target.value, id: e.target.id})
+    console.log("first click") 
+  }
 
   function startG(){
     let empteypofD = Array(Gcount).fill("")
     let pofD = empteypofD.map((_, index) => index)
     display = [...pofD, ...pofD].sort(() => Math.random() - 0.5)
-    for(let i = 0; i < 10; i++){
+    for(let i = 0; i < 20; i++){
       const ell = document.getElementById(i)
         if(ell){
             el.removeChild(ell)
@@ -529,9 +576,12 @@ document.appendChild(newel)
     for(let i = 0; i < display.length; i++){
       const newel = document.createElement("div")
       newel.style.width = "100px"
+      newel.value = display[i]
       newel.style.height = "100px"
       newel.style.border = "5px solid black"
       newel.id = i
+      newel.status = false
+      newel.addEventListener('click', makeG)
       el.appendChild(newel)
     } 
   }
