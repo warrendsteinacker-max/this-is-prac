@@ -662,11 +662,34 @@ document.appendChild(newel)
 </html> -->
 
  
+const chap1 = document.createElement("div")
+const chap2 = document.createElement("div")
+const chap3 = document.createElement("div")
+const chap4 = document.createElement("div")
+const chap5 = document.createElement("div")
+
+chap1
+chap1
+chap1
+chap1
+chap1
+
 
 async function fetchd(){
   const res = await fetch('url')
   const data = await res.json() 
   for(let i = 0; i < data.length; i++){
-    
+    if(data[i].title === "chapter 1"){
+      const el = document.createElement("div")
+    }
+    else if(data[i].title === "chapter 2"){
+      
+    }
+    else if(data[i].title === "chapter 3"){
+      
+    }
+    else if(data[i].title === "chapter 4"){
+      
+    }
   }
 }
