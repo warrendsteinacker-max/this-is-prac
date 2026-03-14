@@ -531,7 +531,9 @@ document.appendChild(newel)
     }
     else if(tracking.length === 1){  ////////change this back to this for prac =
       console.log("starting sess")
-      e.target.textContent = e.target.value      
+      e.target.textContent = e.target.value 
+      console.log(tracking[0].value) 
+      console.log(e.target.value)    
       if(tracking[0].value !== e.target.value){
         const el1 = document.getElementById(e.target.id)
         const el2 = document.getElementById(tracking[0].id)
@@ -545,7 +547,8 @@ document.appendChild(newel)
         }, 3000)
       }
       else{
-        console.log("match")
+        console.log("match");
+        tracking = []; /////////earas tracking for practice
         return null
       }
     }
@@ -553,8 +556,8 @@ document.appendChild(newel)
     console.log("first sess")
 
 
-    e.target.textContent = display[e.target.id]
-    tracking.push({v: display[e.target.id], id: e.target.id})
+    e.target.textContent = e.target.value
+    tracking.push({value: e.target.value, id: e.target.id})
   }
 
   function startG(){
