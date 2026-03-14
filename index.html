@@ -526,20 +526,15 @@ document.appendChild(newel)
   function makeG(e){
 
     if(stat){
-      return null
       console.log("in session")
+      return null
     }
-    else if(tracking.length = 1){
-      console.log(e.target.value)
-      console.log(tracking[0].value)
-      console.log(e.target.id)
+    else if(tracking.length === 1){  ////////change this back to this for prac =
+      console.log("starting sess")
       e.target.textContent = e.target.value      
       if(tracking[0].value !== e.target.value){
         const el1 = document.getElementById(e.target.id)
         const el2 = document.getElementById(tracking[0].id)
-        console.log(e.target.value)
-        console.log(tracking[0].value + " in else if")
-        console.log(e.target.id)
         stat = true
         console.log("not match")
         setTimeout(() => {
@@ -550,21 +545,20 @@ document.appendChild(newel)
         }, 3000)
       }
       else{
-        return null
         console.log("match")
+        return null
       }
     }
 
-    e.target.textContent = e.target.value
-    cons
-    console.log(e.target.value)
-    tracking.push({value: e.target.value, id: e.target.id})
-    console.log({value: e.target.value, id: e.target.id})
-    console.log("first click") 
+    console.log("first sess")
+
+
+    e.target.textContent = display[e.target.id]
+    tracking.push({v: display[e.target.id], id: e.target.id})
   }
 
   function startG(){
-    let empteypofD = Array(Gcount).fill("")
+    let empteypofD = Array(Gcount).fill(null)
     let pofD = empteypofD.map((_, index) => index)
     display = [...pofD, ...pofD].sort(() => Math.random() - 0.5)
     for(let i = 0; i < 20; i++){
@@ -577,7 +571,7 @@ document.appendChild(newel)
       const newel = document.createElement("div")
       newel.style.width = "100px"
       newel.value = display[i]
-      console.log(display[i])
+      console.log(typeof(newel.value))
       newel.style.height = "100px"
       newel.style.border = "5px solid black"
       newel.id = i
