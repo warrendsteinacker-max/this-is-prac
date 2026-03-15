@@ -753,13 +753,20 @@ document.appendChild(newel)
 
     const buttonel = document.createElement("button")
 
+    inputel.addEventListener('click', (e) => {
+      inputel.value = Number(e.target.value)
+      console.log(inputel.value)
+    })
+
     inputel.type = "number"
   
     inputel.min = "1"
 
     inputel.max = "10"
 
-    buttonel
+    document.body.appendChild(inputel)
+
+    buttonel.textContent = "start game"
 
   </script>
 </body>
