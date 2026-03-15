@@ -675,37 +675,59 @@ document.appendChild(newel)
   <script>
 
 
-      const chap1 = document.createElement("div")
-const chap2 = document.createElement("div")
-const chap3 = document.createElement("div")
-const chap4 = document.createElement("div")
-const chap5 = document.createElement("div")
+(async function() {
 
-chap1
-chap1
-chap1
-chap1
-chap1
+  const data = [{title: "chapter 1", section: "one"},{title: "chapter 1", section: "two"},{title: "chapter 2", section: "one"},{title: "chapter 2", section: "two"}]
+  const chap1 = document.createElement("div")
+  const chap2 = document.createElement("div")
 
 
-async function fetchd(){
-  const res = await fetch('url')
-  const data = await res.json() 
+
+  chap1.style.width = "300px"
+  chap1.style.height = "fit-content"
+  chap1.style.border = "5px solid black"
+  chap1.style.position = "absolute"
+  chap1.style.top = "100px"
+  chap1.style.left = "500px"
+  chap1.id = "chap1"
+  document.body.appendChild(chap1)
+
+  chap2.style.width = "300px"
+  chap2.style.height = "fit-content"
+  chap2.style.border = "5px solid black"
+  chap2.style.position = "absolute"
+  chap2.style.top = "100px"
+  chap2.style.left = "calc(100vw - 500px)"
+  chap2.id = "chap2"
+  document.body.appendChild(chap2)
+
+
   for(let i = 0; i < data.length; i++){
     if(data[i].title === "chapter 1"){
       const el = document.createElement("div")
+      el.style.width = "300px"
+      el.style.height = "300px"
+      el.textContent = data[i].section
+      chap1.appendChild(el)
     }
     else if(data[i].title === "chapter 2"){
-      
+      const el = document.createElement("div")
+      el.style.width = "300px"
+      el.style.height = "300px"
+      el.textContent = data[i].section
+      chap2.appendChild(el)  
     }
-    else if(data[i].title === "chapter 3"){
-      
-    }
-    else if(data[i].title === "chapter 4"){
-      
-    }
+
   }
-}
+})()
+
+
+
+
+
+
+
+
 
 
 </script>
