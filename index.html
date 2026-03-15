@@ -755,7 +755,7 @@ document.appendChild(newel)
 
     inputel.addEventListener('click', (e) => {
       inputel.value = Number(e.target.value)
-      console.log(inputel.value)
+      <!-- console.log(inputel.value) -->
     })
 
     inputel.type = "number"
@@ -767,6 +767,25 @@ document.appendChild(newel)
     document.body.appendChild(inputel)
 
     buttonel.textContent = "start game"
+
+    buttonel.addEventListener('click', (e) => {
+      for(let i = 0; i < 10; i++){
+        const el = document.getElementById(i)
+        if(el){
+          el.remove()
+        } 
+      }
+      for(let i = 0; i < Number(inputel.value); i++){
+        const el = document.createElement("div")
+        el.style.border = "5px solid black"
+        el.textContent = Math.floor(Math.random() * 6)
+        el.id = i 
+        document.body.appendChild(el)
+      }
+    }) 
+
+
+    document.body.appendChild(buttonel)
 
   </script>
 </body>
