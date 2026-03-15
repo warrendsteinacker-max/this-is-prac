@@ -736,7 +736,7 @@ document.appendChild(newel)
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -755,7 +755,6 @@ document.appendChild(newel)
 
     inputel.addEventListener('click', (e) => {
       inputel.value = Number(e.target.value)
-      <!-- console.log(inputel.value) -->
     })
 
     inputel.type = "number"
@@ -786,6 +785,77 @@ document.appendChild(newel)
 
 
     document.body.appendChild(buttonel)
+
+  </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+
+    const possibleS = [1,2,3,4];
+    let winS = [...possibleS, ...possibleS];
+    let win;
+    let winStat = [];
+
+    win = winS.sort(() => Math.random() - 0.5)
+
+    console.log(win)
+
+    const gameb = document.createElement("div")
+    gameb.style.display = "grid"
+    gameb.style.gridTemplateColumns = "repeat(2, 1fr)"
+    gameb.style.gridTemplateRows = "repeat(2, 1fr)"
+    gameb.style.width = "fit-content"
+    gameb.style.height = "fit-content"
+    document.body.appendChild(gameb)
+    
+    const b = document.createElement("button")
+    b.textContent = "reset game"
+    document.body.appendChild(b)
+
+    function ONCLICK(e){
+      console.log(e.target.id)
+      console.log(winS[winStat.length])
+      if(e.target.id == winS[winStat.length]){
+        winStat.push(e.target.id)
+        alert("this was correct")
+      }
+      else if(winStat.length === 7){
+        alert("you won new game started")
+        win = winS.sort(() => Math.random() - 0.5)
+        console.log(win)
+        winStat = []
+      }
+      else if(Number(e.target.id) !== Number(winS[winStat.length - 1])){
+        alert("incorrect") 
+      }
+    }
+
+    for(let i = 0; i < 4; i++){
+      const el = document.createElement("div")
+      el.style.height = "100px"
+      el.style.width = "100px"
+      el.style.border = "5px solid black"
+      el.style.display = "grid"
+      el.style.justifyContent = "center"
+      el.style.alignItems = "center"
+      el.textContent = possibleS[i]
+      el.id = possibleS[i]
+      el.addEventListener("click", ONCLICK)
+      gameb.appendChild(el)
+    }
+
+
 
   </script>
 </body>
