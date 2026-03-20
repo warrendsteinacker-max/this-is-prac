@@ -963,6 +963,9 @@ document.appendChild(newel)
 <body>
   <script>
 
+      const Iel = document.createElement("input")
+
+
       let words = ["at", "man", "fan", "am", "sad"]
 
       let word = words.at(Math.random() * 4)
@@ -971,26 +974,28 @@ document.appendChild(newel)
 
       function ONKEYDOWN(e) {
 
-        console.log(e.key)
-        console.log(word.charAt(STAT))
 
         if(e.key === word.charAt(STAT)){
           const el = document.getElementById(STAT)
-          el.textContent = e.key
+          el.innerText= e.key
           STAT = STAT + 1
+          console.log(STAT)
+          console.log(word.length)
         }
 
-        else if(STAT === word.length - 1){
+        if(Number(STAT) === Number(word.length)){
           STAT = 0
+          Iel.value = ""
           for(let i = 0; i < 3; i++){
             const el = document.getElementById(i)
-
+            console.log(el)
             if(el){
               el.remove()
             }
           }
 
-          word = words.at(Math.random() * 4)
+          word = words.at(Math.floor(Math.random() * 4))
+          console.log(word)
 
 
           for(let i = 0; i < word.length; i++){
@@ -998,6 +1003,7 @@ document.appendChild(newel)
             el.style.width = "100px"
             el.style.height = "100px"
             el.style.border = "5px solid black"
+            el.id = i
             container.appendChild(el)
           }
 
@@ -1008,7 +1014,6 @@ document.appendChild(newel)
 
       }
 
-      const Iel = document.createElement("input")
 
       const container = document.createElement("div")
 
@@ -1023,6 +1028,7 @@ document.appendChild(newel)
         const el = document.createElement("div")
         el.style.width = "100px"
         el.style.height = "100px"
+        el.id = i
         el.style.border = "5px solid black"
         container.appendChild(el)
       }
