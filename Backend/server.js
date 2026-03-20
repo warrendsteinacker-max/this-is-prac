@@ -1798,3 +1798,143 @@ app.listen(3000, () => {
   console.log('└────────────────────────────────────────────────────────────┘');
   console.log('');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////server for ai auto via webscraping/puppeter///////////////////////////////
+
+
+
+
+
+
+
+// import { GoogleGenAI } from '@google/genai';
+// import puppeteer from 'puppeteer';
+
+// const ai = new GoogleGenAI({ apiKey: '' });
+// let browser, page;
+
+// // Global AI Brain State
+// let state = {
+//   activeGoal: "Discover trending technology and find interesting GitHub repositories",
+//   todoList: ["Search Google for 'latest open source AI tools'", "Analyze results"],
+//   observationLog: [],
+// };
+
+// // --- The "Hands" of the AI (Puppeteer Actions) ---
+// const actions = {
+//   search_google: async (query) => {
+//     if (!browser) browser = await puppeteer.launch({ headless: false, defaultViewport: null });
+//     if (!page) page = (await browser.pages())[0] || await browser.newPage();
+//     await page.goto(`https://www.google.com/search?q=${encodeURIComponent(query)}`, { waitUntil: 'networkidle2' });
+//     const results = await page.evaluate(() => {
+//       return Array.from(document.querySelectorAll('h3')).map(el => el.innerText).join('\n');
+//     });
+//     return `Google Search Results:\n${results}`;
+//   },
+
+//   visit_url: async (url) => {
+//     if (!browser) browser = await puppeteer.launch({ headless: false });
+//     if (!page) page = await browser.newPage();
+//     await page.goto(url, { waitUntil: 'networkidle2' });
+//     const text = await page.evaluate(() => document.body.innerText.substring(0, 2000));
+//     return `Content from ${url}:\n${text}`;
+//   },
+
+//   type_text: async ({ selector, text }) => {
+//     await page.waitForSelector(selector, { timeout: 5000 });
+//     await page.type(selector, text);
+//     await page.keyboard.press('Enter');
+//     return `Typed "${text}" into ${selector} and pressed Enter.`;
+//   },
+
+//   click_element: async ({ selector }) => {
+//     await page.waitForSelector(selector, { timeout: 5000 });
+//     await page.click(selector);
+//     return `Clicked element: ${selector}`;
+//   }
+// };
+
+// async function startAutonomousLoop() {
+//   console.log(`\n\x1b[35m--- AI is deciding what to do next... ---\x1b[0m`);
+
+//   try {
+//     // CORRECT SYNTAX FOR @google/genai:
+//     // We use ai.models.generateContent directly
+//     const result = await ai.models.generateContent({
+//       model: 'gemini-2.0-flash',
+//       contents: [{ 
+//         role: 'user', 
+//         parts: [{ text: `
+//           You are an autonomous web agent. You have full control over a browser.
+//           GOAL: ${state.activeGoal}
+//           TODO: ${JSON.stringify(state.todoList)}
+//           LOGS: ${JSON.stringify(state.observationLog)}
+
+//           RETURN JSON ONLY:
+//           {
+//             "thought": "your reasoning",
+//             "actionType": "search_google",
+//             "actionInput": "query",
+//             "newObservations": [],
+//             "updatedTodo": []
+//           }
+//         `}] 
+//       }],
+//       config: { 
+//         response_mime_type: 'application/json' 
+//       }
+//     });
+
+//     // Accessing the text in the new SDK
+//     const action = JSON.parse(result.response.text());
+
+//     console.log(`\x1b[33m[Thought]:\x1b[0m ${action.thought}`);
+//     console.log(`\x1b[32m[Action]:\x1b[0m ${action.actionType}`);
+
+//     // ... (Your existing execution logic for search_google, visit_url, etc.)
+
+//     // Execute the AI's chosen tool
+//     let toolResult;
+//     if (action.actionType === 'search_google') {
+//       toolResult = await actions.search_google(action.actionInput);
+//     } else if (action.actionType === 'visit_url') {
+//       toolResult = await actions.visit_url(action.actionInput);
+//     } else if (action.actionType === 'type_text') {
+//       toolResult = await actions.type_text(action.actionInput);
+//     } else if (action.actionType === 'click_element') {
+//       toolResult = await actions.click_element(action.actionInput);
+//     }
+
+//     state.todoList = action.updatedTodo;
+//     state.observationLog.push(...action.newObservations);
+//     state.observationLog.push(`Result: ${toolResult?.substring(0, 300)}`);
+
+//     setTimeout(startAutonomousLoop, 4000);
+
+//   } catch (err) {
+//     console.error("Critical Error:", err.message);
+//     setTimeout(startAutonomousLoop, 10000);
+//   }
+// }
+
+// // Start the browser and the agent
+// startAutonomousLoop();
