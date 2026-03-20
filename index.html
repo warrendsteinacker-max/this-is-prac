@@ -1058,26 +1058,59 @@ document.appendChild(newel)
 <body>
   
 
-  <script>
-    
-    let Gcount;
+  <form id="form" onsubmit="FORMs()">
+    <button type="submit">start game</button>
+  </form>
 
-    function ONCAHNGE(e) {
+  <script>
+    const fromv = document.getElementById("form")
+    const GD = document.createElement("div")
+    GD.style.width = "fit-content"
+    GD.style.height = "fit-content" 
+    GD.style.border = "5px solid balck"
+    GD.style.display = "grid"
+    GD.style.gridTemplateColumns = "repeat(3, 1rf)"
+    GD.style.gridTemplateRows = "repeat(3, 1rf)" 
+    let Gcount;
+    let state = false
+    let trackingGs = []
+    let gARRAY = Array(Gcount).fill(null)
+    let HALFg = gARRAY.map((index, _) => index)
+    let fullGs = [...HALFg, ...HALFg]
+    let Gdisplay = fullGs.sort(() => Math.random() - 0.5)
+
+
+    function ONCHANGE(e) {
       Gcount = Number(e.target.value)
       console.log(Gcount)
     }
     
     const selectG = document.createElement("input")
 
-    selectG.type = number
+    selectG.type = "number"
 
     selectG.min = 1
 
     selectG.max = 10
 
-    selectG.addeventLIstener('onchange', ONCHANGE)
+    selectG.addEventListener('change', ONCHANGE)
 
-    document.body.appendChild(selectG)
+    fromv.appendChild(selectG)
+    document.body.appendChild(GD)
+
+    function FORMs() {
+
+      if(state){
+        return null
+      }
+
+      state = true
+
+      for(let i = 0; i < Gdisplay.length; i++){
+
+      }
+      
+    }
     
   </script>
 </body>
