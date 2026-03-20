@@ -967,9 +967,49 @@ document.appendChild(newel)
 
       let word = words.at(Math.random() * 4)
 
+      let STAT = 0
+
+      function ONKEYDOWN(e) {
+
+        if(e.key === word.charAt(STAT)){
+          const el = document.getElementById(STAT)
+          el.textContent = e.key
+          STAT = STAT + 1
+        }
+
+        else if(STAT === word.length - 1){
+          STAT = 0
+          for(let i = 0; i < 3; i++){
+            const el = document.getElementById(i)
+
+            if(el){
+              el.remove()
+            }
+          }
+
+          word = words.at(Math.random() * 4)
+
+
+          for(let i = 0; i < word.length; i++){
+            const el = document.createElement("div")
+            el.style.width = "100px"
+            el.style.height = "100px"
+            el.style.border = "5px solid black"
+            container.appendChild(el)
+          }
+
+          
+
+        }
+
+
+      }
+
       const Iel = document.createElement("input")
 
       const container = document.createElement("div")
+
+      Iel.addEventListener("keydown", ONKEYDOWN)
 
       container.style.display = "flex"
       container.style.flexDirection = "row"
@@ -980,10 +1020,14 @@ document.appendChild(newel)
         const el = document.createElement("div")
         el.style.width = "100px"
         el.style.height = "100px"
-        el.value = word.charAt(i)
         el.style.border = "5px solid black"
         container.appendChild(el)
       }
+
+
+      document.body.appendChild(container)
+
+      document.body.appendChild(Iel)
 
 
 
