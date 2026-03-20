@@ -881,8 +881,20 @@ document.appendChild(newel)
     gel.style.height = "fit-content"
     gel.style.border = "5px solid black"
     gel.style.display = "grid"
-    gel.style.gridTemplateColumns = "repeat(3, 1rf)"
-    gel.style.gridTemplateRows = "repeat(3, 1rf)"
+    gel.style.gridTemplateColumns = "repeat(3, 1fr)"
+    gel.style.gridTemplateRows = "repeat(3, 1fr)"
+
+    document.body.appendChild(gel)
+
+    for(let i = 0; i < 9; i++){
+      const el = document.createElement("div")
+      el.id = i
+      el.style.width = "100px"
+      el.style.height = "100px"
+      el.style.border = "5px solid black"
+
+      gel.appendChild(el)
+    }
   </script>
 </body>
 </html>
