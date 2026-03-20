@@ -867,7 +867,7 @@ document.appendChild(newel)
 ////////// -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -947,6 +947,47 @@ document.appendChild(newel)
       el.addEventListener("click", ONCLICK)
       gel.appendChild(el)
     }
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+      let words = ["at", "man", "fan", "am", "sad"]
+
+      let word = words.at(Math.random() * 4)
+
+      const Iel = document.createElement("input")
+
+      const container = document.createElement("div")
+
+      container.style.display = "flex"
+      container.style.flexDirection = "row"
+      container.style.width = "fit-content"
+      container.style.height = "fit-content"
+      
+      for(let i = 0; i < word.length; i++){
+        const el = document.createElement("div")
+        el.style.width = "100px"
+        el.style.height = "100px"
+        el.value = word.charAt(i)
+        el.style.border = "5px solid black"
+        container.appendChild(el)
+      }
+
+
+
+
   </script>
 </body>
 </html>
