@@ -953,7 +953,7 @@ document.appendChild(newel)
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1041,6 +1041,44 @@ document.appendChild(newel)
 
 
 
+  </script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <script>
+    
+    let Gcount;
+
+    function ONCAHNGE(e) {
+      Gcount = Number(e.target.value)
+      console.log(Gcount)
+    }
+    
+    const selectG = document.createElement("input")
+
+    selectG.type = number
+
+    selectG.min = 1
+
+    selectG.max = 10
+
+    selectG.addeventLIstener('onchange', ONCHANGE)
+
+    document.body.appendChild(selectG)
+    
   </script>
 </body>
 </html>
