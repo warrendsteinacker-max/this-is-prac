@@ -877,27 +877,38 @@ document.appendChild(newel)
 <body>
   <script>
 
-    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+
     let d = Array(9).fill(null)
     let count = 0
     let turn = false;
     let S;
 
     function ONCLICK(e){
+      
+      const el = document.getElementById(e.target.id)
+
       if(d[Number(e.target.id)]){
         return null
       }
+      
 
       S = turn ? "X" : "O"
       d[Number(e.target.id)] = S
       count = count + 1
       turn = !turn
+      el.textContent = S
 
-      for(let i = 0; i < 9; i++){
+      for(let i = 0; i < 8; i++){
+        
+        var win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+        console.log(win)
         let w = win[i]
-        if(w[0] === w[1] === w[2]){
+        console.log(w)
+
+        if(d[w[0]] && d[w[0]] === d[w[1]] && d[w[1]] === d[w[2]]){
+
           turn ? alert("O won") : alert("X won") 
-          let count = 0
+          count = 0
           d = Array(9).fill(null)
           for(let i = 0; i < 9; i++){
             const el = document.getElementById(i)
@@ -908,7 +919,7 @@ document.appendChild(newel)
 
       if(count === 8){
         alert("there was a draw")
-        let count = 0
+        count = 0
         d = Array(9).fill(null)
         for(let i = 0; i < 9; i++){
           const el = document.getElementById(i)
