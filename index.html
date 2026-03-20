@@ -971,6 +971,9 @@ document.appendChild(newel)
 
       function ONKEYDOWN(e) {
 
+        console.log(e.key)
+        console.log(word.charAt(STAT))
+
         if(e.key === word.charAt(STAT)){
           const el = document.getElementById(STAT)
           el.textContent = e.key
