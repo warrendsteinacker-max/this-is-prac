@@ -876,6 +876,47 @@ document.appendChild(newel)
 </head>
 <body>
   <script>
+
+    const win = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    let d = Array(9).fill(null)
+    let count = 0
+    let turn = false;
+    let S;
+
+    function ONCLICK(e){
+      if(d[Number(e.target.id)]){
+        return null
+      }
+
+      S = turn ? "X" : "O"
+      d[Number(e.target.id)] = S
+      count = count + 1
+      turn = !turn
+
+      for(let i = 0; i < 9; i++){
+        let w = win[i]
+        if(w[0] === w[1] === w[2]){
+          turn ? alert("O won") : alert("X won") 
+          let count = 0
+          d = Array(9).fill(null)
+          for(let i = 0; i < 9; i++){
+            const el = document.getElementById(i)
+            el.textContent = ""
+          }
+        }
+      }
+
+      if(count === 8){
+        alert("there was a draw")
+        let count = 0
+        d = Array(9).fill(null)
+        for(let i = 0; i < 9; i++){
+          const el = document.getElementById(i)
+          el.textContent = ""
+        }
+      }
+    }
+
     const gel = document.createElement("div")
     gel.style.width = "fit-content"
     gel.style.height = "fit-content"
@@ -888,11 +929,11 @@ document.appendChild(newel)
 
     for(let i = 0; i < 9; i++){
       const el = document.createElement("div")
-      el.id = i
+      el.id = Number(i)
       el.style.width = "100px"
       el.style.height = "100px"
       el.style.border = "5px solid black"
-
+      el.addEventListener("click", ONCLICK)
       gel.appendChild(el)
     }
   </script>
