@@ -1167,22 +1167,28 @@ document.appendChild(newel)
            tracking = []
            e.target.textContent = e.target.value
            stat = stat + 1
-           console.log(stat)
-           if(stat === 15){
-            g = Darray.map((index, _) => index).sort(() => Math.random() - 0.5)
+
+           if(stat === 8){
+            g = gg.sort(() => Math.random() - 0.5)
             alert("you won new game started")
+            stat = 0
             for(let i = 0; i < 16; i++){
-              const el = document.getElementById(i)
-              el.textContent = ""
+              const ell = document.getElementById(i)
+              ell.remove()
+              const el = document.createElement("div")
+              el.style.width = "100px"
+              el.style.height = "100px"
+              el.style.border = "5px solid black"
               el.id = i
               el.value = g[i]
+              el.addEventListener("click", ONCLICK)
+              D.appendChild(el)
             }
            } 
         }
         else{
           e.target.textContent = e.target.value
-          stat = stat === 1 ? stat -1 : stat - 2
-          console.log(stat)
+        
           s = true
           setTimeout(() => {
             e.target.textContent = ""
@@ -1193,8 +1199,8 @@ document.appendChild(newel)
         }
       }
       else{
-        stat = stat + 1
-        console.log(stat)
+        
+       
 
         const el = document.getElementById(e.target.id)
         
