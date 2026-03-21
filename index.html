@@ -1067,7 +1067,7 @@ document.appendChild(newel)
     const GD = document.createElement("div")
     GD.style.width = "fit-content"
     GD.style.height = "fit-content" 
-    GD.style.border = "5px solid balck"
+    GD.style.border = "5px solid black"
     GD.style.display = "grid"
     GD.style.gridTemplateColumns = "repeat(3, 1rf)"
     GD.style.gridTemplateRows = "repeat(3, 1rf)" 
@@ -1107,7 +1107,12 @@ document.appendChild(newel)
       state = true
 
       for(let i = 0; i < Gdisplay.length; i++){
-
+        const el = document.createElement("div")
+        el.style.width = "100px"
+        el.style.height = "100px"
+        el.style.border = "5px solid black"
+        el.value = Gdisplay[i]
+        GD.appendChild(el)
       }
       
     }
