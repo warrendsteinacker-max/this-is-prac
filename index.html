@@ -1138,16 +1138,78 @@ document.appendChild(newel)
 
   <script>
     
-
+    let num = 0
     const D = document.getElementById("D")
+    const Darray = Array(8).fill("")
+    for(let i = 0; i < 8; i++){
+      Darray[i] = i
+    }
+    let gg = [...Darray, ...Darray]
 
-    D.style.border = "5px solid black"
+    let g = gg.sort(() => Math.random() - 0.5)
+
+    let tracking = []
+    let stat = 0
     D.style.height = "fit-content"
     D.style.width = "fit-content"
     D.style.display = "grid"
-    D.style.gridTemplateColumns = "repeat(8, 1rf)"
-    D.style.gridTemplateRows = "repeat(8, 1rf)"
+    D.style.gridTemplateColumns = "repeat(6, 1fr)"
+    D.style.gridTemplateRows = "repeat(3, 1fr)"
 
+    function ONCLICK(e){
+
+      if(tracking.length === 1){
+        if(Number(e.target.value) === Number(tracking[0].value)){
+           tracking = []
+           e.target.textContent = e.target.value
+           stat = stat + 1
+           console.log(stat)
+           if(stat === 15){
+            g = Darray.map((index, _) => index).sort(() => Math.random() - 0.5)
+            alert("you won new game started")
+            for(let i = 0; i < 16; i++){
+              const el = document.getElementById(i)
+              el.textContent = ""
+              el.id = i
+              el.value = g[i]
+            }
+           } 
+        }
+        else{
+          e.target.textContent = e.target.value
+          stat = stat === 1 ? stat -1 : stat - 2
+          console.log(stat)
+          setTimeout(() => {
+            e.target.textContent = ""
+            tracking[0].textContent = ""
+            tracking = []
+          }, 3000)
+        }
+      }
+      else{
+        stat = stat + 1
+        console.log(stat)
+
+        const el = document.getElementById(e.target.id)
+        
+        tracking.push(el)
+        
+        e.target.textContent = e.target.value
+      }
+    }
+
+
+
+    for(let i = 0; i < 16; i++){
+      const el = document.createElement("div")
+      el.style.width = "100px"
+      el.style.height = "100px"
+      el.style.border = "5px solid black"
+      el.id = i
+      el.value = g[i]
+      el.addEventListener("click", ONCLICK)
+      D.appendChild(el)
+    }
 
   </script>
 </body>
