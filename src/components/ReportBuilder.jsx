@@ -1133,7 +1133,7 @@
 
 
 import React from 'react'
-import useState from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -1141,25 +1141,20 @@ const ReportBuilder = () => {
 
   const nav = useNavigate()
 
-
-  let pass;
+  const [pass, setP] = useState("")
 
   function ONSUB(e) {
-    e.prevenDefault()
+    e.preventDefault()
 
     if(pass === "pass"){
       nav('/matrix')
     }
   }
 
-  function SETP(e) {
-    pass = e.target.value
-  }
-
   return (
     <>
-    <form onSubmit={ONSUB(event)}>
-      <input type="text" placeholder='enter p' onChange={SETP}/>
+    <form onSubmit={ONSUB}>
+      <input type="text" placeholder='enter p' onChange={(e) => setP(e.target.value)}/>
       <button type="submit">submit</button>
     </form>
     </>
