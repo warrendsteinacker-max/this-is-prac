@@ -1139,6 +1139,11 @@ import { useNavigate } from 'react-router-dom'
 
 const ReportBuilder = () => {
 
+  let F = true
+  let S = false
+  let T = false
+
+
   const nav = useNavigate()
 
   const [pass, setP] = useState("")
@@ -1147,16 +1152,43 @@ const ReportBuilder = () => {
     e.preventDefault()
 
     if(pass === "pass"){
-      nav('/matrix')
+      F = false
+      S = true
     }
+  }
+
+  function ONSUBS(e) {
+    e.preventDefault()
+
+      S = false
+      T = true
+  }
+
+  function ONSUBT(e) {
+    e.preventDefault()
+
+    if(e.target.value === "pass"){
+      nav("/matrix")
+    }
+
   }
 
   return (
     <>
-    <form onSubmit={ONSUB}>
+    {F && <form onSubmit={ONSUB}>
+      <input type="text" placeholder='enter first name' onChange={(e) => setP(e.target.value)}/>
+      <button type="submit">submit</button>
+    </form>}
+
+    {S && <form onSubmit={ONSUBS}>
+      <input type="text" placeholder='enter last name' onChange={(e) => setP(e.target.value)}/>
+      <button type="submit">submit</button>
+    </form>}
+
+    {T && <form onSubmit={ONSUBT}>
       <input type="text" placeholder='enter p' onChange={(e) => setP(e.target.value)}/>
       <button type="submit">submit</button>
-    </form>
+    </form>}
     </>
   )
 }
