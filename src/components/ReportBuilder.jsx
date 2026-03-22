@@ -1139,10 +1139,12 @@ import { useNavigate } from 'react-router-dom'
 
 const ReportBuilder = () => {
 
-  let F = true
-  let S = false
-  let T = false
+  
 
+  const [F, setF] = useState(true)
+  const [S, setS] = useState(false)
+  const [T, setT] = useState(false)
+  
 
   const nav = useNavigate()
 
@@ -1152,16 +1154,16 @@ const ReportBuilder = () => {
     e.preventDefault()
 
     
-      F = false
-      S = true
+      setF(false)
+      setS(true)
     
   }
 
   function ONSUBS(e) {
     e.preventDefault()
 
-      S = false
-      T = true
+      setS(false)
+      setT(true)
   }
 
   function ONSUBT(e) {
