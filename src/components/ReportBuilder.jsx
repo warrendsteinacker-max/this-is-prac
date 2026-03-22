@@ -1151,10 +1151,10 @@ const ReportBuilder = () => {
   function ONSUB(e) {
     e.preventDefault()
 
-    if(pass === "pass"){
+    
       F = false
       S = true
-    }
+    
   }
 
   function ONSUBS(e) {
@@ -1167,7 +1167,7 @@ const ReportBuilder = () => {
   function ONSUBT(e) {
     e.preventDefault()
 
-    if(e.target.value === "pass"){
+    if(pass === "pass"){
       nav("/matrix")
     }
 
