@@ -1266,10 +1266,32 @@ document.appendChild(newel)
 
     function KEYDOWN(e) {
       if(e.key === word.charAt(stat)){
-        console.log("in")
         const el = document.getElementById(stat)
         el.textContent = word.charAt(stat)
         stat = stat + 1 
+        if(stat === word.length){
+            
+          word = words.at(Math.floor(Math.random() * 7))
+
+          stat = 0
+
+          for(let i = 0; i < 5; i++){
+            const el = document.getElementById(i)
+            if(el){
+              el.remove()
+            }
+          }
+
+          for(let i = 0; i < word.length; i++){
+              const el = document.createElement("div")
+
+              el.style.border = "5px solid black"
+              el.style.height = "100px"
+              el.style.width = "100px"
+              el.id = i
+              D.appendChild(el)
+            }  
+        }
       }
     }
 ////
