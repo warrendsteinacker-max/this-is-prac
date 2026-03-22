@@ -1310,23 +1310,33 @@ document.appendChild(newel)
   <title>Document</title>
 </head>
 <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh">
-  <form style="display: flex; flex-direction: column;">
+  <form onsubmit="SUB()" style="display: flex; flex-direction: column;">
     <label for="user">username</label>
     <input type="text" id="user">
     <label for="pas">password</label>
     <input type="text" id="pas">
-    <button>submit</button>
+    <button type="submit">submit</button>
   </form>
 <script>
   const pas = document.getElementById("pas")
   const user = document.getElementById("user")
+  let pass;
+  let userr;
 
   function PASCHANGE(e) {
-
+    pass = e.target.value 
   }
   function USERCHANGE(e) {
-
+    userr = e.target.value
   }
+  function SUB() {
+    if(pass === "123" && userr === "user"){
+      window.location.href("next.html")
+    }
+  }
+
+userr.addEventListener("change", USERCHANGE)
+pass.addEventListener("change", PASCHANGE)
 </script>
 </body>
 </html>
