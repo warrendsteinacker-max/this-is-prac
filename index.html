@@ -1239,15 +1239,41 @@ document.appendChild(newel)
 
   <script>
 
+    const D = document.createElement("div")
+
+    D.style.height = "fit-content"
+    D.style.width = "fit-content"
+    D.style.display = "flex"
+    D.style.flexDirection = "row"
+
+    document.body.appendChild(D)
+
     let stat = 0
 
-    const words = [am, sad, at, fan, dad, luke, farm]
+    const words = ["am", "sad", "at", "fan", "dad", "luke", "farm"]
 
     let word = words.at(Math.floor(Math.random() * 7))
 
     for(let i = 0; i < word.length; i++){
-      el
+      const el = document.createElement("div")
+
+      el.style.border = "5px solid black"
+      el.style.height = "100px"
+      el.style.width = "100px"
+      el.id = i
+      D.appendChild(el)
     }
+
+    function KEYDOWN(e) {
+      if(e.key === word.charAt(stat)){
+        console.log("in")
+        const el = document.getElementById(stat)
+        el.textContent = word.charAt(stat)
+        stat = state + 1 
+      }
+    }
+
+    window.addEventListener("keydown", KEYDOWN)
 
   </script>
  </body>
