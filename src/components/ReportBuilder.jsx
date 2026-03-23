@@ -1132,70 +1132,29 @@
 // }
 
 
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
+
+
+
+
+///////////
+
+
+
+import {useState} from 'react'
 
 const ReportBuilder = () => {
 
+  const [lower, setLl] = useState([])
+  const [upper, setUl] = useState([])
+  const [nums, setN] = useState([])
+  const [Pchar, setPc] = useState([...lower, ...upper, ...nums])
+  const [lenght, setL] = useState(Number)
   
-
-  const [F, setF] = useState(true)
-  const [S, setS] = useState(false)
-  const [T, setT] = useState(false)
-  
-
-  const nav = useNavigate()
-
-  const [pass, setP] = useState("")
-
-  function ONSUB(e) {
-    e.preventDefault()
-
-    
-      setF(false)
-      setS(true)
-    
-  }
-
-  function ONSUBS(e) {
-    e.preventDefault()
-
-      setS(false)
-      setT(true)
-  }
-
-  function ONSUBT(e) {
-    e.preventDefault()
-
-    if(pass === "pass"){
-      nav("/matrix")
-    }
-
-  }
 
   return (
-    <>
-    {F && <form onSubmit={ONSUB}>
-      <input type="text" placeholder='enter first name' onChange={(e) => setP(e.target.value)}/>
-      <button type="submit">submit</button>
-    </form>}
-
-    {S && <form onSubmit={ONSUBS}>
-      <input type="text" placeholder='enter last name' onChange={(e) => setP(e.target.value)}/>
-      <button type="submit">submit</button>
-    </form>}
-
-    {T && <form onSubmit={ONSUBT}>
-      <input type="text" placeholder='enter p' onChange={(e) => setP(e.target.value)}/>
-      <button type="submit">submit</button>
-    </form>}
-    </>
+    <div></div>
   )
 }
 
 export default ReportBuilder
-
-
-///////////
