@@ -4925,26 +4925,30 @@
 // })();
 
 
-class man{
- male = true
+class Man{
 
- isAlive(){
-  console.log("true")
- }
+  male = true
+
+  ismale(){
+    console.log("yes")
+  }
+  
 }
 
 
 
-class me extends man{
+class Me extends Man{
 
-    name = "warren"
+  n = "warren"
 
+  getRounds(){
+    console.log(n)
+  }
 
 }
 
-const Me = new me()
 
-console.log(Me.name)
-console.log(Me.male)
-console.log(Me.isAlive())
-console.log("w")
+const me = new Me()
+
+console.log(me.ismale())
+
