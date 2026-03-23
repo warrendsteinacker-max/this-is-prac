@@ -4925,30 +4925,31 @@
 // })();
 
 
-class Man{
+class Person{
 
-  male = true
-
-  ismale(){
-    console.log("yes")
+  constructor(gender){
+    this.gender = gender 
   }
   
 }
 
 
 
-class Me extends Man{
+class Me extends Person{
 
-  n = "warren"
-
-  getRounds(){
-    console.log(n)
+  constructor(gender, first, last){
+    super(gender)
+    this.first = first
+    this.last = last
   }
+  
 
 }
 
 
-const me = new Me()
+const me = new Me("male", "warren", "steinacker")
 
-console.log(me.ismale())
+console.log(me.gender)
+console.log(me.first)
+console.log(me.last)
 
