@@ -3107,163 +3107,24 @@
 // // ╚════════════════════════════════════════════════════════════╝
 
 // const ASSIGNMENT_DIRECTIONS = `
-// use this template lesson plan to formate the qustions Baker College
-// Teacher Prep Lesson Plan Format
-// Subject Area & Grade Level: Lesson Duration:
-// Lesson Goal:
-// What do we want
-// students to learn?
-// Assessment:
-// How will we know they
-// have learned it?
-// (see guide)
-// Intervention:
-// What will we do if they
-// don’t learn it?
-// (see guide)
-// Enrichment:
-// What will we do if they
-// already know it?
-// (see guide)
-// State Standards:
-// Learning Objective:
-// Materials:
-// Select your learning strategy:
-// ● Direct Teach
-// ● Demonstration
-// ● Cooperative Learning
-// ● Differentiation
-// ● Discovery/Inquiry-Based Learning
-// ● Project-Based Learning
-// ● Reading/Writing/Math Workshop
-// ● Other
-// Activities Planned: ___ Active (Students are active participants in learning)
-// ___ Passive (Teacher led lecture/demonstration)
-// ___ Both
-// Lesson Delivery Steps:
-// Core Teaching Practices addressed in your lesson (check all that apply): (from MDE CTPs)
-// ● Leading a group discussion (CTP #1)
-// ● Explaining and modeling content, practices, and strategies (CTP #2)
-// ● Eliciting and interpreting individual students’ thinking (CTP #3)
-// ● Building respectful relationships with students (CTP #10)
-// ● Check for Understanding (CTP #15)
-// Real-world connections including attention to English language learners and culturally and historically
-// responsive practices (diversity, inclusion, equity, and social justice):
-// Technology tools (listed):
-// Collaboration opportunities (list all that are included whole group, small group, partnerships, building
-// resource personnel i.e., school social worker, special educators, parents, etc…):
-// Lesson Plan Guide
-// Assessment: Used to gather information about a student’s progress towards mastery of the learning objective,
-// help the teacher identify what instruction is working well and what needs refinement, and informs the
-// students about their learning.
-// Options to consider
-// ￿ Diagnostic/Pre-Assessment – Used to check prior knowledge before a lesson
-// ￿ Self-Assessment (Writing Prompts, Running Records, Performance Task, Other)
-// ￿ Formative – Used during a lesson to check progress, identify any misconception, and give feedback to
-// students (Learning/Response Log, Admin/Exit Ticket, Think/Pair/Share, One Minute Paper, Other)
-// ￿ Summative – Used at the end of a lesson to check student mastery of the objective (End of Unit Test,
-// Final Exams or Mid-term Exams, State Tests, Culminating Project, Portfolio, Other)
-// Intervention: How will we respond when they don’t learn?
-// ￿ Differentiated Instruction
-// ￿ Target specific skills
-// ￿ Data item analysis
-// ￿ Leveled materials (below, on level,
-// above)
-// ￿ Bloom's Taxonomy
-// ￿ Grade recovery (re-do/correct)
-// ￿ Parent contact
-// ￿ Referral to Student Support Team
-// ￿ Graphic organizers
-// ￿ Manipulatives
-// ￿ Choice boards
-// ￿ Immediate feedback
-// ￿ Flexible grouping
-// ￿ Extended responses (math/reading)
-// ￿ Journal/Reading logs
-// Responses to Intervention (RtI)
-// ￿ Small group instruction
-// ￿ Tiered group instruction (Tier I, II, III)
-// ￿ 1-1
-// ￿ Centers (leveled)
-// ￿ Re-teach in a different way
-// ￿ Modify: backtrack, build background knowledge
-// ￿ Tutoring: after or before school, lunch
-// ￿ Referral to Student Support Team
-// Enrichment: How will we respond if they already know it?
-// ￿ Choice boards
-// ￿ Use vocabulary to write sentences
-// ￿ Accelerated reader
-// ￿ Centers-High level
-// ￿ Reading buddies
-// ￿ Peer tutoring
-// ￿ Enriched-Leveled Reader-Novels
-// ￿ Picture/writing journals
-// ￿ Independent projects
-// ￿ Separate curriculum
-// ￿ Games
-// ￿ Group leader
-// these are your requriments
-// create the assigment given the SOURCE_PAGES and text make parthentical source (date) words "word for word text" (). and narrative apa 7th eddition citations source (data) metion cahpter and section or page num
-// directions: Part 3 Literacy Across the Curriculum: Part A-Social Studies Literature
-// Review & Part B Social Studies Integrated Literacy Lesson Plan &
-// Reflection Directions
-// ● You will explore how literacy strategies can be integrated into content areas, with a specific
-// focus on social studies. You will analyze children’s literature for its potential to support
-// accuracy, fluency, and vocabulary development, and use their findings to design a
-// standards-aligned, integrated lesson.
-// ● The assignment includes two connected parts submitted together. Part A is a review of 2–3
-// social studies-themed children’s books, and Part B is a literacy-integrated social studies
-// lesson plan with a brief reflective rationale. This work contributes to a culminating Literacy
-// Across the Curriculum thematic unit, where you will apply cross-curricular literacy strategies
-// to support student learning in multiple subjects.
-// ● You will include:
-// Part A – Social Studies Children’s Literature Review
-// ● Assignment Overview: For each selected book (2–3 total), include the following:
-// ● Book Details
-// ▪ Title, author, publication year, grade level, and a brief summary of the
-// content and social studies connection.
-// ● Literacy Integration Analysis
-// Under each of the following categories, explain:
-// ● Accuracy – How accurate is the historical or civic content in the
-// book?
-// o What would you do instructionally to ensure students
-// understand and verify the key facts or concepts?
-// ● Fluency – How does the structure or style of the book support oral
-// reading fluency?
-// o How would you use this text to support reading fluency
-// (e.g., choral reading, performance, partner reading)?
-// ● Vocabulary – What domain-specific or academic vocabulary is
-// introduced?
-// o How would you introduce and reinforce these words
-// before, during, or after reading?
-// Part B – Social Studies Integrated Literacy Lesson Plan & Reflection
-// Using your Part A Social Studies Literature Review, develop a detailed lesson plan that
-// incorporates the key components of effective literacy instruction, specifically focused on
-// accuracy, fluency, and/or vocabulary-integrated in a social studies lesson. Your lesson
-// should be research-informed and responsive to student needs. Remember, your lesson
-// must be part of the theme you selected during module 1, as this is a thematic unit.
-// Setting the Stage for Success
-// o Baker College Teacher Prep Lesson Plan Format
-// Checklist Instructions
-// 1. Choose at least one of the texts from Part A as the foundation of your social
-// studies lesson.
-// 2. Create a literacy-integrated lesson plan that:
-// o Targets a social studies standard and a literacy standard.
-// o Includes explicit strategies to build accuracy, fluency, and vocabulary.
-// o Involves engaging activities (e.g., read-alouds, group work, performance,
-// writing tasks).
-// 3. Use the specific Baker College Teacher Prep Lesson Plan Format (provided).
-// 4. Write a 1-page reflection that addresses:
-// o How did the selected children’s literature inform or inspire your lesson
-// design choices, especially in supporting accuracy, fluency, and vocabulary
-// development?
-// o What did you learn about integrating literacy into content areas like
-// social studies, and how will this influence your approach to cross-
-// curricular planning in your future classroom?
-// Submission Guidelines
-// ● Format: One cohesive document (Word or PDF)
-// ● Length: Approximately 3–5 pages (including the table)
-// ● Style: Professional, academic tone (APA style optional unless citing outside sources)
+//  create the assigment given the SOURCE_PAGES and text make parthentical source (date) words "word for word text" (). and narrative apa 7th eddition citations source (data) metion cahpter and section or page num
+// Directions: Based on your assigned readings and in-class activities, you will analyze a video to identify teaching strategies that promote oral language, comprehension, vocabulary development and home-school connections within a classroom setting.
+
+// Click on the following link to watch the video: Case Studies in Science EducationLinks to an external site..
+
+// You will view the full video lesson, taking notes, observing instructional practices connected to course concepts for your analysis. The analysis table must:
+
+// Examine how the teacher supported students in using science talk (e.g., asking questions, explaining ideas, or collaborating with peers).
+// Determine the strategies the teacher used to introduce and reinforce science vocabulary.
+// Examine how the use of visual tools (e.g., diagrams, anchor charts) or hands-on activities (e.g., experiments, group investigations) contribute to student talk, vocabulary use, and concept understanding.
+// Determine if students were encouraged to use key terms in discussion or writing.
+// Explore the ways the teacher promoted speaking and listening skills through group discussion, partner talk, or presentations during the lesson.
+// Explore one way this science lesson could be extended at home, including activities involving families in supporting vocabulary or inquiry learning.
+// Investigate how you could modify or extend one of these strategies to better meet the needs of  learners (e.g., Dyslexic, ELs, students with IEPs, ADHD, ASD or Gifted) for literacy instruction.
+// Submission Instructions:
+
+// Save your table analysis as a PDF file.
+// Clearly post your analysis table with a brief summary. Your analysis table should be clear, organized, and easy to read (include 200-300 word summary).
 // `;
 
 // // ╔════════════════════════════════════════════════════════════╗
@@ -3279,111 +3140,171 @@
 // const SOURCE_PAGES = `
 // ---
 // AUTHOR: Annenberg Learner
-// DATE: 2026
-// PAGE: dose not have one make narrative citations about video summary aand mention sections info cited from do not make parthentical
+// DATE: n.d.
+// PAGE: 24
 // CHAPTER: dose not have one
 // SECTION: dose not have one
 
 // EXACT TEXT:
-// Video Summary: How does government function at the state level? How are state laws made? In this lesson, Diane Kerr’s students examine the branches of state government, the powers of each branch, and how a bill becomes a law.
 
-// Ms. Kerr begins by identifying the three branches of government and describing the role of each branch. Working in small groups, students use vocabulary cards and a picture of a tree to create posters that illustrate the relationship between the legislative, judicial, and executive “branches.” Then students examine the process by which a bill becomes a law and make flip books that illustrate each step. Next, Ms. Kerr identifies their state representative — the elected official who introduces bills on their behalf — then asks students to consider what legislation they would introduce if they were representatives. As the lesson concludes, students write letters to their state representative as concerned citizens, asking her to consider their proposals.
+// Case Studies in Science Education
 
-// Class at a Glance
-// Teacher: Diane Kerr
-// Grade: 4
-// School: Butcher Greene Elementary School
-// Location: Grandview, Missouri
+// Elsa — K
 
-// Themes and Standards Addressed in This Lesson
-// “State Government and the Role of the Citizen” highlights the following NCSS standards-based themes:
+// Teacher Profile
 
-// Individuals, Groups, and Institutions
-// Power, Authority, and Governance
-// Civic Ideals and Practices
-// Content Standards:
+// Name | Elsa
+// Experience | 15 years
+// Grade & Subject(s) | Two half-day kindergarten classes; all subjects
+// Classroom Demographics | Bilingual classroom
+// School | Elementary school in an urban district
+// Science Teaching | 2 days/week for 30 minutes
+// Curriculum | Specified by district
 
-// Civics
-// About the Class - Classroom Profile
-// About the Class - Lesson Background
-// Read this information to better understand the lesson shown in the video.
+// Contents
 
-// Content: Establishment and Organization of State Government
+// Module 1 Introducing the Case
 
-// The Articles of Confederation, a document consisting of a preamble and 13 articles, is considered our country’s first national constitution. It spelled out how the 13 colonies were to become a confederation or league of independent states, each with sovereign power but working together to meet common goals. This confederacy was proposed by the Second Continental Congress in 1776, (while the Declaration of Independence was being drafted), revised in 1777, and finally ratified by all 13 states in 1781.
+// Module 2 Trying New Ideas
 
-// While the Articles of Confederation created a model for independent state government, they gave so little power to the federal government that it couldn’t operate effectively. In 1789, the Articles of Confederation were superseded by the U.S. Constitution. The Constitution introduced a federalist system to unify states under a centralized national government. The federal government retained power over national affairs, while leaving states with the power to enforce laws and govern local affairs. Any powers not specifically assigned to the federal government were assigned to the states.
+// Module 3 Reflecting and Building on Change
 
-// The Constitution divided national government into three branches with a system of checks and balances and a process for making and amending laws. The structure of state government mirrors that of federal government with legislative, executive, and judicial branches for establishing, amending, and interpreting laws that are enforced at the state (as opposed to the federal) level.
+// Module 1 - Introducing the Case
 
-// The legislative branch of government refers to the House of Representatives and Senate, where bills are introduced. The executive branch of government refers to the chief executive — the president at the federal level, the governor at the state level — who has the power to sign bills into law or veto them. Finally, the judicial branch refers to the role of federal and state courts in interpreting law and determining what is constitutional.
+// Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
+// ---
 
-// Teaching Strategy: SQ3R (Survey, Question, Read, Recite, and Review)
 
-// SQ3R is a teaching strategy Ms. Kerr uses to help her students comprehend text and build meaning. Before they read a section of text, students first survey the text; that is, they skim the headings in bold print, study pictures, maps, charts, and diagrams, and read captions. The purpose of surveying headings and visuals prior to reading is to gain an overview of the topic and understand how the information is organized. The survey process also activates students’ background knowledge as they identify terms that are familiar and make a note of terms that are new. Students then move to the question phase of the strategy, in which they form questions based on the bold headings in the text. Developing these questions in advance helps students to focus on the most important information contained in the section. Students then read to find the answers to their questions, synthesize what they have read through reciting (sharing with a partner, general discussion), and summarize what is learned in the review. SQ3R encourages reader engagement and increases comprehension and retention.
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 25
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+// Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings.
+
+// Seasons Study
+// To initiate discussion of seasonal characteristics, Elsa reads aloud a picture book. Students are then asked to verbalize what they know about seasons. Finally, students are given paper divided into four sections and asked to draw a picture that represents each season.
+
+// Discussion Questions
+// Given Elsa's interest in having students "participate more" during science activities, what would you describe as the strengths and weaknesses of the seasons study?
+
+// What role do you think "free exploration" of objects and phenomena should play in helping students develop basic scientific understandings?
+
+// How would you design activities so that students are likely to make scientifically accurate "discoveries?"
+
+// Module 2 - Trying New Ideas
+// Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa
+
+// ---
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 26
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// takes a "guided discovery" approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
+
+// After working in pairs, where materials are shared, each student completes a worksheet that reflects his or her findings about materials through which a magnetic force can travel. Later, the class reviews the worksheets together. Elsa believes that when students take their worksheets home, students' understandings are again reinforced when shared with family members.
+
+// Magnet Study
+// After a period where students find out what magnets will and will not pick up, student pairs work together in a guided discovery activity to determine whether magnetic force can travel through various substances such as water, paper, wood, and cloth. Students record their discoveries on worksheets and discuss their findings with the entire class.
+
+// Discussion Questions
+// In comparing the magnet study to the seasons study, what do you consider to be the most important changes with regard to getting students to be more actively engaged?
+
+// What meaning does the "discovery method" have for you? How would you contrast "free exploration" with "guided discovery?"
+
+// What would you do to help students reach scientific conclusions and represent their learning after a "discovery" activity?
+// ---
+
+
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 27
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// Module 3 - Reflecting and Building on Change
+// As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. This time, pairs of students each have their own materials but are encouraged to share their results.
+
+// One of Elsa's goals is that students notice consistent results from mixing certain colors. Another goal is that students develop ways of expressing their findings. Overall, however, Elsa recognizes that this activity allows many different outcomes as students pose their own questions and find their own answers by mixing colors.
+
+// Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge. Having never seen this before, Elsa is elated.
+
+// Mixing Colors Activities
+// Students mix food coloring in water to discover what happens when different colors are combined. Discoveries are shared between partners and with Elsa. Later, students use colored cellophane as overlays to see what other changes in color can result. Both activities are designed to reflect a more "open discovery" approach.
+
+// Discussion Questions
+// How would you compare the purposes and the outcomes of the mixing colors activity with the magnet study?
+
+// In your opinion, what is the appropriate balance between free exploration, guided discovery, and open discovery in elementary science? In later grades?
+// ---
+
+
+// ---
+// AUTHOR: Ramlal 
+// DATE: 2023
+// PAGE: 20
+// CHAPTER: Chapter 3
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// NOTES FROM THE FIELD ...
+// I read to my students every day. I always wanted to use my read-aloud time to capture their interests and make reading fun. So, I thought it would be a good idea to allow the students to select the books we’d read. It seemed to be working just fine. Then, I had students take a practice state test. In this practice test, they scored very well when reading and writing about fictional passages. However, they struggled quite a bit with informational passages. During the first few months prior to the practice test, nearly all of the read-aloud books were fictional. This helped me see the importance of varying the genres I used in my read-alouds. It also confirmed what an important instructional tool a read-aloud can be.
+// INTRODUCTION: COMPREHENSION In Chapter 2, we explored the connections accuracy, fluency, and vocabulary may have to a student’s comprehension of a text. In this chapter, we will delve more deeply into the aspects we must consider when teaching reading as it relates to comprehension.
+// TExT SELECTION Comprehension is how a student understands what was read. When we consider our instructional plans, it is important to think of the types of texts we expect our students to work with. As comprehension is essential for learning in all subject areas, we must ensure that our instructional plans include texts from various genres (e.g., chapter books,
 // ---
 
 // ---
 // AUTHOR: Ramlal 
 // DATE: 2023
-// PAGE: 9
-// CHAPTER: Chapter 2
+// PAGE: 21
+// CHAPTER: Chapter 3
 // SECTION: dose not have one
 
 // EXACT TEXT:
 
-// ACCURACY Accuracy involves how a student reads a text aloud. When a student reads aloud the words and phrases in the printed text the way they are supposed to be pronounced, the student is reading with accuracy. Chapter 6 will explore specific ways to measure students' accuracy rates to determine how to select a level of text suitable for each student.The ability to read a text accurately can greatly contribute to a student's comprehension of the text. Similarly, if students are unable to read a text accurately, they can often struggle to understand what they read. Table 2.1 lists some possible areas of need to look for that may contribute to struggles with accuracy.If accuracy is an area of need for your students, the following are some activities you can implement in your classroom to offer support.Table 2.1 Possible Causes of Accuracy DifficultiesAffixesAffixes include prefixes and suffixes. For example, in the word international, inter- is a prefix and -al is a suffix. Students may have difficulty pronouncing words if they are unable to segment affixes.Compound WordsCompound words are two words that are combined, such as "sun" and "flower" in the word sunflower. Students may have difficulty with accuracy if they are unable to segment compound words.Controlled rThe controlled r sound occurs when a vowel sound is affected by the letter r, such as in the word girl. Students who do not understand how to apply this rule may have difficulty with pronouncing words accurately.Consonant Blends (Clusters)Consonant blends are also called consonant clusters. These are parts of words that blend together, such as bl in blue. Students may struggle with accuracy if they are unable to apply this rule to decode words.Cueing SystemsReaders rely on cueing systems to read. These systems relate to context (or meaning), syntax (or structure/grammar), and graphophonics (or the relationship between the picture of a letter and its sound). If students struggle in any of these areas, they are likely to experience difficulties with accuracy (Clay, 2000).DigraphA digraph occurs when letters form a single sound, such as ch in chick. Students may struggle with accuracy if they are unable to apply this rule to decode words.
+// textbooks, graphic novels, poetry), in various formats (e.g., print and digital), and in various mediums (e.g., letters from teachers, newspaper advertisements, email messages, videos and images, presidential speeches). It is natural for students (and even the classroom teacher) to demonstrate a preference
+// for a particular genre. However, our goal is to expose students in the upper-elementary grades to varied genres to offer an assortment of experiences to develop comprehension abilities. Table 3.1 shows an example of a checklist to keep track of the types of genres that you should incorporate into your instruction.
+// Table 3.1 Read-Aloud Genre Checklist GENRE
+// Drama Fairy Tale Historical Fiction Poetry Biography Narrative Nonfiction Textbook
+// This checklist will allow you to determine which genres have been used and
+// which genres you still need to incorporate into your classroom. This can be a valuable instructional tool to ensure that you are balancing the genres in your classroom. Table 3.2 offers a brief list of some genres typically used in an upper-elementary school classroom. When considering the genres to use in your classroom, review the standards for
+// the grade to ensure you are meeting grade-level expectations. Also, be sure to vary the format of the genres used by including a mixture of print-based and digital texts. Creating such varied exposure to reading materials can have a positive impact on how students’ comprehension develops. It can also promote engagement and an overall love of reading.
 
-// ---
-
-// ---
-// AUTHOR: Ramlal 
-// DATE: 2023
-// PAGE: 13
-// CHAPTER: Chapter 2
-// SECTION: dose not have one
-
-// EXACT TEXT:
-
-// identified. Address any misconceptions that occurred or confirm what the student read. Continue to use word analogies in meaningful contexts until the student demonstrates they are appropriately applying this skill to read words accurately.
-
-// Reading words accurately may be a major contributor to understanding what was read. Thus, we need to pay careful attention to our students' accuracy skills and use methods, like those described above, to support such skills.
-
-// FLUENCY
-// Fluency and accuracy are closely linked. Fluency is how a student reads a text with automaticity (accuracy and speed) and prosody, or expression. If one or more of these components are an area of need for a student, then struggles with comprehension and accuracy may develop. For instance, suppose I read a text very quickly, ignoring punctuation and other textual features, such as bolded or capitalized words. Reading a text this way may prevent me from fully understanding the author's intended message. Thus, when observing how a student reads a text aloud, be sure to pay special attention to their fluency (automaticity and prosody). If you do notice that fluency is an area of need for a student, here are some activities you can incorporate into your instructional plans to offer support.
-
-// Choral Reading
-// Choral reading can be completed in a whole-class or small-group setting. Choral reading builds fluency because it offers students a model of what fluent reading should sound like using a predetermined text and immediately offers an opportunity for students to practice fluent reading using the same text in which the fluent reading was modeled. Choral reading requires students to read the text in unison with the teacher. A text for choral reading should be brief in length, such as a poem, and it should be clearly related to the experiences of the students, so the prior knowledge connection is apparent. Use this text over several days until the students demonstrate fluent reading.
 // ---
 
 
 // ---
 // AUTHOR: Ramlal 
 // DATE: 2023
-// PAGE: 14
-// CHAPTER: Chapter 2
+// PAGE: 23
+// CHAPTER: Chapter 3
 // SECTION: dose not have one
 
 // EXACT TEXT:
 
-// Present the text to the students and have a discussion about the concepts and key vocabulary in the text. Be sure the text is projected clearly on a chart or large screen for the group.
-
-// Read the text aloud one time for the students. Have the students listen to your fluent reading of the text.
-
-// Using the same text, read one line of the text at a time. Point to each line so students can read chorally with you. Continue to do this until the students have demonstrated fluent reading of the text.
-
-// Echo Reading
-// Echo reading can also be completed in a whole-class or small-group setting. Echo reading builds fluency as it requires students to repeat, or echo, phrases read by the teacher. This allows the students to hear a model of fluent reading and then immediately practice reading the same text fluently. In echo reading, it is recommended that a brief text, such as a poem, is selected as well, and that a connection to the experiences of the students is considered.
-
-// Present the text to the students and have a discussion about the concepts and key vocabulary in the text. Be sure the text is projected clearly on a chart or large screen for the group.
-
-// Read the text aloud one time for the students. Have the students listen to your fluent reading of the text.
-
-// Read one line of the text at a time and have the students echo the line you just read before moving on. Continue to do this until the entire text is read. You can select a new text when students have demonstrated fluent reading.
-
-// Audiobooks
-// Audiobooks can be a useful tool to build fluency. If a student struggles with reading fluently, having the student listen to audiobooks offers models of fluent reading. Have the student listen to the same audiobook several times. Then, have the student practice reading the text aloud until they can do so fluently. You should select a text that is
-
+// component of reading that is done automatically and is typically limited to accuracy, fluency, and vocabulary. Here are some examples of reading skills:
+// • decoding words (accuracy) • reading with expression (fluency) • using affixes to determine word meaning (vocabulary)
+// Thus, skills typically include the components of reading outside of comprehension. A
+// strategy is a component of reading that requires the reader to have a purposeful, metacognitive plan, or to monitor their own thinking. It often solely connects to comprehension. Here are some examples of reading strategies:
+// • making predictions using clues in the text (comprehension) • making an inference about the character’s feelings using clues in the text (comprehension)
+// Teaching a balance of skills and strategies is important to promote growth in the area
+// of reading. Overtime, as students gain experience with using strategies and continue to practice reading skills, the manner in which you plan your instruction should also evolve. Chapter 6 will discuss how to assess students in these areas.
+// WHOLE-CLASS METHODS When creating your instructional plans for the entire class, you should focus on the following areas: accuracy, fluency, vocabulary, and comprehension. Chapter 2 discussed activities you can implement to support students with reading skills (accuracy, fluency, and vocabulary). This section will focus on reading strategies for comprehension for the whole class.
+// Read-Alouds When planning for whole-class instruction, be sure to include a daily read-aloud. Use the chart in Table 3.1 to keep track of the genres used for read-alouds to promote variety. At times, you want to ensure your read-aloud has a clear instructional purpose. Plan this purpose around the needs of the class. At other times, you want to use the read-aloud to build a love for reading. Table 3.3 lists some general read-aloud tips to consider
 // ---
 
 
@@ -3391,32 +3312,24 @@
 // ---
 // AUTHOR: Ramlal 
 // DATE: 2023
-// PAGE: 15
-// CHAPTER: Chapter 2
+// PAGE: 24
+// CHAPTER: Chapter 3
 // SECTION: dose not have one
 
 // EXACT TEXT:
 
-
-// Have students review sight words on flashcards with a partner.
-
-// Play sight word games, such as sight word bingo.
-
-// Use a visual word wall with sight words.
-
-// Keep a tally chart of the frequency of sight words in a text.
-
-// As with accuracy, fluent reading may be a major contributor to understanding what was read. Thus, including activities to support fluency skills is rather important.
-
-// VOCABULARY
-// Vocabulary relates to the understanding a student demonstrates when they read a text. This can greatly impact comprehension. When working with your students, asking questions and having discussions can assist you in identifying how much assistance they require with developing vocabulary skills. While it is not useful to attempt to determine a specific vocabulary level, students who demonstrate a need to work on vocabulary need to be identified as vocabulary may have a huge impact on how students comprehend what was read. It can also have an impact on the quality of writing that is produced. Typically, vocabulary skills should be incorporated into your daily reading instruction and should strongly connect to the content areas. Here are some activities that can offer support in this area.
-
-// Interactive Word Walls
-// If vocabulary is an area of need for the students in your class, one suggestion is to create word walls of key concepts relevant to the current unit of study. To make a word wall interactive, use a sentence strip or large index card that has been folded in half. On the outside cover of the card, write the new word with a visual. On the inside of the card, write the definition of the new word and a sample sentence in which the word is used. Display these cards on the classroom word wall. You can also have students create their own personal word walls using poster boards. Frequently refer to the words on the word wall and encourage students to use them when reading and writing. Your overall goal with using word walls is to develop students' vocabulary in a meaningful way, rather than simply having them memorize the word meanings.
-
-// Guess-the-Password Game
-// Playing games is an engaging way to promote vocabulary learning. "Guess the password" can incorporate your existing interactive word wall and provide opportunities for vocabulary development. Here are the steps to play:
-
+// Table 3.3 Tips for Read-Alouds • Avoid using read-alouds as a behavior management tool. Implement other strategies if you need the class to sit quietly.
+// • Plan read-alouds for when you have uninterrupted blocks of time. Keep the read-aloud time to 20–30 minutes. Do not attempt to start with 20 minutes on the first day. Begin with a smaller timeframe, then work your way up.
+// • When setting an instructional purpose for a read aloud, consider the needs of the whole class as they relate to accuracy, fluency, vocabulary, and/or comprehension. vary the read-aloud to address both skills and strategies. However, at times, you should set no instructional purpose for the read-aloud to promote a “reading for fun” message.
+// • Use a checklist or some other means to vary the genres of texts used for a read-aloud (see Table 3.1).
+// • Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension. Plan questions and stopping points ahead of time.
+// • Use read-alouds to make content-area connections and/or teach purposeful life skills (e.g., dealing with bullying, sharing, friendship).
+// • Use read-alouds to make meaningful connections to students’ lives and/or expose students to new experiences and ideas that will support their learning in the future.
+// • Preview the topics in the read-aloud before reading to the class. There may be concepts or terms that are not appropriate for the grade level or individual students in the class.
+// • Select read-aloud topics that consider a broad view of diversity: cultural, linguistic, or geographical, or about students with disabilities, gender stereotypes, family structures, popular culture, and so on.
+// When planning for a read-aloud, follow the procedures below:
+// • Before Reading: Have a discussion to introduce the book and activate prior knowledge. If you have already read part of the book, have a discussion to introduce the new section or chapter and review what was read previously. Then review key details from the previous day’s read-aloud. Try to allow students to do most of the talking.
+// • During Reading: Plan out stopping points to discuss the text or to ask and answer questions. Or simply use the stopping points for students to reflect on the read-aloud before continuing
 
 // ---
 // `;
@@ -3445,9 +3358,9 @@
 // ${"=".repeat(50)}
 
 // ━━ PARENTHETICAL CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Format: "word for word text from source" (p. #).
-//      or "word for word text from source" (Chapter X).
-//      or "word for word text from source" (Section X).
+// Format: auther (date) states or other introductory word "word for word text from source" (p. #).
+//      or "word for word text from source" (author, date, page location or para use pp if on more then on page).
+     
 
 // Use whichever of PAGE / CHAPTER / SECTION is listed in the
 // source block the text came from.
@@ -3466,7 +3379,7 @@
 //    WRONG:   "word for word text." (p. 53).
 //    WRONG:   "word for word text."
 
-// 3. Every quote MUST be followed immediately by a citation reference.
+// 3. Every quote MUST be started with author (date) wods for picing together quote followed immediately by a citation reference.
 //    A quote with nothing after it is always wrong.
 //    WRONG: "is her literal comprehension, which scored at 82%."
 //    WRONG: "is her literal comprehension, which scored at 82%"
@@ -4216,825 +4129,822 @@
 
 
 
+// import puppeteer from "puppeteer";
 
-import puppeteer from "puppeteer";
+// // ╔════════════════════════════════════════════════════════════╗
+// // ║                                                            ║
+// // ║   ASSIGNMENTS — Define all your assignments here          ║
+// // ║                                                            ║
+// // ║   Each assignment has:                                     ║
+// // ║   - directions: what the assignment asks for              ║
+// // ║   - sources: one entry per book/chapter to pull text from ║
+// // ║     - bookTitle: exact title as it appears on Yuzu        ║
+// // ║     - author: author last name to confirm correct book    ║
+// // ║     - chapter: chapter number or name to navigate to      ║
+// // ║     - pages: array of page numbers to read text from      ║
+// // ║                                                            ║
+// // ╚════════════════════════════════════════════════════════════╝
 
-// ╔════════════════════════════════════════════════════════════╗
-// ║                                                            ║
-// ║   ASSIGNMENTS — Define all your assignments here          ║
-// ║                                                            ║
-// ║   Each assignment has:                                     ║
-// ║   - directions: what the assignment asks for              ║
-// ║   - sources: one entry per book/chapter to pull text from ║
-// ║     - bookTitle: exact title as it appears on Yuzu        ║
-// ║     - author: author last name to confirm correct book    ║
-// ║     - chapter: chapter number or name to navigate to      ║
-// ║     - pages: array of page numbers to read text from      ║
-// ║                                                            ║
-// ╚════════════════════════════════════════════════════════════╝
+// const ASSIGNMENTS = [
+//   {
+//     directions: `
+//       Write a literacy intervention analysis for a 6th grade student named Mary.
+//       Include:
+//       1. A problem statement identifying the student's core deficit
+//       2. The student's area of strength and how it serves as an instructional bridge
+//       3. Three recommended intervention strategies aligned to Michigan standards
+//       4. How these strategies connect to grade-level independence
+//       Use APA 7th Edition citations throughout.
+//     `,
+//     sources: [
+//       {
+//         bookTitle: "Literacy in Elementary Education",
+//         author: "Ramlal",
+//         chapter: "Chapter 2",
+//         pages: [8, 9, 10, 11, 12],
+//       },
+//       // Add more sources for this assignment here
+//       // {
+//       //   bookTitle: "Literacy in Grades 4-8",
+//       //   author: "Cecil",
+//       //   chapter: "Chapter One",
+//       //   pages: [1, 2, 3],
+//       // },
+//     ],
+//   },
+//   // Add more assignments here — they run one after the other automatically
+//   // {
+//   //   directions: `Write a summary of...`,
+//   //   sources: [
+//   //     { bookTitle: "...", author: "...", chapter: "Chapter 3", pages: [20, 21] },
+//   //   ],
+//   // },
+// ];
 
-const ASSIGNMENTS = [
-  {
-    directions: `
-Directions: Based on your assigned readings and in-class activities, you will analyze a video to identify teaching strategies that promote oral language, comprehension, vocabulary development and home-school connections within a classroom setting.
+// // ════════════════════════════════════════════════════════════
+// // Everything below runs automatically — do not edit.
+// // ════════════════════════════════════════════════════════════
 
-Click on the following link to watch the video: Case Studies in Science EducationLinks to an external site..
+// const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-You will view the full video lesson, taking notes, observing instructional practices connected to course concepts for your analysis. The analysis table must:
+// const YUZU_BASE    = "https://reader.yuzu.com";
+// const YUZU_LIBRARY = `${YUZU_BASE}/home/my-library`;
 
-Examine how the teacher supported students in using science talk (e.g., asking questions, explaining ideas, or collaborating with peers).
-Determine the strategies the teacher used to introduce and reinforce science vocabulary.
-Examine how the use of visual tools (e.g., diagrams, anchor charts) or hands-on activities (e.g., experiments, group investigations) contribute to student talk, vocabulary use, and concept understanding.
-Determine if students were encouraged to use key terms in discussion or writing.
-Explore the ways the teacher promoted speaking and listening skills through group discussion, partner talk, or presentations during the lesson.
-Explore one way this science lesson could be extended at home, including activities involving families in supporting vocabulary or inquiry learning.
-Investigate how you could modify or extend one of these strategies to better meet the needs of  learners (e.g., Dyslexic, ELs, students with IEPs, ADHD, ASD or Gifted) for literacy instruction.
-Submission Instructions:
+// const CHROME_PATH  = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
-Save your table analysis as a PDF file.
-Clearly post your analysis table with a brief summary. Your analysis table should be clear, organized, and easy to read (include 200-300 word summary).
-    `,
-    sources: [
-      {
-Auther: 'Cecil et alert. (2014)',
-chpater: 'Ch 3-Fostering Oral Language',
-chpater: 'Ch 11-Connecting School and Home',
-pagenums: 'find them and document em your self'
-      },
-      // Add more sources for this assignment here
-      // {
-      //   bookTitle: "Literacy in Grades 4-8",
-      //   author: "Cecil",
-      //   chapter: "Chapter One",
-      //   pages: [1, 2, 3],
-      // },
-    ],
-  },
-  // Add more assignments here — they run one after the other automatically
-  // {
-  //   directions: `Write a summary of...`,
-  //   sources: [
-  //     { bookTitle: "...", author: "...", chapter: "Chapter 3", pages: [20, 21] },
-  //   ],
-  // },
-];
+// const launchOptions = {
+//   headless: false,
+//   executablePath: CHROME_PATH,
+//   slowMo: 60,
+//   args: [
+//     "--no-sandbox",
+//     "--disable-setuid-sandbox",
+//     "--disable-blink-features=AutomationControlled",
+//     "--start-maximized",
+//   ],
+//   defaultViewport: null,
+//   ignoreDefaultArgs: ["--enable-automation"],
+// };
 
-// ════════════════════════════════════════════════════════════
-// Everything below runs automatically — do not edit.
-// ════════════════════════════════════════════════════════════
+// // ─── YUZU TEXT READER ────────────────────────────────────────────────────────
+// // One browser per source book. Navigates Yuzu, finds the book by title+author,
+// // opens the specified chapter, reads page text word for word.
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// async function launchYuzuReader(source, index) {
+//   console.log(`\n  [YUZU ${index + 1}] Launching browser for: ${source.bookTitle}`);
 
-const YUZU_BASE    = "https://reader.yuzu.com";
-const YUZU_LIBRARY = `${YUZU_BASE}/home/my-library`;
+//   const browser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [
+//       ...launchOptions.args,
+//       `--user-data-dir=C:\\Temp\\puppeteer-yuzu-${index}`,
+//     ],
+//   });
 
-const CHROME_PATH  = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+//   const page = await browser.newPage();
+//   await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, "webdriver", { get: () => false });
+//     window.chrome = { runtime: {} };
+//   });
 
-const launchOptions = {
-  headless: false,
-  executablePath: CHROME_PATH,
-  slowMo: 60,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-    "--disable-blink-features=AutomationControlled",
-    "--start-maximized",
-  ],
-  defaultViewport: null,
-  ignoreDefaultArgs: ["--enable-automation"],
-};
+//   // Go to Yuzu library — uses your existing logged-in session
+//   console.log(`  [YUZU ${index + 1}] Going to Yuzu library...`);
+//   await page.goto(YUZU_LIBRARY, { waitUntil: "domcontentloaded", timeout: 60000 });
+//   await sleep(4000);
 
-// ─── YUZU TEXT READER ────────────────────────────────────────────────────────
-// One browser per source book. Navigates Yuzu, finds the book by title+author,
-// opens the specified chapter, reads page text word for word.
+//   // If redirected to sign-in, wait for user to sign in
+//   if (page.url().includes("sign-in") || page.url().includes("login")) {
+//     console.log(`\n  [YUZU ${index + 1}] Not logged in — sign into Yuzu in this window.`);
+//     console.log(`  [YUZU ${index + 1}] Script waits until you are on the library page.`);
+//     await page.waitForFunction(
+//       () => location.href.includes("my-library") || location.href.includes("dashboard"),
+//       { timeout: 120000, polling: 1000 }
+//     );
+//     await sleep(3000);
+//   }
 
-async function launchYuzuReader(source, index) {
-  console.log(`\n  [YUZU ${index + 1}] Launching browser for: ${source.bookTitle}`);
+//   console.log(`  [YUZU ${index + 1}] On library. Searching for: ${source.bookTitle} by ${source.author}`);
 
-  const browser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      `--user-data-dir=C:\\Temp\\puppeteer-yuzu-${index}`,
-    ],
-  });
+//   // Find the book card by title text
+//   const bookFound = await page.evaluate((title, author) => {
+//     const cards = document.querySelectorAll("h3, h4, .book-title, [class*='title'], [class*='book']");
+//     for (const card of cards) {
+//       if (card.innerText && card.innerText.toLowerCase().includes(title.toLowerCase())) {
+//         // Confirm author if possible
+//         const parent = card.closest("[class*='book'], [class*='card'], li, article") || card.parentElement;
+//         const parentText = parent ? parent.innerText.toLowerCase() : "";
+//         if (!author || parentText.includes(author.toLowerCase())) {
+//           card.click();
+//           return true;
+//         }
+//       }
+//     }
+//     return false;
+//   }, source.bookTitle, source.author);
 
-  const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false });
-    window.chrome = { runtime: {} };
-  });
+//   if (!bookFound) {
+//     // Try clicking the three-dot menu and then Open Book
+//     console.log(`  [YUZU ${index + 1}] Direct click not found — trying menu approach...`);
+//     await page.evaluate((title) => {
+//       const allText = document.querySelectorAll("*");
+//       for (const el of allText) {
+//         if (el.children.length === 0 && el.innerText &&
+//             el.innerText.toLowerCase().includes(title.toLowerCase())) {
+//           el.closest("[class*='book'], [class*='card'], li, article")
+//             ?.querySelector("button, [class*='menu'], [class*='more']")
+//             ?.click();
+//           return;
+//         }
+//       }
+//     }, source.bookTitle);
+//     await sleep(1000);
 
-  // Go to Yuzu library — uses your existing logged-in session
-  console.log(`  [YUZU ${index + 1}] Going to Yuzu library...`);
-  await page.goto(YUZU_LIBRARY, { waitUntil: "domcontentloaded", timeout: 60000 });
-  await sleep(4000);
+//     // Click "Open Book" in the menu
+//     await page.evaluate(() => {
+//       const items = document.querySelectorAll("li, [role='menuitem'], button, a");
+//       for (const item of items) {
+//         if (item.innerText && item.innerText.toLowerCase().includes("open book")) {
+//           item.click();
+//           return;
+//         }
+//       }
+//     });
+//   }
 
-  // If redirected to sign-in, wait for user to sign in
-  if (page.url().includes("sign-in") || page.url().includes("login")) {
-    console.log(`\n  [YUZU ${index + 1}] Not logged in — sign into Yuzu in this window.`);
-    console.log(`  [YUZU ${index + 1}] Script waits until you are on the library page.`);
-    await page.waitForFunction(
-      () => location.href.includes("my-library") || location.href.includes("dashboard"),
-      { timeout: 120000, polling: 1000 }
-    );
-    await sleep(3000);
-  }
+//   // Wait for the book reader to open
+//   await sleep(5000);
+//   await page.waitForFunction(
+//     () => location.href.includes("/reader/books/") || location.href.includes("/reader/"),
+//     { timeout: 30000, polling: 1000 }
+//   ).catch(() => console.log(`  [YUZU ${index + 1}] Book reader wait timed out — continuing`));
 
-  console.log(`  [YUZU ${index + 1}] On library. Searching for: ${source.bookTitle} by ${source.author}`);
+//   await sleep(3000);
+//   console.log(`  [YUZU ${index + 1}] Book open. Navigating to ${source.chapter}...`);
 
-  // Find the book card by title text
-  const bookFound = await page.evaluate((title, author) => {
-    const cards = document.querySelectorAll("h3, h4, .book-title, [class*='title'], [class*='book']");
-    for (const card of cards) {
-      if (card.innerText && card.innerText.toLowerCase().includes(title.toLowerCase())) {
-        // Confirm author if possible
-        const parent = card.closest("[class*='book'], [class*='card'], li, article") || card.parentElement;
-        const parentText = parent ? parent.innerText.toLowerCase() : "";
-        if (!author || parentText.includes(author.toLowerCase())) {
-          card.click();
-          return true;
-        }
-      }
-    }
-    return false;
-  }, source.bookTitle, source.author);
+//   // Open the table of contents sidebar
+//   await page.evaluate(() => {
+//     const toc = document.querySelector(
+//       "[aria-label='Table of contents'], [class*='toc'], [class*='contents'], button[class*='menu']"
+//     );
+//     if (toc) toc.click();
+//   });
+//   await sleep(2000);
 
-  if (!bookFound) {
-    // Try clicking the three-dot menu and then Open Book
-    console.log(`  [YUZU ${index + 1}] Direct click not found — trying menu approach...`);
-    await page.evaluate((title) => {
-      const allText = document.querySelectorAll("*");
-      for (const el of allText) {
-        if (el.children.length === 0 && el.innerText &&
-            el.innerText.toLowerCase().includes(title.toLowerCase())) {
-          el.closest("[class*='book'], [class*='card'], li, article")
-            ?.querySelector("button, [class*='menu'], [class*='more']")
-            ?.click();
-          return;
-        }
-      }
-    }, source.bookTitle);
-    await sleep(1000);
+//   // Find and click the chapter in the TOC
+//   const chapterClicked = await page.evaluate((chapterName) => {
+//     const links = document.querySelectorAll("a, [role='link'], [class*='chapter'], [class*='toc'] li");
+//     for (const link of links) {
+//       if (link.innerText && link.innerText.toLowerCase().includes(chapterName.toLowerCase())) {
+//         link.click();
+//         return true;
+//       }
+//     }
+//     return false;
+//   }, source.chapter);
 
-    // Click "Open Book" in the menu
-    await page.evaluate(() => {
-      const items = document.querySelectorAll("li, [role='menuitem'], button, a");
-      for (const item of items) {
-        if (item.innerText && item.innerText.toLowerCase().includes("open book")) {
-          item.click();
-          return;
-        }
-      }
-    });
-  }
+//   if (!chapterClicked) {
+//     console.log(`  [YUZU ${index + 1}] Chapter link not found in TOC — trying search...`);
+//   }
 
-  // Wait for the book reader to open
-  await sleep(5000);
-  await page.waitForFunction(
-    () => location.href.includes("/reader/books/") || location.href.includes("/reader/"),
-    { timeout: 30000, polling: 1000 }
-  ).catch(() => console.log(`  [YUZU ${index + 1}] Book reader wait timed out — continuing`));
+//   await sleep(4000);
 
-  await sleep(3000);
-  console.log(`  [YUZU ${index + 1}] Book open. Navigating to ${source.chapter}...`);
+//   // Read text from each specified page
+//   let allPageText = "";
+//   const currentPageNum = source.pages[0];
 
-  // Open the table of contents sidebar
-  await page.evaluate(() => {
-    const toc = document.querySelector(
-      "[aria-label='Table of contents'], [class*='toc'], [class*='contents'], button[class*='menu']"
-    );
-    if (toc) toc.click();
-  });
-  await sleep(2000);
+//   // Navigate to first page using the page input at the bottom
+//   await page.evaluate((pageNum) => {
+//     const inputs = document.querySelectorAll("input[type='number'], input[class*='page'], .page-input");
+//     for (const input of inputs) {
+//       input.value = "";
+//       input.dispatchEvent(new Event("input", { bubbles: true }));
+//       input.value = String(pageNum);
+//       input.dispatchEvent(new Event("input", { bubbles: true }));
+//       input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
+//       input.dispatchEvent(new KeyboardEvent("keypress", { key: "Enter", bubbles: true }));
+//       input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
+//       return;
+//     }
+//   }, currentPageNum);
 
-  // Find and click the chapter in the TOC
-  const chapterClicked = await page.evaluate((chapterName) => {
-    const links = document.querySelectorAll("a, [role='link'], [class*='chapter'], [class*='toc'] li");
-    for (const link of links) {
-      if (link.innerText && link.innerText.toLowerCase().includes(chapterName.toLowerCase())) {
-        link.click();
-        return true;
-      }
-    }
-    return false;
-  }, source.chapter);
+//   await sleep(3000);
 
-  if (!chapterClicked) {
-    console.log(`  [YUZU ${index + 1}] Chapter link not found in TOC — trying search...`);
-  }
+//   // Read text from each page
+//   for (const pageNum of source.pages) {
+//     console.log(`  [YUZU ${index + 1}] Reading page ${pageNum}...`);
 
-  await sleep(4000);
+//     // Navigate to page
+//     await page.evaluate((num) => {
+//       const inputs = document.querySelectorAll("input[type='number'], input[class*='page'], .page-input");
+//       for (const input of inputs) {
+//         input.value = String(num);
+//         input.dispatchEvent(new Event("input", { bubbles: true }));
+//         input.dispatchEvent(new Event("change", { bubbles: true }));
+//         ["keydown","keypress","keyup"].forEach(evType => {
+//           input.dispatchEvent(new KeyboardEvent(evType, { key: "Enter", keyCode: 13, bubbles: true }));
+//         });
+//         return;
+//       }
+//     }, pageNum);
 
-  // Read text from each specified page
-  let allPageText = "";
-  const currentPageNum = source.pages[0];
+//     await sleep(3000);
 
-  // Navigate to first page using the page input at the bottom
-  await page.evaluate((pageNum) => {
-    const inputs = document.querySelectorAll("input[type='number'], input[class*='page'], .page-input");
-    for (const input of inputs) {
-      input.value = "";
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.value = String(pageNum);
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
-      input.dispatchEvent(new KeyboardEvent("keypress", { key: "Enter", bubbles: true }));
-      input.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
-      return;
-    }
-  }, currentPageNum);
+//     // Extract all visible text from the page content area
+//     const pageText = await page.evaluate((num) => {
+//       // Try common Yuzu content selectors
+//       const contentSelectors = [
+//         ".page-content",
+//         "[class*='page-content']",
+//         "[class*='reader-content']",
+//         "[class*='book-content']",
+//         ".epub-content",
+//         "[class*='epub']",
+//         "article",
+//         "main",
+//         "#content",
+//       ];
 
-  await sleep(3000);
+//       for (const sel of contentSelectors) {
+//         const el = document.querySelector(sel);
+//         if (el && el.innerText && el.innerText.length > 100) {
+//           return `[PAGE ${num}]\n${el.innerText.trim()}`;
+//         }
+//       }
 
-  // Read text from each page
-  for (const pageNum of source.pages) {
-    console.log(`  [YUZU ${index + 1}] Reading page ${pageNum}...`);
+//       // Fallback: get all paragraph text
+//       const paras = document.querySelectorAll("p");
+//       const text = Array.from(paras).map(p => p.innerText).filter(t => t.length > 20).join("\n");
+//       return text.length > 50 ? `[PAGE ${num}]\n${text}` : "";
+//     }, pageNum);
 
-    // Navigate to page
-    await page.evaluate((num) => {
-      const inputs = document.querySelectorAll("input[type='number'], input[class*='page'], .page-input");
-      for (const input of inputs) {
-        input.value = String(num);
-        input.dispatchEvent(new Event("input", { bubbles: true }));
-        input.dispatchEvent(new Event("change", { bubbles: true }));
-        ["keydown","keypress","keyup"].forEach(evType => {
-          input.dispatchEvent(new KeyboardEvent(evType, { key: "Enter", keyCode: 13, bubbles: true }));
-        });
-        return;
-      }
-    }, pageNum);
+//     if (pageText) {
+//       allPageText += "\n\n" + pageText;
+//       console.log(`  [YUZU ${index + 1}] Page ${pageNum}: captured ${pageText.length} chars`);
+//     } else {
+//       console.warn(`  [YUZU ${index + 1}] Page ${pageNum}: no text captured`);
+//     }
+//   }
 
-    await sleep(3000);
+//   console.log(`  [YUZU ${index + 1}] Done reading. Total: ${allPageText.length} chars`);
+//   return { browser, text: allPageText.trim(), source };
+// }
 
-    // Extract all visible text from the page content area
-    const pageText = await page.evaluate((num) => {
-      // Try common Yuzu content selectors
-      const contentSelectors = [
-        ".page-content",
-        "[class*='page-content']",
-        "[class*='reader-content']",
-        "[class*='book-content']",
-        ".epub-content",
-        "[class*='epub']",
-        "article",
-        "main",
-        "#content",
-      ];
+// // ─── FIND GEMINI INPUT ────────────────────────────────────────────────────────
+// async function findInput(page, label) {
+//   const selectors = [
+//     'rich-textarea div[contenteditable="true"]',
+//     'div[contenteditable="true"]',
+//     'div[role="textbox"]',
+//     'textarea',
+//     '.ql-editor',
+//   ];
+//   for (const sel of selectors) {
+//     try {
+//       const el = await page.$(sel);
+//       if (el) {
+//         const box = await el.boundingBox();
+//         if (box && box.width > 0) {
+//           console.log(`  [${label}] Input: ${sel}`);
+//           return { el, sel };
+//         }
+//       }
+//     } catch (_) {}
+//   }
+//   const html = await page.evaluate(() => document.body.innerHTML.substring(0, 2000));
+//   console.error(`  [${label}] No input found. HTML:\n`, html);
+//   throw new Error(`[${label}] Input not found`);
+// }
 
-      for (const sel of contentSelectors) {
-        const el = document.querySelector(sel);
-        if (el && el.innerText && el.innerText.length > 100) {
-          return `[PAGE ${num}]\n${el.innerText.trim()}`;
-        }
-      }
+// // ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
+// async function sendMessage(page, text, label) {
+//   const { el, sel } = await findInput(page, label);
+//   await el.click();
+//   await sleep(400);
+//   await page.keyboard.down("Control");
+//   await page.keyboard.press("a");
+//   await page.keyboard.up("Control");
+//   await page.keyboard.press("Backspace");
+//   await sleep(200);
 
-      // Fallback: get all paragraph text
-      const paras = document.querySelectorAll("p");
-      const text = Array.from(paras).map(p => p.innerText).filter(t => t.length > 20).join("\n");
-      return text.length > 50 ? `[PAGE ${num}]\n${text}` : "";
-    }, pageNum);
+//   const ok = await page.evaluate((t, s) => {
+//     const el = document.querySelector(s);
+//     if (!el) return false;
+//     el.focus();
+//     return document.execCommand("insertText", false, t);
+//   }, text, sel);
 
-    if (pageText) {
-      allPageText += "\n\n" + pageText;
-      console.log(`  [YUZU ${index + 1}] Page ${pageNum}: captured ${pageText.length} chars`);
-    } else {
-      console.warn(`  [YUZU ${index + 1}] Page ${pageNum}: no text captured`);
-    }
-  }
+//   if (!ok) {
+//     await page.evaluate((t, s) => {
+//       const el = document.querySelector(s);
+//       if (!el) return;
+//       el.focus();
+//       if (el.contentEditable === "true") {
+//         el.innerText = t;
+//       } else {
+//         Object.getOwnPropertyDescriptor(
+//           window.HTMLTextAreaElement.prototype, "value"
+//         ).set.call(el, t);
+//       }
+//       el.dispatchEvent(new Event("input", { bubbles: true }));
+//       el.dispatchEvent(new Event("change", { bubbles: true }));
+//     }, text, sel);
+//   }
 
-  console.log(`  [YUZU ${index + 1}] Done reading. Total: ${allPageText.length} chars`);
-  return { browser, text: allPageText.trim(), source };
+//   await sleep(500);
+//   const sendBtn = await page.$(
+//     'button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]'
+//   );
+//   if (sendBtn) await sendBtn.click();
+//   else await page.keyboard.press("Enter");
+//   await sleep(2000);
+// }
+
+// // ─── WAIT FOR RESPONSE ────────────────────────────────────────────────────────
+// async function waitForResponse(page, label, timeoutMs = 240000) {
+//   console.log(`  [${label}] Waiting...`);
+//   try {
+//     await page.waitForFunction(
+//       () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//       { timeout: 20000, polling: 500 }
+//     );
+//   } catch (_) {}
+
+//   await page.waitForFunction(
+//     () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//     { timeout: timeoutMs, polling: 1000 }
+//   ).catch(() => {});
+
+//   await sleep(3000);
+
+//   const text = await page.evaluate(() => {
+//     const all = [
+//       ...document.querySelectorAll("model-response"),
+//       ...document.querySelectorAll('[data-message-author-role="model"]'),
+//       ...document.querySelectorAll(".model-response-text"),
+//       ...document.querySelectorAll("message-content"),
+//     ];
+//     return all.length ? all[all.length - 1].innerText.trim() : "";
+//   });
+
+//   if (!text) console.warn(`  [${label}] Empty response`);
+//   else console.log(`  [${label}] Got ${text.length} chars`);
+//   return text;
+// }
+
+// // ─── OPEN GEMINI BROWSER ─────────────────────────────────────────────────────
+// async function openGeminiBrowser(profileName, label) {
+//   console.log(`  Opening ${label} browser...`);
+//   const browser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [
+//       ...launchOptions.args,
+//       `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`,
+//     ],
+//   });
+//   const page = await browser.newPage();
+//   await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, "webdriver", { get: () => false });
+//     window.chrome = { runtime: {} };
+//   });
+//   await page.goto("https://gemini.google.com/app", {
+//     waitUntil: "domcontentloaded",
+//     timeout: 60000,
+//   });
+//   return { browser, page };
+// }
+
+// // ─── CITATION SCANNER ────────────────────────────────────────────────────────
+// function scanCitations(text) {
+//   const violations = [];
+//   let m;
+
+//   // 1a — period inside closing quote WITH citation after
+//   const r1a = /"([^"]+?)\."\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+)\)/g;
+//   while ((m = r1a.exec(text)) !== null) {
+//     violations.push({ rule: 1, bad: m[0], detail: `Period inside closing quote — must go AFTER closing parenthesis. CORRECT: "word for word text" (p. #).` });
+//   }
+
+//   // 1b — period inside closing quote with NO citation after
+//   const r1b = /"([^"]{5,}?)\."\s*(?!\s*\((?:p\.|Chapter|Section))/g;
+//   while ((m = r1b.exec(text)) !== null) {
+//     violations.push({ rule: 1, bad: m[0].trim(), detail: `Two violations: period inside closing quote AND no citation reference after it. Fix: remove entirely, write your own sentence.` });
+//   }
+
+//   // 2 — empty quotes
+//   const r2 = /""\s*\((?:p\.\s*\d+|Chapter[^)]*|Section[^)]*)?\)/g;
+//   while ((m = r2.exec(text)) !== null) {
+//     violations.push({ rule: 2, bad: m[0], detail: `Empty quotes — drop citation, write your own sentence.` });
+//   }
+
+//   // 3 — known filler connector words before opening quote
+//   const knownGlue = [/\brate of\s+"/, /(?<!\w)a\s+"/, /\bsuch as\s+"/, /\bknown as\s+"/, /\breferred to as\s+"/, /\bcalled\s+"/, /\btermed\s+"/, /\bof\s+"/, /\bin\s+"/];
+//   for (const pattern of knownGlue) {
+//     const glueRe = new RegExp(pattern.source + '([^"]{3,}?)"\\s*\\((?:p\\.\\s*\\d+|Chapter[^)]+|Section[^)]+)\\)', 'g');
+//     while ((m = glueRe.exec(text)) !== null) {
+//       violations.push({ rule: 3, bad: m[0].trim(), detail: `Filler connector word before opening quote — citation must start with opening quote or pulled-out source word. Drop and write your own sentence.` });
+//     }
+//   }
+
+//   // 4 — chapter/section inside narrative citation parens
+//   const r4 = /([A-Z][a-zA-Z\s]+?)\s*\((\d{4})\s*,\s*(?:Chapter|Ch\.?)\s*[\d\w]+[^)]*\)/g;
+//   while ((m = r4.exec(text)) !== null) {
+//     violations.push({ rule: 4, bad: m[0], detail: `Chapter/section inside parentheses — write naturally in the sentence: According to ${m[1].trim()} (${m[2]}), from Chapter X in Section X, ...` });
+//   }
+
+//   // 5 — narrative citation with no location in sentence
+//   const r5 = /According to ([^(]+?)\s*\((\d{4})\)\s*,\s*/gi;
+//   while ((m = r5.exec(text)) !== null) {
+//     const after = text.substring(m.index + m[0].length, m.index + m[0].length + 250).toLowerCase();
+//     if (!after.match(/\b(chapter|section|page|p\.)\b/)) {
+//       violations.push({ rule: 5, bad: m[0].trim(), detail: `Narrative citation missing location — add chapter/section/page naturally in sentence: According to ${m[1].trim()} (${m[2]}), from Chapter X in Section X on page #, ...` });
+//     }
+//   }
+
+//   // 6 — opening quote starts on capital word
+//   const r6 = /"([A-Z][a-zA-Z']+)\s+([^"]{3,}?)"\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+)\)/g;
+//   while ((m = r6.exec(text)) !== null) {
+//     violations.push({ rule: 6, bad: m[0], detail: `Opening quote starts on capital word "${m[1]}" — pull it out and lowercase: ${m[1].toLowerCase()} "${m[2]}..." (p. #).` });
+//   }
+
+//   // 7 — quotes around word/phrase with no citation (short, no verb)
+//   const r7 = /"([^"]{2,60})"\s*(?!\s*\((?:p\.|Chapter|Section))/g;
+//   const hasVerb = /\b(is|are|was|were|has|have|must|should|will|can|does|do|reads|shows)\b/;
+//   while ((m = r7.exec(text)) !== null) {
+//     if (!hasVerb.test(m[1].toLowerCase()) && m[1].length < 60) {
+//       violations.push({ rule: 7, bad: m[0].trim(), detail: `Quotes around "${m[1]}" with no citation — remove quotes and write plainly.` });
+//     }
+//   }
+
+//   return violations;
+// }
+
+// function buildEvidenceReport(violations) {
+//   if (!violations.length) return null;
+//   let r = `Scanner found ${violations.length} violation(s):\n\n`;
+//   violations.forEach((v, i) => {
+//     r += `VIOLATION ${i + 1} — Rule ${v.rule}\nWrong: ${v.bad}\nWhy: ${v.detail}\n\n`;
+//   });
+//   return r;
+// }
+
+// // ─── PROMPT BUILDERS ─────────────────────────────────────────────────────────
+// function buildFirstPrompt(directions, sourceBlocks) {
+//   const sourcesText = sourceBlocks.map(s =>
+//     `---\nBOOK: ${s.source.bookTitle}\nAUTHOR: ${s.source.author}\nCHAPTER: ${s.source.chapter}\nPAGES: ${s.source.pages.join(", ")}\n\nEXACT TEXT FROM BOOK:\n${s.text}\n---`
+//   ).join("\n\n");
+
+//   return `You are completing an assignment. You have been given the exact word-for-word text from the required textbooks. Use this text to write the assignment.
+
+// ${"=".repeat(50)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(50)}
+// ${directions.trim()}
+
+// ${"=".repeat(50)}
+// SOURCE TEXT — PULLED WORD FOR WORD FROM TEXTBOOKS:
+// ${"=".repeat(50)}
+// ${sourcesText}
+
+// ${"=".repeat(50)}
+// CITATION RULES — FOLLOW EVERY ONE:
+// ${"=".repeat(50)}
+
+// PARENTHETICAL CITATIONS: "word for word text" (p. #).
+//   - Text inside quotes must be EXACT word for word from the source above
+//   - Period goes AFTER the closing parenthesis — NEVER inside the quotes
+//   - Every quote MUST be followed by (p. #) or (Chapter X) or (Section X)
+//   - A quote with nothing after it is WRONG
+//   - No filler connector words before opening quote: rate of "text" is wrong
+//   - A word pulled out of the source sitting before the quote IS correct:
+//     decoding "is Mary's greatest area of need" (p. 8). ← CORRECT
+//   - If source text starts with a capital — pull that word OUT, lowercase it,
+//     blend into sentence, quote opens on second word:
+//     SOURCE: Decoding is Mary's greatest area of need
+//     CORRECT: decoding "is Mary's greatest area of need" (p. 8).
+//   - No empty quotes: "" (p. #) is wrong
+//   - No random quotes around terms without a citation after them
+
+// NARRATIVE CITATIONS: According to Author (date), from Chapter X in Section X on page #, ...
+//   - Author name and date in parentheses — chapter/section/page naturally in sentence
+//   - NEVER put chapter/section inside the parentheses
+//   - Every narrative citation must mention where in the source it came from
+
+// IF IN DOUBT about any citation — drop it and write your own sentence.
+
+// Now complete the assignment using only the source text provided above.`;
+// }
+
+// const buildReviewerPrompt = (assignment, evidence) => `You are a strict APA 7th Edition citation reviewer.
+
+// ${evidence ? `Scanner already found these violations. Confirm each and check for more:\n\nSCANNER FINDINGS:\n${evidence}` : `Scanner found no violations. Do a thorough manual check.`}
+
+// RULES:
+// 1. "word for word text" (p. #). — period AFTER closing parenthesis, NEVER inside quotes
+// 2. Every quote MUST be followed by (p. #) or (Chapter X) or (Section X)
+//    "text." with no citation after it = WRONG — two violations at once
+// 3. No filler connector words before opening quote
+//    Pulled-out source word before quote IS correct: decoding "is..." (p. #). ← CORRECT
+// 4. No empty quotes: "" (p. #) is wrong
+// 5. Opening quote on capital word = WRONG
+//    decoding "is Mary's greatest area" (p. #). ← CORRECT (first word pulled out)
+// 6. No quotes around words/phrases without citation after them
+// 7. Narrative: According to Author (date), from Chapter X in Section X on page #, ...
+//    Chapter/section NEVER inside parentheses
+
+// FIX FOR ALL: remove citation, replace with plain written text.
+// Quote every wrong piece exactly. State the fix.
+
+// End with: OVERALL RESULT: PASS  or  OVERALL RESULT: FAIL
+
+// Assignment:
+// ---
+// ${assignment}
+// ---`;
+
+// function buildCorrectionPrompt(feedback, violations) {
+//   let p = `Your assignment has citation violations. Fix all of them now.\n\n`;
+//   if (violations.length) {
+//     p += `These exact wrong texts were found:\n\n`;
+//     violations.forEach((v, i) => {
+//       p += `${i + 1}. WRONG: ${v.bad}\n   WHY: ${v.detail}\n   FIX: Remove it. Write your own plain sentence instead.\n\n`;
+//     });
+//   }
+//   p += `Reviewer said:\n${feedback}\n\n`;
+//   p += `RULES:\n`;
+//   p += `- "word for word text" (p. #). — period AFTER closing paren, NEVER inside quotes\n`;
+//   p += `- Every quote needs (p. #) or (Chapter X) after it — no citation = wrong\n`;
+//   p += `- No filler connector words before opening quote\n`;
+//   p += `- Pulled-out source word before quote IS correct: decoding "is..." (p. #).\n`;
+//   p += `- No empty quotes\n`;
+//   p += `- Opening quote on capital = WRONG: pull first word out, lowercase it\n`;
+//   p += `- Narrative: According to Author (date), from Chapter X in Section X on page #, ...\n`;
+//   p += `- Any doubt — drop the citation, write your own sentence\n\n`;
+//   p += `Rewrite the full assignment now.`;
+//   return p;
+// }
+
+// function buildDirectionsCheckerPrompt(assignment, directions) {
+//   return `You are checking whether a completed assignment fully covers all points in the directions.
+// You are NOT checking citations — only content coverage.
+
+// ${"=".repeat(50)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(50)}
+// ${directions.trim()}
+
+// ${"=".repeat(50)}
+// COMPLETED ASSIGNMENT:
+// ${"=".repeat(50)}
+// ${assignment}
+
+// ${"=".repeat(50)}
+// YOUR JOB:
+// ${"=".repeat(50)}
+// For each requirement in the directions, check if it is covered.
+
+// Report:
+//   POINT: [requirement]
+//   STATUS: COVERED or MISSING
+//   REASON: [one sentence]
+
+// End with:
+//   DIRECTIONS RESULT: PASS   — all points covered
+//   DIRECTIONS RESULT: FAIL   — any point missing
+
+// If FAIL, list exactly what is missing.`;
+// }
+
+// function buildDirectionsRewritePrompt(checkerFeedback) {
+//   return `Your assignment is missing required content. Add it now.
+
+// Checker feedback:
+// ${checkerFeedback}
+
+// Keep all existing citations exactly as they are. Only add the missing content.
+// Rewrite the full assignment with the missing points included.`;
+// }
+
+// const FOLLOWUP_PROMPTS = [
+//   `Compare every citation in your assignment against the source text. Fix any parenthetical citation where the text inside the quotes is not exactly word for word from the source. Fix any narrative citation that does not mention chapter, section, or page naturally in the sentence. If a citation opens on a capital word — pull that word out, lowercase it, blend into the sentence.`,
+//   `Final check: every quote must be followed by (p. #) or (Chapter X) or (Section X). Any quote with a period inside it or nothing after it is wrong — remove it and write your own sentence. Every narrative citation must mention where in the source it came from.`,
+// ];
+
+// // ─── RUN ONE ASSIGNMENT ───────────────────────────────────────────────────────
+// async function runAssignment(assignmentNum, assignment, workerPage, reviewerPage, checkerPage) {
+//   console.log("\n" + "█".repeat(60));
+//   console.log(`  ASSIGNMENT ${assignmentNum}`);
+//   console.log("█".repeat(60));
+
+//   // Launch one Yuzu browser per source book and read text
+//   console.log(`\n  Reading source books from Yuzu (${assignment.sources.length} book(s))...`);
+//   const sourceResults = [];
+
+//   for (let i = 0; i < assignment.sources.length; i++) {
+//     const { browser, text, source } = await launchYuzuReader(assignment.sources[i], i);
+//     sourceResults.push({ browser, text, source });
+//     console.log(`  Book ${i + 1} text captured: ${text.length} chars`);
+//   }
+
+//   // Round 0 — send directions + captured source text to Worker
+//   console.log(`\n${"=".repeat(60)}`);
+//   console.log(`  ROUND 0 — Directions + book text → Worker`);
+//   console.log(`${"=".repeat(60)}\n`);
+
+//   await sendMessage(workerPage, buildFirstPrompt(assignment.directions, sourceResults), "WORKER");
+//   let lastResponse = await waitForResponse(workerPage, "WORKER");
+
+//   // Citation review rounds
+//   for (let i = 0; i < FOLLOWUP_PROMPTS.length; i++) {
+//     const round = i + 1;
+//     console.log(`\n${"=".repeat(60)}\n  CITATION ROUND ${round}\n${"=".repeat(60)}`);
+
+//     let citationApproved = false;
+//     let attempt = 0;
+
+//     while (!citationApproved) {
+//       attempt++;
+//       console.log(`\n  Attempt ${attempt} — Citation Round ${round}`);
+
+//       if (attempt === 1) {
+//         await sendMessage(workerPage, FOLLOWUP_PROMPTS[i], "WORKER");
+//         lastResponse = await waitForResponse(workerPage, "WORKER");
+//       }
+
+//       const violations = scanCitations(lastResponse);
+//       console.log(`  [SCANNER] ${violations.length ? violations.length + " violation(s)" : "No violations"}`);
+//       violations.forEach((v, i) => console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad.substring(0, 80)}`));
+
+//       await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)), "CITATION REVIEWER");
+//       const feedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
+//       console.log(`\n  CITATION REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
+
+//       const passed = feedback.includes("OVERALL RESULT: PASS");
+//       const failed = feedback.includes("OVERALL RESULT: FAIL") || feedback.toLowerCase().includes("violation");
+
+//       if (passed && !failed) {
+//         console.log(`\n  Citation Round ${round} PASSED.\n`);
+//         citationApproved = true;
+//       } else {
+//         await sendMessage(workerPage, buildCorrectionPrompt(feedback, violations), "WORKER");
+//         lastResponse = await waitForResponse(workerPage, "WORKER");
+//         await sleep(2000);
+//       }
+//     }
+//     await sleep(2000);
+//   }
+
+//   // Directions check
+//   console.log(`\n${"=".repeat(60)}\n  DIRECTIONS CHECK\n${"=".repeat(60)}`);
+//   let directionsApproved = false;
+//   let dirAttempt = 0;
+
+//   while (!directionsApproved) {
+//     dirAttempt++;
+//     console.log(`\n  Directions Check Attempt ${dirAttempt}...`);
+
+//     await sendMessage(checkerPage, buildDirectionsCheckerPrompt(lastResponse, assignment.directions), "DIRECTIONS CHECKER");
+//     const checkerFeedback = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
+//     console.log(`\n  DIRECTIONS CHECKER:\n  ` + checkerFeedback.split("\n").join("\n  "));
+
+//     if (checkerFeedback.includes("DIRECTIONS RESULT: PASS")) {
+//       console.log(`\n  Directions Check PASSED.\n`);
+//       directionsApproved = true;
+//     } else {
+//       await sendMessage(workerPage, buildDirectionsRewritePrompt(checkerFeedback), "WORKER");
+//       lastResponse = await waitForResponse(workerPage, "WORKER");
+
+//       // Re-run citation scan on rewrite
+//       const rewriteViolations = scanCitations(lastResponse);
+//       if (rewriteViolations.length) {
+//         await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(rewriteViolations)), "CITATION REVIEWER");
+//         const rFeedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
+//         if (!rFeedback.includes("OVERALL RESULT: PASS")) {
+//           await sendMessage(workerPage, buildCorrectionPrompt(rFeedback, rewriteViolations), "WORKER");
+//           lastResponse = await waitForResponse(workerPage, "WORKER");
+//         }
+//       }
+//       await sleep(2000);
+//     }
+//   }
+
+//   // Close Yuzu browsers for this assignment
+//   for (const { browser } of sourceResults) {
+//     await browser.close();
+//   }
+
+//   console.log(`\n${"=".repeat(60)}`);
+//   console.log(`  ASSIGNMENT ${assignmentNum} COMPLETE`);
+//   console.log(`  Citations: PASS  |  Directions: PASS`);
+//   console.log(`  Copy the final assignment from the Worker window.`);
+//   console.log(`${"=".repeat(60)}\n`);
+
+//   return lastResponse;
+// }
+
+// // ─── MAIN ─────────────────────────────────────────────────────────────────────
+// (async () => {
+//   console.log("█".repeat(60));
+//   console.log("  GEMINI THREE-AI + YUZU BOOK READER PIPELINE");
+//   console.log("█".repeat(60));
+//   console.log("  Window 1 — WORKER            writes the assignment");
+//   console.log("  Window 2 — CITATION REVIEWER checks citation format");
+//   console.log("  Window 3 — DIRECTIONS CHECKER checks all points covered");
+//   console.log("  Window(s) — YUZU READERS     one per source book per assignment");
+//   console.log("");
+//   console.log(`  ${ASSIGNMENTS.length} assignment(s) queued. Running in order.`);
+//   console.log("█".repeat(60) + "\n");
+
+//   // Open the three Gemini AI windows
+//   const { browser: wBrowser, page: workerPage }   = await openGeminiBrowser("worker",   "WORKER");
+//   const { browser: rBrowser, page: reviewerPage } = await openGeminiBrowser("reviewer", "CITATION REVIEWER");
+//   const { browser: cBrowser, page: checkerPage }  = await openGeminiBrowser("checker",  "DIRECTIONS CHECKER");
+
+//   // Wait for all three to land on Gemini
+//   const allPages = [workerPage, reviewerPage, checkerPage];
+//   const needsLogin = allPages.some(p => p.url().includes("accounts.google.com"));
+//   if (needsLogin) {
+//     console.log("\n" + "!".repeat(60));
+//     console.log("  Sign into Google in ALL THREE Gemini windows.");
+//     console.log("  Script waits until all three are on Gemini.");
+//     console.log("!".repeat(60));
+//     await Promise.all(allPages.map(p =>
+//       p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 120000, polling: 1000 })
+//     ));
+//   }
+
+//   // Wait for input boxes
+//   for (const [p, label] of [[workerPage, "WORKER"], [reviewerPage, "CITATION REVIEWER"], [checkerPage, "DIRECTIONS CHECKER"]]) {
+//     await p.waitForFunction(
+//       () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
+//       { timeout: 30000, polling: 1000 }
+//     ).catch(() => console.warn(`  [${label}] Input wait timed out`));
+//   }
+
+//   await sleep(2000);
+//   console.log("All three Gemini windows ready.\n");
+
+//   // Run each assignment in order
+//   for (let i = 0; i < ASSIGNMENTS.length; i++) {
+//     await runAssignment(i + 1, ASSIGNMENTS[i], workerPage, reviewerPage, checkerPage);
+
+//     if (i < ASSIGNMENTS.length - 1) {
+//       console.log("Moving to next assignment in 5 seconds...\n");
+//       await sleep(5000);
+//     }
+//   }
+
+//   console.log("\n" + "█".repeat(60));
+//   console.log("  ALL ASSIGNMENTS COMPLETE");
+//   console.log("█".repeat(60) + "\n");
+
+//   // Windows stay open so you can copy final assignments
+//   // Uncomment to close:
+//   // await wBrowser.close();
+//   // await rBrowser.close();
+//   // await cBrowser.close();
+// })();
+
+
+class man{
+ male = true
+
+ isAlive(){
+  console.log("true")
+ }
 }
 
-// ─── FIND GEMINI INPUT ────────────────────────────────────────────────────────
-async function findInput(page, label) {
-  const selectors = [
-    'rich-textarea div[contenteditable="true"]',
-    'div[contenteditable="true"]',
-    'div[role="textbox"]',
-    'textarea',
-    '.ql-editor',
-  ];
-  for (const sel of selectors) {
-    try {
-      const el = await page.$(sel);
-      if (el) {
-        const box = await el.boundingBox();
-        if (box && box.width > 0) {
-          console.log(`  [${label}] Input: ${sel}`);
-          return { el, sel };
-        }
-      }
-    } catch (_) {}
-  }
-  const html = await page.evaluate(() => document.body.innerHTML.substring(0, 2000));
-  console.error(`  [${label}] No input found. HTML:\n`, html);
-  throw new Error(`[${label}] Input not found`);
+
+
+class me extends man{
+
+    name = "warren"
+
+
 }
 
-// ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
-async function sendMessage(page, text, label) {
-  const { el, sel } = await findInput(page, label);
-  await el.click();
-  await sleep(400);
-  await page.keyboard.down("Control");
-  await page.keyboard.press("a");
-  await page.keyboard.up("Control");
-  await page.keyboard.press("Backspace");
-  await sleep(200);
-
-  const ok = await page.evaluate((t, s) => {
-    const el = document.querySelector(s);
-    if (!el) return false;
-    el.focus();
-    return document.execCommand("insertText", false, t);
-  }, text, sel);
-
-  if (!ok) {
-    await page.evaluate((t, s) => {
-      const el = document.querySelector(s);
-      if (!el) return;
-      el.focus();
-      if (el.contentEditable === "true") {
-        el.innerText = t;
-      } else {
-        Object.getOwnPropertyDescriptor(
-          window.HTMLTextAreaElement.prototype, "value"
-        ).set.call(el, t);
-      }
-      el.dispatchEvent(new Event("input", { bubbles: true }));
-      el.dispatchEvent(new Event("change", { bubbles: true }));
-    }, text, sel);
-  }
-
-  await sleep(500);
-  const sendBtn = await page.$(
-    'button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]'
-  );
-  if (sendBtn) await sendBtn.click();
-  else await page.keyboard.press("Enter");
-  await sleep(2000);
-}
-
-// ─── WAIT FOR RESPONSE ────────────────────────────────────────────────────────
-async function waitForResponse(page, label, timeoutMs = 240000) {
-  console.log(`  [${label}] Waiting...`);
-  try {
-    await page.waitForFunction(
-      () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
-      { timeout: 20000, polling: 500 }
-    );
-  } catch (_) {}
-
-  await page.waitForFunction(
-    () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
-    { timeout: timeoutMs, polling: 1000 }
-  ).catch(() => {});
-
-  await sleep(3000);
-
-  const text = await page.evaluate(() => {
-    const all = [
-      ...document.querySelectorAll("model-response"),
-      ...document.querySelectorAll('[data-message-author-role="model"]'),
-      ...document.querySelectorAll(".model-response-text"),
-      ...document.querySelectorAll("message-content"),
-    ];
-    return all.length ? all[all.length - 1].innerText.trim() : "";
-  });
-
-  if (!text) console.warn(`  [${label}] Empty response`);
-  else console.log(`  [${label}] Got ${text.length} chars`);
-  return text;
-}
-
-// ─── OPEN GEMINI BROWSER ─────────────────────────────────────────────────────
-async function openGeminiBrowser(profileName, label) {
-  console.log(`  Opening ${label} browser...`);
-  const browser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`,
-    ],
-  });
-  const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false });
-    window.chrome = { runtime: {} };
-  });
-  await page.goto("https://gemini.google.com/app", {
-    waitUntil: "domcontentloaded",
-    timeout: 60000,
-  });
-  return { browser, page };
-}
-
-// ─── CITATION SCANNER ────────────────────────────────────────────────────────
-function scanCitations(text) {
-  const violations = [];
-  let m;
-
-  // 1a — period inside closing quote WITH citation after
-  const r1a = /"([^"]+?)\."\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+)\)/g;
-  while ((m = r1a.exec(text)) !== null) {
-    violations.push({ rule: 1, bad: m[0], detail: `Period inside closing quote — must go AFTER closing parenthesis. CORRECT: "word for word text" (p. #).` });
-  }
-
-  // 1b — period inside closing quote with NO citation after
-  const r1b = /"([^"]{5,}?)\."\s*(?!\s*\((?:p\.|Chapter|Section))/g;
-  while ((m = r1b.exec(text)) !== null) {
-    violations.push({ rule: 1, bad: m[0].trim(), detail: `Two violations: period inside closing quote AND no citation reference after it. Fix: remove entirely, write your own sentence.` });
-  }
-
-  // 2 — empty quotes
-  const r2 = /""\s*\((?:p\.\s*\d+|Chapter[^)]*|Section[^)]*)?\)/g;
-  while ((m = r2.exec(text)) !== null) {
-    violations.push({ rule: 2, bad: m[0], detail: `Empty quotes — drop citation, write your own sentence.` });
-  }
-
-  // 3 — known filler connector words before opening quote
-  const knownGlue = [/\brate of\s+"/, /(?<!\w)a\s+"/, /\bsuch as\s+"/, /\bknown as\s+"/, /\breferred to as\s+"/, /\bcalled\s+"/, /\btermed\s+"/, /\bof\s+"/, /\bin\s+"/];
-  for (const pattern of knownGlue) {
-    const glueRe = new RegExp(pattern.source + '([^"]{3,}?)"\\s*\\((?:p\\.\\s*\\d+|Chapter[^)]+|Section[^)]+)\\)', 'g');
-    while ((m = glueRe.exec(text)) !== null) {
-      violations.push({ rule: 3, bad: m[0].trim(), detail: `Filler connector word before opening quote — citation must start with opening quote or pulled-out source word. Drop and write your own sentence.` });
-    }
-  }
-
-  // 4 — chapter/section inside narrative citation parens
-  const r4 = /([A-Z][a-zA-Z\s]+?)\s*\((\d{4})\s*,\s*(?:Chapter|Ch\.?)\s*[\d\w]+[^)]*\)/g;
-  while ((m = r4.exec(text)) !== null) {
-    violations.push({ rule: 4, bad: m[0], detail: `Chapter/section inside parentheses — write naturally in the sentence: According to ${m[1].trim()} (${m[2]}), from Chapter X in Section X, ...` });
-  }
-
-  // 5 — narrative citation with no location in sentence
-  const r5 = /According to ([^(]+?)\s*\((\d{4})\)\s*,\s*/gi;
-  while ((m = r5.exec(text)) !== null) {
-    const after = text.substring(m.index + m[0].length, m.index + m[0].length + 250).toLowerCase();
-    if (!after.match(/\b(chapter|section|page|p\.)\b/)) {
-      violations.push({ rule: 5, bad: m[0].trim(), detail: `Narrative citation missing location — add chapter/section/page naturally in sentence: According to ${m[1].trim()} (${m[2]}), from Chapter X in Section X on page #, ...` });
-    }
-  }
-
-  // 6 — opening quote starts on capital word
-  const r6 = /"([A-Z][a-zA-Z']+)\s+([^"]{3,}?)"\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+)\)/g;
-  while ((m = r6.exec(text)) !== null) {
-    violations.push({ rule: 6, bad: m[0], detail: `Opening quote starts on capital word "${m[1]}" — pull it out and lowercase: ${m[1].toLowerCase()} "${m[2]}..." (p. #).` });
-  }
-
-  // 7 — quotes around word/phrase with no citation (short, no verb)
-  const r7 = /"([^"]{2,60})"\s*(?!\s*\((?:p\.|Chapter|Section))/g;
-  const hasVerb = /\b(is|are|was|were|has|have|must|should|will|can|does|do|reads|shows)\b/;
-  while ((m = r7.exec(text)) !== null) {
-    if (!hasVerb.test(m[1].toLowerCase()) && m[1].length < 60) {
-      violations.push({ rule: 7, bad: m[0].trim(), detail: `Quotes around "${m[1]}" with no citation — remove quotes and write plainly.` });
-    }
-  }
-
-  return violations;
-}
-
-function buildEvidenceReport(violations) {
-  if (!violations.length) return null;
-  let r = `Scanner found ${violations.length} violation(s):\n\n`;
-  violations.forEach((v, i) => {
-    r += `VIOLATION ${i + 1} — Rule ${v.rule}\nWrong: ${v.bad}\nWhy: ${v.detail}\n\n`;
-  });
-  return r;
-}
-
-// ─── PROMPT BUILDERS ─────────────────────────────────────────────────────────
-function buildFirstPrompt(directions, sourceBlocks) {
-  const sourcesText = sourceBlocks.map(s =>
-    `---\nBOOK: ${s.source.bookTitle}\nAUTHOR: ${s.source.author}\nCHAPTER: ${s.source.chapter}\nPAGES: ${s.source.pages.join(", ")}\n\nEXACT TEXT FROM BOOK:\n${s.text}\n---`
-  ).join("\n\n");
-
-  return `You are completing an assignment. You have been given the exact word-for-word text from the required textbooks. Use this text to write the assignment.
-
-${"=".repeat(50)}
-ASSIGNMENT DIRECTIONS:
-${"=".repeat(50)}
-${directions.trim()}
-
-${"=".repeat(50)}
-SOURCE TEXT — PULLED WORD FOR WORD FROM TEXTBOOKS:
-${"=".repeat(50)}
-${sourcesText}
-
-${"=".repeat(50)}
-CITATION RULES — FOLLOW EVERY ONE:
-${"=".repeat(50)}
-
-PARENTHETICAL CITATIONS: "word for word text" (p. #).
-  - Text inside quotes must be EXACT word for word from the source above
-  - Period goes AFTER the closing parenthesis — NEVER inside the quotes
-  - Every quote MUST be followed by (p. #) or (Chapter X) or (Section X)
-  - A quote with nothing after it is WRONG
-  - No filler connector words before opening quote: rate of "text" is wrong
-  - A word pulled out of the source sitting before the quote IS correct:
-    decoding "is Mary's greatest area of need" (p. 8). ← CORRECT
-  - If source text starts with a capital — pull that word OUT, lowercase it,
-    blend into sentence, quote opens on second word:
-    SOURCE: Decoding is Mary's greatest area of need
-    CORRECT: decoding "is Mary's greatest area of need" (p. 8).
-  - No empty quotes: "" (p. #) is wrong
-  - No random quotes around terms without a citation after them
-
-NARRATIVE CITATIONS: According to Author (date), from Chapter X in Section X on page #, ...
-  - Author name and date in parentheses — chapter/section/page naturally in sentence
-  - NEVER put chapter/section inside the parentheses
-  - Every narrative citation must mention where in the source it came from
-
-IF IN DOUBT about any citation — drop it and write your own sentence.
-
-Now complete the assignment using only the source text provided above.`;
-}
-
-const buildReviewerPrompt = (assignment, evidence) => `You are a strict APA 7th Edition citation reviewer.
-
-${evidence ? `Scanner already found these violations. Confirm each and check for more:\n\nSCANNER FINDINGS:\n${evidence}` : `Scanner found no violations. Do a thorough manual check.`}
-
-RULES:
-1. "word for word text" (p. #). — period AFTER closing parenthesis, NEVER inside quotes
-2. Every quote MUST be followed by (p. #) or (Chapter X) or (Section X)
-   "text." with no citation after it = WRONG — two violations at once
-3. No filler connector words before opening quote
-   Pulled-out source word before quote IS correct: decoding "is..." (p. #). ← CORRECT
-4. No empty quotes: "" (p. #) is wrong
-5. Opening quote on capital word = WRONG
-   decoding "is Mary's greatest area" (p. #). ← CORRECT (first word pulled out)
-6. No quotes around words/phrases without citation after them
-7. Narrative: According to Author (date), from Chapter X in Section X on page #, ...
-   Chapter/section NEVER inside parentheses
-
-FIX FOR ALL: remove citation, replace with plain written text.
-Quote every wrong piece exactly. State the fix.
-
-End with: OVERALL RESULT: PASS  or  OVERALL RESULT: FAIL
-
-Assignment:
----
-${assignment}
----`;
-
-function buildCorrectionPrompt(feedback, violations) {
-  let p = `Your assignment has citation violations. Fix all of them now.\n\n`;
-  if (violations.length) {
-    p += `These exact wrong texts were found:\n\n`;
-    violations.forEach((v, i) => {
-      p += `${i + 1}. WRONG: ${v.bad}\n   WHY: ${v.detail}\n   FIX: Remove it. Write your own plain sentence instead.\n\n`;
-    });
-  }
-  p += `Reviewer said:\n${feedback}\n\n`;
-  p += `RULES:\n`;
-  p += `- "word for word text" (p. #). — period AFTER closing paren, NEVER inside quotes\n`;
-  p += `- Every quote needs (p. #) or (Chapter X) after it — no citation = wrong\n`;
-  p += `- No filler connector words before opening quote\n`;
-  p += `- Pulled-out source word before quote IS correct: decoding "is..." (p. #).\n`;
-  p += `- No empty quotes\n`;
-  p += `- Opening quote on capital = WRONG: pull first word out, lowercase it\n`;
-  p += `- Narrative: According to Author (date), from Chapter X in Section X on page #, ...\n`;
-  p += `- Any doubt — drop the citation, write your own sentence\n\n`;
-  p += `Rewrite the full assignment now.`;
-  return p;
-}
-
-function buildDirectionsCheckerPrompt(assignment, directions) {
-  return `You are checking whether a completed assignment fully covers all points in the directions.
-You are NOT checking citations — only content coverage.
-
-${"=".repeat(50)}
-ASSIGNMENT DIRECTIONS:
-${"=".repeat(50)}
-${directions.trim()}
-
-${"=".repeat(50)}
-COMPLETED ASSIGNMENT:
-${"=".repeat(50)}
-${assignment}
-
-${"=".repeat(50)}
-YOUR JOB:
-${"=".repeat(50)}
-For each requirement in the directions, check if it is covered.
-
-Report:
-  POINT: [requirement]
-  STATUS: COVERED or MISSING
-  REASON: [one sentence]
-
-End with:
-  DIRECTIONS RESULT: PASS   — all points covered
-  DIRECTIONS RESULT: FAIL   — any point missing
-
-If FAIL, list exactly what is missing.`;
-}
-
-function buildDirectionsRewritePrompt(checkerFeedback) {
-  return `Your assignment is missing required content. Add it now.
-
-Checker feedback:
-${checkerFeedback}
-
-Keep all existing citations exactly as they are. Only add the missing content.
-Rewrite the full assignment with the missing points included.`;
-}
-
-const FOLLOWUP_PROMPTS = [
-  `Compare every citation in your assignment against the source text. Fix any parenthetical citation where the text inside the quotes is not exactly word for word from the source. Fix any narrative citation that does not mention chapter, section, or page naturally in the sentence. If a citation opens on a capital word — pull that word out, lowercase it, blend into the sentence.`,
-  `Final check: every quote must be followed by (p. #) or (Chapter X) or (Section X). Any quote with a period inside it or nothing after it is wrong — remove it and write your own sentence. Every narrative citation must mention where in the source it came from.`,
-];
-
-// ─── RUN ONE ASSIGNMENT ───────────────────────────────────────────────────────
-async function runAssignment(assignmentNum, assignment, workerPage, reviewerPage, checkerPage) {
-  console.log("\n" + "█".repeat(60));
-  console.log(`  ASSIGNMENT ${assignmentNum}`);
-  console.log("█".repeat(60));
-
-  // Launch one Yuzu browser per source book and read text
-  console.log(`\n  Reading source books from Yuzu (${assignment.sources.length} book(s))...`);
-  const sourceResults = [];
-
-  for (let i = 0; i < assignment.sources.length; i++) {
-    const { browser, text, source } = await launchYuzuReader(assignment.sources[i], i);
-    sourceResults.push({ browser, text, source });
-    console.log(`  Book ${i + 1} text captured: ${text.length} chars`);
-  }
-
-  // Round 0 — send directions + captured source text to Worker
-  console.log(`\n${"=".repeat(60)}`);
-  console.log(`  ROUND 0 — Directions + book text → Worker`);
-  console.log(`${"=".repeat(60)}\n`);
-
-  await sendMessage(workerPage, buildFirstPrompt(assignment.directions, sourceResults), "WORKER");
-  let lastResponse = await waitForResponse(workerPage, "WORKER");
-
-  // Citation review rounds
-  for (let i = 0; i < FOLLOWUP_PROMPTS.length; i++) {
-    const round = i + 1;
-    console.log(`\n${"=".repeat(60)}\n  CITATION ROUND ${round}\n${"=".repeat(60)}`);
-
-    let citationApproved = false;
-    let attempt = 0;
-
-    while (!citationApproved) {
-      attempt++;
-      console.log(`\n  Attempt ${attempt} — Citation Round ${round}`);
-
-      if (attempt === 1) {
-        await sendMessage(workerPage, FOLLOWUP_PROMPTS[i], "WORKER");
-        lastResponse = await waitForResponse(workerPage, "WORKER");
-      }
-
-      const violations = scanCitations(lastResponse);
-      console.log(`  [SCANNER] ${violations.length ? violations.length + " violation(s)" : "No violations"}`);
-      violations.forEach((v, i) => console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad.substring(0, 80)}`));
-
-      await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)), "CITATION REVIEWER");
-      const feedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
-      console.log(`\n  CITATION REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
-
-      const passed = feedback.includes("OVERALL RESULT: PASS");
-      const failed = feedback.includes("OVERALL RESULT: FAIL") || feedback.toLowerCase().includes("violation");
-
-      if (passed && !failed) {
-        console.log(`\n  Citation Round ${round} PASSED.\n`);
-        citationApproved = true;
-      } else {
-        await sendMessage(workerPage, buildCorrectionPrompt(feedback, violations), "WORKER");
-        lastResponse = await waitForResponse(workerPage, "WORKER");
-        await sleep(2000);
-      }
-    }
-    await sleep(2000);
-  }
-
-  // Directions check
-  console.log(`\n${"=".repeat(60)}\n  DIRECTIONS CHECK\n${"=".repeat(60)}`);
-  let directionsApproved = false;
-  let dirAttempt = 0;
-
-  while (!directionsApproved) {
-    dirAttempt++;
-    console.log(`\n  Directions Check Attempt ${dirAttempt}...`);
-
-    await sendMessage(checkerPage, buildDirectionsCheckerPrompt(lastResponse, assignment.directions), "DIRECTIONS CHECKER");
-    const checkerFeedback = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
-    console.log(`\n  DIRECTIONS CHECKER:\n  ` + checkerFeedback.split("\n").join("\n  "));
-
-    if (checkerFeedback.includes("DIRECTIONS RESULT: PASS")) {
-      console.log(`\n  Directions Check PASSED.\n`);
-      directionsApproved = true;
-    } else {
-      await sendMessage(workerPage, buildDirectionsRewritePrompt(checkerFeedback), "WORKER");
-      lastResponse = await waitForResponse(workerPage, "WORKER");
-
-      // Re-run citation scan on rewrite
-      const rewriteViolations = scanCitations(lastResponse);
-      if (rewriteViolations.length) {
-        await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(rewriteViolations)), "CITATION REVIEWER");
-        const rFeedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
-        if (!rFeedback.includes("OVERALL RESULT: PASS")) {
-          await sendMessage(workerPage, buildCorrectionPrompt(rFeedback, rewriteViolations), "WORKER");
-          lastResponse = await waitForResponse(workerPage, "WORKER");
-        }
-      }
-      await sleep(2000);
-    }
-  }
-
-  // Close Yuzu browsers for this assignment
-  for (const { browser } of sourceResults) {
-    await browser.close();
-  }
-
-  console.log(`\n${"=".repeat(60)}`);
-  console.log(`  ASSIGNMENT ${assignmentNum} COMPLETE`);
-  console.log(`  Citations: PASS  |  Directions: PASS`);
-  console.log(`  Copy the final assignment from the Worker window.`);
-  console.log(`${"=".repeat(60)}\n`);
-
-  return lastResponse;
-}
-
-// ─── MAIN ─────────────────────────────────────────────────────────────────────
-(async () => {
-  console.log("█".repeat(60));
-  console.log("  GEMINI THREE-AI + YUZU BOOK READER PIPELINE");
-  console.log("█".repeat(60));
-  console.log("  Window 1 — WORKER            writes the assignment");
-  console.log("  Window 2 — CITATION REVIEWER checks citation format");
-  console.log("  Window 3 — DIRECTIONS CHECKER checks all points covered");
-  console.log("  Window(s) — YUZU READERS     one per source book per assignment");
-  console.log("");
-  console.log(`  ${ASSIGNMENTS.length} assignment(s) queued. Running in order.`);
-  console.log("█".repeat(60) + "\n");
-
-  // Open the three Gemini AI windows
-  const { browser: wBrowser, page: workerPage }   = await openGeminiBrowser("worker",   "WORKER");
-  const { browser: rBrowser, page: reviewerPage } = await openGeminiBrowser("reviewer", "CITATION REVIEWER");
-  const { browser: cBrowser, page: checkerPage }  = await openGeminiBrowser("checker",  "DIRECTIONS CHECKER");
-
-  // Wait for all three to land on Gemini
-  const allPages = [workerPage, reviewerPage, checkerPage];
-  const needsLogin = allPages.some(p => p.url().includes("accounts.google.com"));
-  if (needsLogin) {
-    console.log("\n" + "!".repeat(60));
-    console.log("  Sign into Google in ALL THREE Gemini windows.");
-    console.log("  Script waits until all three are on Gemini.");
-    console.log("!".repeat(60));
-    await Promise.all(allPages.map(p =>
-      p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 120000, polling: 1000 })
-    ));
-  }
-
-  // Wait for input boxes
-  for (const [p, label] of [[workerPage, "WORKER"], [reviewerPage, "CITATION REVIEWER"], [checkerPage, "DIRECTIONS CHECKER"]]) {
-    await p.waitForFunction(
-      () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
-      { timeout: 30000, polling: 1000 }
-    ).catch(() => console.warn(`  [${label}] Input wait timed out`));
-  }
-
-  await sleep(2000);
-  console.log("All three Gemini windows ready.\n");
-
-  // Run each assignment in order
-  for (let i = 0; i < ASSIGNMENTS.length; i++) {
-    await runAssignment(i + 1, ASSIGNMENTS[i], workerPage, reviewerPage, checkerPage);
-
-    if (i < ASSIGNMENTS.length - 1) {
-      console.log("Moving to next assignment in 5 seconds...\n");
-      await sleep(5000);
-    }
-  }
-
-  console.log("\n" + "█".repeat(60));
-  console.log("  ALL ASSIGNMENTS COMPLETE");
-  console.log("█".repeat(60) + "\n");
-
-  // Windows stay open so you can copy final assignments
-  // Uncomment to close:
-  // await wBrowser.close();
-  // await rBrowser.close();
-  // await cBrowser.close();
-})();
-
-
-
-
-
-//////note not sure how the sandbox should fix puppeter code 
-// When Sandbox generates fixed Puppeteer code, how should it be applied?
-// 1 of 2
-
-// 1
-// Write a new server.js and restart the script automatically
-
-// 2
-// Patch just the failing function (e.g. launchYuzuReader) and hot-reload it
-
-// 3
-// Save the fix to a file so YOU can review and run it manually
+const Me = new me()
+
+console.log(Me.name)
+console.log(Me.male)
+console.log(Me.isAlive())
+console.log("w")
