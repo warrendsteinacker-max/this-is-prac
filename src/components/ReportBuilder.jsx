@@ -1150,10 +1150,36 @@ const ReportBuilder = () => {
   const [nums, setN] = useState([])
   const [Pchar, setPc] = useState([...lower, ...upper, ...nums])
   const [lenght, setL] = useState(Number)
+  const [pass, setP] = useState([])
+
+  function SETN (e){
+
+  }
+
+  function SETlL (e){
+
+  }
+
+  function SETUL (e){
+    if(e.target.che)
+  }
   
 
   return (
-    <div></div>
+    
+    <>
+    <div>{}</div>
+    <form onSubmit={}>
+      <lable for='num'>nums</lable>
+      <input type="checkbox" id='num' onChange={}/>
+      <lable for='Ll'>nums</lable>
+      <input type="checkbox" id='Ll' onChange={}/>
+      <lable for='Ul'>nums</lable>
+      <input type="checkbox" id='Ul' onChange={}/>
+      <button type="submit">submit</button>
+    </form>
+    </>
+
   )
 }
 
