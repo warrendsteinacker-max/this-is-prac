@@ -1149,14 +1149,15 @@ const ReportBuilder = () => {
   const [upper, setUl] = useState([])
   const [nums, setN] = useState([])
   const [Pchar, setPc] = useState([...lower, ...upper, ...nums])
-  const [lenght, setL] = useState(Number)
-  const [passS, setPS] = useState([])
+  // const [lenght, setL] = useState(Number)
+  // const [passS, setPS] = useState([])
   const [P, setP] = useState([])
 
   function SETN (e){
 
     if(e.target.checked){
       setN([1,2,3,4,5,6,7,8,9,0])
+      console.log(nums)
     }
     else{
       setN([])
@@ -1168,6 +1169,7 @@ const ReportBuilder = () => {
 
     if(e.target.checked){
       setLl(["n","m","l","c","g","i","h","g","f","e","d","c","b","a"])
+      console.log(lower)
     }
     else{
       setLl([])
@@ -1178,6 +1180,7 @@ const ReportBuilder = () => {
   function SETUL (e){
     if(e.target.checked){
       setUl(["Z","X","C","B","A"])
+      console.log(upper)
     }
 
     else{
@@ -1199,14 +1202,14 @@ const ReportBuilder = () => {
   return (
     
     <>
-    <div>{V}</div>
-    <form onSubmit={}>
+    <div>{P}</div>
+    <form onSubmit={ONSUBMIT}>
       <lable for='num'>nums</lable>
-      <input type="checkbox" id='num' onChange={}/>
+      <input type="checkbox" id='num' onChange={SETN}/>
       <lable for='Ll'>nums</lable>
-      <input type="checkbox" id='Ll' onChange={}/>
+      <input type="checkbox" id='Ll' onChange={SETlL}/>
       <lable for='Ul'>nums</lable>
-      <input type="checkbox" id='Ul' onChange={}/>
+      <input type="checkbox" id='Ul' onChange={SETUL}/>
       <button type="submit">submit</button>
     </form>
     </>
