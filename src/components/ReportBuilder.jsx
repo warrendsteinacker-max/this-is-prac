@@ -1188,7 +1188,7 @@ const ReportBuilder = () => {
   function ONSUBMIT (e){
     e.preventDefalut()
  
-    const V = Pchar.sort(() => Math.random() - 0.5).map((index, item) => index < 11 ? item : continue )
+    const V = Pchar.sort(() => Math.random() - 0.5).slice(0, 11)
 
     setP(V)
 
