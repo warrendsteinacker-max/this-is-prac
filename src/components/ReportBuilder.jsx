@@ -1144,31 +1144,62 @@
 import {useState} from 'react'
 
 const ReportBuilder = () => {
-
+  
   const [lower, setLl] = useState([])
   const [upper, setUl] = useState([])
   const [nums, setN] = useState([])
   const [Pchar, setPc] = useState([...lower, ...upper, ...nums])
   const [lenght, setL] = useState(Number)
-  const [pass, setP] = useState([])
+  const [passS, setPS] = useState([])
+  const [P, setP] = useState([])
 
   function SETN (e){
+
+    if(e.target.checked){
+      setN([1,2,3,4,5,6,7,8,9,0])
+    }
+    else{
+      setN([])
+    }
 
   }
 
   function SETlL (e){
 
+    if(e.target.checked){
+      setLl(["n","m","l","c","g","i","h","g","f","e","d","c","b","a"])
+    }
+    else{
+      setLl([])
+    }
+
   }
 
   function SETUL (e){
-    if(e.target.che)
+    if(e.target.checked){
+      setUl(["Z","X","C","B","A"])
+    }
+
+    else{
+      setUl([])
+    }
+  }
+
+  function ONSUBMIT (e){
+    e.preventDefalut()
+ 
+    const V = Pchar.sort(() => Math.random() - 0.5).map((index, item) => index < 11 ? item : continue )
+
+    setP(V)
+
+
   }
   
 
   return (
     
     <>
-    <div>{}</div>
+    <div>{V}</div>
     <form onSubmit={}>
       <lable for='num'>nums</lable>
       <input type="checkbox" id='num' onChange={}/>
