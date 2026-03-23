@@ -1148,7 +1148,7 @@ const ReportBuilder = () => {
   const [lower, setLl] = useState([])
   const [upper, setUl] = useState([])
   const [nums, setN] = useState([])
-  const [Pchar, setPc] = useState([...lower, ...upper, ...nums])
+  let Pchar = [...lower, ...upper, ...nums]
   // const [lenght, setL] = useState(Number)
   // const [passS, setPS] = useState([])
   const [P, setP] = useState([])
@@ -1189,7 +1189,13 @@ const ReportBuilder = () => {
   }
 
   function ONSUBMIT (e){
-    e.preventDefalut()
+    e.preventDefault()
+
+    console.log(upper)
+
+    console.log(lower)
+
+    console.log(num)
  
     const V = Pchar.sort(() => Math.random() - 0.5).slice(0, 11)
 
