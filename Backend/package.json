@@ -7,11 +7,12 @@
   "author": "",
   "type": "module",
   "main": "server.js",
-  "scripts": {
-    "start:gateway": "node server.js",
-    "start:mcp": "node mcpServer.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start:gateway": "node server.js",
+  "start:mcp": "node mcpServer.js",
+  "start:pipeline": "node pipeline.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "dependencies": {
     "@google/genai": "^1.43.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
