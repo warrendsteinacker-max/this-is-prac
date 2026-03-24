@@ -1363,6 +1363,20 @@ pas.addEventListener("change", PASCHANGE)
     <button type="submit">make to do</button>
   </form>
   <script>
+
+
+
+  
+
+  (function(){
+      const data = JSON.parse(localStorage.getItem("data"))
+      if(data.length > 0){
+      for(let i = 0; i < data.length; i++){
+        document.body.appendChild(data[i])
+      }
+    }
+  })()
+
    let v; 
     function CHANGE(e){
       v = e.target.value
@@ -1383,10 +1397,13 @@ pas.addEventListener("change", PASCHANGE)
         el.style.width = "100px"
         el.style.height = "100px"
         el.appendChild(C)
-        L.textContent = "Do This"
+        L.textContent = "Do This Red Means Not Done Green Means Done"
         L.for = v
         document.body.appendChild(el)
-        document.body.appendChild(L)
+        data.unshift(el)
+        console.log(data)
+        localStorage.setItem("data", JSON.stringify(data))
+        console.log(JSON.parse(localStorage.getItem("data")))
       }
     }
 
