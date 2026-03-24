@@ -1368,11 +1368,28 @@ pas.addEventListener("change", PASCHANGE)
 
 
 
-  
 
 
-  let data;
-   let v; 
+  let data = [];
+
+    (function(){
+      data = JSON.parse(localStorage.getItem("data"))
+      for(let i = 0; i < data.length; i++){
+        const el = document.createElement("div")
+        el.textContent = `To Do: ${data[i].T}`
+        el.id = `To Do: ${data[i].T}`
+        el.style.border = "5px solid black"
+        el.style.width = "100px"
+        el.style.height = "100px"
+        el.style.backgroundColor = data[i].C 
+
+
+        document.body.appendChild(el)
+      }
+    })()
+
+  let v;
+
     function CHANGE(e){
       v = e.target.value
     }
@@ -1393,7 +1410,7 @@ pas.addEventListener("change", PASCHANGE)
 
 
         document.body.appendChild(el)
-        data.push({
+        data.unshift({
           H: "100px",
           W: "100px",
           id: v,
