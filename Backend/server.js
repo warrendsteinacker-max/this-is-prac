@@ -2375,7 +2375,7 @@
 
 
 
-//////two ai
+
 
 // import puppeteer from "puppeteer";
 
@@ -2527,7 +2527,8 @@
 //    If the source text already starts with a lowercase word the quote
 //    can open directly on that word — no change needed.
 //    SOURCE TEXT:  students must read widely and deeply
-//    CORRECT:      "students must read widely and deeply" (p. 10).
+//    INCORRECT:      "students must read widely and deeply" (p. 10).
+//    CORRECT: The source states "students must read widely and deeply" (p. 10).
 
 // 6. NEVER put quotes around a word or phrase unless it is a full
 //    parenthetical citation with a page/chapter/section reference.
@@ -3096,6 +3097,49 @@
 
 
 // create a assigment summary given the SOURCE_PAGES and text make parthentical source (date) words "word for word text" (). and narrative apa 7th eddition citations source (data) metion cahpter and section or page num
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,19 +1,7 @@
-
-// this test is for mod 4 discusion
-
-
 import puppeteer from "puppeteer";
 
 // ╔════════════════════════════════════════════════════════════════════╗
 // ║   ASSIGNMENTS — fill in your assignments here                     ║
-// ║                                                                    ║
-// ║   sources:                                                        ║
-// ║     bookTitle, author, authorLastFirst, date, publisher           ║
-// ║     vbid       — number after /books/ in the Yuzu URL             ║
-// ║     chapters   — array of chapter names to read                   ║
-// ║     maxPagesPerChapter — how many pages to read before stopping   ║
-// ║                                                                    ║
-// ║   manualText — optional extra passages (leave "" to skip)         ║
 // ╚════════════════════════════════════════════════════════════════════╝
 
 const ASSIGNMENTS = [
@@ -115,20 +103,19 @@ As the year progresses, Elsa is convinced that science has become her students' 
 ];
 
 // ════════════════════════════════════════════════════════════
-// SOURCE TEXT STORE — populated automatically
+// SOURCE TEXT STORE
 // ════════════════════════════════════════════════════════════
 
 const SOURCE_TEXT_STORE = [];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const YUZU_LIBRARY = "https://reader.yuzu.com/home/my-library";
-const CHROME_PATH  = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const launchOptions = {
   headless: false,
   executablePath: CHROME_PATH,
-  slowMo: 60,
+  slowMo: 50,
   args: [
     "--no-sandbox",
     "--disable-setuid-sandbox",
@@ -139,131 +126,141 @@ const launchOptions = {
   ignoreDefaultArgs: ["--enable-automation"],
 };
 
-// ─── GEMINI VISION — reads a screenshot by pasting it into a Gemini window ───
-// We open a dedicated Gemini window for vision at startup and reuse it.
-// Each page screenshot is uploaded via the Gemini attachment button,
-// then we read the response text back.
+// ─── GET PAGE NUMBER FROM MAIN DOM ────────────────────────────────────────────
 
-async function openVisionBrowser() {
-  const browser = await puppeteer.launch({
-    ...launchOptions,
-    args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-vision`],
+async function getPageNumber(page) {
+  return await page.evaluate(() => {
+    // Try the page number input
+    for (const input of document.querySelectorAll("input")) {
+      const val = parseInt(input.value, 10);
+      if (!isNaN(val) && val > 0 && val < 2000) return val;
+    }
+    // Try aria-valuetext on a slider
+    const slider = document.querySelector("[aria-valuetext]");
+    if (slider) {
+      const m = slider.getAttribute("aria-valuetext").match(/(\d+)/);
+      if (m) return parseInt(m[1], 10);
+    }
+    // Try "Page 22" tooltip
+    for (const t of document.querySelectorAll("[class*='tooltip'], [role='tooltip']")) {
+      const m = (t.innerText || "").match(/Page\s+(\d+)/i);
+      if (m) return parseInt(m[1], 10);
+    }
+    return null;
   });
-  const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false });
-    window.chrome = { runtime: {} };
-  });
-  await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
-  console.log("  [VISION] Gemini vision window open.");
-  return { browser, page };
 }
 
-// Sends a screenshot buffer + prompt to the Gemini vision window and returns the text response.
-async function geminiVision(visionPage, screenshotBuffer, chapterName) {
-  // Write screenshot to a temp file so Gemini's file input can pick it up
-  const { writeFileSync, unlinkSync } = await import("fs");
-  const tmpPath = `C:\\Temp\\yuzu_page_tmp.png`;
-  writeFileSync(tmpPath, screenshotBuffer);
+// ─── COPY PAGE TEXT VIA CLIPBOARD ────────────────────────────────────────────
+// Clicks inside the reading pane, Ctrl+A selects all, Ctrl+C copies,
+// then reads clipboard. Filters out Yuzu UI strings.
 
-  // Click the attachment / image button in Gemini
-  const attached = await visionPage.evaluate(() => {
-    const btns = Array.from(document.querySelectorAll("button, [role='button'], label"));
-    for (const btn of btns) {
-      const lbl = (btn.getAttribute("aria-label") || btn.getAttribute("title") || btn.innerText || "").toLowerCase();
-      if (lbl.includes("upload") || lbl.includes("attach") || lbl.includes("image") || lbl.includes("add image")) {
-        btn.click();
-        return true;
+async function copyPageText(page) {
+  // Click in the center of the reading pane
+  await page.mouse.click(700, 350);
+  await sleep(600);
+
+  await page.keyboard.down("Control");
+  await page.keyboard.press("a");
+  await page.keyboard.up("Control");
+  await sleep(500);
+
+  await page.keyboard.down("Control");
+  await page.keyboard.press("c");
+  await page.keyboard.up("Control");
+  await sleep(600);
+
+  let text = await page.evaluate(async () => {
+    try { return await navigator.clipboard.readText() || ""; }
+    catch (_) { return ""; }
+  });
+
+  // Strip known Yuzu UI strings
+  const uiStrings = [
+    "Book Page Loaded", "Skip to main content", "Skip to book navigation",
+    "Table of Contents", "Search across book", "Reader Preferences",
+    "Highlights, Notes, Bookmarks", "More Options", "Previous", "Next",
+    "Bookmark page", "Go to Page", "Go to First Page", "Read Aloud",
+    "Print", "Download", "My Library",
+  ];
+  for (const ui of uiStrings) text = text.split(ui).join("");
+  text = text.replace(/\n{3,}/g, "\n\n").trim();
+
+  return text;
+}
+
+// ─── OPEN TOC ─────────────────────────────────────────────────────────────────
+
+async function openToc(page) {
+  await page.evaluate(() => {
+    for (const btn of document.querySelectorAll("button[aria-label]")) {
+      if (btn.getAttribute("aria-label") === "Table of Contents") { btn.click(); return; }
+    }
+    // Fallback — any hamburger-style button in the header
+    const fb = document.querySelector("header button, [class*='header'] button");
+    if (fb) fb.click();
+  });
+  await sleep(1500);
+}
+
+// ─── CLICK CHAPTER IN TOC ────────────────────────────────────────────────────
+
+async function clickChapterInToc(page, chapterName) {
+  const chapterNum = chapterName.match(/\d+/)?.[0] || "";
+  const clicked = await page.evaluate((chapName, chapNum) => {
+    // Yuzu TOC buttons: aria-label="Go to Chapter 3 Comprehension, page 20"
+    for (const btn of document.querySelectorAll("button[aria-label]")) {
+      const lbl = btn.getAttribute("aria-label").toLowerCase();
+      if (lbl.includes("go to") && chapNum && lbl.includes("chapter " + chapNum)) {
+        btn.click(); return true;
       }
     }
-    // Try the file input directly
-    const fileInput = document.querySelector("input[type='file']");
-    if (fileInput) { fileInput.click(); return "input"; }
-    return false;
-  });
-
-  if (attached === "input" || attached) {
-    await sleep(800);
-    // Set the file on the hidden input
-    const fileInput = await visionPage.$("input[type='file']");
-    if (fileInput) {
-      await fileInput.uploadFile(tmpPath);
-      await sleep(2000);
+    // Fallback — match by span text inside TOC buttons
+    for (const btn of document.querySelectorAll("button")) {
+      const span = btn.querySelector("span");
+      if (span && span.innerText.toLowerCase().includes(chapName.toLowerCase())) {
+        btn.click(); return true;
+      }
     }
-  }
+    // Fallback — any link/button whose text matches
+    for (const el of document.querySelectorAll("nav a, nav button, aside a, [class*='toc'] a")) {
+      const t = (el.innerText || el.textContent || "").toLowerCase().trim();
+      if (t.includes(chapName.toLowerCase()) || (chapNum && t.includes("chapter " + chapNum))) {
+        el.click(); return true;
+      }
+    }
+    return false;
+  }, chapterName, chapterNum);
 
-  // Type the prompt into the text box
-  const prompt = `This is a screenshot of a textbook page in the Yuzu ebook reader.
-
-Read ALL text visible on the book page. Find the page number at the bottom (e.g. "20 / 89" = page 20). Tell me if this is still part of "${chapterName}" or if a new chapter started.
-
-Respond ONLY in this exact format:
-
-PAGE_NUMBER: [number or UNKNOWN]
-NEW_CHAPTER: [YES or NO]
-TEXT:
-[every word on the page, word for word]`;
-
-  const sel = 'rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea';
-  const inputEl = await visionPage.$(sel);
-  if (inputEl) {
-    await inputEl.click();
-    await sleep(300);
-    await visionPage.evaluate((t, s) => {
-      const el = document.querySelector(s);
-      if (!el) return;
-      el.focus();
-      document.execCommand("insertText", false, t);
-    }, prompt, sel);
-  }
-
-  await sleep(500);
-  const sendBtn = await visionPage.$(
-    'button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]'
-  );
-  if (sendBtn) await sendBtn.click();
-  else await visionPage.keyboard.press("Enter");
-
-  // Wait for response
-  try {
-    await visionPage.waitForFunction(
-      () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
-      { timeout: 15000, polling: 500 }
-    );
-  } catch (_) {}
-  await visionPage.waitForFunction(
-    () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
-    { timeout: 60000, polling: 1000 }
-  ).catch(() => {});
-  await sleep(2000);
-
-  const raw = await visionPage.evaluate(() => {
-    const all = [
-      ...document.querySelectorAll("model-response"),
-      ...document.querySelectorAll('[data-message-author-role="model"]'),
-      ...document.querySelectorAll(".model-response-text"),
-      ...document.querySelectorAll("message-content"),
-    ];
-    return all.length ? all[all.length - 1].innerText.trim() : "";
-  });
-
-  // Clean up temp file
-  try { unlinkSync(tmpPath); } catch (_) {}
-
-  return raw;
+  if (!clicked) console.log(`  [WARN] Chapter "${chapterName}" not found in TOC`);
+  return clicked;
 }
 
-// ─── YUZU PAGE READER ─────────────────────────────────────────────────────────
+// ─── CLICK NEXT PAGE ─────────────────────────────────────────────────────────
 
-async function readYuzuBook(source, profileIndex, visionPage) {
-  const label = `YUZU-${profileIndex + 1}`;
+async function clickNext(page) {
+  const clicked = await page.evaluate(() => {
+    for (const btn of document.querySelectorAll("button[aria-label]")) {
+      if (btn.getAttribute("aria-label") === "Next") { btn.click(); return true; }
+    }
+    return false;
+  });
+  if (!clicked) await page.keyboard.press("ArrowRight");
+}
+
+// ─── YUZU BOOK READER ─────────────────────────────────────────────────────────
+
+async function readYuzuBook(source, profileIndex) {
+  const label    = `YUZU-${profileIndex + 1}`;
   const chapters = source.chapters || [source.chapter].filter(Boolean);
   console.log(`\n  [${label}] Book: "${source.bookTitle}"`);
   console.log(`  [${label}] Chapters: ${chapters.join(", ")}`);
 
   const browser = await puppeteer.launch({
     ...launchOptions,
-    args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-yuzu-${profileIndex}`],
+    args: [
+      ...launchOptions.args,
+      `--user-data-dir=C:\\Temp\\puppeteer-yuzu-${profileIndex}`,
+    ],
   });
 
   const page = await browser.newPage();
@@ -272,168 +269,122 @@ async function readYuzuBook(source, profileIndex, visionPage) {
     window.chrome = { runtime: {} };
   });
 
-  await page.goto(YUZU_LIBRARY, { waitUntil: "domcontentloaded", timeout: 60000 });
+  // Grant clipboard permissions
+  const context = browser.defaultBrowserContext();
+  await context.overridePermissions("https://reader.yuzu.com", ["clipboard-read", "clipboard-write"]);
+
+  // Go directly to book via VBID
+  const readerUrl = source.vbid
+    ? `https://reader.yuzu.com/reader/books/${source.vbid}`
+    : `https://reader.yuzu.com/home/my-library`;
+
+  console.log(`  [${label}] Opening: ${readerUrl}`);
+  await page.goto(readerUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
   await sleep(5000);
 
+  // Wait for login if needed
   if (page.url().includes("sign-in") || page.url().includes("#sign") || page.url().includes("login")) {
     console.log(`  [${label}] Not logged in — sign into Yuzu in this window.`);
     await page.waitForFunction(
-      () => location.href.includes("my-library") || location.href.includes("dashboard"),
+      () => location.href.includes("/reader/books/"),
       { timeout: 180000, polling: 2000 }
     );
-    await sleep(4000);
+    await sleep(5000);
   }
 
-  const readerUrl = source.vbid
-    ? `https://reader.yuzu.com/reader/books/${source.vbid}`
-    : await findBookUrl(page, source.bookTitle, label);
-
-  if (!readerUrl) {
-    console.error(`  [${label}] Could not find book — skipping.`);
-    await browser.close();
-    return;
-  }
-
-  await page.goto(readerUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
-  await sleep(6000);
-
+  // Wait for reader UI — page number input signals it's ready
   await page.waitForFunction(
-    () => location.href.includes("/reader/books/") &&
-      (document.querySelector("input[type='number']") ||
-       document.querySelector("iframe[src*='jigsaw'], iframe[title], iframe[name]")),
+    () => {
+      for (const input of document.querySelectorAll("input")) {
+        if (!isNaN(parseInt(input.value, 10)) && parseInt(input.value, 10) > 0) return true;
+      }
+      return false;
+    },
     { timeout: 30000, polling: 1000 }
-  ).catch(() => {});
+  ).catch(() => console.log(`  [${label}] Reader load wait timed out`));
 
   await sleep(3000);
+  console.log(`  [${label}] Reader loaded.`);
 
   for (const chapterName of chapters) {
     console.log(`\n  [${label}] → ${chapterName}`);
+
     await openToc(page);
-    await sleep(2500);
-    await clickChapter(page, chapterName);
-    await closeToc(page);
-    await sleep(4000);
+    const clicked = await clickChapterInToc(page, chapterName);
+    if (clicked) {
+      console.log(`  [${label}] Chapter clicked in TOC`);
+      await sleep(4000);
+    } else {
+      console.log(`  [${label}] Reading from current position`);
+      await sleep(1000);
+    }
 
-    const startPage = await getPageNumber(page);
-    console.log(`  [${label}] Starts at page: ${startPage || "unknown"}`);
-
-    const maxPages = source.maxPagesPerChapter || 20;
-    let lastText = "";
-    let emptyCount = 0;
+    const maxPages      = source.maxPagesPerChapter || 20;
+    let lastText        = "";
+    let lastPageNum     = null;
+    let emptyStreak     = 0;
+    let duplicateStreak = 0;
 
     for (let offset = 0; offset < maxPages; offset++) {
       await sleep(3000);
-      const buf = await page.screenshot({ type: "png", fullPage: false });
-      console.log(`  [${label}] Page ${offset + 1}: ${Math.round(buf.length / 1024)}kb — reading via Gemini vision...`);
 
-      const raw = await geminiVision(visionPage, buf, chapterName);
+      const pageNum = await getPageNumber(page);
+      console.log(`  [${label}] Offset ${offset + 1}: page=${pageNum ?? "?"}`);
 
-      const pageMatch      = raw.match(/PAGE_NUMBER:\s*(\d+|UNKNOWN)/i);
-      const chapterEndMatch = raw.match(/NEW_CHAPTER:\s*(YES|NO)/i);
-      const textMatch      = raw.match(/TEXT:\s*([\s\S]+)/i);
+      // Stuck check
+      if (pageNum && pageNum === lastPageNum && offset > 1) {
+        console.log(`  [${label}] Page number stuck — stopping.`);
+        break;
+      }
+      lastPageNum = pageNum;
 
-      const pageNum    = pageMatch && pageMatch[1] !== "UNKNOWN" ? parseInt(pageMatch[1], 10) : (startPage ? startPage + offset : offset + 1);
-      const extracted  = textMatch ? textMatch[1].trim() : "";
-      const newChapter = chapterEndMatch && chapterEndMatch[1].toUpperCase() === "YES";
+      let text = await copyPageText(page);
+      console.log(`  [${label}] Copied ${text.length} chars`);
 
-      console.log(`  [${label}] p.${pageNum} chapterEnded=${newChapter} len=${extracted.length}`);
+      if (text.length > 200) {
+        if (text === lastText) {
+          duplicateStreak++;
+          if (duplicateStreak >= 2) {
+            console.log(`  [${label}] Duplicate text — chapter ended. Stopping.`);
+            break;
+          }
+        } else {
+          duplicateStreak = 0;
+        }
+        lastText    = text;
+        emptyStreak = 0;
 
-      if (newChapter && offset > 0) { console.log(`  [${label}] New chapter — stopping.`); break; }
-
-      if (extracted.length > 100) {
-        if (extracted === lastText) { console.log(`  [${label}] Stuck — stopping.`); break; }
-        lastText = extracted;
-        emptyCount = 0;
         SOURCE_TEXT_STORE.push({
-          bookTitle: source.bookTitle, author: source.author,
-          authorLastFirst: source.authorLastFirst, date: source.date,
-          publisher: source.publisher || "", chapter: chapterName,
-          page: pageNum, text: extracted,
+          bookTitle:       source.bookTitle,
+          author:          source.author,
+          authorLastFirst: source.authorLastFirst,
+          date:            source.date,
+          publisher:       source.publisher || "",
+          chapter:         chapterName,
+          page:            pageNum ?? (offset + 1),
+          text,
         });
-        console.log(`  [${label}] Stored p.${pageNum}`);
+        console.log(`  [${label}] Stored p.${pageNum ?? offset + 1}`);
       } else {
-        emptyCount++;
-        if (emptyCount >= 3) { console.log(`  [${label}] 3 empty pages — stopping.`); break; }
+        emptyStreak++;
+        console.warn(`  [${label}] Low text (${text.length} chars) — streak: ${emptyStreak}`);
+        if (emptyStreak >= 3) {
+          console.log(`  [${label}] 3 low-text pages — stopping.`);
+          break;
+        }
       }
 
-      // Next page
-      const clicked = await page.evaluate(() => {
-        const btns = Array.from(document.querySelectorAll("button, a, [role='button']"));
-        for (const btn of btns) {
-          const lbl = (btn.getAttribute("aria-label") || btn.getAttribute("title") || btn.innerText || "").toLowerCase().trim();
-          if (lbl === "next" || lbl === "next page" || lbl === ">") { btn.click(); return true; }
-        }
-        return false;
-      });
-      if (!clicked) await page.keyboard.press("ArrowRight");
+      await clickNext(page);
     }
   }
 
-  console.log(`  [${label}] Done. ${SOURCE_TEXT_STORE.filter(e => e.bookTitle === source.bookTitle).length} pages stored.`);
+  const stored = SOURCE_TEXT_STORE.filter(e => e.bookTitle === source.bookTitle);
+  console.log(`\n  [${label}] Done. ${stored.length} pages stored.`);
+  if (!stored.length) {
+    console.error(`  [${label}] No text captured — clipboard may not have worked.`);
+    console.error(`  [${label}] Make sure Chrome has clipboard permissions for reader.yuzu.com`);
+  }
   await browser.close();
-}
-
-async function findBookUrl(page, title, label) {
-  await page.waitForFunction(
-    () => document.querySelectorAll("a[href*='reader/books']").length > 0,
-    { timeout: 20000, polling: 1000 }
-  ).catch(() => {});
-  return await page.evaluate((t) => {
-    for (const link of document.querySelectorAll("a[href*='reader/books']")) {
-      if ((link.getAttribute("aria-label") || link.innerText || "").toLowerCase().includes(t.toLowerCase()))
-        return link.href.split("?")[0];
-    }
-    return null;
-  }, title);
-}
-
-async function getPageNumber(page) {
-  return await page.evaluate(() => {
-    for (const input of document.querySelectorAll("input")) {
-      if (input.type === "number" || input.className?.includes("page")) {
-        const v = parseInt(input.value, 10);
-        if (!isNaN(v) && v > 0) return v;
-      }
-    }
-    const m = document.body.innerText.match(/\b(\d+)\s*\/\s*(\d+)\b/);
-    return m ? parseInt(m[1], 10) : null;
-  });
-}
-
-async function openToc(page) {
-  await page.evaluate(() => {
-    for (const btn of document.querySelectorAll("button, [role='button']")) {
-      const lbl = (btn.getAttribute("aria-label") || btn.getAttribute("title") || btn.innerText || "").toLowerCase();
-      if (lbl.includes("table of contents") || lbl.includes("toc") || lbl === "menu" || lbl.includes("main menu")) {
-        btn.click(); return;
-      }
-    }
-    const fb = document.querySelector("header button, nav button");
-    if (fb) fb.click();
-  });
-}
-
-async function clickChapter(page, chapterName) {
-  const chapNum = chapterName.replace(/\D/g, "");
-  const clicked = await page.evaluate((chap, num) => {
-    for (const el of document.querySelectorAll("nav a, nav button, [class*='toc'] a, aside a, [role='listitem'] a")) {
-      const t = (el.innerText || el.textContent || "").toLowerCase().trim();
-      if (t.includes(chap.toLowerCase()) || (num && (t.startsWith(num + " ") || t.includes("chapter " + num)))) {
-        el.click(); return true;
-      }
-    }
-    return false;
-  }, chapterName, chapNum);
-  if (!clicked) console.log(`  Chapter not found in TOC — reading from current position`);
-}
-
-async function closeToc(page) {
-  await page.evaluate(() => {
-    for (const btn of document.querySelectorAll("button, [role='button']")) {
-      const lbl = (btn.getAttribute("aria-label") || btn.innerText || "").toLowerCase();
-      if (lbl.includes("close") || lbl.includes("dismiss")) { btn.click(); return; }
-    }
-  });
 }
 
 // ─── BUILD SOURCE BLOCK ───────────────────────────────────────────────────────
@@ -453,8 +404,7 @@ ${e.text}
 }
 
 function buildReferenceList(sources) {
-  const seen = new Set();
-  const refs = [];
+  const seen = new Set(), refs = [];
   for (const s of sources) {
     const key = `${s.bookTitle}${s.date}`;
     if (!seen.has(key)) {
@@ -492,12 +442,17 @@ function parseManualText(manualText, idx) {
 // ─── FIRST PROMPT ─────────────────────────────────────────────────────────────
 
 function buildFirstPrompt(assignment) {
-  const entries = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
-  const sourceBlock   = buildSourceBlock(entries);
-  const referenceList = buildReferenceList(entries.map(e => ({ bookTitle: e.bookTitle, authorLastFirst: e.authorLastFirst, date: e.date, publisher: e.publisher || "" })));
+  const bookEntries    = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
+  const manualEntries  = SOURCE_TEXT_STORE.filter(e => e.isManual);
+  const allEntries     = [...bookEntries, ...manualEntries];
+  const sourceBlock    = buildSourceBlock(allEntries);
+  const referenceList  = buildReferenceList(allEntries.map(e => ({ bookTitle: e.bookTitle, authorLastFirst: e.authorLastFirst, date: e.date, publisher: e.publisher || "" })));
 
   return `You are completing an assignment using exact text pulled word for word from textbooks.
 Use these passages as your ONLY citation sources.
+You have been given every page of the chapter. Read all of them, decide which pages contain
+the most relevant content for each part of the assignment, and cite only those pages.
+You do NOT need to cite every page — choose the most useful ones.
 
 ${"=".repeat(55)}
 ASSIGNMENT DIRECTIONS:
@@ -505,7 +460,7 @@ ${"=".repeat(55)}
 ${assignment.directions.trim()}
 
 ${"=".repeat(55)}
-SOURCE TEXT:
+SOURCE TEXT — WORD FOR WORD FROM TEXTBOOKS:
 ${"=".repeat(55)}
 ${sourceBlock}
 
@@ -515,43 +470,80 @@ ${"=".repeat(55)}
 ${referenceList}
 
 ${"=".repeat(55)}
-APA 7TH EDITION CITATION RULES:
+APA 7TH EDITION CITATION RULES — FOLLOW EVERY ONE:
 ${"=".repeat(55)}
 
-━━ PARENTHETICAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Author (date) states "word for word text" (p. #).
-  "word for word text" (Author, date, p. #).
-  "word for word text" (Author, date, pp. #–#).
+━━ THE ONLY ALLOWED PARENTHETICAL FORMAT ━━━━━━━━━━━━━━━━
+  Author (date) verb "word for word text" (p. #).
 
-RULES:
-1. Quotes must be EXACTLY word for word from source.
-2. Period AFTER closing parenthesis — NEVER inside quotes.
-   CORRECT: "text" (Ramlal, 2023, p. 23).
-   WRONG:   "text." (Ramlal, 2023, p. 23).
-3. Every quote MUST have a citation immediately after it.
-4. No filler words before the opening quote.
-   WRONG: such as "text" (Ramlal, 2023, p. 23).
-   CORRECT: Ramlal (2023) states "text" (p. 23).
-5. If source starts with a capital — pull first word out, lowercase it.
-6. NEVER quote a word or phrase without a citation after it.
+CORRECT:
+  Ramlal (2023) explains "vocabulary relates to the understanding a student demonstrates" (p. 20).
+  Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
 
-━━ NARRATIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  According to Author (date), from Chapter X on page #, ...
-  As Author (date) explains in Chapter X on page #, ...
+WRONG — NEVER DO THESE:
+  WRONG: "text" (Author, date, p. #).     ← author/date go in the SENTENCE not closing parens
+  WRONG: "Text starts capital" (p. #).    ← capital first word must be pulled out
+  WRONG: "text." (p. #).                  ← period inside quotes
+  WRONG: such as "text" (p. #).           ← filler word before quote
 
-- Chapter and page in the SENTENCE — never inside parentheses.
-  WRONG: Ramlal (2023, Chapter 3, p. 23) states...
-  CORRECT: Ramlal (2023) explains in Chapter 3 on page 23 that...
+━━ RULE 1 — AUTHOR INTRODUCES THE QUOTE ━━━━━━━━━━━━━━━━
+Author (date) verb "word for word text" (p. #).
+NEVER put author and date inside the closing parentheses alongside the page number.
+WRONG: "text" (Ramlal, 2023, p. 20).
+RIGHT: Ramlal (2023) explains "text" (p. 20).
 
-━━ IF IN DOUBT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Drop the citation. Write your own plain sentence.
+━━ RULE 2 — FIRST WORD OF QUOTE ━━━━━━━━━━━━━━━━━━━━━━━━
+If the source starts with a capital letter, pull that first word OUT of the quotes,
+lowercase it, blend into the sentence. Quote opens on the second word.
 
-Choose only the most relevant pages. You do not have to cite every page.
+SOURCE: Students become engaged whenever they are using their senses
+RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
+WRONG:  Annenberg Learner (n.d.) notes "Students become engaged..." (p. 24).
 
-Complete the assignment now. Add a References section at the end.`;
+If source already starts lowercase — quote it directly.
+SOURCE: vocabulary relates to the understanding
+RIGHT:  Ramlal (2023) states "vocabulary relates to the understanding a student demonstrates" (p. 20).
+
+━━ RULE 3 — PERIOD PLACEMENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Period goes AFTER the closing (p. #) — NEVER inside the quotes.
+RIGHT: Ramlal (2023) notes "text here" (p. 23).
+WRONG: Ramlal (2023) notes "text here." (p. 23).
+
+━━ RULE 4 — EVERY QUOTE NEEDS A CITATION ━━━━━━━━━━━━━━━
+Every quoted phrase must be followed immediately by (p. #).
+A quote with nothing after it is always wrong — drop it and write a plain sentence.
+
+━━ RULE 5 — NO FILLER WORDS BEFORE OPENING QUOTE ━━━━━━━
+WRONG: such as "text" (p. #).
+WRONG: like "text" (p. #).
+WRONG: called "text" (p. #).
+RIGHT: Ramlal (2023) states "text" (p. #).
+A word pulled OUT of the source text before the quote is CORRECT — that is the intended format.
+
+━━ RULE 6 — NO UNCITED QUOTED TERMS ━━━━━━━━━━━━━━━━━━━━
+NEVER put quotes around a term or phrase without (p. #) after it.
+WRONG: this is called "guided discovery" in science.
+RIGHT: this is called guided discovery in science.
+
+━━ RULE 7 — DO NOT MIX SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━
+Only cite text from the source it actually came from.
+Annenberg Learner text → cite as Annenberg Learner (n.d.)
+Ramlal text → cite as Ramlal (2023)
+
+━━ NARRATIVE CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  According to Ramlal (2023), from Chapter 3 on page 20, ...
+  As Annenberg Learner (n.d.) explains on page 25, ...
+
+Chapter and page go NATURALLY in the sentence — NEVER inside the parentheses.
+WRONG: Ramlal (2023, Chapter 3, p. 20) states...
+RIGHT: According to Ramlal (2023), from Chapter 3 on page 20, ...
+
+━━ IF IN DOUBT — drop the citation and write a plain sentence.
+
+Complete the assignment. Add a References section at the end.`;
 }
 
-// ─── GEMINI WINDOW UTILITIES ──────────────────────────────────────────────────
+// ─── GEMINI UTILITIES ─────────────────────────────────────────────────────────
 
 async function openGeminiBrowser(profileName, label) {
   const browser = await puppeteer.launch({
@@ -559,10 +551,7 @@ async function openGeminiBrowser(profileName, label) {
     args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`],
   });
   const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false });
-    window.chrome = { runtime: {} };
-  });
+  await page.evaluateOnNewDocument(() => { Object.defineProperty(navigator, "webdriver", { get: () => false }); window.chrome = { runtime: {} }; });
   await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
   console.log(`  [${label}] window open.`);
   return { browser, page };
@@ -570,10 +559,7 @@ async function openGeminiBrowser(profileName, label) {
 
 async function findInput(page, label) {
   for (const sel of ['rich-textarea div[contenteditable="true"]', 'div[contenteditable="true"]', 'div[role="textbox"]', 'textarea']) {
-    try {
-      const el = await page.$(sel);
-      if (el && (await el.boundingBox())?.width > 0) return { el, sel };
-    } catch (_) {}
+    try { const el = await page.$(sel); if (el && (await el.boundingBox())?.width > 0) return { el, sel }; } catch (_) {}
   }
   throw new Error(`[${label}] Input not found`);
 }
@@ -588,8 +574,7 @@ async function sendMessage(page, text, label) {
     const el = document.querySelector(s); if (!el) return; el.focus();
     if (el.contentEditable === "true") el.innerText = t;
     else Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(el, t);
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-    el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true }));
   }, text, sel);
   await sleep(500);
   const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
@@ -606,8 +591,7 @@ async function waitForResponse(page, label, timeoutMs = 240000) {
     const all = [...document.querySelectorAll("model-response"), ...document.querySelectorAll('[data-message-author-role="model"]'), ...document.querySelectorAll(".model-response-text"), ...document.querySelectorAll("message-content")];
     return all.length ? all[all.length - 1].innerText.trim() : "";
   });
-  if (!text) console.warn(`  [${label}] Empty response`);
-  else console.log(`  [${label}] ${text.length} chars`);
+  if (!text) console.warn(`  [${label}] Empty response`); else console.log(`  [${label}] ${text.length} chars`);
   return text;
 }
 
@@ -615,28 +599,59 @@ async function waitForResponse(page, label, timeoutMs = 240000) {
 
 function scanCitations(text) {
   const v = []; let m;
+
+  // Rule 1a — period inside closing quote WITH citation after
   const r1a = /"([^"]+?)\."\s*\((?:[^)]+)\)/g;
-  while ((m = r1a.exec(text)) !== null) v.push({ rule: 1, bad: m[0], detail: "Period inside closing quote — must go AFTER parenthesis." });
+  while ((m = r1a.exec(text)) !== null)
+    v.push({ rule: 1, bad: m[0], detail: "Period inside closing quote — must go AFTER the closing (p. #)." });
+
+  // Rule 1b — period inside closing quote with NO citation after
   const r1b = /"([^"]{5,}?)\."\s*(?!\s*\()/g;
-  while ((m = r1b.exec(text)) !== null) v.push({ rule: 1, bad: m[0].trim(), detail: "Period inside closing quote AND no citation — remove entirely." });
+  while ((m = r1b.exec(text)) !== null)
+    v.push({ rule: 1, bad: m[0].trim(), detail: "Period inside closing quote AND no citation after it — remove entirely, write plain sentence." });
+
+  // Rule 2 — empty quotes
   const r2 = /""\s*\([^)]*\)/g;
-  while ((m = r2.exec(text)) !== null) v.push({ rule: 2, bad: m[0], detail: "Empty quotes — drop and write your own sentence." });
-  for (const f of ["such as", "like", "known as", "called", "termed", "referred to as"]) {
-    const re = new RegExp(`${f}\\s+"([^"]{3,}?)"\\s*\\(`, "gi");
-    while ((m = re.exec(text)) !== null) v.push({ rule: 3, bad: m[0].trim(), detail: `Filler "${f}" before quote.` });
+  while ((m = r2.exec(text)) !== null)
+    v.push({ rule: 2, bad: m[0], detail: "Empty quotes — drop and write your own sentence." });
+
+  // Rule 3 — WRONG FORMAT: "text" (Author, date, p. #)
+  const r3 = /"([^"]{3,}?)"\s*\([A-Z][^,)]+,\s*(?:n\.d\.|[12][09]\d\d),\s*(?:p\.|pp\.)\s*\d+\)/g;
+  while ((m = r3.exec(text)) !== null)
+    v.push({ rule: 3, bad: m[0], detail: `WRONG FORMAT — author/date inside closing parens. Correct: Author (date) verb "text" (p. #).` });
+
+  // Rule 4 — filler connector before opening quote
+  for (const f of ["such as", "like", "known as", "called", "termed", "referred to as", "of"]) {
+    const re = new RegExp(`\\b${f}\\s+"([^"]{3,}?)"\\s*\\(`, "gi");
+    while ((m = re.exec(text)) !== null)
+      v.push({ rule: 4, bad: m[0].trim(), detail: `Filler connector "${f}" before opening quote — rewrite as Author (date) verb "text" (p. #).` });
   }
-  const r4 = /([A-Z][a-zA-Z\s,&.]+?)\s*\((\d{4})\s*,\s*(?:Chapter|Ch\.?|p\.)\s*[\d\w]+[^)]*\)/g;
-  while ((m = r4.exec(text)) !== null) v.push({ rule: 4, bad: m[0], detail: "Chapter/page inside parentheses — write in the sentence instead." });
-  const r5 = /(?:According to|As noted by|As stated by|As explained by)\s+([^(]+?)\s*\((\d{4})\)\s*,/gi;
-  while ((m = r5.exec(text)) !== null) {
+
+  // Rule 5 — chapter/page inside narrative citation parens
+  const r5 = /([A-Z][a-zA-Z\s,&.]+?)\s*\((\d{4}|n\.d\.?)\s*,\s*(?:Chapter|Ch\.?|p\.)\s*[\d\w]+[^)]*\)/g;
+  while ((m = r5.exec(text)) !== null)
+    v.push({ rule: 5, bad: m[0], detail: "Chapter/page inside parentheses — write in the sentence naturally." });
+
+  // Rule 6 — narrative citation missing chapter/page
+  const r6 = /(?:According to|As noted by|As stated by|As explained by)\s+([^(]+?)\s*\(([^)]+)\)\s*,/gi;
+  while ((m = r6.exec(text)) !== null) {
     const after = text.substring(m.index + m[0].length, m.index + m[0].length + 300).toLowerCase();
-    if (!after.match(/\b(chapter|section|page|p\.|on page)\b/)) v.push({ rule: 5, bad: m[0].trim(), detail: "Narrative citation missing chapter/page." });
+    if (!after.match(/\b(chapter|section|page|p\.|on page)\b/))
+      v.push({ rule: 6, bad: m[0].trim(), detail: "Narrative citation missing chapter/page in the sentence." });
   }
-  const r6 = /(?:states|notes|explains|writes|argues|suggests|reports|observes)\s+"([A-Z][a-zA-Z']{2,})\s+([^"]{3,}?)"\s*\(/g;
-  while ((m = r6.exec(text)) !== null) v.push({ rule: 6, bad: `"${m[1]} ${m[2]}"`, detail: `Quote starts on capital "${m[1]}" — pull out and lowercase.` });
-  const r7 = /"([^"]{2,60})"\s*(?!\s*\()/g;
+
+  // Rule 7 — capital first word inside opening quote
+  const r7cap = /(?:states|notes|explains|writes|argues|suggests|reports|observes)\s+"([A-Z][a-zA-Z']{2,})\s+([^"]{3,}?)"\s*\(/g;
+  while ((m = r7cap.exec(text)) !== null)
+    v.push({ rule: 7, bad: `"${m[1]} ${m[2]}"`, detail: `Opening quote starts on capital "${m[1]}" — pull out and lowercase into sentence: ${m[1].toLowerCase()} "${m[2]}..." (p. #).` });
+
+  // Rule 8 — quoted phrase with no citation at all
+  const r8 = /"([^"]{2,60})"\s*(?!\s*\()/g;
   const hasVerb = /\b(is|are|was|were|has|have|must|should|will|can|does|do|shows|states|notes|explains|suggests)\b/;
-  while ((m = r7.exec(text)) !== null) if (!hasVerb.test(m[1].toLowerCase()) && m[1].length < 60) v.push({ rule: 7, bad: m[0].trim(), detail: "Quoted phrase has no citation." });
+  while ((m = r8.exec(text)) !== null)
+    if (!hasVerb.test(m[1].toLowerCase()) && m[1].length < 60)
+      v.push({ rule: 8, bad: m[0].trim(), detail: "Quoted phrase has no citation after it — add (p. #) or remove quotes and write plainly." });
+
   return v;
 }
 
@@ -646,21 +661,33 @@ function buildEvidenceReport(violations) {
     violations.map((v, i) => `VIOLATION ${i + 1} — Rule ${v.rule}\nWrong: ${v.bad}\nWhy:   ${v.detail}`).join("\n\n");
 }
 
-const buildReviewerPrompt = (assignment, evidence) => `You are a strict APA 7th Edition citation reviewer.
+// ─── REVIEWER PROMPT ──────────────────────────────────────────────────────────
+
+const buildReviewerPrompt = (assignment, evidence) => `You are a strict APA 7th Edition citation reviewer enforcing ONE specific citation format.
 
 ${evidence ? `Scanner found violations:\n\n${evidence}` : "Scanner found nothing. Do a thorough manual check."}
 
-RULES:
-1. Period AFTER closing parenthesis — NEVER inside quotes
-2. Every quote needs a citation immediately after it
-3. No filler words before opening quote
-4. No empty quotes
-5. Opening quote on capital word = pull out and lowercase
-6. No quotes around terms without citations
-7. Narrative: chapter/page in sentence NOT inside parentheses
-8. Every narrative citation must reference chapter or page
+THE ONLY CORRECT PARENTHETICAL FORMAT IS:
+  Author (date) verb "word for word text" (p. #).
+  Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
+  Example: Annenberg Learner (n.d.) notes "students become engaged" (p. 24).
 
-End with: OVERALL RESULT: PASS  or  OVERALL RESULT: FAIL
+VIOLATIONS TO FLAG:
+1. "text" (Author, date, p. #). — WRONG. Author/date must introduce the quote in the sentence.
+   Fix: rewrite as Author (date) verb "text" (p. #).
+2. Period inside closing quote: "text." (p. #). — WRONG. Fix: "text" (p. #).
+3. Quote with no (p. #) after it. Fix: add (p. #) or drop the quote, write plain sentence.
+4. Capital letter as first word inside opening quote. Fix: pull first word out, lowercase, blend into sentence.
+5. Empty or shell quotes: "" (p. #). Fix: drop and write plain sentence.
+6. Chapter/page inside narrative parens: Author (2023, Chapter 3) — WRONG.
+   Fix: According to Author (2023), from Chapter 3 on page #, ...
+7. Filler connector before opening quote: such as "text" — WRONG.
+   Fix: Author (date) verb "text" (p. #).
+8. Citing Ramlal for Annenberg Learner text or vice versa — sources must not be mixed.
+
+For each violation: quote the exact wrong text, state the rule broken, state the fix.
+
+End with exactly: OVERALL RESULT: PASS  or  OVERALL RESULT: FAIL
 
 Assignment:
 ---
@@ -669,18 +696,28 @@ ${assignment}
 
 function buildCorrectionPrompt(feedback, violations) {
   let p = "Fix every citation violation now.\n\n";
-  violations.forEach((v, i) => { p += `${i + 1}. WRONG: ${v.bad}\n   WHY: ${v.detail}\n   FIX: Remove it. Write your own sentence.\n\n`; });
-  p += `Reviewer said:\n${feedback}\n\nCORRECT formats:\n`;
-  p += `  Ramlal (2023) states "word for word text" (p. 23).\n`;
-  p += `  "word for word text" (Ramlal, 2023, p. 23).\n`;
-  p += `  According to Ramlal (2023), from Chapter 3 on page 23, ...\n\n`;
-  p += "Rewrite the full assignment now.";
+  violations.forEach((v, i) => {
+    p += `${i + 1}. WRONG: ${v.bad}\n   WHY: ${v.detail}\n   FIX: Rewrite using correct format or drop and write plain sentence.\n\n`;
+  });
+  p += `Reviewer said:\n${feedback}\n\n`;
+  p += `THE ONLY CORRECT FORMAT:\n`;
+  p += `  Author (date) verb "word for word text" (p. #).\n\n`;
+  p += `CORRECT EXAMPLES:\n`;
+  p += `  Ramlal (2023) explains "vocabulary relates to the understanding a student demonstrates" (p. 20).\n`;
+  p += `  Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).\n\n`;
+  p += `NEVER: "text" (Author, date, p. #). ← author/date do NOT go in closing parens.\n`;
+  p += `NEVER: "Capital first word..." (p. #). ← pull capital word out, lowercase it, blend into sentence.\n`;
+  p += `FIRST WORD RULE: SOURCE: Students become engaged → RIGHT: ...that students "become engaged" (p. 24).\n`;
+  p += `PERIOD: always AFTER the closing (p. #) — never inside the quotes.\n\n`;
+  p += `Rewrite the full assignment now with every violation fixed.`;
   return p;
 }
 
+// ─── DIRECTIONS CHECKER ───────────────────────────────────────────────────────
+
 function buildDirectionsCheckerPrompt(assignment, directions) {
   return `You are checking if a completed assignment covers every requirement in the directions.
-Do NOT check citation format — only check CONTENT coverage.
+Do NOT check citations — only CONTENT coverage.
 
 ${"=".repeat(50)}
 ASSIGNMENT DIRECTIONS:
@@ -711,27 +748,40 @@ function buildDirectionsRewritePrompt(feedback) {
 Checker feedback:
 ${feedback}
 
-Keep every existing citation exactly as it is.
-Only add the missing content.
+Keep every existing citation exactly as it is. Only add the missing content.
 Rewrite the full assignment with the missing points included.`;
 }
 
 const FOLLOWUP_PROMPTS = [
-  `Review every citation. For each parenthetical: confirm text is word for word, author and date included, period AFTER closing parenthesis. For each narrative: confirm chapter and page are in the sentence naturally. Fix any that are wrong.`,
-  `Final citation check: (1) every quoted phrase must have a citation after it — if not, remove quotes and write plainly. (2) Period AFTER closing parenthesis — never inside quotes. (3) No quotes around terms without citations. Fix everything that does not match.`,
+  `Review every citation in your assignment. The ONLY correct format is:
+  Author (date) verb "word for word text" (p. #).
+  Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
+
+  Fix anything that does not match:
+  - "text" (Author, date, p. #) is WRONG — rewrite as Author (date) verb "text" (p. #).
+  - If the first word inside the opening quote is capitalized — pull it out and blend into the sentence.
+  - Period must be AFTER the closing (p. #) never inside the quotes.
+  - Every quote must have (p. #) immediately after it.
+  - Do NOT cite Ramlal text with Annenberg Learner or vice versa.`,
+
+  `Final check — scan every single quoted phrase:
+  1. Does it follow: Author (date) verb "text" (p. #)? If not, fix it.
+  2. Is the first word inside the quote capitalized? Pull it out, lowercase it, blend into sentence.
+  3. Is the period inside the closing quote? Move it outside.
+  4. Is there any "text" (Author, date, p. #)? Rewrite as Author (date) verb "text" (p. #).
+  5. Are sources mixed? Fix it.
+  If unsure — drop the citation and write a plain sentence.`,
 ];
 
 // ─── RUN ONE ASSIGNMENT ───────────────────────────────────────────────────────
 
 async function runAssignment(num, assignment, workerPage, reviewerPage, checkerPage) {
-  console.log("\n" + "█".repeat(60));
-  console.log(`  ASSIGNMENT ${num}`);
-  console.log("█".repeat(60));
+  console.log("\n" + "=".repeat(60) + `\n  ASSIGNMENT ${num}\n` + "=".repeat(60));
 
-  const entries = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
-  console.log(`\n  Source text: ${entries.length} pages`);
+  const bookEntries   = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
+  const manualEntries = SOURCE_TEXT_STORE.filter(e => e.isManual);
+  console.log(`\n  Book pages: ${bookEntries.length}   Manual passages: ${manualEntries.length}`);
 
-  console.log(`\n${"=".repeat(60)}\n  ROUND 0 — Sending to Worker\n${"=".repeat(60)}\n`);
   await sendMessage(workerPage, buildFirstPrompt(assignment), "WORKER");
   let lastResponse = await waitForResponse(workerPage, "WORKER");
 
@@ -744,17 +794,14 @@ async function runAssignment(num, assignment, workerPage, reviewerPage, checkerP
       attempt++;
       console.log(`\n  Attempt ${attempt}`);
       if (attempt === 1) { await sendMessage(workerPage, FOLLOWUP_PROMPTS[i], "WORKER"); lastResponse = await waitForResponse(workerPage, "WORKER"); }
-
       const violations = scanCitations(lastResponse);
       console.log(`  [SCANNER] ${violations.length ? violations.length + " violation(s)" : "Clean"}`);
-
+      violations.forEach((v, i) => console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad.substring(0, 80)}`));
       await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)), "CITATION REVIEWER");
       const feedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
-      console.log(`\n  CITATION REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
-
+      console.log(`\n  REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
       if (feedback.includes("OVERALL RESULT: PASS") && !feedback.includes("OVERALL RESULT: FAIL")) {
-        console.log(`\n  Citation Round ${round} PASSED.\n`);
-        approved = true;
+        console.log(`\n  Round ${round} PASSED.\n`); approved = true;
       } else {
         await sendMessage(workerPage, buildCorrectionPrompt(feedback, violations), "WORKER");
         lastResponse = await waitForResponse(workerPage, "WORKER");
@@ -769,17 +816,14 @@ async function runAssignment(num, assignment, workerPage, reviewerPage, checkerP
 
   while (!dirApproved) {
     dirAttempt++;
-    console.log(`\n  Directions Attempt ${dirAttempt}`);
     await sendMessage(checkerPage, buildDirectionsCheckerPrompt(lastResponse, assignment.directions), "DIRECTIONS CHECKER");
-    const checkerFeedback = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
-    console.log(`\n  DIRECTIONS CHECKER:\n  ` + checkerFeedback.split("\n").join("\n  "));
+    const cf = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
+    console.log(`\n  CHECKER:\n  ` + cf.split("\n").join("\n  "));
 
-    if (checkerFeedback.includes("DIRECTIONS RESULT: PASS")) {
-      console.log(`\n  Directions Check PASSED.\n`);
-      dirApproved = true;
-    } else if (checkerFeedback.includes("DIRECTIONS RESULT: FAIL")) {
-      console.log(`\n  Directions Check FAILED — fixing...\n`);
-      await sendMessage(workerPage, buildDirectionsRewritePrompt(checkerFeedback), "WORKER");
+    if (cf.includes("DIRECTIONS RESULT: PASS")) {
+      console.log(`\n  Directions PASSED.\n`); dirApproved = true;
+    } else if (cf.includes("DIRECTIONS RESULT: FAIL")) {
+      await sendMessage(workerPage, buildDirectionsRewritePrompt(cf), "WORKER");
       lastResponse = await waitForResponse(workerPage, "WORKER");
       const rv = scanCitations(lastResponse);
       if (rv.length) {
@@ -792,11 +836,11 @@ async function runAssignment(num, assignment, workerPage, reviewerPage, checkerP
       }
       await sleep(2000);
     } else {
-      if (dirAttempt >= 4) { console.log(`  No verdict after 4 attempts — moving on.`); dirApproved = true; }
+      if (dirAttempt >= 4) { console.log(`  No verdict — moving on.`); dirApproved = true; }
       else {
-        await sendMessage(checkerPage, `End your response with exactly one of:\n\nDIRECTIONS RESULT: PASS\n\nor\n\nDIRECTIONS RESULT: FAIL`, "DIRECTIONS CHECKER");
+        await sendMessage(checkerPage, `End your response with exactly one of:\nDIRECTIONS RESULT: PASS\nor\nDIRECTIONS RESULT: FAIL`, "DIRECTIONS CHECKER");
         const reminder = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
-        if (reminder.includes("DIRECTIONS RESULT: PASS")) { dirApproved = true; }
+        if (reminder.includes("DIRECTIONS RESULT: PASS")) dirApproved = true;
         else if (reminder.includes("DIRECTIONS RESULT: FAIL")) {
           await sendMessage(workerPage, buildDirectionsRewritePrompt(reminder), "WORKER");
           lastResponse = await waitForResponse(workerPage, "WORKER");
@@ -806,52 +850,41 @@ async function runAssignment(num, assignment, workerPage, reviewerPage, checkerP
     }
   }
 
-  console.log(`\n${"█".repeat(60)}`);
-  console.log(`  ASSIGNMENT ${num} COMPLETE — copy from Worker window.`);
-  console.log(`${"█".repeat(60)}\n`);
+  console.log(`\n${"=".repeat(60)}\n  ASSIGNMENT ${num} COMPLETE — copy from Worker window.\n${"=".repeat(60)}\n`);
   return lastResponse;
 }
 
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 (async () => {
-  console.log("█".repeat(60));
-  console.log("  GEMINI PIPELINE — no API key required");
-  console.log("█".repeat(60));
+  console.log("=".repeat(60) + "\n  GEMINI PIPELINE\n" + "=".repeat(60));
   console.log(`  ${ASSIGNMENTS.length} assignment(s) queued.\n`);
 
-  // Open vision window first (reused for all page screenshots)
-  console.log("Opening Gemini vision window...");
-  const { browser: vBrowser, page: visionPage } = await openVisionBrowser();
-
-  // Wait for vision window login if needed
-  if (visionPage.url().includes("accounts.google.com")) {
-    console.log("  Sign into Google in the VISION window first.");
-    await visionPage.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 });
-  }
-  await visionPage.waitForFunction(
-    () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], textarea'),
-    { timeout: 30000, polling: 1000 }
-  ).catch(() => {});
-  console.log("  Vision window ready.\n");
-
-  // Step 1: Parse manual text + read Yuzu books
-  console.log("STEP 1 — Reading books + manual text...\n");
+  console.log("STEP 1 — Reading source text...\n");
   let yuzuIndex = 0;
   for (let ai = 0; ai < ASSIGNMENTS.length; ai++) {
     const a = ASSIGNMENTS[ai];
     if (a.manualText?.trim()) parseManualText(a.manualText, ai);
-    for (const source of a.sources) await readYuzuBook(source, yuzuIndex++, visionPage);
+    for (const source of a.sources) await readYuzuBook(source, yuzuIndex++);
   }
 
-  console.log(`\n${SOURCE_TEXT_STORE.length} total pages stored.`);
+  console.log(`\n${SOURCE_TEXT_STORE.length} total pages stored:`);
   SOURCE_TEXT_STORE.forEach(e => console.log(`  ${e.bookTitle} — ${e.chapter} — p.${e.page} — ${e.text.length} chars`));
 
-  // Step 2: Open Worker, Reviewer, Checker windows
-  console.log("\nSTEP 2 — Opening Gemini AI windows...\n");
-  const { browser: wBrowser, page: workerPage }   = await openGeminiBrowser("worker",   "WORKER");
-  const { browser: rBrowser, page: reviewerPage } = await openGeminiBrowser("reviewer", "CITATION REVIEWER");
-  const { browser: cBrowser, page: checkerPage }  = await openGeminiBrowser("checker",  "DIRECTIONS CHECKER");
+  // Print captured text so you can verify
+  console.log("\n" + "=".repeat(60) + "\n  CAPTURED TEXT — verify before proceeding\n" + "=".repeat(60));
+  SOURCE_TEXT_STORE.forEach((e, i) => {
+    console.log(`\n[${ i + 1}] ${e.bookTitle} | ${e.chapter} | p.${e.page}`);
+    console.log("─".repeat(60));
+    console.log(e.text.substring(0, 600));
+    if (e.text.length > 600) console.log(`  ... [${e.text.length - 600} more chars]`);
+  });
+  console.log("\n" + "=".repeat(60) + "\n");
+
+  console.log("STEP 2 — Opening Gemini windows...\n");
+  const { browser: wB, page: workerPage }   = await openGeminiBrowser("worker",   "WORKER");
+  const { browser: rB, page: reviewerPage } = await openGeminiBrowser("reviewer", "CITATION REVIEWER");
+  const { browser: cB, page: checkerPage }  = await openGeminiBrowser("checker",  "DIRECTIONS CHECKER");
 
   const allPages = [workerPage, reviewerPage, checkerPage];
   if (allPages.some(p => p.url().includes("accounts.google.com"))) {
@@ -864,14 +897,11 @@ async function runAssignment(num, assignment, workerPage, reviewerPage, checkerP
   await sleep(2000);
   console.log("\nAll windows ready.\n");
 
-  // Step 3: Run assignments
   console.log("STEP 3 — Running assignments...\n");
   for (let i = 0; i < ASSIGNMENTS.length; i++) {
     await runAssignment(i + 1, ASSIGNMENTS[i], workerPage, reviewerPage, checkerPage);
     if (i < ASSIGNMENTS.length - 1) { console.log("Next in 5s...\n"); await sleep(5000); }
   }
 
-  console.log("\n" + "█".repeat(60));
-  console.log("  ALL ASSIGNMENTS COMPLETE");
-  console.log("█".repeat(60) + "\n");
+  console.log("\n" + "=".repeat(60) + "\n  ALL COMPLETE\n" + "=".repeat(60) + "\n");
 })();
