@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html>
+</html> -->
 
 
 
@@ -1346,3 +1346,50 @@ pas.addEventListener("change", PASCHANGE)
 </script>
 </body>
 </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <h1>To do list</h1>
+
+  <form onsubmit="SUB(event)">
+    <input type="text" oninput="CHANGE(event)">
+    <button type="submit">make to do</button>
+  </form>
+  <script>
+   let v; 
+    function CHANGE(e){
+      v = e.target.value
+    }
+    function SUB(e){
+      e.preventDefault()
+/////oral readings as gorup and documenting the data
+      if(v.length > 0){
+        const el = document.createElement("div")
+        const C = document.createElement("input")
+        const L = document.createElement("lable")
+
+        C.type = "checkbox"
+
+        el.textContent = v
+        el.id = v
+        el.style.border = "5px solid black"
+        el.style.width = "100px"
+        el.style.height = "100px"
+        el.appendChild(C)
+        L.textContent = "Do This"
+        L.for = v
+        document.body.appendChild(el)
+        document.body.appendChild(L)
+      }
+    }
+
+  </script>
+</body>
+</html>

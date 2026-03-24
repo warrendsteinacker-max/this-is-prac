@@ -1,0 +1,5 @@
+2026/03/24-16:47:56.073 136c Creating DB C:\Users\User\p\vite-project\Backend\ai_automation_session\Default\Local Storage\leveldb since it was missing.
+2026/03/24-16:47:56.586 136c Reusing MANIFEST C:\Users\User\p\vite-project\Backend\ai_automation_session\Default\Local Storage\leveldb/MANIFEST-000001
+2026/03/24-16:50:15.904 3e58 Level-0 table #5: started
+2026/03/24-16:50:15.925 3e58 Level-0 table #5: 79469 bytes OK
+2026/03/24-16:50:15.930 3e58 Delete type=0 #3
