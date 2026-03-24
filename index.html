@@ -1347,6 +1347,8 @@ pas.addEventListener("change", PASCHANGE)
 </body>
 </html> -->
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1368,15 +1370,8 @@ pas.addEventListener("change", PASCHANGE)
 
   
 
-  (function(){
-      const data = JSON.parse(localStorage.getItem("data"))
-      if(data.length > 0){
-      for(let i = 0; i < data.length; i++){
-        document.body.appendChild(data[i])
-      }
-    }
-  })()
 
+  let data;
    let v; 
     function CHANGE(e){
       v = e.target.value
@@ -1386,21 +1381,26 @@ pas.addEventListener("change", PASCHANGE)
 /////oral readings as gorup and documenting the data
       if(v.length > 0){
         const el = document.createElement("div")
-        const C = document.createElement("input")
-        const L = document.createElement("lable")
 
-        C.type = "checkbox"
+        const L = document.createElement("button")
 
-        el.textContent = v
-        el.id = v
+        el.textContent = `To Do: ${v}`
+        el.id = `To Do: ${v}`
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
-        el.appendChild(C)
-        L.textContent = "Do This Red Means Not Done Green Means Done"
-        L.for = v
+        el.style.backgroundColor = "red" 
+
+
         document.body.appendChild(el)
-        data.unshift(el)
+        data.push({
+          H: "100px",
+          W: "100px",
+          id: v,
+          B: "5px solid black",
+          T: v,
+          C: "red"
+      })
         console.log(data)
         localStorage.setItem("data", JSON.stringify(data))
         console.log(JSON.parse(localStorage.getItem("data")))
