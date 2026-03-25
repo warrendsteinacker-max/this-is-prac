@@ -1356,12 +1356,13 @@ pas.addEventListener("change", PASCHANGE)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
+<body style="min-height: 100vh; display: grid; margin: 0; justify-content: center; align-items: center">
   
-  <h1>To do list</h1>
+  <h1 style="text-decoration: underline;">To do list</h1>
+  <p>Green means done and red means not done</p>
 
-  <form onsubmit="SUB(event)">
-    <input type="text" oninput="CHANGE(event)">
+  <form onsubmit="SUB(event)" style="border: 5px solid black; border-radius: 5px; width: 200px; height: 100px; padding: 25px">
+    <input type="text" id="textarea" onchange="CHANGE(event)" style="margin: 10px">
     <button type="submit">make to do</button>
   </form>
   <script>
@@ -1371,18 +1372,24 @@ pas.addEventListener("change", PASCHANGE)
 
 
   let data = [];
+  let v = ""
+
 
 
     function ONCLICK(e) {
       console.log(e.target.id)
-      const el = document.getElementById(e.target.id)
+      const va = e.target.id - 1
+      const el = document.getElementById(va + "a")
+      console.log(el)
+      console.log(typeof(el.style.backgroundColor))
       if(el.style.backgroundColor === "red"){
-        e.target.backgroundColor = "green"
+        el.style.backgroundColor = "green"
         data[e.target.id - 1].C = "green"
         localStorage.setItem("data", JSON.stringify(data))
       }
-      else if(e.target.backgroundColor === "green"){
-        e.target.backgroundColor = "red"
+      else {
+        console.log("in")
+        el.style.backgroundColor = "red"
         data[e.target.id - 1].C = "red"
         localStorage.setItem("data", JSON.stringify(data))
       }
@@ -1390,16 +1397,21 @@ pas.addEventListener("change", PASCHANGE)
 
     (function(){
       data = JSON.parse(localStorage.getItem("data"))
-      for(let i = 0; i <= data.length; i++){
+      for(let i = 0; i < data.length; i++){
         const el = document.createElement("div")
         const B = document.createElement("button")
         B.id = i + 1
+        B.textContent = "Status"
+        B.style.margin = "25px"
         B.addEventListener("click", ONCLICK)
         el.textContent = `To Do: ${data[i].T}`
-        el.id = i
+        el.id = i + "a"
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
+        el.style.borderRadius = "5px"
+        el.style.padding = "10px"
+        el.style.margin = "10px"
         el.style.backgroundColor = data[i].C 
 
         el.appendChild(B)
@@ -1407,35 +1419,42 @@ pas.addEventListener("change", PASCHANGE)
       }
     })()
 
-  let v;
+  
 
     function CHANGE(e){
       v = e.target.value
     }
+
     function SUB(e){
       e.preventDefault()
-/////oral readings as gorup and documenting the data
+
       if(v.length > 0){
         const el = document.createElement("div")
 
         const B = document.createElement("button")
 
+        const I = document.getElementById("textarea")
+
         el.textContent = `To Do: ${v}`
-        el.id = data.length
+        el.id = data.length + "a"
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
         el.style.backgroundColor = "red"
-        el.stat = false
+        el.style.borderRadius = "5px"
+        el.style.padding = "10px"
         B.id = data.length + 1
+        B.textContent = "Status"
+        B.style.margin = "25px"
         B.addEventListener("click", ONCLICK)
 
         el.appendChild(B)
         document.body.appendChild(el)
+        const Vv = data.length + 1
         data.unshift({
           H: "100px",
           W: "100px",
-          id: v,
+          id: Vv + "a",
           B: "5px solid black",
           T: v,
           C: "red",
