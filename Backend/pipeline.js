@@ -680,11 +680,12 @@ function correctionPrompt(feedback, violations) {
 // ── FOLLOWUP PROMPTS (citation polish rounds) ─────────────────────────────────
 const FOLLOWUPS = [
   `Review every single citation in your assignment against this rule:
-THE ONLY CORRECT FORMAT: Author (date) verb "exact text" (p. #).
+THE ONLY CORRECT FORMATs: Author (date) verb "exact text" (p. #).
 Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
 Example: Annenberg Learner (n.d.) notes "students become engaged whenever" (p. 24).
+Ex: words to fether in "text" (Author, date, p.#).
 
-Fix anything that uses: "text" (Author, date, p.#)  — that format is WRONG.
+
 Fix capital first word inside quotes: pull it out and lowercase it.
 Fix period inside closing quote: move it after (p.#).
 Also add at least two NARRATIVE citations in the form:
