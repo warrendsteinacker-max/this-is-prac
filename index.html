@@ -1372,18 +1372,37 @@ pas.addEventListener("change", PASCHANGE)
 
   let data = [];
 
+
+    function ONCLICK(e) {
+      console.log(e.target.id)
+      const el = document.getElementById(e.target.id)
+      if(el.style.backgroundColor === "red"){
+        e.target.backgroundColor = "green"
+        data[e.target.id - 1].C = "green"
+        localStorage.setItem("data", JSON.stringify(data))
+      }
+      else if(e.target.backgroundColor === "green"){
+        e.target.backgroundColor = "red"
+        data[e.target.id - 1].C = "red"
+        localStorage.setItem("data", JSON.stringify(data))
+      }
+    }
+
     (function(){
       data = JSON.parse(localStorage.getItem("data"))
-      for(let i = 0; i < data.length; i++){
+      for(let i = 0; i <= data.length; i++){
         const el = document.createElement("div")
+        const B = document.createElement("button")
+        B.id = i + 1
+        B.addEventListener("click", ONCLICK)
         el.textContent = `To Do: ${data[i].T}`
-        el.id = `To Do: ${data[i].T}`
+        el.id = i
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
         el.style.backgroundColor = data[i].C 
 
-
+        el.appendChild(B)
         document.body.appendChild(el)
       }
     })()
@@ -1399,16 +1418,19 @@ pas.addEventListener("change", PASCHANGE)
       if(v.length > 0){
         const el = document.createElement("div")
 
-        const L = document.createElement("button")
+        const B = document.createElement("button")
 
         el.textContent = `To Do: ${v}`
-        el.id = `To Do: ${v}`
+        el.id = data.length
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
-        el.style.backgroundColor = "red" 
+        el.style.backgroundColor = "red"
+        el.stat = false
+        B.id = data.length + 1
+        B.addEventListener("click", ONCLICK)
 
-
+        el.appendChild(B)
         document.body.appendChild(el)
         data.unshift({
           H: "100px",
@@ -1416,7 +1438,8 @@ pas.addEventListener("change", PASCHANGE)
           id: v,
           B: "5px solid black",
           T: v,
-          C: "red"
+          C: "red",
+          stat: false
       })
         console.log(data)
         localStorage.setItem("data", JSON.stringify(data))
