@@ -1,8 +1,20 @@
 import puppeteer from "puppeteer";
 
-// ╔════════════════════════════════════════════════════════════════════╗
-// ║   ASSIGNMENTS — fill in your assignments here                     ║
-// ╚════════════════════════════════════════════════════════════════════╝
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  pipeline.js  —  run with:  node pipeline.js                    ║
+// ║                                                                  ║
+// ║  WHAT IT DOES:                                                   ║
+// ║  1. Opens Yuzu, navigates to each chapter, copies text per page ║
+// ║  2. Prints every captured page to terminal with page number      ║
+// ║  3. Opens 3 Gemini windows: Worker, Citation Reviewer, Checker  ║
+// ║  4. Worker writes assignment using source text + citation rules  ║
+// ║  5. Citation Reviewer checks and corrects format until PASS      ║
+// ║  6. Directions Checker verifies all assignment points covered    ║
+// ╚══════════════════════════════════════════════════════════════════╝
+
+// ── CONFIGURATION ────────────────────────────────────────────────────────────
+
+const CHROME = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const ASSIGNMENTS = [
   {
@@ -20,22 +32,23 @@ const ASSIGNMENTS = [
       6. Explore one way this science lesson could be extended at home
       7. Investigate how you could modify a strategy for diverse learners
 
-      Include a 200-300 word summary with APA 7th Edition citations.
+      Include a 200-300 word summary with APA 7th Edition citations from the sources provided.
     `,
 
     sources: [
       {
         bookTitle: "Literacy in Elementary Education, Grades 3-6",
-        author: "Ramlal",
+        author:          "Ramlal",
         authorLastFirst: "Ramlal, S. R.",
-        date: "2023",
-        publisher: "Cognella Academic Publishing",
-        vbid: "826802A",
-        chapters: ["Chapter 3"],
-        maxPagesPerChapter: 20,
+        date:            "2023",
+        publisher:       "Cognella Academic Publishing",
+        vbid:            "826802A",          // from reader.yuzu.com/reader/books/826802A
+        chapters:        ["Chapter 3"],
+        maxPagesPerChapter: 16,
       },
     ],
 
+    // ── MANUAL TEXT (optional — leave as "" to skip) ─────────────────────────
     manualText: `
 ---
 AUTHOR: Annenberg Learner
@@ -43,865 +56,867 @@ DATE: n.d.
 PAGE: 24
 CHAPTER: does not have one
 SECTION: does not have one
-
 EXACT TEXT:
-Case Studies in Science Education
-
-Elsa — K
-
-Teacher Profile
-Name | Elsa
-Experience | 15 years
-Grade & Subject(s) | Two half-day kindergarten classes; all subjects
-Classroom Demographics | Bilingual classroom
-School | Elementary school in an urban district
-Science Teaching | 2 days/week for 30 minutes
-Curriculum | Specified by district
-
-Module 1 - Introducing the Case
-Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
+Case Studies in Science Education. Elsa — K. Teacher Profile: Name | Elsa. Experience | 15 years. Grade & Subject(s) | Two half-day kindergarten classes; all subjects. Classroom Demographics | Bilingual classroom. School | Elementary school in an urban district. Science Teaching | 2 days/week for 30 minutes. Curriculum | Specified by district. Module 1 - Introducing the Case. Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
 ---
-
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 25
 CHAPTER: does not have one
 SECTION: does not have one
-
 EXACT TEXT:
-Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings.
-
-Module 2 - Trying New Ideas
-Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa takes a guided discovery approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
+Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings. Module 2 - Trying New Ideas. Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa takes a guided discovery approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
 ---
-
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 26
 CHAPTER: does not have one
 SECTION: does not have one
-
 EXACT TEXT:
 After working in pairs, where materials are shared, each student completes a worksheet that reflects his or her findings about materials through which a magnetic force can travel. Later, the class reviews the worksheets together. Elsa believes that when students take their worksheets home, students' understandings are again reinforced when shared with family members.
 ---
-
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 27
 CHAPTER: does not have one
 SECTION: does not have one
-
 EXACT TEXT:
-Module 3 - Reflecting and Building on Change
-As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge.
+Module 3 - Reflecting and Building on Change. As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge.
 ---
     `,
   },
+
+  // ── ADD MORE ASSIGNMENTS BELOW ────────────────────────────────────────────
+  // {
+  //   directions: `...`,
+  //   sources: [{ bookTitle: "...", author: "...", authorLastFirst: "...", date: "...", publisher: "...", vbid: "...", chapters: ["Chapter 1"], maxPagesPerChapter: 15 }],
+  //   manualText: "",
+  // },
 ];
 
-// ════════════════════════════════════════════════════════════
-// SOURCE TEXT STORE
-// ════════════════════════════════════════════════════════════
+// ── INTERNALS — do not edit below ────────────────────────────────────────────
 
 const SOURCE_TEXT_STORE = [];
-
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const BASE_ARGS = [
+  "--no-sandbox", "--disable-setuid-sandbox",
+  "--disable-blink-features=AutomationControlled",
+  "--start-maximized",
+];
 
-const launchOptions = {
-  headless: false,
-  executablePath: CHROME_PATH,
-  slowMo: 50,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-    "--disable-blink-features=AutomationControlled",
-    "--start-maximized",
-  ],
-  defaultViewport: null,
-  ignoreDefaultArgs: ["--enable-automation"],
-};
+function makeBrowser(profileSuffix, extra = []) {
+  return puppeteer.launch({
+    headless: false,
+    executablePath: CHROME,
+    slowMo: 50,
+    args: [...BASE_ARGS, `--user-data-dir=C:\\Temp\\pup-${profileSuffix}`, ...extra],
+    defaultViewport: null,
+    ignoreDefaultArgs: ["--enable-automation"],
+  });
+}
 
-// ─── GET PAGE NUMBER FROM MAIN DOM ────────────────────────────────────────────
-
-async function getPageNumber(page) {
-  return await page.evaluate(() => {
-    // Try the page number input
-    for (const input of document.querySelectorAll("input")) {
-      const val = parseInt(input.value, 10);
-      if (!isNaN(val) && val > 0 && val < 2000) return val;
+// ── PAGE NUMBER — read from main Yuzu DOM ─────────────────────────────────────
+// The iframe content is cross-origin but the page number is always in the
+// main DOM: <input value="22">, aria-valuetext="Page 22", or tooltip text
+async function getPageNum(page) {
+  return page.evaluate(() => {
+    // 1. The Go-to-Page input at the bottom bar
+    for (const inp of document.querySelectorAll("input")) {
+      const v = parseInt(inp.value, 10);
+      if (!isNaN(v) && v > 0 && v < 5000) return v;
     }
-    // Try aria-valuetext on a slider
+    // 2. The progress slider: aria-valuetext="Page 22"
     const slider = document.querySelector("[aria-valuetext]");
     if (slider) {
-      const m = slider.getAttribute("aria-valuetext").match(/(\d+)/);
-      if (m) return parseInt(m[1], 10);
-    }
-    // Try "Page 22" tooltip
-    for (const t of document.querySelectorAll("[class*='tooltip'], [role='tooltip']")) {
-      const m = (t.innerText || "").match(/Page\s+(\d+)/i);
+      const m = (slider.getAttribute("aria-valuetext") || "").match(/(\d+)/);
       if (m) return parseInt(m[1], 10);
     }
     return null;
   });
 }
 
-// ─── COPY PAGE TEXT VIA CLIPBOARD ────────────────────────────────────────────
-// Clicks inside the reading pane, Ctrl+A selects all, Ctrl+C copies,
-// then reads clipboard. Filters out Yuzu UI strings.
-
-async function copyPageText(page) {
-  // Click in the center of the reading pane
-  await page.mouse.click(700, 350);
-  await sleep(600);
-
+// ── COPY PAGE TEXT via Ctrl+A / Ctrl+C ───────────────────────────────────────
+// Yuzu book content is inside a cross-origin jigsaw.yuzu.com iframe.
+// DOM access is blocked by same-origin policy.
+// Keyboard select-all + copy works across iframe boundaries — same approach
+// a human uses when they highlight text and press Copy.
+async function copyText(page) {
+  // Click in the centre of the book reading pane to focus it
+  await page.mouse.click(700, 300);
+  await sleep(700);
   await page.keyboard.down("Control");
   await page.keyboard.press("a");
   await page.keyboard.up("Control");
   await sleep(500);
-
   await page.keyboard.down("Control");
   await page.keyboard.press("c");
   await page.keyboard.up("Control");
-  await sleep(600);
+  await sleep(500);
 
-  let text = await page.evaluate(async () => {
-    try { return await navigator.clipboard.readText() || ""; }
-    catch (_) { return ""; }
+  const raw = await page.evaluate(async () => {
+    try { return await navigator.clipboard.readText(); } catch { return ""; }
   });
 
-  // Strip known Yuzu UI strings
-  const uiStrings = [
+  // Strip Yuzu UI chrome strings that get selected alongside book text
+  const uiNoise = [
     "Book Page Loaded", "Skip to main content", "Skip to book navigation",
     "Table of Contents", "Search across book", "Reader Preferences",
-    "Highlights, Notes, Bookmarks", "More Options", "Previous", "Next",
-    "Bookmark page", "Go to Page", "Go to First Page", "Read Aloud",
-    "Print", "Download", "My Library",
+    "Highlights, Notes, Bookmarks, and Flashcards", "More Options",
+    "Previous", "Next", "Bookmark page", "Go to Page", "Go to First Page",
+    "Open/Close Margin", "More book options", "Back",
   ];
-  for (const ui of uiStrings) text = text.split(ui).join("");
-  text = text.replace(/\n{3,}/g, "\n\n").trim();
-
-  return text;
+  let text = raw;
+  for (const s of uiNoise) text = text.split(s).join("");
+  return text.replace(/\n{3,}/g, "\n\n").trim();
 }
 
-// ─── OPEN TOC ─────────────────────────────────────────────────────────────────
-
-async function openToc(page) {
-  await page.evaluate(() => {
-    for (const btn of document.querySelectorAll("button[aria-label]")) {
-      if (btn.getAttribute("aria-label") === "Table of Contents") { btn.click(); return; }
-    }
-    // Fallback — any hamburger-style button in the header
-    const fb = document.querySelector("header button, [class*='header'] button");
-    if (fb) fb.click();
-  });
-  await sleep(1500);
-}
-
-// ─── CLICK CHAPTER IN TOC ────────────────────────────────────────────────────
-
-async function clickChapterInToc(page, chapterName) {
-  const chapterNum = chapterName.match(/\d+/)?.[0] || "";
-  const clicked = await page.evaluate((chapName, chapNum) => {
-    // Yuzu TOC buttons: aria-label="Go to Chapter 3 Comprehension, page 20"
-    for (const btn of document.querySelectorAll("button[aria-label]")) {
-      const lbl = btn.getAttribute("aria-label").toLowerCase();
-      if (lbl.includes("go to") && chapNum && lbl.includes("chapter " + chapNum)) {
-        btn.click(); return true;
-      }
-    }
-    // Fallback — match by span text inside TOC buttons
-    for (const btn of document.querySelectorAll("button")) {
-      const span = btn.querySelector("span");
-      if (span && span.innerText.toLowerCase().includes(chapName.toLowerCase())) {
-        btn.click(); return true;
-      }
-    }
-    // Fallback — any link/button whose text matches
-    for (const el of document.querySelectorAll("nav a, nav button, aside a, [class*='toc'] a")) {
-      const t = (el.innerText || el.textContent || "").toLowerCase().trim();
-      if (t.includes(chapName.toLowerCase()) || (chapNum && t.includes("chapter " + chapNum))) {
-        el.click(); return true;
-      }
-    }
-    return false;
-  }, chapterName, chapterNum);
-
-  if (!clicked) console.log(`  [WARN] Chapter "${chapterName}" not found in TOC`);
-  return clicked;
-}
-
-// ─── CLICK NEXT PAGE ─────────────────────────────────────────────────────────
-
-async function clickNext(page) {
-  const clicked = await page.evaluate(() => {
+// ── NEXT PAGE ─────────────────────────────────────────────────────────────────
+async function nextPage(page) {
+  const ok = await page.evaluate(() => {
     for (const btn of document.querySelectorAll("button[aria-label]")) {
       if (btn.getAttribute("aria-label") === "Next") { btn.click(); return true; }
     }
     return false;
   });
-  if (!clicked) await page.keyboard.press("ArrowRight");
+  if (!ok) await page.keyboard.press("ArrowRight");
 }
 
-// ─── YUZU BOOK READER ─────────────────────────────────────────────────────────
-
-async function readYuzuBook(source, profileIndex) {
-  const label    = `YUZU-${profileIndex + 1}`;
-  const chapters = source.chapters || [source.chapter].filter(Boolean);
-  console.log(`\n  [${label}] Book: "${source.bookTitle}"`);
-  console.log(`  [${label}] Chapters: ${chapters.join(", ")}`);
-
-  const browser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      `--user-data-dir=C:\\Temp\\puppeteer-yuzu-${profileIndex}`,
-    ],
+// ── OPEN TOC & CLICK CHAPTER ──────────────────────────────────────────────────
+async function gotoChapter(page, chapterName) {
+  // Open the TOC panel
+  await page.evaluate(() => {
+    for (const btn of document.querySelectorAll("button[aria-label]")) {
+      if (btn.getAttribute("aria-label") === "Table of Contents") { btn.click(); return; }
+    }
   });
+  await sleep(2000);
 
+  const chapNum = (chapterName.match(/\d+/) || [""])[0];
+  const clicked = await page.evaluate((name, num) => {
+    // TOC buttons: aria-label="Go to Chapter 3 Comprehension, page 20"
+    for (const btn of document.querySelectorAll("button[aria-label]")) {
+      const lbl = (btn.getAttribute("aria-label") || "").toLowerCase();
+      if (lbl.startsWith("go to") && num && lbl.includes("chapter " + num)) {
+        btn.click(); return true;
+      }
+    }
+    // Fallback: match by span text inside button
+    for (const btn of document.querySelectorAll("button")) {
+      const t = (btn.innerText || "").toLowerCase();
+      if (t.includes(name.toLowerCase())) { btn.click(); return true; }
+    }
+    return false;
+  }, chapterName, chapNum);
+
+  if (clicked) {
+    await sleep(4000);
+    console.log(`    → Navigated to ${chapterName}`);
+  } else {
+    console.log(`    → Chapter not found in TOC — reading from current position`);
+  }
+}
+
+// ── READ ONE BOOK FROM YUZU ───────────────────────────────────────────────────
+async function readYuzuBook(source, idx) {
+  const tag = `YUZU${idx + 1}`;
+  const chapters = source.chapters || [source.chapter].filter(Boolean);
+  console.log(`\n[${tag}] Opening "${source.bookTitle}"`);
+
+  const browser = await makeBrowser(`yuzu${idx}`);
   const page = await browser.newPage();
   await page.evaluateOnNewDocument(() => {
     Object.defineProperty(navigator, "webdriver", { get: () => false });
     window.chrome = { runtime: {} };
   });
 
-  // Grant clipboard permissions
-  const context = browser.defaultBrowserContext();
-  await context.overridePermissions("https://reader.yuzu.com", ["clipboard-read", "clipboard-write"]);
+  // Grant clipboard access
+  await browser.defaultBrowserContext()
+    .overridePermissions("https://reader.yuzu.com", ["clipboard-read", "clipboard-write"]);
 
-  // Go directly to book via VBID
-  const readerUrl = source.vbid
+  const url = source.vbid
     ? `https://reader.yuzu.com/reader/books/${source.vbid}`
-    : `https://reader.yuzu.com/home/my-library`;
+    : "https://reader.yuzu.com/home/my-library";
 
-  console.log(`  [${label}] Opening: ${readerUrl}`);
-  await page.goto(readerUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
-  await sleep(5000);
+  console.log(`[${tag}] Navigating to ${url}`);
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+  await sleep(6000);
 
-  // Wait for login if needed
-  if (page.url().includes("sign-in") || page.url().includes("#sign") || page.url().includes("login")) {
-    console.log(`  [${label}] Not logged in — sign into Yuzu in this window.`);
+  // Handle sign-in redirect
+  if (!page.url().includes("/reader/books/")) {
+    console.log(`[${tag}] Not at book — waiting for sign-in or library navigation...`);
+    console.log(`[${tag}] Sign into Yuzu in the browser window that just opened.`);
     await page.waitForFunction(
       () => location.href.includes("/reader/books/"),
-      { timeout: 180000, polling: 2000 }
-    );
+      { timeout: 300000, polling: 2000 }
+    ).catch(() => console.log(`[${tag}] Timeout waiting for reader — continuing`));
     await sleep(5000);
   }
 
-  // Wait for reader UI — page number input signals it's ready
+  // Wait for page number input to appear (signals reader is fully loaded)
   await page.waitForFunction(
     () => {
-      for (const input of document.querySelectorAll("input")) {
-        if (!isNaN(parseInt(input.value, 10)) && parseInt(input.value, 10) > 0) return true;
+      for (const inp of document.querySelectorAll("input")) {
+        const v = parseInt(inp.value, 10);
+        if (!isNaN(v) && v > 0) return true;
       }
       return false;
     },
     { timeout: 30000, polling: 1000 }
-  ).catch(() => console.log(`  [${label}] Reader load wait timed out`));
+  ).catch(() => console.log(`[${tag}] Reader load wait timed out`));
 
   await sleep(3000);
-  console.log(`  [${label}] Reader loaded.`);
+  console.log(`[${tag}] Reader loaded. Starting chapter reading...`);
 
   for (const chapterName of chapters) {
-    console.log(`\n  [${label}] → ${chapterName}`);
+    console.log(`\n[${tag}] Chapter: ${chapterName}`);
+    await gotoChapter(page, chapterName);
 
-    await openToc(page);
-    const clicked = await clickChapterInToc(page, chapterName);
-    if (clicked) {
-      console.log(`  [${label}] Chapter clicked in TOC`);
-      await sleep(4000);
-    } else {
-      console.log(`  [${label}] Reading from current position`);
-      await sleep(1000);
-    }
+    const max = source.maxPagesPerChapter || 20;
+    let prevText = "";
+    let prevPage = null;
+    let emptyRun = 0;
+    let dupRun = 0;
 
-    const maxPages      = source.maxPagesPerChapter || 20;
-    let lastText        = "";
-    let lastPageNum     = null;
-    let emptyStreak     = 0;
-    let duplicateStreak = 0;
+    for (let i = 0; i < max; i++) {
+      await sleep(2800);
+      const pn = await getPageNum(page);
+      const text = await copyText(page);
 
-    for (let offset = 0; offset < maxPages; offset++) {
-      await sleep(3000);
+      console.log(`  [${tag}] Page ${pn ?? "?"}: ${text.length} chars`);
 
-      const pageNum = await getPageNumber(page);
-      console.log(`  [${label}] Offset ${offset + 1}: page=${pageNum ?? "?"}`);
-
-      // Stuck check
-      if (pageNum && pageNum === lastPageNum && offset > 1) {
-        console.log(`  [${label}] Page number stuck — stopping.`);
-        break;
+      // Stuck detection
+      if (pn && pn === prevPage && i > 1) {
+        console.log(`  [${tag}] Page number unchanged — stopping.`); break;
       }
-      lastPageNum = pageNum;
+      prevPage = pn;
 
-      let text = await copyPageText(page);
-      console.log(`  [${label}] Copied ${text.length} chars`);
-
-      if (text.length > 200) {
-        if (text === lastText) {
-          duplicateStreak++;
-          if (duplicateStreak >= 2) {
-            console.log(`  [${label}] Duplicate text — chapter ended. Stopping.`);
-            break;
-          }
-        } else {
-          duplicateStreak = 0;
-        }
-        lastText    = text;
-        emptyStreak = 0;
+      if (text.length > 150) {
+        if (text === prevText) {
+          if (++dupRun >= 2) { console.log(`  [${tag}] Duplicate — chapter ended. Stopping.`); break; }
+        } else { dupRun = 0; }
+        prevText = text;
+        emptyRun = 0;
 
         SOURCE_TEXT_STORE.push({
-          bookTitle:       source.bookTitle,
-          author:          source.author,
-          authorLastFirst: source.authorLastFirst,
-          date:            source.date,
-          publisher:       source.publisher || "",
-          chapter:         chapterName,
-          page:            pageNum ?? (offset + 1),
-          text,
+          bookTitle: source.bookTitle, author: source.author,
+          authorLastFirst: source.authorLastFirst, date: source.date,
+          publisher: source.publisher || "", chapter: chapterName,
+          page: pn ?? i + 1, text,
         });
-        console.log(`  [${label}] Stored p.${pageNum ?? offset + 1}`);
       } else {
-        emptyStreak++;
-        console.warn(`  [${label}] Low text (${text.length} chars) — streak: ${emptyStreak}`);
-        if (emptyStreak >= 3) {
-          console.log(`  [${label}] 3 low-text pages — stopping.`);
-          break;
-        }
+        if (++emptyRun >= 3) { console.log(`  [${tag}] 3 empty pages — stopping.`); break; }
       }
-
-      await clickNext(page);
+      await nextPage(page);
     }
   }
 
-  const stored = SOURCE_TEXT_STORE.filter(e => e.bookTitle === source.bookTitle);
-  console.log(`\n  [${label}] Done. ${stored.length} pages stored.`);
-  if (!stored.length) {
-    console.error(`  [${label}] No text captured — clipboard may not have worked.`);
-    console.error(`  [${label}] Make sure Chrome has clipboard permissions for reader.yuzu.com`);
-  }
+  const n = SOURCE_TEXT_STORE.filter(e => e.bookTitle === source.bookTitle).length;
+  console.log(`\n[${tag}] Done — ${n} page(s) stored from "${source.bookTitle}"`);
   await browser.close();
 }
 
-// ─── BUILD SOURCE BLOCK ───────────────────────────────────────────────────────
+// ── PARSE MANUAL TEXT BLOCKS ──────────────────────────────────────────────────
+function parseManual(manualText, assignIdx) {
+  if (!manualText?.trim()) return;
+  let added = 0;
+  for (const block of manualText.split(/^---\s*$/m).filter(b => b.trim())) {
+    const g = (k) => { const m = block.match(new RegExp(`^${k}:\\s*(.+)$`, "im")); return m ? m[1].trim() : ""; };
+    const author = g("AUTHOR"), date = g("DATE"), pageRaw = g("PAGE");
+    const chapter = g("CHAPTER"), section = g("SECTION");
+    const em = block.match(/EXACT TEXT:\s*([\s\S]+)/i);
+    const text = em ? em[1].trim() : "";
+    if (text.length < 30) continue;
+    const chapLabel =
+      chapter && !chapter.toLowerCase().includes("does not") ? chapter :
+      section && !section.toLowerCase().includes("does not") ? section : "n/a";
+    SOURCE_TEXT_STORE.push({
+      bookTitle: `Manual — ${author}`, author: author.split(" ").pop(),
+      authorLastFirst: author, date, publisher: "", chapter: chapLabel,
+      page: parseInt(pageRaw, 10) || pageRaw, text, isManual: true,
+    });
+    added++;
+  }
+  if (added) console.log(`  [MANUAL] ${added} passage(s) loaded for assignment ${assignIdx + 1}`);
+}
 
-function buildSourceBlock(entries) {
-  if (!entries.length) return "No source text available.";
+// ── PRINT ALL CAPTURED TEXT TO TERMINAL ──────────────────────────────────────
+function printCapturedText() {
+  console.log("\n" + "█".repeat(62));
+  console.log("  CAPTURED SOURCE TEXT — verify before assignment starts");
+  console.log("█".repeat(62));
+  SOURCE_TEXT_STORE.forEach((e, i) => {
+    console.log(`\n${"─".repeat(62)}`);
+    console.log(`  [${i + 1}]  ${e.bookTitle}`);
+    console.log(`  Chapter : ${e.chapter}`);
+    console.log(`  Page    : ${e.page}`);
+    console.log(`  Author  : ${e.authorLastFirst} (${e.date})`);
+    console.log(`${"─".repeat(62)}`);
+    const preview = e.text.length > 900 ? e.text.substring(0, 900) + `\n  ...[${e.text.length - 900} more chars]` : e.text;
+    console.log(preview);
+  });
+  console.log("\n" + "█".repeat(62) + "\n");
+}
+
+// ── BUILD SOURCE BLOCK FOR PROMPT ─────────────────────────────────────────────
+function sourceBlock(entries) {
+  if (!entries.length) return "No source text was provided.";
   return entries.map(e => `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SOURCE PASSAGE
 Book:    ${e.bookTitle}
 Author:  ${e.authorLastFirst} (${e.date})
 Chapter: ${e.chapter}
 Page:    p. ${e.page}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${e.text}
-`.trim()).join("\n\n");
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${e.text}`.trim()).join("\n\n");
 }
 
-function buildReferenceList(sources) {
-  const seen = new Set(), refs = [];
-  for (const s of sources) {
-    const key = `${s.bookTitle}${s.date}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      refs.push(`${s.authorLastFirst} (${s.date}). *${s.bookTitle}*. ${s.publisher}.`);
+function refList(entries) {
+  const seen = new Set(), out = [];
+  for (const e of entries) {
+    const k = `${e.bookTitle}|${e.date}`;
+    if (!seen.has(k)) {
+      seen.add(k);
+      out.push(`${e.authorLastFirst} (${e.date}). *${e.bookTitle}*${e.publisher ? ". " + e.publisher : ""}.`);
     }
   }
-  return refs.join("\n");
+  return out.join("\n");
 }
 
-function parseManualText(manualText, idx) {
-  if (!manualText?.trim()) return;
-  const blocks = manualText.split(/^---\s*$/m).filter(b => b.trim());
-  let added = 0;
-  for (const block of blocks) {
-    const get = (key) => { const m = block.match(new RegExp(`^${key}:\\s*(.+)$`, "im")); return m ? m[1].trim() : ""; };
-    const author = get("AUTHOR"), date = get("DATE"), pageRaw = get("PAGE");
-    const chapter = get("CHAPTER"), section = get("SECTION");
-    const em = block.match(/EXACT TEXT:\s*([\s\S]+)/i);
-    const text = em ? em[1].trim() : "";
-    if (!text || text.length < 30) continue;
-    const chapterLabel =
-      (chapter && !chapter.toLowerCase().includes("does not")) ? chapter :
-      (section && !section.toLowerCase().includes("does not")) ? section : "Manual Source";
-    SOURCE_TEXT_STORE.push({
-      bookTitle: `Manual Source — ${author}`, author: author.split(" ").pop(),
-      authorLastFirst: author, date, publisher: "", chapter: chapterLabel,
-      page: parseInt(pageRaw, 10) || pageRaw, text, isManual: true,
-    });
-    added++;
-  }
-  if (added) console.log(`  [MANUAL TEXT] ${added} passage(s) parsed for assignment ${idx + 1}`);
-}
+// ── FIRST PROMPT TO WORKER ────────────────────────────────────────────────────
+function firstPrompt(assignment) {
+  const bookEntries   = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
+  const manualEntries = SOURCE_TEXT_STORE.filter(e => e.isManual);
+  const all = [...bookEntries, ...manualEntries];
 
-// ─── FIRST PROMPT ─────────────────────────────────────────────────────────────
+  return `You are completing an academic assignment. Use ONLY the source passages below for citations.
 
-function buildFirstPrompt(assignment) {
-  const bookEntries    = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
-  const manualEntries  = SOURCE_TEXT_STORE.filter(e => e.isManual);
-  const allEntries     = [...bookEntries, ...manualEntries];
-  const sourceBlock    = buildSourceBlock(allEntries);
-  const referenceList  = buildReferenceList(allEntries.map(e => ({ bookTitle: e.bookTitle, authorLastFirst: e.authorLastFirst, date: e.date, publisher: e.publisher || "" })));
-
-  return `You are completing an assignment using exact text pulled word for word from textbooks.
-Use these passages as your ONLY citation sources.
-You have been given every page of the chapter. Read all of them, decide which pages contain
-the most relevant content for each part of the assignment, and cite only those pages.
-You do NOT need to cite every page — choose the most useful ones.
-
-${"=".repeat(55)}
+${"=".repeat(58)}
 ASSIGNMENT DIRECTIONS:
-${"=".repeat(55)}
+${"=".repeat(58)}
 ${assignment.directions.trim()}
 
-${"=".repeat(55)}
-SOURCE TEXT — WORD FOR WORD FROM TEXTBOOKS:
-${"=".repeat(55)}
-${sourceBlock}
+${"=".repeat(58)}
+SOURCE TEXT (cite only from these — word for word):
+${"=".repeat(58)}
+${sourceBlock(all)}
 
-${"=".repeat(55)}
+${"=".repeat(58)}
 REFERENCE LIST:
-${"=".repeat(55)}
-${referenceList}
+${"=".repeat(58)}
+${refList(all)}
 
-${"=".repeat(55)}
-APA 7TH EDITION CITATION RULES — FOLLOW EVERY ONE:
-${"=".repeat(55)}
+${"=".repeat(58)}
+CITATION RULES — READ EVERY RULE CAREFULLY:
+${"=".repeat(58)}
 
-━━ THE ONLY ALLOWED PARENTHETICAL FORMAT ━━━━━━━━━━━━━━━━
-  Author (date) verb "word for word text" (p. #).
+╔═══════════════════════════════════════════════════════╗
+║  THE ONLY CORRECT CITATION FORMAT IS:                 ║
+║                                                       ║
+║  Author (date) verb "word for word text" (p. #).      ║
+╚═══════════════════════════════════════════════════════╝
 
-CORRECT:
+CORRECT EXAMPLES — study these:
   Ramlal (2023) explains "vocabulary relates to the understanding a student demonstrates" (p. 20).
   Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+  Ramlal (2023) states "read-alouds to develop vocabulary, promote student-led discussions" (p. 23).
 
-WRONG — NEVER DO THESE:
-  WRONG: "text" (Author, date, p. #).     ← author/date go in the SENTENCE not closing parens
-  WRONG: "Text starts capital" (p. #).    ← capital first word must be pulled out
-  WRONG: "text." (p. #).                  ← period inside quotes
-  WRONG: such as "text" (p. #).           ← filler word before quote
+ALSO CORRECT — narrative form that mentions chapter/page/section:
+  According to Ramlal (2023), in Chapter 3 on page 23, teaching a balance of skills and strategies
+  is important to promote growth in reading.
 
-━━ RULE 1 — AUTHOR INTRODUCES THE QUOTE ━━━━━━━━━━━━━━━━
-Author (date) verb "word for word text" (p. #).
-NEVER put author and date inside the closing parentheses alongside the page number.
-WRONG: "text" (Ramlal, 2023, p. 20).
-RIGHT: Ramlal (2023) explains "text" (p. 20).
+  As Annenberg Learner (n.d.) observes on page 26, students' understandings are reinforced
+  when worksheets are shared with family members.
 
-━━ RULE 2 — FIRST WORD OF QUOTE ━━━━━━━━━━━━━━━━━━━━━━━━
-If the source starts with a capital letter, pull that first word OUT of the quotes,
-lowercase it, blend into the sentence. Quote opens on the second word.
+══ RULE 1 — ONE FORMAT ONLY ════════════════════════════
+Use: Author (date) verb "exact text" (p. #).
+Author name + date come BEFORE the quote in the sentence.
+(p. #) comes immediately AFTER the closing quote.
 
-SOURCE: Students become engaged whenever they are using their senses
-RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
-WRONG:  Annenberg Learner (n.d.) notes "Students become engaged..." (p. 24).
+BANNED FORMATS — never use these:
+  ✗ "text" (Author, date, p. #).       ← author/date must NOT go in closing parens
+  ✗ (Author, date, p. #) alone         ← parenthetical-only citation
+  ✗ text (Author, date)                ← no page number
 
-If source already starts lowercase — quote it directly.
-SOURCE: vocabulary relates to the understanding
-RIGHT:  Ramlal (2023) states "vocabulary relates to the understanding a student demonstrates" (p. 20).
+══ RULE 2 — FIRST WORD OF QUOTE ═══════════════════════
+When the source text starts with a capital letter:
+  • Pull that first word OUT of the quotes
+  • Lowercase it and blend it naturally into your sentence
+  • The opening quote starts on the SECOND word
 
-━━ RULE 3 — PERIOD PLACEMENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Period goes AFTER the closing (p. #) — NEVER inside the quotes.
-RIGHT: Ramlal (2023) notes "text here" (p. 23).
-WRONG: Ramlal (2023) notes "text here." (p. 23).
+SOURCE TEXT starts: "Students become engaged whenever they are using their senses"
+CORRECT: ...that students "become engaged whenever they are using their senses" (p. 24).
+                   ↑ "Students" pulled out, lowercased to "students", blended in
 
-━━ RULE 4 — EVERY QUOTE NEEDS A CITATION ━━━━━━━━━━━━━━━
+SOURCE TEXT starts: "Elsa believes that when students take their worksheets home"
+CORRECT: ...that Elsa believes "that when students take their worksheets home" (p. 26).
+
+If source already starts lowercase — no change needed. Quote it directly.
+
+══ RULE 3 — PERIOD PLACEMENT ══════════════════════════
+Period goes AFTER the closing (p. #). NEVER inside the quotes.
+  CORRECT: ...notes "students become engaged" (p. 24).
+  WRONG:   ...notes "students become engaged." (p. 24).
+
+══ RULE 4 — EVERY QUOTE NEEDS A CITATION ══════════════
 Every quoted phrase must be followed immediately by (p. #).
-A quote with nothing after it is always wrong — drop it and write a plain sentence.
+A floating quote with no (p. #) after it is always wrong.
 
-━━ RULE 5 — NO FILLER WORDS BEFORE OPENING QUOTE ━━━━━━━
-WRONG: such as "text" (p. #).
-WRONG: like "text" (p. #).
-WRONG: called "text" (p. #).
-RIGHT: Ramlal (2023) states "text" (p. #).
-A word pulled OUT of the source text before the quote is CORRECT — that is the intended format.
-
-━━ RULE 6 — NO UNCITED QUOTED TERMS ━━━━━━━━━━━━━━━━━━━━
-NEVER put quotes around a term or phrase without (p. #) after it.
-WRONG: this is called "guided discovery" in science.
-RIGHT: this is called guided discovery in science.
-
-━━ RULE 7 — DO NOT MIX SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━
-Only cite text from the source it actually came from.
+══ RULE 5 — DO NOT MIX SOURCES ════════════════════════
 Annenberg Learner text → cite as Annenberg Learner (n.d.)
 Ramlal text → cite as Ramlal (2023)
+Never cite Ramlal for Annenberg text or vice versa.
 
-━━ NARRATIVE CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  According to Ramlal (2023), from Chapter 3 on page 20, ...
-  As Annenberg Learner (n.d.) explains on page 25, ...
+══ RULE 6 — NO FILLER CONNECTORS ══════════════════════
+No connector words between your sentence and the opening quote:
+  WRONG: the teacher uses such as "guided discovery" (p. 25).
+  CORRECT: Annenberg Learner (n.d.) describes "guided discovery" (p. 25).
 
-Chapter and page go NATURALLY in the sentence — NEVER inside the parentheses.
-WRONG: Ramlal (2023, Chapter 3, p. 20) states...
-RIGHT: According to Ramlal (2023), from Chapter 3 on page 20, ...
+══ RULE 7 — NARRATIVE CITATIONS ═══════════════════════
+For narrative citations you MUST mention chapter OR page OR section naturally:
+  According to Ramlal (2023), in Chapter 3 on page 23, ...
+  As noted by Annenberg Learner (n.d.) on page 26, ...
+  Ramlal (2023) discusses in Chapter 3 ...
 
-━━ IF IN DOUBT — drop the citation and write a plain sentence.
+Chapter/page/section go IN THE SENTENCE — never inside the parentheses:
+  WRONG:  Ramlal (2023, Chapter 3, p. 23) states...
+  CORRECT: Ramlal (2023) explains in Chapter 3 on page 23 that...
 
-Complete the assignment. Add a References section at the end.`;
+══ RULE 8 — BALANCE PARENTHETICAL AND NARRATIVE ═══════
+Use a mix of both citation styles throughout:
+  • Parenthetical: Author (date) verb "text" (p. #).
+  • Narrative: According to Author (date), on page #, [paraphrase or text].
+Aim for roughly half and half.
+
+══ IF IN DOUBT — drop the citation and write a plain sentence. ═
+
+Complete the assignment now following ALL rules above.
+Add a References section at the end.`;
 }
 
-// ─── GEMINI UTILITIES ─────────────────────────────────────────────────────────
-
-async function openGeminiBrowser(profileName, label) {
-  const browser = await puppeteer.launch({
-    ...launchOptions,
-    args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`],
-  });
+// ── GEMINI BROWSER HELPERS ────────────────────────────────────────────────────
+async function openGemini(profile, label) {
+  const browser = await makeBrowser(profile);
   const page = await browser.newPage();
-  await page.evaluateOnNewDocument(() => { Object.defineProperty(navigator, "webdriver", { get: () => false }); window.chrome = { runtime: {} }; });
+  await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => false });
+    window.chrome = { runtime: {} };
+  });
   await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
-  console.log(`  [${label}] window open.`);
+  console.log(`  [${label}] window opened`);
   return { browser, page };
 }
 
-async function findInput(page, label) {
-  for (const sel of ['rich-textarea div[contenteditable="true"]', 'div[contenteditable="true"]', 'div[role="textbox"]', 'textarea']) {
-    try { const el = await page.$(sel); if (el && (await el.boundingBox())?.width > 0) return { el, sel }; } catch (_) {}
+async function getInput(page, label) {
+  for (const sel of [
+    'rich-textarea div[contenteditable="true"]',
+    'div[contenteditable="true"]',
+    'div[role="textbox"]',
+    'textarea',
+  ]) {
+    try {
+      const el = await page.$(sel);
+      if (el && (await el.boundingBox())?.width > 0) return { el, sel };
+    } catch (_) {}
   }
-  throw new Error(`[${label}] Input not found`);
+  throw new Error(`[${label}] Could not find input box`);
 }
 
-async function sendMessage(page, text, label) {
-  const { el, sel } = await findInput(page, label);
-  await el.click(); await sleep(400);
+async function send(page, text, label) {
+  const { el, sel } = await getInput(page, label);
+  await el.click(); await sleep(300);
   await page.keyboard.down("Control"); await page.keyboard.press("a"); await page.keyboard.up("Control");
-  await page.keyboard.press("Backspace"); await sleep(200);
-  const ok = await page.evaluate((t, s) => { const el = document.querySelector(s); if (!el) return false; el.focus(); return document.execCommand("insertText", false, t); }, text, sel);
+  await page.keyboard.press("Backspace"); await sleep(150);
+  const ok = await page.evaluate((t, s) => {
+    const el = document.querySelector(s); if (!el) return false;
+    el.focus(); return document.execCommand("insertText", false, t);
+  }, text, sel);
   if (!ok) await page.evaluate((t, s) => {
     const el = document.querySelector(s); if (!el) return; el.focus();
     if (el.contentEditable === "true") el.innerText = t;
     else Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(el, t);
-    el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true }));
+    el.dispatchEvent(new Event("input", { bubbles: true }));
   }, text, sel);
-  await sleep(500);
-  const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
+  await sleep(400);
+  const btn = await page.$('button[aria-label="Send message"],button[aria-label="Submit"],button[jsname="Qx7uuf"]');
   if (btn) await btn.click(); else await page.keyboard.press("Enter");
-  await sleep(2000);
+  await sleep(1800);
 }
 
-async function waitForResponse(page, label, timeoutMs = 240000) {
-  console.log(`  [${label}] Waiting...`);
-  try { await page.waitForFunction(() => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'), { timeout: 20000, polling: 500 }); } catch (_) {}
-  await page.waitForFunction(() => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'), { timeout: timeoutMs, polling: 1000 }).catch(() => {});
+async function waitReply(page, label, ms = 300000) {
+  console.log(`  [${label}] waiting...`);
+  try {
+    await page.waitForFunction(
+      () => !!document.querySelector('[aria-label="Stop generating"],[aria-label="Stop response"]'),
+      { timeout: 18000, polling: 400 }
+    );
+  } catch (_) {}
+  await page.waitForFunction(
+    () => !document.querySelector('[aria-label="Stop generating"],[aria-label="Stop response"]'),
+    { timeout: ms, polling: 1000 }
+  ).catch(() => {});
   await sleep(3000);
-  const text = await page.evaluate(() => {
-    const all = [...document.querySelectorAll("model-response"), ...document.querySelectorAll('[data-message-author-role="model"]'), ...document.querySelectorAll(".model-response-text"), ...document.querySelectorAll("message-content")];
+  const t = await page.evaluate(() => {
+    const all = [
+      ...document.querySelectorAll("model-response"),
+      ...document.querySelectorAll('[data-message-author-role="model"]'),
+      ...document.querySelectorAll(".model-response-text"),
+      ...document.querySelectorAll("message-content"),
+    ];
     return all.length ? all[all.length - 1].innerText.trim() : "";
   });
-  if (!text) console.warn(`  [${label}] Empty response`); else console.log(`  [${label}] ${text.length} chars`);
-  return text;
+  if (!t) console.warn(`  [${label}] empty response`);
+  else console.log(`  [${label}] ${t.length} chars received`);
+  return t;
 }
 
-// ─── CITATION SCANNER ─────────────────────────────────────────────────────────
-
-function scanCitations(text) {
+// ── CITATION SCANNER ──────────────────────────────────────────────────────────
+function scan(text) {
   const v = []; let m;
 
-  // Rule 1a — period inside closing quote WITH citation after
-  const r1a = /"([^"]+?)\."\s*\((?:[^)]+)\)/g;
-  while ((m = r1a.exec(text)) !== null)
-    v.push({ rule: 1, bad: m[0], detail: "Period inside closing quote — must go AFTER the closing (p. #)." });
+  // Wrong format: "text" (Author, date, p.#) — author in closing parens
+  const rWrong = /"([^"]{3,150})"\s*\([A-Z][^,)]{1,40},\s*(?:n\.d\.?|[12]\d{3}),\s*(?:p\.|pp\.)\s*\d+\)/g;
+  while ((m = rWrong.exec(text)) !== null)
+    v.push({ rule: "W", bad: m[0], detail: 'WRONG FORMAT "text" (Author, date, p.#) — rewrite as: Author (date) verb "text" (p.#).' });
 
-  // Rule 1b — period inside closing quote with NO citation after
-  const r1b = /"([^"]{5,}?)\."\s*(?!\s*\()/g;
-  while ((m = r1b.exec(text)) !== null)
-    v.push({ rule: 1, bad: m[0].trim(), detail: "Period inside closing quote AND no citation after it — remove entirely, write plain sentence." });
+  // Period inside closing quote
+  const r1 = /"([^"]{4,}?)\."\s*\(/g;
+  while ((m = r1.exec(text)) !== null)
+    v.push({ rule: 1, bad: m[0], detail: "Period inside closing quote — move period after (p.#)." });
 
-  // Rule 2 — empty quotes
+  // Empty quotes
   const r2 = /""\s*\([^)]*\)/g;
   while ((m = r2.exec(text)) !== null)
-    v.push({ rule: 2, bad: m[0], detail: "Empty quotes — drop and write your own sentence." });
+    v.push({ rule: 2, bad: m[0], detail: "Empty quotes." });
 
-  // Rule 3 — WRONG FORMAT: "text" (Author, date, p. #)
-  const r3 = /"([^"]{3,}?)"\s*\([A-Z][^,)]+,\s*(?:n\.d\.|[12][09]\d\d),\s*(?:p\.|pp\.)\s*\d+\)/g;
-  while ((m = r3.exec(text)) !== null)
-    v.push({ rule: 3, bad: m[0], detail: `WRONG FORMAT — author/date inside closing parens. Correct: Author (date) verb "text" (p. #).` });
-
-  // Rule 4 — filler connector before opening quote
-  for (const f of ["such as", "like", "known as", "called", "termed", "referred to as", "of"]) {
-    const re = new RegExp(`\\b${f}\\s+"([^"]{3,}?)"\\s*\\(`, "gi");
+  // Filler connector before opening quote
+  for (const f of ["such as", "like", "known as", "called", "termed", "referred to as"]) {
+    const re = new RegExp(`\\b${f}\\s+"[^"]{3,}"\\s*\\(`, "gi");
     while ((m = re.exec(text)) !== null)
-      v.push({ rule: 4, bad: m[0].trim(), detail: `Filler connector "${f}" before opening quote — rewrite as Author (date) verb "text" (p. #).` });
+      v.push({ rule: 3, bad: m[0].trim(), detail: `Filler connector "${f}" directly before opening quote.` });
   }
 
-  // Rule 5 — chapter/page inside narrative citation parens
-  const r5 = /([A-Z][a-zA-Z\s,&.]+?)\s*\((\d{4}|n\.d\.?)\s*,\s*(?:Chapter|Ch\.?|p\.)\s*[\d\w]+[^)]*\)/g;
+  // Chapter/page inside narrative parens
+  const r4 = /\w[^(]{0,30}\((?:n\.d\.?|[12]\d{3})\s*,\s*(?:Chapter|p\.|pp\.|Section)/g;
+  while ((m = r4.exec(text)) !== null)
+    v.push({ rule: 4, bad: m[0].trim(), detail: "Chapter/page inside parentheses — move to sentence." });
+
+  // Quoted phrase with no (p.#) after it
+  const r5 = /"([^"]{4,80})"\s*(?!\s*\()/g;
+  const verbRe = /\b(is|are|was|were|has|have|must|should|will|can|does|do|shows|states|notes|explains|observes)\b/;
   while ((m = r5.exec(text)) !== null)
-    v.push({ rule: 5, bad: m[0], detail: "Chapter/page inside parentheses — write in the sentence naturally." });
-
-  // Rule 6 — narrative citation missing chapter/page
-  const r6 = /(?:According to|As noted by|As stated by|As explained by)\s+([^(]+?)\s*\(([^)]+)\)\s*,/gi;
-  while ((m = r6.exec(text)) !== null) {
-    const after = text.substring(m.index + m[0].length, m.index + m[0].length + 300).toLowerCase();
-    if (!after.match(/\b(chapter|section|page|p\.|on page)\b/))
-      v.push({ rule: 6, bad: m[0].trim(), detail: "Narrative citation missing chapter/page in the sentence." });
-  }
-
-  // Rule 7 — capital first word inside opening quote
-  const r7cap = /(?:states|notes|explains|writes|argues|suggests|reports|observes)\s+"([A-Z][a-zA-Z']{2,})\s+([^"]{3,}?)"\s*\(/g;
-  while ((m = r7cap.exec(text)) !== null)
-    v.push({ rule: 7, bad: `"${m[1]} ${m[2]}"`, detail: `Opening quote starts on capital "${m[1]}" — pull out and lowercase into sentence: ${m[1].toLowerCase()} "${m[2]}..." (p. #).` });
-
-  // Rule 8 — quoted phrase with no citation at all
-  const r8 = /"([^"]{2,60})"\s*(?!\s*\()/g;
-  const hasVerb = /\b(is|are|was|were|has|have|must|should|will|can|does|do|shows|states|notes|explains|suggests)\b/;
-  while ((m = r8.exec(text)) !== null)
-    if (!hasVerb.test(m[1].toLowerCase()) && m[1].length < 60)
-      v.push({ rule: 8, bad: m[0].trim(), detail: "Quoted phrase has no citation after it — add (p. #) or remove quotes and write plainly." });
+    if (!verbRe.test(m[1].toLowerCase()))
+      v.push({ rule: 5, bad: m[0].trim(), detail: "Quoted phrase has no (p.#) citation after it." });
 
   return v;
 }
 
-function buildEvidenceReport(violations) {
+function evidenceReport(violations) {
   if (!violations.length) return null;
-  return `Scanner found ${violations.length} violation(s):\n\n` +
-    violations.map((v, i) => `VIOLATION ${i + 1} — Rule ${v.rule}\nWrong: ${v.bad}\nWhy:   ${v.detail}`).join("\n\n");
+  return violations.map((v, i) =>
+    `VIOLATION ${i + 1} — Rule ${v.rule}\nWrong text: ${v.bad}\nWhy: ${v.detail}`
+  ).join("\n\n");
 }
 
-// ─── REVIEWER PROMPT ──────────────────────────────────────────────────────────
+// ── REVIEWER PROMPT ───────────────────────────────────────────────────────────
+function reviewerPrompt(assignment, evidence) {
+  return `You are a strict APA 7th Edition citation reviewer.
 
-const buildReviewerPrompt = (assignment, evidence) => `You are a strict APA 7th Edition citation reviewer enforcing ONE specific citation format.
+${evidence ? `The scanner found these violations — confirm each and find any others:\n\n${evidence}` : "The scanner found nothing. Do a careful manual check."}
 
-${evidence ? `Scanner found violations:\n\n${evidence}` : "Scanner found nothing. Do a thorough manual check."}
-
-THE ONLY CORRECT PARENTHETICAL FORMAT IS:
+THE ONLY CORRECT FORMAT:
   Author (date) verb "word for word text" (p. #).
-  Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
-  Example: Annenberg Learner (n.d.) notes "students become engaged" (p. 24).
+  OR narrative: According to Author (date), on page #, [paraphrase or text].
 
-VIOLATIONS TO FLAG:
-1. "text" (Author, date, p. #). — WRONG. Author/date must introduce the quote in the sentence.
-   Fix: rewrite as Author (date) verb "text" (p. #).
-2. Period inside closing quote: "text." (p. #). — WRONG. Fix: "text" (p. #).
-3. Quote with no (p. #) after it. Fix: add (p. #) or drop the quote, write plain sentence.
-4. Capital letter as first word inside opening quote. Fix: pull first word out, lowercase, blend into sentence.
-5. Empty or shell quotes: "" (p. #). Fix: drop and write plain sentence.
-6. Chapter/page inside narrative parens: Author (2023, Chapter 3) — WRONG.
-   Fix: According to Author (2023), from Chapter 3 on page #, ...
-7. Filler connector before opening quote: such as "text" — WRONG.
-   Fix: Author (date) verb "text" (p. #).
-8. Citing Ramlal for Annenberg Learner text or vice versa — sources must not be mixed.
+VIOLATIONS TO FIND AND FIX:
+1. "text" (Author, date, p.#) — WRONG FORMAT. Author must introduce quote in the sentence.
+   Fix: Author (date) verb "text" (p.#).
+2. Period inside closing quote before (p.#). Fix: move period after (p.#).
+3. Quote with no (p.#) after it at all. Fix: add page or drop quote.
+4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
+   SOURCE: "Students become engaged..."  CORRECT: ...that students "become engaged..." (p.24).
+5. Filler connector (such as, like, called) immediately before opening quote.
+6. Author, date crammed inside closing parens with page: (Author, 2023, p.#). Always wrong.
+7. Source mixing — Ramlal text cited as Annenberg Learner or vice versa.
+8. Narrative citation with no chapter/page mentioned in the sentence.
 
-For each violation: quote the exact wrong text, state the rule broken, state the fix.
+For every violation: quote the exact wrong text, state rule broken, state the correct rewrite.
 
-End with exactly: OVERALL RESULT: PASS  or  OVERALL RESULT: FAIL
+End with ONE of these as the very last line of your response:
+OVERALL RESULT: PASS
+OVERALL RESULT: FAIL
 
-Assignment:
+Assignment to review:
 ---
 ${assignment}
 ---`;
+}
 
-function buildCorrectionPrompt(feedback, violations) {
-  let p = "Fix every citation violation now.\n\n";
-  violations.forEach((v, i) => {
-    p += `${i + 1}. WRONG: ${v.bad}\n   WHY: ${v.detail}\n   FIX: Rewrite using correct format or drop and write plain sentence.\n\n`;
-  });
-  p += `Reviewer said:\n${feedback}\n\n`;
-  p += `THE ONLY CORRECT FORMAT:\n`;
-  p += `  Author (date) verb "word for word text" (p. #).\n\n`;
-  p += `CORRECT EXAMPLES:\n`;
-  p += `  Ramlal (2023) explains "vocabulary relates to the understanding a student demonstrates" (p. 20).\n`;
+// ── CORRECTION PROMPT ─────────────────────────────────────────────────────────
+function correctionPrompt(feedback, violations) {
+  let p = "Fix every citation violation listed below. Rewrite the FULL assignment.\n\n";
+  if (violations.length) {
+    p += "SCANNER FOUND:\n";
+    violations.forEach((v, i) => {
+      p += `${i + 1}. WRONG: ${v.bad}\n   FIX: ${v.detail}\n\n`;
+    });
+  }
+  p += `REVIEWER SAID:\n${feedback}\n\n`;
+  p += `CORRECT FORMAT REMINDER:\n`;
+  p += `  Author (date) verb "exact text from source" (p. #).\n`;
+  p += `  Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).\n`;
   p += `  Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).\n\n`;
-  p += `NEVER: "text" (Author, date, p. #). ← author/date do NOT go in closing parens.\n`;
-  p += `NEVER: "Capital first word..." (p. #). ← pull capital word out, lowercase it, blend into sentence.\n`;
-  p += `FIRST WORD RULE: SOURCE: Students become engaged → RIGHT: ...that students "become engaged" (p. 24).\n`;
-  p += `PERIOD: always AFTER the closing (p. #) — never inside the quotes.\n\n`;
-  p += `Rewrite the full assignment now with every violation fixed.`;
+  p += `FIRST-WORD RULE: if source starts with capital — pull first word out, lowercase it, blend in:\n`;
+  p += `  SOURCE: "Students become engaged..."  →  ...that students "become engaged..." (p. 24).\n\n`;
+  p += `NEVER: "text" (Author, date, p.#). NEVER: period inside closing quote.\n\n`;
+  p += `Rewrite the complete assignment now.`;
   return p;
 }
 
-// ─── DIRECTIONS CHECKER ───────────────────────────────────────────────────────
+// ── FOLLOWUP PROMPTS (citation polish rounds) ─────────────────────────────────
+const FOLLOWUPS = [
+  `Review every single citation in your assignment against this rule:
+THE ONLY CORRECT FORMAT: Author (date) verb "exact text" (p. #).
+Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
+Example: Annenberg Learner (n.d.) notes "students become engaged whenever" (p. 24).
 
-function buildDirectionsCheckerPrompt(assignment, directions) {
-  return `You are checking if a completed assignment covers every requirement in the directions.
-Do NOT check citations — only CONTENT coverage.
+Fix anything that uses: "text" (Author, date, p.#)  — that format is WRONG.
+Fix capital first word inside quotes: pull it out and lowercase it.
+Fix period inside closing quote: move it after (p.#).
+Also add at least two NARRATIVE citations in the form:
+  According to Author (date), on page #, [your sentence here].
+  As Author (date) explains in Chapter X on page #, [your sentence here].`,
 
-${"=".repeat(50)}
-ASSIGNMENT DIRECTIONS:
-${"=".repeat(50)}
-${directions.trim()}
-
-${"=".repeat(50)}
-COMPLETED ASSIGNMENT:
-${"=".repeat(50)}
-${assignment}
-
-${"=".repeat(50)}
-YOUR JOB:
-${"=".repeat(50)}
-For each numbered requirement report:
-  POINT: [exact requirement]
-  STATUS: COVERED or MISSING
-  REASON: one sentence
-
-End with exactly one of these as the very last line:
-DIRECTIONS RESULT: PASS
-DIRECTIONS RESULT: FAIL`;
-}
-
-function buildDirectionsRewritePrompt(feedback) {
-  return `Your assignment is missing required content. Add everything that is missing.
-
-Checker feedback:
-${feedback}
-
-Keep every existing citation exactly as it is. Only add the missing content.
-Rewrite the full assignment with the missing points included.`;
-}
-
-const FOLLOWUP_PROMPTS = [
-  `Review every citation in your assignment. The ONLY correct format is:
-  Author (date) verb "word for word text" (p. #).
-  Example: Ramlal (2023) explains "vocabulary relates to the understanding" (p. 20).
-
-  Fix anything that does not match:
-  - "text" (Author, date, p. #) is WRONG — rewrite as Author (date) verb "text" (p. #).
-  - If the first word inside the opening quote is capitalized — pull it out and blend into the sentence.
-  - Period must be AFTER the closing (p. #) never inside the quotes.
-  - Every quote must have (p. #) immediately after it.
-  - Do NOT cite Ramlal text with Annenberg Learner or vice versa.`,
-
-  `Final check — scan every single quoted phrase:
-  1. Does it follow: Author (date) verb "text" (p. #)? If not, fix it.
-  2. Is the first word inside the quote capitalized? Pull it out, lowercase it, blend into sentence.
-  3. Is the period inside the closing quote? Move it outside.
-  4. Is there any "text" (Author, date, p. #)? Rewrite as Author (date) verb "text" (p. #).
-  5. Are sources mixed? Fix it.
-  If unsure — drop the citation and write a plain sentence.`,
+  `Final citation polish:
+1. Any "text" (Author, date, p.#) format left? Rewrite as Author (date) verb "text" (p.#).
+2. Any capital first word inside opening quote? Pull out and lowercase.
+3. Any period inside closing quote? Move after (p.#).
+4. Every quoted phrase has a (p.#) after it?
+5. At least two narrative citations present that mention page or chapter?
+6. No source mixing (Ramlal text cited as Annenberg or vice versa)?
+Rewrite the full assignment with every issue fixed.`,
 ];
 
-// ─── RUN ONE ASSIGNMENT ───────────────────────────────────────────────────────
+// ── DIRECTIONS CHECKER PROMPT ─────────────────────────────────────────────────
+function checkerPrompt(assignment, directions) {
+  return `You are checking whether a completed assignment fully covers all requirements in the directions.
+Do NOT check citations or formatting — check CONTENT COVERAGE ONLY.
 
-async function runAssignment(num, assignment, workerPage, reviewerPage, checkerPage) {
-  console.log("\n" + "=".repeat(60) + `\n  ASSIGNMENT ${num}\n` + "=".repeat(60));
+${"=".repeat(52)}
+ASSIGNMENT DIRECTIONS:
+${"=".repeat(52)}
+${directions.trim()}
 
-  const bookEntries   = SOURCE_TEXT_STORE.filter(e => assignment.sources.some(s => s.bookTitle === e.bookTitle));
-  const manualEntries = SOURCE_TEXT_STORE.filter(e => e.isManual);
-  console.log(`\n  Book pages: ${bookEntries.length}   Manual passages: ${manualEntries.length}`);
+${"=".repeat(52)}
+COMPLETED ASSIGNMENT:
+${"=".repeat(52)}
+${assignment}
 
-  await sendMessage(workerPage, buildFirstPrompt(assignment), "WORKER");
-  let lastResponse = await waitForResponse(workerPage, "WORKER");
+${"=".repeat(52)}
+YOUR TASK:
+${"=".repeat(52)}
+Go through each numbered requirement in the directions.
+For each one write EXACTLY:
 
-  for (let i = 0; i < FOLLOWUP_PROMPTS.length; i++) {
-    const round = i + 1;
-    console.log(`\n${"=".repeat(60)}\n  CITATION ROUND ${round}\n${"=".repeat(60)}`);
-    let approved = false, attempt = 0;
+POINT: [copy the requirement word for word]
+STATUS: COVERED
+REASON: [one sentence saying where/how it is covered]
 
-    while (!approved) {
-      attempt++;
-      console.log(`\n  Attempt ${attempt}`);
-      if (attempt === 1) { await sendMessage(workerPage, FOLLOWUP_PROMPTS[i], "WORKER"); lastResponse = await waitForResponse(workerPage, "WORKER"); }
-      const violations = scanCitations(lastResponse);
-      console.log(`  [SCANNER] ${violations.length ? violations.length + " violation(s)" : "Clean"}`);
-      violations.forEach((v, i) => console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad.substring(0, 80)}`));
-      await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)), "CITATION REVIEWER");
-      const feedback = await waitForResponse(reviewerPage, "CITATION REVIEWER");
-      console.log(`\n  REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
-      if (feedback.includes("OVERALL RESULT: PASS") && !feedback.includes("OVERALL RESULT: FAIL")) {
-        console.log(`\n  Round ${round} PASSED.\n`); approved = true;
-      } else {
-        await sendMessage(workerPage, buildCorrectionPrompt(feedback, violations), "WORKER");
-        lastResponse = await waitForResponse(workerPage, "WORKER");
-        await sleep(2000);
-      }
-    }
-    await sleep(2000);
-  }
+OR:
 
-  console.log(`\n${"=".repeat(60)}\n  DIRECTIONS CHECK\n${"=".repeat(60)}`);
-  let dirApproved = false, dirAttempt = 0;
+POINT: [copy the requirement word for word]
+STATUS: MISSING
+REASON: [one sentence saying what is absent]
 
-  while (!dirApproved) {
-    dirAttempt++;
-    await sendMessage(checkerPage, buildDirectionsCheckerPrompt(lastResponse, assignment.directions), "DIRECTIONS CHECKER");
-    const cf = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
-    console.log(`\n  CHECKER:\n  ` + cf.split("\n").join("\n  "));
+Check EVERY numbered point. Do not skip any.
 
-    if (cf.includes("DIRECTIONS RESULT: PASS")) {
-      console.log(`\n  Directions PASSED.\n`); dirApproved = true;
-    } else if (cf.includes("DIRECTIONS RESULT: FAIL")) {
-      await sendMessage(workerPage, buildDirectionsRewritePrompt(cf), "WORKER");
-      lastResponse = await waitForResponse(workerPage, "WORKER");
-      const rv = scanCitations(lastResponse);
-      if (rv.length) {
-        await sendMessage(reviewerPage, buildReviewerPrompt(lastResponse, buildEvidenceReport(rv)), "CITATION REVIEWER");
-        const rf = await waitForResponse(reviewerPage, "CITATION REVIEWER");
-        if (!rf.includes("OVERALL RESULT: PASS")) {
-          await sendMessage(workerPage, buildCorrectionPrompt(rf, rv), "WORKER");
-          lastResponse = await waitForResponse(workerPage, "WORKER");
-        }
-      }
-      await sleep(2000);
-    } else {
-      if (dirAttempt >= 4) { console.log(`  No verdict — moving on.`); dirApproved = true; }
-      else {
-        await sendMessage(checkerPage, `End your response with exactly one of:\nDIRECTIONS RESULT: PASS\nor\nDIRECTIONS RESULT: FAIL`, "DIRECTIONS CHECKER");
-        const reminder = await waitForResponse(checkerPage, "DIRECTIONS CHECKER");
-        if (reminder.includes("DIRECTIONS RESULT: PASS")) dirApproved = true;
-        else if (reminder.includes("DIRECTIONS RESULT: FAIL")) {
-          await sendMessage(workerPage, buildDirectionsRewritePrompt(reminder), "WORKER");
-          lastResponse = await waitForResponse(workerPage, "WORKER");
-        }
-        await sleep(2000);
-      }
-    }
-  }
+After checking all points, end your response with EXACTLY one of these
+two lines — this must be the VERY LAST LINE of your response:
 
-  console.log(`\n${"=".repeat(60)}\n  ASSIGNMENT ${num} COMPLETE — copy from Worker window.\n${"=".repeat(60)}\n`);
-  return lastResponse;
+DIRECTIONS RESULT: PASS
+DIRECTIONS RESULT: FAIL
+
+Rules:
+- PASS only if every single point is COVERED.
+- FAIL if even one point is MISSING.
+- Do not add any text after the DIRECTIONS RESULT line.
+- Do not offer to rewrite anything.`;
 }
 
-// ─── MAIN ─────────────────────────────────────────────────────────────────────
+function rewritePrompt(checkerFeedback) {
+  return `Your assignment is missing required content. Add what is missing now.
 
+Directions checker feedback:
+${checkerFeedback}
+
+Keep every existing citation exactly as it is — do not change citation text.
+Only add the missing content.
+Rewrite the complete assignment with every missing point covered.`;
+}
+
+// ── WAIT FOR GEMINI INPUT TO BE READY ────────────────────────────────────────
+async function waitForInput(page, label) {
+  await page.waitForFunction(
+    () => !!document.querySelector(
+      'rich-textarea div[contenteditable="true"], div[contenteditable="true"], textarea'
+    ),
+    { timeout: 30000, polling: 1000 }
+  ).catch(() => console.warn(`  [${label}] input wait timed out`));
+}
+
+// ── RUN ONE ASSIGNMENT ────────────────────────────────────────────────────────
+async function runAssignment(num, assignment, wPage, rPage, cPage) {
+  console.log("\n" + "▓".repeat(62) + `\n  ASSIGNMENT ${num}\n` + "▓".repeat(62));
+
+  // Round 0 — send everything to worker
+  await send(wPage, firstPrompt(assignment), "WORKER");
+  let last = await waitReply(wPage, "WORKER");
+
+  // Citation rounds
+  for (let ri = 0; ri < FOLLOWUPS.length; ri++) {
+    console.log(`\n${"─".repeat(62)}\n  CITATION ROUND ${ri + 1}\n${"─".repeat(62)}`);
+    let done = false, att = 0;
+    while (!done) {
+      att++;
+      console.log(`  Attempt ${att}`);
+      if (att === 1) { await send(wPage, FOLLOWUPS[ri], "WORKER"); last = await waitReply(wPage, "WORKER"); }
+      const violations = scan(last);
+      console.log(`  [SCAN] ${violations.length ? violations.length + " issue(s) found" : "clean"}`);
+      violations.forEach((v, i) => console.log(`    ${i + 1}. Rule ${v.rule}: ${v.bad.substring(0, 70)}`));
+      await send(rPage, reviewerPrompt(last, evidenceReport(violations)), "REVIEWER");
+      const fb = await waitReply(rPage, "REVIEWER");
+      console.log("\n  REVIEWER:\n  " + fb.split("\n").join("\n  "));
+      if (fb.includes("OVERALL RESULT: PASS") && !fb.includes("OVERALL RESULT: FAIL")) {
+        console.log(`\n  Round ${ri + 1} PASSED\n`); done = true;
+      } else {
+        console.log(`\n  Fixing violations...`);
+        await send(wPage, correctionPrompt(fb, violations), "WORKER");
+        last = await waitReply(wPage, "WORKER");
+        await sleep(1500);
+      }
+    }
+    await sleep(1500);
+  }
+
+  // Directions check
+  console.log(`\n${"─".repeat(62)}\n  DIRECTIONS CHECK\n${"─".repeat(62)}`);
+  let dirDone = false, dirAtt = 0;
+  while (!dirDone) {
+    dirAtt++;
+    console.log(`\n  Directions attempt ${dirAtt}`);
+    await send(cPage, checkerPrompt(last, assignment.directions), "CHECKER");
+    const cf = await waitReply(cPage, "CHECKER");
+    console.log("\n  CHECKER:\n  " + cf.split("\n").join("\n  "));
+
+    if (cf.includes("DIRECTIONS RESULT: PASS")) {
+      console.log(`\n  Directions: PASS\n`);
+      dirDone = true;
+
+    } else if (cf.includes("DIRECTIONS RESULT: FAIL")) {
+      console.log(`\n  Directions: FAIL — sending gaps to Worker`);
+      await send(wPage, rewritePrompt(cf), "WORKER");
+      last = await waitReply(wPage, "WORKER");
+      // Re-check citations after rewrite
+      const rv = scan(last);
+      if (rv.length) {
+        await send(rPage, reviewerPrompt(last, evidenceReport(rv)), "REVIEWER");
+        const rf = await waitReply(rPage, "REVIEWER");
+        if (!rf.includes("OVERALL RESULT: PASS")) {
+          await send(wPage, correctionPrompt(rf, rv), "WORKER");
+          last = await waitReply(wPage, "WORKER");
+        }
+      }
+      await sleep(1500);
+
+    } else {
+      // No verdict found — send a direct reminder
+      console.log(`  No verdict found — sending reminder to Checker`);
+      if (dirAtt >= 5) {
+        console.log(`  Checker gave no verdict after 5 attempts — moving on`);
+        dirDone = true;
+      } else {
+        await send(
+          cPage,
+          `You must end your response with exactly one of these two lines:\n\nDIRECTIONS RESULT: PASS\n\nor\n\nDIRECTIONS RESULT: FAIL\n\nPlease re-read the assignment against the directions and give the verdict now.`,
+          "CHECKER"
+        );
+        const rem = await waitReply(cPage, "CHECKER");
+        console.log("  Reminder response: " + rem.substring(0, 200));
+        if (rem.includes("DIRECTIONS RESULT: PASS")) {
+          console.log(`\n  Directions: PASS\n`); dirDone = true;
+        } else if (rem.includes("DIRECTIONS RESULT: FAIL")) {
+          console.log(`\n  Directions: FAIL — fixing`);
+          await send(wPage, rewritePrompt(rem), "WORKER");
+          last = await waitReply(wPage, "WORKER");
+        }
+        await sleep(1500);
+      }
+    }
+  }
+
+  console.log(`\n${"▓".repeat(62)}\n  ASSIGNMENT ${num} COMPLETE — copy from the Worker window\n${"▓".repeat(62)}\n`);
+  return last;
+}
+
+// ── MAIN ──────────────────────────────────────────────────────────────────────
 (async () => {
-  console.log("=".repeat(60) + "\n  GEMINI PIPELINE\n" + "=".repeat(60));
-  console.log(`  ${ASSIGNMENTS.length} assignment(s) queued.\n`);
+  console.log("▓".repeat(62));
+  console.log("  PIPELINE — node pipeline.js");
+  console.log("▓".repeat(62));
+  console.log(`  ${ASSIGNMENTS.length} assignment(s) queued\n`);
 
-  console.log("STEP 1 — Reading source text...\n");
-  let yuzuIndex = 0;
+  // ── STEP 1: Read all source text ──────────────────────────────────────────
+  console.log("STEP 1 — Reading source text from Yuzu + manual blocks\n");
+  let yuzuIdx = 0;
   for (let ai = 0; ai < ASSIGNMENTS.length; ai++) {
     const a = ASSIGNMENTS[ai];
-    if (a.manualText?.trim()) parseManualText(a.manualText, ai);
-    for (const source of a.sources) await readYuzuBook(source, yuzuIndex++);
+    if (a.manualText?.trim()) parseManual(a.manualText, ai);
+    for (const src of a.sources) await readYuzuBook(src, yuzuIdx++);
   }
 
-  console.log(`\n${SOURCE_TEXT_STORE.length} total pages stored:`);
-  SOURCE_TEXT_STORE.forEach(e => console.log(`  ${e.bookTitle} — ${e.chapter} — p.${e.page} — ${e.text.length} chars`));
+  // Print everything captured to terminal
+  printCapturedText();
 
-  // Print captured text so you can verify
-  console.log("\n" + "=".repeat(60) + "\n  CAPTURED TEXT — verify before proceeding\n" + "=".repeat(60));
-  SOURCE_TEXT_STORE.forEach((e, i) => {
-    console.log(`\n[${ i + 1}] ${e.bookTitle} | ${e.chapter} | p.${e.page}`);
-    console.log("─".repeat(60));
-    console.log(e.text.substring(0, 600));
-    if (e.text.length > 600) console.log(`  ... [${e.text.length - 600} more chars]`);
-  });
-  console.log("\n" + "=".repeat(60) + "\n");
+  if (SOURCE_TEXT_STORE.length === 0) {
+    console.error("ERROR: No source text was captured. Check Yuzu login and clipboard permissions.");
+    process.exit(1);
+  }
 
-  console.log("STEP 2 — Opening Gemini windows...\n");
-  const { browser: wB, page: workerPage }   = await openGeminiBrowser("worker",   "WORKER");
-  const { browser: rB, page: reviewerPage } = await openGeminiBrowser("reviewer", "CITATION REVIEWER");
-  const { browser: cB, page: checkerPage }  = await openGeminiBrowser("checker",  "DIRECTIONS CHECKER");
+  // ── STEP 2: Open three Gemini windows ─────────────────────────────────────
+  console.log("STEP 2 — Opening Gemini windows\n");
+  const { browser: wB, page: wPage } = await openGemini("worker",   "WORKER");
+  const { browser: rB, page: rPage } = await openGemini("reviewer", "REVIEWER");
+  const { browser: cB, page: cPage } = await openGemini("checker",  "CHECKER");
 
-  const allPages = [workerPage, reviewerPage, checkerPage];
+  // Sign-in check
+  const allPages = [wPage, rPage, cPage];
   if (allPages.some(p => p.url().includes("accounts.google.com"))) {
     console.log("\n  Sign into Google in ALL THREE Gemini windows.");
-    await Promise.all(allPages.map(p => p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })));
+    console.log("  Waiting up to 3 minutes...");
+    await Promise.all(allPages.map(p =>
+      p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })
+    ));
+    console.log("  All signed in.\n");
   }
-  for (const [p, lbl] of [[workerPage, "WORKER"], [reviewerPage, "CITATION REVIEWER"], [checkerPage, "DIRECTIONS CHECKER"]]) {
-    await p.waitForFunction(() => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], textarea'), { timeout: 30000, polling: 1000 }).catch(() => console.warn(`  [${lbl}] Input wait timed out`));
+
+  // Wait for input boxes to appear
+  for (const [p, lbl] of [[wPage, "WORKER"], [rPage, "REVIEWER"], [cPage, "CHECKER"]]) {
+    await waitForInput(p, lbl);
   }
   await sleep(2000);
-  console.log("\nAll windows ready.\n");
+  console.log("\nAll Gemini windows ready.\n");
 
-  console.log("STEP 3 — Running assignments...\n");
+  // ── STEP 3: Run each assignment ────────────────────────────────────────────
+  console.log("STEP 3 — Running assignments\n");
   for (let i = 0; i < ASSIGNMENTS.length; i++) {
-    await runAssignment(i + 1, ASSIGNMENTS[i], workerPage, reviewerPage, checkerPage);
-    if (i < ASSIGNMENTS.length - 1) { console.log("Next in 5s...\n"); await sleep(5000); }
+    await runAssignment(i + 1, ASSIGNMENTS[i], wPage, rPage, cPage);
+    if (i < ASSIGNMENTS.length - 1) { console.log("  Next assignment in 5s...\n"); await sleep(5000); }
   }
 
-  console.log("\n" + "=".repeat(60) + "\n  ALL COMPLETE\n" + "=".repeat(60) + "\n");
+  console.log("▓".repeat(62) + "\n  ALL DONE\n" + "▓".repeat(62) + "\n");
+  // Browsers left open so you can copy from the Worker window
 })();

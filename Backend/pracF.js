@@ -1,108 +1,105 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import path from 'path';
-import fs from 'fs';
+import { Clipboard } from 'clipboardy'; // Optional: Use a library or browser-native
 
-// Apply stealth to hide the "navigator.webdriver" flag from Gemini/Yuzu
 puppeteer.use(StealthPlugin());
 
-async function runGhostAgent() {
+/**
+ * CONFIGURATION
+ * Edit these values for your specific book and chapter.
+ */
+const BOOK_URL = 'https://reader.yuzu.com/reader/books/826802A';
+const TARGET_CHAPTER = "Chapter 3"; // Exact name in Table of Contents
+const MAX_PAGES = 15; 
+
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function startExtraction() {
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: false, // MUST BE FALSE for clipboard and UI interaction
         defaultViewport: null,
-        // Using specific flags to ensure Gemini doesn't detect the automation
-        args: [
-            '--start-maximized',
-            '--disable-blink-features=AutomationControlled',
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-        ]
+        args: ['--start-maximized', '--disable-blink-features=AutomationControlled']
     });
 
-    const [workerPage] = await browser.pages(); // Yuzu Reader Tab
-    const brainPage = await browser.newPage();   // Gemini AI Tab
+    const [page] = await browser.pages();
+    
+    // Grant Clipboard Permissions
+    const context = browser.defaultBrowserContext();
+    await context.overridePermissions("https://reader.yuzu.com", ["clipboard-read", "clipboard-write"]);
 
-    // Setting a standard User Agent to look like a normal Windows user
-    const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
-    await workerPage.setUserAgent(UA);
-    await brainPage.setUserAgent(UA);
+    console.log(">> Navigating to Yuzu...");
+    await page.goto(BOOK_URL);
 
-    // Load both sites
-    await workerPage.goto('https://reader.yuzu.com/reader/books/826802A');
-    await brainPage.goto('https://gemini.google.com/app');
+    console.log(">> Please login. Waiting for the reader to load...");
+    // Wait for the 'Next' button or page input to know we are in the book
+    await page.waitForSelector('button[aria-label="Next"]', { timeout: 0 });
 
-    console.log("--------------------------------------------------");
-    console.log("STATUS: WAITING FOR LOGIN");
-    console.log("Please sign in to Yuzu and Gemini manually.");
-    console.log("The script will start automatically once the chat box appears.");
-    console.log("--------------------------------------------------");
+    // 1. NAVIGATE TO CHAPTER (The "AI-Style" Search)
+    console.log(`>> Searching for ${TARGET_CHAPTER}...`);
+    await page.keyboard.press('t'); // Opens Table of Contents
+    await sleep(2000);
 
-    // The script pauses here until the Gemini input box exists (detects login)
-    await brainPage.waitForSelector('div[role="textbox"]', { timeout: 0 });
-    console.log("STATUS: CONNECTION ESTABLISHED. BEGINNING EXTRACTION...");
-
-    let pageCount = 1;
-
-    while (true) {
-        try {
-            const screenshotPath = path.resolve(`temp_capture.png`);
-            
-            // 1. Capture the textbook page from Yuzu
-            await workerPage.bringToFront();
-            // We wait a moment to ensure the page is fully rendered before snapping
-            await new Promise(r => setTimeout(r, 2000)); 
-            await workerPage.screenshot({ path: screenshotPath });
-
-            // 2. Switch to Gemini to process the image
-            await brainPage.bringToFront();
-            
-            // Locate the file input for Gemini's upload feature
-            const fileInput = await brainPage.$('input[type="file"]');
-            await fileInput.uploadFile(screenshotPath);
-            
-            // Wait for the image thumbnail to show up in the prompt box
-            await new Promise(r => setTimeout(r, 3000));
-
-            // 3. Send the "Human" Prompt (Mimicking a student, not a bot)
-            const humanMsg = "Could you please type out the text from this page for my notes? Just the content of the book, no extra conversation please.";
-            
-            await brainPage.click('div[role="textbox"]');
-            // 'delay' makes the typing look like a real person typing
-            await brainPage.keyboard.type(humanMsg, { delay: 40 }); 
-            await brainPage.keyboard.press('Enter');
-
-            // 4. Monitor Gemini for the finished response
-            console.log(`[SYSTEM] Transcribing Page ${pageCount}...`);
-            
-            // The "Stop generating" button disappears when the AI is done talking
-            await brainPage.waitForSelector('button[aria-label="Stop generating"]', { hidden: true, timeout: 120000 });
-
-            // Grab the latest message from the chat
-            const transcribedText = await brainPage.evaluate(() => {
-                const messages = document.querySelectorAll('.message-content');
-                return messages[messages.length - 1]?.innerText || "Extraction failed.";
-            });
-
-            // 5. Output to Terminal
-            console.log(`\n=== PAGE ${pageCount} CONTENT ===\n`);
-            console.log(transcribedText);
-            console.log(`\n================================\n`);
-
-            // 6. Navigate to the next page in Yuzu
-            await workerPage.bringToFront();
-            await workerPage.keyboard.press('ArrowRight');
-            
-            pageCount++;
-
-            // Clean up and wait for the next page to load
-            if (fs.existsSync(screenshotPath)) fs.unlinkSync(screenshotPath);
-            await new Promise(r => setTimeout(r, 4000));
-
-        } catch (err) {
-            console.error("Critical Loop Error. Retrying in 10s...", err.message);
-            await new Promise(r => setTimeout(r, 10000));
+    const navSuccess = await page.evaluate((chapterName) => {
+        const items = Array.from(document.querySelectorAll('button, a, span'));
+        const match = items.find(el => el.innerText.includes(chapterName));
+        if (match) {
+            match.click();
+            return true;
         }
+        return false;
+    }, TARGET_CHAPTER);
+
+    if (!navSuccess) {
+        console.log(">> Chapter not found in TOC. Please navigate manually, then the script will continue.");
+        await sleep(5000);
+    } else {
+        await sleep(5000); // Wait for page to load
     }
+
+    // 2. EXTRACTION LOOP
+    for (let i = 1; i <= MAX_PAGES; i++) {
+        console.log(`>> Extracting Page ${i}...`);
+
+        // Focus the iframe by clicking center screen
+        await page.mouse.click(600, 400);
+        await sleep(500);
+
+        // Perform the "Human" Copy
+        await page.keyboard.down('Control');
+        await page.keyboard.press('a');
+        await page.keyboard.up('Control');
+        await sleep(200);
+        await page.keyboard.down('Control');
+        await page.keyboard.press('c');
+        await page.keyboard.up('Control');
+        await sleep(1000);
+
+        // Read the text from the clipboard
+        const pageText = await page.evaluate(async () => {
+            return await navigator.clipboard.readText();
+        });
+
+        // SAVE DATA (Logging for now)
+        console.log("--------------------------------------------------");
+        console.log(`CONTENT PREVIEW (Page ${i}):`, pageText.substring(0, 100) + "...");
+        
+        // Write to a local file (append mode)
+        fs.appendFileSync('extracted_text.txt', `\n--- PAGE ${i} ---\n${pageText}\n`);
+
+        // 3. TURN THE PAGE
+        await page.keyboard.press('ArrowRight');
+        await sleep(3000); // Wait for next page to render
+    }
+
+    console.log(">> Done! Check extracted_text.txt");
+    await browser.close();
 }
 
-runGhostAgent();
+import fs from 'fs';
+startExtraction();
+
+
+
+
+
+/////////remeber new copy meth ctrl a then c
