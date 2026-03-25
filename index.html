@@ -1375,6 +1375,11 @@ pas.addEventListener("change", PASCHANGE)
   let v = ""
 
 
+    function DEL(e) {
+      const D = e.target.id.split()
+
+      console.log(D)
+    }
 
     function ONCLICK(e) {
       console.log(e.target.id)
@@ -1396,16 +1401,19 @@ pas.addEventListener("change", PASCHANGE)
     }
 
     (function(){
-      data = JSON.parse(localStorage.getItem("data"))
+      data = JSON.parse(localStorage.getItem("data")) || []
       for(let i = 0; i < data.length; i++){
         const el = document.createElement("div")
         const B = document.createElement("button")
+        const BB = document.createElement("button")
         B.id = i + 1
         B.textContent = "Status"
         B.style.margin = "25px"
         B.addEventListener("click", ONCLICK)
+        BB.id = "a" + " " + i
+        BB.addEventListener("click", DEL)
         el.textContent = `To Do: ${data[i].T}`
-        el.id = i + "a"
+        el.id = i + " " + "a"
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
@@ -1433,10 +1441,12 @@ pas.addEventListener("change", PASCHANGE)
 
         const B = document.createElement("button")
 
+        const BB = document.createElement("button")
+
         const I = document.getElementById("textarea")
 
         el.textContent = `To Do: ${v}`
-        el.id = data.length + "a"
+        el.id = data.length + " " + "a"
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
@@ -1447,14 +1457,15 @@ pas.addEventListener("change", PASCHANGE)
         B.textContent = "Status"
         B.style.margin = "25px"
         B.addEventListener("click", ONCLICK)
-
+        BB.id = "a" + " " + i
+        BB.addEventListener("click", DEL)
         el.appendChild(B)
         document.body.appendChild(el)
         const Vv = data.length + 1
         data.unshift({
           H: "100px",
           W: "100px",
-          id: Vv + "a",
+          id: Vv + " " + "a",
           B: "5px solid black",
           T: v,
           C: "red",
