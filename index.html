@@ -1376,15 +1376,19 @@ pas.addEventListener("change", PASCHANGE)
 
 
     function DEL(e) {
-      const D = e.target.id.split()
-
-      console.log(D)
+      const D = e.target.id.split(" ")
+      const index = D[1]
+      const L = D[0]
+      const newD = data.filter((i, item) => String(i) === index)
+      localStorage.setItem("data", JSON.stringify(newD))
+      const el = document.getElementById(index + " " + L)
+      el.remove()
     }
 
     function ONCLICK(e) {
       console.log(e.target.id)
       const va = e.target.id - 1
-      const el = document.getElementById(va + "a")
+      const el = document.getElementById(va + " " + "a")
       console.log(el)
       console.log(typeof(el.style.backgroundColor))
       if(el.style.backgroundColor === "red"){
@@ -1423,6 +1427,7 @@ pas.addEventListener("change", PASCHANGE)
         el.style.backgroundColor = data[i].C 
 
         el.appendChild(B)
+        el.appendChild(BB)
         document.body.appendChild(el)
       }
     })()
@@ -1460,6 +1465,7 @@ pas.addEventListener("change", PASCHANGE)
         BB.id = "a" + " " + i
         BB.addEventListener("click", DEL)
         el.appendChild(B)
+        el.appendChild(BB)
         document.body.appendChild(el)
         const Vv = data.length + 1
         data.unshift({
