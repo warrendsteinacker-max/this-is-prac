@@ -1356,7 +1356,7 @@ pas.addEventListener("change", PASCHANGE)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body style="min-height: 100vh; display: grid; margin: 0; justify-content: center; align-items: center">
+<body style="min-height: 100vh; display: grid; margin: 0; justify-content: center; align-items: center; background-image: url(pic.png)">
   
   <h1 style="text-decoration: underline;">To do list</h1>
   <p>Green means done and red means not done</p>
@@ -1381,6 +1381,7 @@ pas.addEventListener("change", PASCHANGE)
       const L = D[0]
       const newD = data.filter((i, item) => String(i) === index)
       localStorage.setItem("data", JSON.stringify(newD))
+      console.log(index + " " + L)
       const el = document.getElementById(index + " " + L)
       el.remove()
     }
@@ -1405,6 +1406,7 @@ pas.addEventListener("change", PASCHANGE)
     }
 
     (function(){
+      if(data.length > 0){
       data = JSON.parse(localStorage.getItem("data")) || []
       for(let i = 0; i < data.length; i++){
         const el = document.createElement("div")
@@ -1418,6 +1420,7 @@ pas.addEventListener("change", PASCHANGE)
         BB.addEventListener("click", DEL)
         el.textContent = `To Do: ${data[i].T}`
         el.id = i + " " + "a"
+        console.log(el.id)
         el.style.border = "5px solid black"
         el.style.width = "100px"
         el.style.height = "100px"
@@ -1428,7 +1431,9 @@ pas.addEventListener("change", PASCHANGE)
 
         el.appendChild(B)
         el.appendChild(BB)
+        
         document.body.appendChild(el)
+      }
       }
     })()
 
@@ -1450,6 +1455,9 @@ pas.addEventListener("change", PASCHANGE)
 
         const I = document.getElementById("textarea")
 
+
+        const Vv = data.length + 1
+
         el.textContent = `To Do: ${v}`
         el.id = data.length + " " + "a"
         el.style.border = "5px solid black"
@@ -1462,12 +1470,11 @@ pas.addEventListener("change", PASCHANGE)
         B.textContent = "Status"
         B.style.margin = "25px"
         B.addEventListener("click", ONCLICK)
-        BB.id = "a" + " " + i
+        BB.id = "a" + " " + data.length
         BB.addEventListener("click", DEL)
         el.appendChild(B)
         el.appendChild(BB)
         document.body.appendChild(el)
-        const Vv = data.length + 1
         data.unshift({
           H: "100px",
           W: "100px",
