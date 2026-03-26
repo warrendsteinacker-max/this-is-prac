@@ -1,3 +1,6 @@
+/////////this is code get working for ai to navigate websites via puppeter and do task get working
+
+
 // import puppeteer from 'puppeteer-extra';
 // import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
@@ -234,7 +237,9 @@ import express from "express"
 import cors from "cors"
 
 
-let data = []
+import data from "data.js"
+
+console.log(data)
 
 const app = express()
 
