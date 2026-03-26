@@ -1536,9 +1536,44 @@ pas.addEventListener("change", PASCHANGE)
 <div id="gameD" style="display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); width: fit-content; height: fit-content"></div>
   
 <script>
-
+  let player = true
   const winstat = Array(16).fill(null)
   const win = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15],[0,4,8,12],[1,5,9,13],[2,6,10,14],[3,7,11,15],[0,5,10,15],[3,6,9,12]]
+  let count = 0
+
+  function ONCLICK(e){
+    if(winstat[e.target.id]){
+      return null
+    }
+
+    if(count === 15){
+      window.location.reload()
+    }
+
+    let S = player ? "P1" : "P2"
+
+    console.log(S)
+
+    winstat[e.target.id] = S
+
+    player ? e.target.style.backgroundColor = "red" : e.target.style.backgroundColor = "green"
+
+    player = !player
+
+    console.log(count)
+
+    count = count + 1
+    
+    for(let i = 0; i < 10; i++){
+      const [a,b,c,d] = win[i]
+
+
+      if(winstat[a] && winstat[a] === winstat[b] && winstat[b] === winstat[c] && winstat[c] === winstat[d]){
+        count = 0
+        window.location.reload()
+      }
+    }
+  }
 
   for(let i = 0; i < 16; i++){
     const el = document.createElement("div")
@@ -1546,6 +1581,8 @@ pas.addEventListener("change", PASCHANGE)
     el.style.border = "5px solid black"
     el.style.width = "100px"
     el.style.height = "100px"
+    el.id = i
+    el.addEventListener("click", ONCLICK)
     ell.appendChild(el)
   }
 </script>
