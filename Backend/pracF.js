@@ -233,31 +233,3 @@
 
 
 
-import express from "express"
-import cors from "cors"
-
-
-import data from "data.js"
-
-console.log(data)
-
-const app = express()
-
-app.use(express.json())
-
-app.use(cors({origin: "*"}))
-
-app.post("/createA", (req, res) => {
-    try
-        {const {pass} = req.body
-        data.push(pass)
-        console.log(data)
-        return res.status(201).json({stat: "account created"})}
-    catch(error){
-        console.error(error.message)
-        return res.status(500).json({stat: "account not created"})
-    }
-})
-
-
-app.listen(3000, () => console.log("on port 3000"))
