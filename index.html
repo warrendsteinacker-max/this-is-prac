@@ -1536,6 +1536,26 @@ pas.addEventListener("change", PASCHANGE)
 <div id="gameD" style="display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); width: fit-content; height: fit-content"></div>
   
 <script>
+
+
+
+  (function(){
+
+
+    const row = 4
+    const col = 4
+    let wina = []
+
+
+      for(let i = 0; i < col*2+2; i++){
+        const index = Number(col - 1) - i
+        wina.push([index, index + 1, index + 2, index + 3])
+      }
+    
+    console.log(wina)
+  })()
+
+
   let player = true
   const winstat = Array(16).fill(null)
   const win = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15],[0,4,8,12],[1,5,9,13],[2,6,10,14],[3,7,11,15],[0,5,10,15],[3,6,9,12]]
@@ -1585,6 +1605,16 @@ pas.addEventListener("change", PASCHANGE)
     el.addEventListener("click", ONCLICK)
     ell.appendChild(el)
   }
+
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+///////////
