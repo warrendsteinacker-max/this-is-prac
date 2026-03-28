@@ -284,11 +284,11 @@
     let row = 5
 
     for(let i = 0; i < 5; i++){
-      data.push([i, i + 1, i + 2, i + 3])
-      if(i !== 0){
-        data.push([i * col, i * col - 1, i * col - 2, i * col - 3])
-      }
       
+        const ii = i + 1
+        data.push([i, i + 1, i + 2, i + 3])
+        data.push([ii * col, ii * col - 1, ii * col - 2, ii * col - 3])
+
     }
 
     console.log(data)
