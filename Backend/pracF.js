@@ -280,34 +280,35 @@ let data = []
 let row = 7;
 let col = 6;
 
-
-///////sloving for horizontal 
+/////Horizantal
 for(let r = 0; r < row; r++){
     for(let c = 0; c < col - 3; c++){
         let start = r*col+c
-        data.push([start, start + 1, start + 2, start + 3])
+        data.push([start, start+1, start+2, start+3])
     }
 }
 
-/////solving for vertical
+//////vertical
 for(let r = 0; r < row - 3; r++){
     for(let c = 0; c < col; c++){
         let start = r*col+c
-        data.push([start, start + col*1, start + col*2, start + col*3]) 
+        data.push([start, start+col*1, start+col*2, start+col*3])
     }
 }
-////// for this direction \
+
 for(let r = 0; r < row - 3; r++){
     for(let c = 0; c < col - 3; c++){
         let start = r*col+c
-        data.push([start, start+col+1, start+3(col+1), start+3(col+1)])
+        data.push([start, start+col+1, start+2*(col+1), start+3*(col+1)])
     }
 }
 
 for(let r = 0; r < row - 3; r++){
     for(let c = 3; c < col; c++){
         let start = r*col+c
-        data.push([start, start+col-1, start+2(col-1), start+3(col-1)])
+        data.push([start, start + col-1, start + 2*(col-1), start + 3*(col-1)])
     }
 }
 
+
+console.log(data)
