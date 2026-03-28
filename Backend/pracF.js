@@ -267,69 +267,98 @@
 
 // startOrchestrator().catch(console.error);
 
-import jwt from "jsonwebtoken"
-import express from "express"
-import cors from "cors"
-import bcrypt from "bcrypt"
-
-const pass = "pass"
-let realpass;
-let c = 0;
-const T = "Tt"
-
-let Tt;
 
 
-const app = express()
 
-app.use(express.json())
 
-app.post("/r", (req, res) => {
 
- const {pas, name} = req.body
 
- if(c = 0){
-    realpass = bcrypt.hash(pass, 10)
-}
 
-    c = 1
 
-    console.log(realpass)
+
+
+/////got to fix the hashing in this 
+
+// import jwt from "jsonwebtoken"
+// import express from "express"
+// import cors from "cors"
+// import bcrypt from "bcrypt"
+
+// const pass = "pass"
+// let realpass;
+// let c = 0;
+// const T = "Tt"
+
+// const role = "luke"
+// const Me = "warren"
+
+// let Tt;
+
+
+// const app = express()
+
+// app.use(express.json())
+
+// app.post("/r", async(req, res) => {
+
+//  const {pas, name} = req.body
+
+//  if(c = 0){
+//     realpass = await bcrypt.hash(pas, 10)
+// }
+
+//     c = 1
+
+//     console.log(realpass)
+
+//     const v = await bcrypt.compare(realpass, realpass)
  
- if(realpass === realpass){
-    const token = jwt.sign({userId: name}, T, {expiresIn: "59s"})
-    Tt = {Token: token}
+//  if(v){
+//     const token = jwt.sign({userId: name}, T, {expiresIn: "59s"})
+//     Tt = {Token: token}
 
-    console.log("stat good")
- }
- else{
-    console.log("stat bad")
- }
+//     console.log("stat good")
+//     return res.status(200).json({stat: "good"})
+//  }
+//  else{
+//     console.log("stat bad")
+//     return res.status(403).json({stat: "bad"})
+//  }
 
-})
+// })
 
 
-app.post("/A", (req, res) => {
+// app.post("/A", (req, res) => {
 
 
-    const {Token} = Tt
+//     const {Token} = Tt
 
-    const state = jwt.verify(Token, T)
+//     const state = jwt.verify(Token, T)
 
-    if(!state){
-        console.log("bad")
-        return
-    }
-    else{
-        console.log("good")
-        c = 0
-    }
+//     if(role !== Me){
+//         return res.status(403).json({stat: "wrong role you have"})
+//     }
+
+
+//     if(!state){
+//         console.log("bad")
+//         return res.status(401).json({stat: "invalid token you have"})
+//     }
+
+//     else{
+//         console.log("good")
+//         c = 0
+//         return res.status(200).json({stat: "good"})
+//     }
     
-})
+// })
 
-app.listen(3000, () => {
-    console.log("running")
-})
+// app.listen(3000, () => {
+//     console.log("running")
+// })
+
+
+import fsPromises from "fs/promises"
 
 
 
