@@ -359,7 +359,24 @@
 
 
 import fsPromises from "fs/promises"
+import path from "path"
+import {fileURLToPath} from "url"
+import {dirname} from "path"
 
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+async function START() {
+    await fsPromises.writeFile(path.join(__dirname, "text.txt"), "Hello")
+    await fsPromises.appendFile(path.join(__dirname, "text.txt"), "I am Warren")
+
+    const data = await fsPromises.readFile(path.join(__dirname, "text.txt"), "utf8")
+
+    console.log(data)
+}
+
+START()
 
 
 
