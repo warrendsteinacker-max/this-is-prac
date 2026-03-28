@@ -270,8 +270,11 @@
 import jwt from "jsonwebtoken"
 import express from "express"
 import cors from "cors"
+import bcrypt from "bcrypt"
 
 const pass = "pass"
+let realpass;
+let c = 0;
 const T = "Tt"
 
 let Tt;
@@ -284,10 +287,17 @@ app.use(express.json())
 app.post("/r", (req, res) => {
 
  const {pas, name} = req.body
- 
- if(pas === pass){
-    const token = jwt.sign({userId: name}, T, {expiresIn: "30s"})
 
+ if(c = 0){
+    realpass = bcrypt.hash(pass, 10)
+}
+
+    c = 1
+
+    console.log(realpass)
+ 
+ if(realpass === realpass){
+    const token = jwt.sign({userId: name}, T, {expiresIn: "59s"})
     Tt = {Token: token}
 
     console.log("stat good")
@@ -297,6 +307,7 @@ app.post("/r", (req, res) => {
  }
 
 })
+
 
 app.post("/A", (req, res) => {
 
@@ -311,6 +322,7 @@ app.post("/A", (req, res) => {
     }
     else{
         console.log("good")
+        c = 0
     }
     
 })
