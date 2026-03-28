@@ -97,7 +97,48 @@
 
 
 
-/////////remeber new copy meth ctrl a then c
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////remeber new copy meth ctrl a then c
+
+
+
+
+
+
+// Book info Author(s) Sasha R. Ramlal Publisher Cognella Academic Publishing Copyright 2023 Format pdf VBID 826802A
+
+
+
+
 
 // import puppeteer from 'puppeteer-extra';
 // import StealthPlugin from 'puppeteer-extra-plugin-stealth';
@@ -106,8 +147,8 @@
 
 // // ── CONFIGURATION ────────────────────────────────────────────────────────────
 // const BOOK_URL = 'https://reader.yuzu.com/reader/books/826802A';
-// const GOAL = "Extract Chapter 3 text and navigate to the end of the chapter.";
-// const MAX_LOOPS = 20; 
+// const GOAL = "Extract Chapter 3 text using smartCopy and navigate to the end.";
+// const MAX_LOOPS = 25; 
 
 // const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
@@ -122,110 +163,105 @@
 //     const [yuzuPage] = await browser.pages();
 //     const geminiPage = await browser.newPage();
 
-//     console.log(">> Navigating to Yuzu and Gemini...");
+//     // Injects tools that survive page reloads
+//     const injectTools = async (page) => {
+//         await page.evaluateOnNewDocument(() => {
+//             window.smartCopy = () => {
+//                 const range = document.createRange();
+//                 range.selectNode(document.body);
+//                 const selection = window.getSelection();
+//                 selection.removeAllRanges();
+//                 selection.addRange(range);
+//                 document.execCommand('copy'); 
+//                 const text = selection.toString();
+//                 selection.removeAllRanges();
+//                 return `SUCCESS_EXTRACT: ${text.substring(0, 100)}...`;
+//             };
+//         });
+//     };
+
+//     await injectTools(yuzuPage);
+    
+//     console.log(">> Opening Pages...");
 //     await yuzuPage.goto(BOOK_URL);
 //     await geminiPage.goto('https://gemini.google.com/app');
 
 //     console.log(">> WAITING FOR MANUAL LOGIN...");
-//     // Wait for the main UI elements to exist before starting the loop
 //     await yuzuPage.waitForSelector('body', { timeout: 0 });
 //     await geminiPage.waitForSelector('div[role="textbox"]', { timeout: 0 });
 
 //     for (let i = 1; i <= MAX_LOOPS; i++) {
 //         console.log(`\n--- ORCHESTRATOR LOOP ${i} ---`);
 
-//         // 1. SEMANTIC UI COMPRESSION (Reduces size by ~90%)
+//         // 1. FRESH UI CAPTURE
 //         await yuzuPage.bringToFront();
+//         await sleep(3000); 
+
 //         const semanticUI = await yuzuPage.evaluate(() => {
-//             // Focus on interactive and content-heavy elements
-//             const selectors = 'button, a, [role="button"], h1, h2, h3, p, .epub-content, .reader-content';
+//             const selectors = 'button, a, h1, h2, h3, p, .epub-content, .reader-content';
 //             const elements = document.querySelectorAll(selectors);
-            
 //             return Array.from(elements)
 //                 .map(el => {
 //                     const tag = el.tagName.toLowerCase();
-//                     const text = el.innerText.replace(/\s+/g, ' ').trim().substring(0, 200);
+//                     const text = el.innerText.replace(/\s+/g, ' ').trim().substring(0, 60);
 //                     const id = el.id ? `#${el.id}` : '';
-//                     const cls = el.className ? `.${el.className.split(' ').join('.')}` : '';
-                    
-//                     if (!text && !id && !cls) return null;
-//                     return `[${tag}${id}${cls}] "${text}"`;
+//                     if (!text && !id) return null;
+//                     return `[${tag}${id}] "${text}"`;
 //                 })
 //                 .filter(item => item !== null)
 //                 .join('\n');
 //         });
 
-//         console.log(`>> UI Compressed to ${semanticUI.length} characters.`);
-
-//         // 2. CONSTRUCT AND SEND PROMPT
+//         // 2. STABILIZED SENDING TO GEMINI
 //         await geminiPage.bringToFront();
-//         const orchestratorPrompt = `
-//             ACT AS A PUPPETEER ORCHESTRATOR.
-//             GOAL: ${GOAL}
-            
-//             CURRENT UI STATE (ELEMENTS & TEXT):
-//             ${semanticUI.substring(0, 10000)} 
-
-//             Based on this state, provide ONE JavaScript command to run in the browser console.
-//             - To click: document.querySelector('SELECTOR').click();
-//             - To get text: Array.from(document.querySelectorAll('p')).map(p => p.innerText).join('\\n');
-            
-//             RULES:
-//             1. Return ONLY the raw JavaScript code.
-//             2. No explanations. No markdown code blocks.
-//             3. If the goal is met, return: console.log("GOAL_REACHED");
-//         `;
-
-//         // Clear and type
+        
+//         // Step A: Clear the box
 //         await geminiPage.click('div[role="textbox"]');
-//         // Select all and delete to ensure a fresh prompt
 //         await geminiPage.keyboard.down('Control');
 //         await geminiPage.keyboard.press('A');
 //         await geminiPage.keyboard.up('Control');
 //         await geminiPage.keyboard.press('Backspace');
         
-//         await geminiPage.keyboard.type(orchestratorPrompt, { delay: 0 });
+//         console.log(">> Textbox cleared. Waiting 10s before pasting...");
+//         await sleep(10000); // 10-second pause as requested
+
+//         // Step B: Type the prompt with a human-like delay
+//         const orchestratorPrompt = `ACT AS A PUPPETEER ORCHESTRATOR. GOAL: ${GOAL}\nTOOLS: window.smartCopy(); | document.querySelector('SELECTOR').click();\n\nUI STATE:\n${semanticUI.substring(0, 8000)}\n\nSTRICT RULES: Output ONLY raw JS code. No markdown. If done, return: console.log("GOAL_REACHED");`;
+        
+//         await geminiPage.keyboard.type(orchestratorPrompt, { delay: 10 }); 
+        
+//         console.log(">> Text entered. Waiting 10s before pressing Enter...");
+//         await sleep(10000); // 10-second pause before hitting Enter
 //         await geminiPage.keyboard.press('Enter');
 
-//         console.log(">> Waiting for Gemini to process...");
-//         await sleep(15000); 
+//         console.log(">> Prompt sent. Waiting 20.5s for Gemini to process...");
+//         await sleep(20500); 
 
-//         // 3. RETRIEVE AND CLEAN RESPONSE
+//         // 3. GET GEMINI'S CODE
 //         const rawResponse = await geminiPage.evaluate(() => {
 //             const bubbles = document.querySelectorAll('.message-content, .markdown, model-response');
-//             const latest = bubbles[bubbles.length - 1];
-//             return latest ? latest.innerText : null;
+//             return bubbles.length ? bubbles[bubbles.length - 1].innerText : null;
 //         });
 
-//         if (!rawResponse) {
-//             console.log(">> No response from Gemini. Retrying...");
-//             continue;
-//         }
+//         if (rawResponse) {
+//             const nextCommand = rawResponse.replace(/```javascript|```js|```/g, '').trim();
 
-//         // Strip markdown backticks if Gemini ignores the "No Markdown" rule
-//         const nextCommand = rawResponse.replace(/```javascript|```js|```/g, '').trim();
-
-//         if (nextCommand.includes("GOAL_REACHED")) {
-//             console.log(">> SUCCESS: Gemini reports goal reached.");
-//             break;
-//         }
-
-//         // 4. EXECUTE ON YUZU
-//         console.log(`>> EXECUTING: ${nextCommand}`);
-//         await yuzuPage.bringToFront();
-//         try {
-//             const result = await yuzuPage.evaluate((cmd) => {
-//                 return eval(cmd);
-//             }, nextCommand);
-            
-//             if (result) {
-//                 console.log(`>> DATA EXTRACTED: ${String(result).substring(0, 100)}...`);
+//             if (nextCommand.includes("GOAL_REACHED")) {
+//                 console.log(">> SUCCESS: Goal reached.");
+//                 break;
 //             }
-//         } catch (err) {
-//             console.error(`>> EXECUTION ERROR: ${err.message}`);
-//         }
 
-//         await sleep(3000);
+//             console.log(`>> GEMINI ACTION: ${nextCommand}`);
+//             await yuzuPage.bringToFront();
+//             try {
+//                 const result = await yuzuPage.evaluate((cmd) => eval(cmd), nextCommand);
+//                 if (result) console.log(`>> OUTPUT: ${result}`);
+//             } catch (err) {
+//                 console.error(`>> ERROR: ${err.message}`);
+//             }
+//         }
+        
+//         await sleep(5000); // Let everything settle
 //     }
 // }
 
@@ -233,3 +269,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+    let data = []
+    let col = 5
+    let row = 5
+
+    for(let i = 0; i < 5; i++){
+      data.push([i, i + 1, i + 2, i + 3])
+      if(i !== 0){
+        data.push([i * col, i * col - 1, i * col - 2, i * col - 3])
+      }
+      
+    }
+
+    console.log(data)
