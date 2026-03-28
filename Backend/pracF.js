@@ -267,48 +267,67 @@
 
 // startOrchestrator().catch(console.error);
 
+import jwt from "jsonwebtoken"
+import express from "express"
+import cors from "cors"
+
+const pass = "pass"
+const T = "Tt"
+
+let Tt;
 
 
+const app = express()
+
+app.use(express.json())
+
+app.post("/r", (req, res) => {
+
+ const {pas, name} = req.body
+ 
+ if(pas === pass){
+    const token = jwt.sign({userId: name}, T, {expiresIn: "30s"})
+
+    Tt = {Token: token}
+
+    console.log("stat good")
+ }
+ else{
+    console.log("stat bad")
+ }
+
+})
+
+app.post("/A", (req, res) => {
 
 
+    const {Token} = Tt
 
+    const state = jwt.verify(Token, T)
 
-
-
-
-let data = []
-let row = 7;
-let col = 6;
-
-/////Horizantal
-for(let r = 0; r < row; r++){
-    for(let c = 0; c < col - 3; c++){
-        let start = r*col+c
-        data.push([start, start+1, start+2, start+3])
+    if(!state){
+        console.log("bad")
+        return
     }
-}
-
-//////vertical
-for(let r = 0; r < row - 3; r++){
-    for(let c = 0; c < col; c++){
-        let start = r*col+c
-        data.push([start, start+col*1, start+col*2, start+col*3])
+    else{
+        console.log("good")
     }
-}
+    
+})
 
-for(let r = 0; r < row - 3; r++){
-    for(let c = 0; c < col - 3; c++){
-        let start = r*col+c
-        data.push([start, start+col+1, start+2*(col+1), start+3*(col+1)])
-    }
-}
-
-for(let r = 0; r < row - 3; r++){
-    for(let c = 3; c < col; c++){
-        let start = r*col+c
-        data.push([start, start + col-1, start + 2*(col-1), start + 3*(col-1)])
-    }
-}
+app.listen(3000, () => {
+    console.log("running")
+})
 
 
-console.log(data)
+
+
+
+
+
+
+
+
+
+
+
