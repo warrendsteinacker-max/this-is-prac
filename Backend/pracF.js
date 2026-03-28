@@ -276,19 +276,38 @@
 
 
 
+let data = []
+let row = 7;
+let col = 6;
 
 
-
-    let data = []
-    let col = 5
-    let row = 5
-
-    for(let i = 0; i < 5; i++){
-      
-        const ii = i + 1
-        data.push([i, i + 1, i + 2, i + 3])
-        data.push([ii * col, ii * col - 1, ii * col - 2, ii * col - 3])
-
+///////sloving for horizontal 
+for(let r = 0; r < row; r++){
+    for(let c = 0; c < col - 3; c++){
+        let start = r*col+c
+        data.push([start, start + 1, start + 2, start + 3])
     }
+}
 
-    console.log(data)
+/////solving for vertical
+for(let r = 0; r < row - 3; r++){
+    for(let c = 0; c < col; c++){
+        let start = r*col+c
+        data.push([start, start + col*1, start + col*2, start + col*3]) 
+    }
+}
+////// for this direction \
+for(let r = 0; r < row - 3; r++){
+    for(let c = 0; c < col - 3; c++){
+        let start = r*col+c
+        data.push([start, start+col+1, start+3(col+1), start+3(col+1)])
+    }
+}
+
+for(let r = 0; r < row - 3; r++){
+    for(let c = 3; c < col; c++){
+        let start = r*col+c
+        data.push([start, start+col-1, start+2(col-1), start+3(col-1)])
+    }
+}
+
