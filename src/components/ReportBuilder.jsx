@@ -1141,35 +1141,61 @@
 
 
 
-import {createContext, useContext, useState} from 'react'
+// import {createContext, useContext, useState} from 'react'
 
 
 
 
-const Comp = () => {
+// const Comp = () => {
 
-  const {FUNC} = useContext()
+//   const {FUNC} = useContext()
 
 
-  return(<>
-    <div ref={ref1} style={{width: "50px", height: "50px", border: "5px solid black"}} id="a"></div>
-    <button onClick={FUNC}>change color</button>
+//   return(<>
+//     <div ref={ref1} style={{width: "50px", height: "50px", border: "5px solid black"}} id="a"></div>
+//     <button onClick={FUNC}>change color</button>
   
-  </>)
-} 
+//   </>)
+// } 
 
 
-const CreatingCon = createContext(null)
+// const CreatingCon = createContext(null)
 
 
-const ConProvider = ({children}) => {
+// const ConProvider = ({children}) => {
   
 
-  const [D, setD] = useState(0)
+//   const [D, setD] = useState(0)
 
-  const FUNC = () => {
-    setD((pre) => pre + 1)
-  }
+//   const FUNC = () => {
+//     setD((pre) => pre + 1)
+//   }
 
-  return(<CreatingCon.Provider value={{D, setD, FUNC}}>{children}</CreatingCon.Provider>)
+//   return(<CreatingCon.Provider value={{D, setD, FUNC}}>{children}</CreatingCon.Provider>)
+// }
+
+
+const FUNC = (props) => {
+  
+  return(<><h3>props.name</h3></>)
 }
+
+
+
+const FUNCW = (F) => {
+
+  return (props) => {
+
+    return <F {...props}/>
+  }
+}
+
+
+const OUTF = () => {
+
+  const El = FUNCW(FUNC)
+
+  return(<EL name={warren}/>)
+}
+
+export default OUTF
