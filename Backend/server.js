@@ -5364,53 +5364,1247 @@
 
 
 
+// import puppeteer from "puppeteer";
+
+// // ╔════════════════════════════════════════════════════════════╗
+// // ║   STEP 1 — PASTE YOUR ASSIGNMENT DIRECTIONS HERE          ║
+// // ╚════════════════════════════════════════════════════════════╝
+
+// const ASSIGNMENT_DIRECTIONS = `
+//  create the assigment given the SOURCE_PAGES and text make parthentical source (date) words "word for word text" (). and narrative apa 7th eddition citations source (data) metion cahpter and section or page num
+// Directions: Based on your assigned readings and in-class activities, you will analyze a video to identify teaching strategies that promote oral language, comprehension, vocabulary development and home-school connections within a classroom setting.
+
+// Click on the following link to watch the video: Case Studies in Science EducationLinks to an external site..
+
+// You will view the full video lesson, taking notes, observing instructional practices connected to course concepts for your analysis. The analysis table must:
+
+// Examine how the teacher supported students in using science talk (e.g., asking questions, explaining ideas, or collaborating with peers).
+// Determine the strategies the teacher used to introduce and reinforce science vocabulary.
+// Examine how the use of visual tools (e.g., diagrams, anchor charts) or hands-on activities (e.g., experiments, group investigations) contribute to student talk, vocabulary use, and concept understanding.
+// Determine if students were encouraged to use key terms in discussion or writing.
+// Explore the ways the teacher promoted speaking and listening skills through group discussion, partner talk, or presentations during the lesson.
+// Explore one way this science lesson could be extended at home, including activities involving families in supporting vocabulary or inquiry learning.
+// Investigate how you could modify or extend one of these strategies to better meet the needs of  learners (e.g., Dyslexic, ELs, students with IEPs, ADHD, ASD or Gifted) for literacy instruction.
+// Submission Instructions:
+
+// Save your table analysis as a PDF file.
+// Clearly post your analysis table with a brief summary. Your analysis table should be clear, organized, and easy to read (include 200-300 word summary).
+// `;
+
+// // ╔════════════════════════════════════════════════════════════╗
+// // ║   STEP 2 — PASTE YOUR SOURCE TEXT / PAGES HERE           ║
+// // ╚════════════════════════════════════════════════════════════╝
+
+// const SOURCE_PAGES = `
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 24
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// Case Studies in Science Education
+
+// Elsa — K
+
+// Teacher Profile
+
+// Name | Elsa
+// Experience | 15 years
+// Grade & Subject(s) | Two half-day kindergarten classes; all subjects
+// Classroom Demographics | Bilingual classroom
+// School | Elementary school in an urban district
+// Science Teaching | 2 days/week for 30 minutes
+// Curriculum | Specified by district
+
+// Contents
+
+// Module 1 Introducing the Case
+
+// Module 2 Trying New Ideas
+
+// Module 3 Reflecting and Building on Change
+
+// Module 1 - Introducing the Case
+
+// Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
+// ---
+
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 25
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+// Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings.
+
+// Seasons Study
+// To initiate discussion of seasonal characteristics, Elsa reads aloud a picture book. Students are then asked to verbalize what they know about seasons. Finally, students are given paper divided into four sections and asked to draw a picture that represents each season.
+
+// Discussion Questions
+// Given Elsa's interest in having students "participate more" during science activities, what would you describe as the strengths and weaknesses of the seasons study?
+
+// What role do you think "free exploration" of objects and phenomena should play in helping students develop basic scientific understandings?
+
+// How would you design activities so that students are likely to make scientifically accurate "discoveries?"
+
+// Module 2 - Trying New Ideas
+// Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa
+
+// ---
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 26
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// takes a "guided discovery" approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
+
+// After working in pairs, where materials are shared, each student completes a worksheet that reflects his or her findings about materials through which a magnetic force can travel. Later, the class reviews the worksheets together. Elsa believes that when students take their worksheets home, students' understandings are again reinforced when shared with family members.
+
+// Magnet Study
+// After a period where students find out what magnets will and will not pick up, student pairs work together in a guided discovery activity to determine whether magnetic force can travel through various substances such as water, paper, wood, and cloth. Students record their discoveries on worksheets and discuss their findings with the entire class.
+
+// Discussion Questions
+// In comparing the magnet study to the seasons study, what do you consider to be the most important changes with regard to getting students to be more actively engaged?
+
+// What meaning does the "discovery method" have for you? How would you contrast "free exploration" with "guided discovery?"
+
+// What would you do to help students reach scientific conclusions and represent their learning after a "discovery" activity?
+// ---
+
+
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 27
+// CHAPTER: dose not have one
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// Module 3 - Reflecting and Building on Change
+// As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. This time, pairs of students each have their own materials but are encouraged to share their results.
+
+// One of Elsa's goals is that students notice consistent results from mixing certain colors. Another goal is that students develop ways of expressing their findings. Overall, however, Elsa recognizes that this activity allows many different outcomes as students pose their own questions and find their own answers by mixing colors.
+
+// Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge. Having never seen this before, Elsa is elated.
+
+// Mixing Colors Activities
+// Students mix food coloring in water to discover what happens when different colors are combined. Discoveries are shared between partners and with Elsa. Later, students use colored cellophane as overlays to see what other changes in color can result. Both activities are designed to reflect a more "open discovery" approach.
+
+// Discussion Questions
+// How would you compare the purposes and the outcomes of the mixing colors activity with the magnet study?
+
+// In your opinion, what is the appropriate balance between free exploration, guided discovery, and open discovery in elementary science? In later grades?
+// ---
+
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 20
+// CHAPTER: Chapter 3
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// NOTES FROM THE FIELD ...
+// I read to my students every day. I always wanted to use my read-aloud time to capture their interests and make reading fun. So, I thought it would be a good idea to allow the students to select the books we'd read. It seemed to be working just fine. Then, I had students take a practice state test. In this practice test, they scored very well when reading and writing about fictional passages. However, they struggled quite a bit with informational passages. During the first few months prior to the practice test, nearly all of the read-aloud books were fictional. This helped me see the importance of varying the genres I used in my read-alouds. It also confirmed what an important instructional tool a read-aloud can be.
+// INTRODUCTION: COMPREHENSION In Chapter 2, we explored the connections accuracy, fluency, and vocabulary may have to a student's comprehension of a text. In this chapter, we will delve more deeply into the aspects we must consider when teaching reading as it relates to comprehension.
+// TExT SELECTION Comprehension is how a student understands what was read. When we consider our instructional plans, it is important to think of the types of texts we expect our students to work with. As comprehension is essential for learning in all subject areas, we must ensure that our instructional plans include texts from various genres (e.g., chapter books,
+// ---
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 21
+// CHAPTER: Chapter 3
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// textbooks, graphic novels, poetry), in various formats (e.g., print and digital), and in various mediums (e.g., letters from teachers, newspaper advertisements, email messages, videos and images, presidential speeches). It is natural for students (and even the classroom teacher) to demonstrate a preference
+// for a particular genre. However, our goal is to expose students in the upper-elementary grades to varied genres to offer an assortment of experiences to develop comprehension abilities. Table 3.1 shows an example of a checklist to keep track of the types of genres that you should incorporate into your instruction.
+// Table 3.1 Read-Aloud Genre Checklist GENRE
+// Drama Fairy Tale Historical Fiction Poetry Biography Narrative Nonfiction Textbook
+// This checklist will allow you to determine which genres have been used and
+// which genres you still need to incorporate into your classroom. This can be a valuable instructional tool to ensure that you are balancing the genres in your classroom. Table 3.2 offers a brief list of some genres typically used in an upper-elementary school classroom. When considering the genres to use in your classroom, review the standards for
+// the grade to ensure you are meeting grade-level expectations. Also, be sure to vary the format of the genres used by including a mixture of print-based and digital texts. Creating such varied exposure to reading materials can have a positive impact on how students' comprehension develops. It can also promote engagement and an overall love of reading.
+
+// ---
+
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 23
+// CHAPTER: Chapter 3
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// component of reading that is done automatically and is typically limited to accuracy, fluency, and vocabulary. Here are some examples of reading skills:
+// • decoding words (accuracy) • reading with expression (fluency) • using affixes to determine word meaning (vocabulary)
+// Thus, skills typically include the components of reading outside of comprehension. A
+// strategy is a component of reading that requires the reader to have a purposeful, metacognitive plan, or to monitor their own thinking. It often solely connects to comprehension. Here are some examples of reading strategies:
+// • making predictions using clues in the text (comprehension) • making an inference about the character's feelings using clues in the text (comprehension)
+// Teaching a balance of skills and strategies is important to promote growth in the area
+// of reading. Overtime, as students gain experience with using strategies and continue to practice reading skills, the manner in which you plan your instruction should also evolve. Chapter 6 will discuss how to assess students in these areas.
+// WHOLE-CLASS METHODS When creating your instructional plans for the entire class, you should focus on the following areas: accuracy, fluency, vocabulary, and comprehension. Chapter 2 discussed activities you can implement to support students with reading skills (accuracy, fluency, and vocabulary). This section will focus on reading strategies for comprehension for the whole class.
+// Read-Alouds When planning for whole-class instruction, be sure to include a daily read-aloud. Use the chart in Table 3.1 to keep track of the genres used for read-alouds to promote variety. At times, you want to ensure your read-aloud has a clear instructional purpose. Plan this purpose around the needs of the class. At other times, you want to use the read-aloud to build a love for reading. Table 3.3 lists some general read-aloud tips to consider
+// ---
+
+
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 24
+// CHAPTER: Chapter 3
+// SECTION: dose not have one
+
+// EXACT TEXT:
+
+// Table 3.3 Tips for Read-Alouds • Avoid using read-alouds as a behavior management tool. Implement other strategies if you need the class to sit quietly.
+// • Plan read-alouds for when you have uninterrupted blocks of time. Keep the read-aloud time to 20–30 minutes. Do not attempt to start with 20 minutes on the first day. Begin with a smaller timeframe, then work your way up.
+// • When setting an instructional purpose for a read aloud, consider the needs of the whole class as they relate to accuracy, fluency, vocabulary, and/or comprehension. vary the read-aloud to address both skills and strategies. However, at times, you should set no instructional purpose for the read-aloud to promote a "reading for fun" message.
+// • Use a checklist or some other means to vary the genres of texts used for a read-aloud (see Table 3.1).
+// • Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension. Plan questions and stopping points ahead of time.
+// • Use read-alouds to make content-area connections and/or teach purposeful life skills (e.g., dealing with bullying, sharing, friendship).
+// • Use read-alouds to make meaningful connections to students' lives and/or expose students to new experiences and ideas that will support their learning in the future.
+// • Preview the topics in the read-aloud before reading to the class. There may be concepts or terms that are not appropriate for the grade level or individual students in the class.
+// • Select read-aloud topics that consider a broad view of diversity: cultural, linguistic, or geographical, or about students with disabilities, gender stereotypes, family structures, popular culture, and so on.
+// When planning for a read-aloud, follow the procedures below:
+// • Before Reading: Have a discussion to introduce the book and activate prior knowledge. If you have already read part of the book, have a discussion to introduce the new section or chapter and review what was read previously. Then review key details from the previous day's read-aloud. Try to allow students to do most of the talking.
+// • During Reading: Plan out stopping points to discuss the text or to ask and answer questions. Or simply use the stopping points for students to reflect on the read-aloud before continuing
+
+// ---
+// `;
+
+// // ════════════════════════════════════════════════════════════
+// // Everything below runs automatically — do not edit.
+// // ════════════════════════════════════════════════════════════
+
+// const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// // ─── PROMPT BUILDERS ─────────────────────────────────────────────────────────
+
+// function buildFirstPrompt() {
+//   return `You are completing an assignment. Here are your directions and all source material.
+
+// ${"=".repeat(50)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(50)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(50)}
+// SOURCE TEXT — USE THIS FOR ALL CITATIONS:
+// ${"=".repeat(50)}
+// ${SOURCE_PAGES.trim()}
+
+// ${"=".repeat(50)}
+// CITATION RULES — FOLLOW EVERY ONE EXACTLY:
+// ${"=".repeat(50)}
+
+// IMPORTANT: Citations are REQUIRED throughout this assignment. You must use both
+// parenthetical and narrative citations from the sources above. Do NOT write plain
+// text only. Every key claim must be backed by a properly formatted citation.
+
+// ━━ PARENTHETICAL CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Format option A: Author (date) states word "word for word text from source" (p. #).
+// Format option B: word "word for word text from source" (Author, date, p. #).
+
+// CORRECT EXAMPLES (use these as models):
+//   Annenberg Learner (n.d.) notes that Elsa believes that for many "children, what
+//   happens in kindergarten affects students' feelings" (p. 24).
+
+//   Elsa takes "a guided discovery approach by getting students to work with a
+//   partner" (Annenberg Learner, n.d., p. 26).
+
+//   students "record their discoveries on worksheets and discuss their findings
+//   with the entire class" (Annenberg Learner, n.d., p. 26).
+
+// RULES:
+// 1. Text inside the quotes must be copied EXACTLY word for word from the EXACT TEXT
+//    in the source block — nothing changed.
+
+// 2. The period goes AFTER the closing parenthesis — NEVER inside the quotes.
+//    CORRECT: "word for word text" (p. 53).
+//    WRONG:   "word for word text." (p. 53).
+//    WRONG:   "word for word text."
+
+// 3. Every quote MUST be immediately followed by a citation.
+//    WRONG: "is her literal comprehension, which scored at 82%."
+//    RIGHT:  "is her literal comprehension, which scored at 82%" (p. 53).
+
+// 4. Do NOT use filler connector words immediately before the opening quote.
+//    WRONG: such as "word for word text" (p. 53).
+//    A word pulled OUT of the source text is CORRECT and encouraged:
+//    CORRECT: Elsa takes "a guided discovery approach by getting students to work
+//              with a partner" (Annenberg Learner, n.d., p. 26).
+
+// 5. No empty quotes ever.
+
+// 6. If the source text starts with a capital letter, pull that first word OUT of the
+//    quotes, lowercase it, and blend it into your sentence.
+//    SOURCE: Discoveries are shared between partners and with Elsa.
+//    CORRECT: discoveries "are shared between partners and with Elsa" (Annenberg Learner, n.d., p. 27).
+//    WRONG:   "Discoveries are shared between partners and with Elsa" (p. 27).
+
+// 7. NEVER put quotes around a word or phrase unless a citation (p. #) or
+//    (Author, date, p. #) immediately follows it.
+//    WRONG: educators use "guided discovery" to build skills.
+//    RIGHT:  educators use guided discovery to build skills.
+//    RIGHT:  Elsa takes "a guided discovery approach" (Annenberg Learner, n.d., p. 26).
+
+// ━━ NARRATIVE CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Format: According to Author (date), from Chapter X on page #, sentence continues...
+
+// CORRECT EXAMPLES:
+//   According to Ramlal (2023), from Chapter 3 on page 24, teachers should plan
+//   questions and stopping points ahead of time to support comprehension.
+
+//   According to Annenberg Learner (n.d.), on page 26, Elsa believes that when
+//   students take their worksheets home, their understandings are reinforced.
+
+// RULES:
+// 8. Author name in the sentence, date in parentheses only: Author (date).
+
+// 9. Chapter/section/page go NATURALLY in the sentence AFTER (date) — NEVER inside
+//    the parentheses.
+//    CORRECT: According to Ramlal (2023), from Chapter 3 on page 24, ...
+//    WRONG:   According to Ramlal (2023, Chapter 3, p. 24), ...
+//    WRONG:   sentence (Ramlal, 2023, Chapter 3).
+//    WRONG:   sentence (anything except just the year or n.d.).
+
+// 10. Every narrative citation must mention chapter and/or page in the sentence.
+
+// ━━ IF IN DOUBT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// If you are unsure about a citation format, write a plain sentence instead of that
+// one citation. But you MUST have citations throughout — do not write the entire
+// assignment as plain prose.
+
+// Now complete the full assignment. Every paragraph of the summary and every row
+// of the analysis table must contain at least one properly formatted citation.`;
+// }
+
+// // ─── CITATION SCANNER ────────────────────────────────────────────────────────
+
+// function scanCitations(text) {
+//   const violations = [];
+//   let m;
+
+//   // VIOLATION 1a — period INSIDE the closing quote when citation follows
+//   const r1a =
+//     /"([^"]+?)\."\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\)/g;
+//   while ((m = r1a.exec(text)) !== null) {
+//     violations.push({
+//       rule: 1,
+//       bad: m[0],
+//       detail: `Period is inside the closing quote — must go AFTER the closing parenthesis. CORRECT: "word for word text" (p. #).`,
+//     });
+//   }
+
+//   // VIOLATION 1b — period INSIDE the closing quote with NO citation following
+//   const r1b =
+//     /"([^"]{5,}?)\."\s*(?!\s*\((?:p\.|Chapter|Section|Annenberg|Ramlal))/g;
+//   while ((m = r1b.exec(text)) !== null) {
+//     violations.push({
+//       rule: 1,
+//       bad: m[0].trim(),
+//       detail: `Two violations: (1) period is inside the closing quote. (2) No citation after this quote. Fix: rewrite as "text" (p. #). or write your own plain sentence instead.`,
+//     });
+//   }
+
+//   // VIOLATION 2 — empty quotes
+//   const r2 = /""\s*\((?:p\.\s*\d+|Chapter[^)]*|Section[^)]*)?\)/g;
+//   while ((m = r2.exec(text)) !== null) {
+//     violations.push({
+//       rule: 2,
+//       bad: m[0],
+//       detail: `Empty quotes — must contain real word-for-word text from the source.`,
+//     });
+//   }
+
+//   // VIOLATION 3 — filler glue words before opening quote tied to a citation
+//   const knownGlue = [
+//     /\brate of\s+"/g,
+//     /\bsuch as\s+"/g,
+//     /\bknown as\s+"/g,
+//     /\breferred to as\s+"/g,
+//     /\btermed\s+"/g,
+//     /\bthe concept of\s+"/g,
+//   ];
+//   for (const pattern of knownGlue) {
+//     const glueRe = new RegExp(
+//       pattern.source +
+//         '([^"]{3,}?)"\\s*\\((?:p\\.\\s*\\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\\)',
+//       "g"
+//     );
+//     while ((m = glueRe.exec(text)) !== null) {
+//       violations.push({
+//         rule: 3,
+//         bad: m[0].trim(),
+//         detail: `Filler connector word before the opening quote. Rewrite so the citation starts with a pulled-out source word or the quote begins directly.`,
+//       });
+//     }
+//   }
+
+//   // VIOLATION 4 — chapter/section/page crammed INSIDE narrative citation parens
+//   const r4 =
+//     /([A-Z][a-zA-Z\s]+?)\s*\((\d{4}|n\.d\.)\s*,\s*(?:Chapter|Ch\.?|chapter|Section|Sec\.?|section|p\.)\s*[\d\w]+[^)]*\)/g;
+//   while ((m = r4.exec(text)) !== null) {
+//     violations.push({
+//       rule: 4,
+//       bad: m[0],
+//       detail: `Chapter/section/page must NOT go inside the parentheses. CORRECT: According to ${m[1].trim()} (${m[2]}), from Chapter X on page #, ...`,
+//     });
+//   }
+
+//   // VIOLATION 5 — narrative citation with no chapter/section/page nearby
+//   const r5 =
+//     /According to ([A-Z][^(]+?)\s*\((\d{4}|n\.d\.)\)\s*,\s*(?!.*?\b(?:chapter|section|page|p\.)\b)/gi;
+//   while ((m = r5.exec(text)) !== null) {
+//     const after = text
+//       .substring(m.index + m[0].length, m.index + m[0].length + 200)
+//       .toLowerCase();
+//     if (!after.match(/\b(chapter|section|page|p\.)\b/)) {
+//       violations.push({
+//         rule: 5,
+//         bad: m[0].trim(),
+//         detail: `Narrative citation has no chapter/section/page in the sentence. Add naturally: According to ${m[1].trim()} (${m[2]}), from Chapter X on page #, ...`,
+//       });
+//     }
+//   }
+
+//   // VIOLATION 6 — opening quote starts on a capitalized word (with citation after)
+//   const r6 =
+//     /"([A-Z][a-zA-Z']+)\s+([^"]{3,}?)"\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\)/g;
+//   while ((m = r6.exec(text)) !== null) {
+//     violations.push({
+//       rule: 6,
+//       bad: m[0],
+//       detail: `Opening quote starts on capital word "${m[1]}" — pull it out and lowercase it: ${m[1].toLowerCase()} "${m[2]}..." (p. #).`,
+//     });
+//   }
+
+//   // VIOLATION 7 — quotes around a word/phrase with NO citation immediately after
+//   const r7 =
+//     /"([^"]{2,60})"\s*(?!\s*\((?:p\.|Chapter|Section|Annenberg|Ramlal))/g;
+//   while ((m = r7.exec(text)) !== null) {
+//     const inner = m[1].toLowerCase();
+//     // Skip if it contains a verb (likely a legitimate sentence fragment)
+//     const hasVerb =
+//       /\b(is|are|was|were|has|have|must|should|will|can|does|do|reads|shows|indicates|believes|takes|invites|notes|records|mix|use|plan|select|avoid|keep|work|share|discuss|develop|encourage)\b/.test(
+//         inner
+//       );
+//     if (!hasVerb && m[1].length < 60) {
+//       violations.push({
+//         rule: 7,
+//         bad: m[0].trim(),
+//         detail: `Quotes around "${m[1]}" with no citation after — remove quotes and write plainly, OR add (p. #) or (Author, date, p. #) immediately after the closing quote.`,
+//       });
+//     }
+//   }
+
+//   return violations;
+// }
+
+// // ─── CITATION PRESENCE CHECK ─────────────────────────────────────────────────
+// // Detects when the Worker has removed ALL citations to escape the loop.
+
+// function hasSufficientCitations(text) {
+//   const parentheticalPattern =
+//     /\((?:p\.\s*\d+|Annenberg[^)]{1,60}|Ramlal[^)]{1,60})\)/g;
+//   const narrativePattern =
+//     /According to [A-Z][^(]+\((?:\d{4}|n\.d\.)\)/gi;
+
+//   const pCount = (text.match(parentheticalPattern) || []).length;
+//   const nCount = (text.match(narrativePattern) || []).length;
+
+//   return pCount + nCount >= 3;
+// }
+
+// function buildEvidenceReport(violations) {
+//   if (!violations.length) return null;
+//   let r = `Citation scanner found ${violations.length} violation(s):\n\n`;
+//   violations.forEach((v, i) => {
+//     r += `VIOLATION ${i + 1} — Rule ${v.rule}\n`;
+//     r += `Wrong text:  ${v.bad}\n`;
+//     r += `Why wrong:   ${v.detail}\n\n`;
+//   });
+//   return r;
+// }
+
+// // ─── REVIEWER PROMPT ─────────────────────────────────────────────────────────
+
+// const buildReviewerPrompt = (assignment, evidence) =>
+//   `You are a strict APA 7th Edition citation reviewer.
+
+// ${
+//   evidence
+//     ? `A scanner already found these violations. Confirm each one, explain why it is wrong, and check for anything else missed.\n\nSCANNER FINDINGS:\n${evidence}`
+//     : `The scanner found no formatting violations. Do a thorough manual check yourself.`
+// }
+
+// ━━ CRITICAL CHECK FIRST ━━
+// Before checking formatting, check: does this assignment contain AT LEAST 3 citations?
+// Count all parenthetical citations like (p. 24) or (Annenberg Learner, n.d., p. 26)
+// AND narrative citations like "According to Ramlal (2023), from Chapter 3 on page 24..."
+// If fewer than 3 citations total exist, report:
+// VIOLATION: MISSING CITATIONS — assignment must have properly formatted citations throughout.
+// Writing plain prose with NO citations is NOT a valid fix. The assignment requires citations.
+
+// ━━ PARENTHETICAL FORMAT ━━
+// Correct: "word for word text" (p. #).
+// Correct: "word for word text" (Author, date, p. #).
+
+//   VIOLATION — period inside the closing quote:
+//     WRONG: "text." (p. 53).  |  WRONG: "text."
+//     RIGHT: "text" (p. 53).
+
+//   VIOLATION — quote with no citation after it:
+//     WRONG: Elsa "is building new knowledge."
+//     RIGHT: Elsa "is building new knowledge" (Annenberg Learner, n.d., p. 27).
+
+//   VIOLATION — empty quotes.
+
+//   VIOLATION — filler connector words before quote (such as, a, called, of):
+//     WRONG: such as "word for word text" (p. 53).
+//     NOT a violation — pulled-out source word or verb before quote:
+//       Elsa takes "a guided discovery approach" (Annenberg Learner, n.d., p. 26). ← CORRECT
+//       students "record their discoveries on worksheets" (Annenberg Learner, n.d., p. 26). ← CORRECT
+
+//   VIOLATION — opening quote starts on a capital word:
+//     WRONG: "Discoveries are shared between partners" (p. 27).
+//     RIGHT: discoveries "are shared between partners" (p. 27).
+
+//   VIOLATION — quotes around a word/phrase with no citation:
+//     WRONG: educators use "guided discovery" in class.
+//     RIGHT: educators use guided discovery in class.
+//     NOT a violation if a citation follows: Elsa takes "a guided approach" (p. 26). ← CORRECT
+
+// ━━ NARRATIVE FORMAT ━━
+// Correct: According to Author (date), from Chapter X on page #, sentence...
+
+//   VIOLATION — location inside the parentheses:
+//     WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...
+//     RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...
+
+//   VIOLATION — narrative citation with no chapter/section/page in the sentence:
+//     WRONG: According to Ramlal (2023), the data shows...
+//     RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, the data shows...
+
+// ━━ IMPORTANT ━━
+// The fix for a citation FORMATTING problem is to correct the format — NOT to remove the citation.
+// Only tell the Worker to remove a citation if it absolutely cannot be fixed.
+// Citations are REQUIRED throughout the assignment.
+
+// Quote every wrong piece of text exactly. State the fix.
+
+// End with exactly one of:
+// OVERALL RESULT: PASS
+// OVERALL RESULT: FAIL
+
+// Assignment to review:
+// ---
+// ${assignment}
+// ---`;
+
+// // ─── CORRECTION PROMPT ───────────────────────────────────────────────────────
+
+// function buildCorrectionPrompt(feedback, violations, noCitations) {
+//   let p = ``;
+
+//   if (noCitations) {
+//     p += `⚠️ CRITICAL: Your assignment has NO citations or almost none.
+// Citations are REQUIRED — you cannot submit plain prose with no citations.
+// Go back to the source text and add properly formatted citations to every
+// section of the table and every paragraph of the summary.
+
+// `;
+//   }
+
+//   p += `Your assignment has citation violations. FIX the format — do NOT simply remove citations.
+// Citations from the source text are required throughout.\n\n`;
+
+//   if (violations.length) {
+//     p += `These exact wrong texts were found — fix each one:\n\n`;
+//     violations.forEach((v, i) => {
+//       p += `${i + 1}. WRONG TEXT: ${v.bad}\n`;
+//       p += `   WHY WRONG:  ${v.detail}\n`;
+//       p += `   FIX:        Correct the format. Only remove entirely if truly unfixable.\n\n`;
+//     });
+//   }
+
+//   p += `Reviewer feedback:\n${feedback}\n\n`;
+//   p += `${"━".repeat(50)}\n`;
+//   p += `REWRITING RULES — CITATIONS ARE MANDATORY\n`;
+//   p += `${"━".repeat(50)}\n\n`;
+//   p += `The assignment MUST contain at least 4-6 properly formatted citations total.\n`;
+//   p += `Do NOT write the assignment as plain prose with no citations.\n\n`;
+//   p += `PARENTHETICAL FORMAT:\n`;
+//   p += `  "word for word text" (p. #).                      ← correct\n`;
+//   p += `  "word for word text" (Author, date, p. #).        ← also correct\n`;
+//   p += `  Author (date) states word "word for word text" (p. #).  ← also correct\n\n`;
+//   p += `- Period AFTER the closing parenthesis — NEVER inside the quotes\n`;
+//   p += `- Every quote must be followed IMMEDIATELY by its citation\n`;
+//   p += `- Pulled-out source word before the quote IS correct:\n`;
+//   p += `  Elsa takes "a guided discovery approach by getting students to work with a partner"\n`;
+//   p += `  (Annenberg Learner, n.d., p. 26).  ← CORRECT\n`;
+//   p += `- If quote opens on a capital word — pull it out and lowercase it:\n`;
+//   p += `  WRONG: "Discoveries are shared between partners" (p. 27).\n`;
+//   p += `  RIGHT: discoveries "are shared between partners" (p. 27).\n`;
+//   p += `- No quotes around a term unless a citation immediately follows.\n\n`;
+//   p += `NARRATIVE FORMAT:\n`;
+//   p += `  According to Author (date), from Chapter X on page #, sentence...\n`;
+//   p += `- Chapter/page go in the SENTENCE — NEVER inside the parentheses:\n`;
+//   p += `  WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...\n`;
+//   p += `  RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...\n\n`;
+//   p += `Rewrite the full assignment now. Keep all correctly formatted citations.\n`;
+//   p += `Fix all violations. ADD citations where they are missing.`;
+//   return p;
+// }
+
+// // ─── FOLLOW-UP PROMPTS ───────────────────────────────────────────────────────
+
+// const FOLLOWUP_PROMPTS = [
+//   `Review every citation in your assignment against the source text.
+// IMPORTANT: Do NOT remove citations — fix their format.
+
+// Check each one against these rules:
+// 1. Is the quoted text copied exactly word-for-word from the source (nothing changed)?
+// 2. Does the period go AFTER the closing parenthesis — never inside the quotes?
+// 3. If the quote opens on a capitalized word — pull that word OUT of the quotes,
+//    lowercase it, and blend it into your sentence.
+//    WRONG: "Discoveries are shared between partners and with Elsa" (p. 27).
+//    RIGHT: discoveries "are shared between partners and with Elsa" (Annenberg Learner, n.d., p. 27).
+// 4. Does every narrative citation say the chapter and/or page in the sentence —
+//    not inside the parentheses?
+//    WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...
+//    RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...
+// 5. Are there at least 4-6 citations total? If not, add more from the source text.
+
+// Fix all violations. Keep all correctly formatted citations as-is.`,
+
+//   `Final citation check — verify every quote and citation in the assignment:
+// 1. Every word-for-word quote must be followed IMMEDIATELY by (p. #) or (Author, date, p. #).
+// 2. If a quote opens on a capital word — pull it out, lowercase it, blend into sentence.
+//    WRONG: "Elsa believes that for many children" (p. 24).
+//    RIGHT: Elsa believes that for many "children, what happens in kindergarten" (p. 24).
+// 3. Period at the end of every parenthetical citation AFTER the closing parenthesis.
+// 4. Never put quotes around a word or phrase unless a citation immediately follows.
+//    WRONG: Elsa used "guided discovery" as a strategy.
+//    RIGHT: Elsa used guided discovery as a strategy.
+//    OR RIGHT: Elsa took "a guided discovery approach" (Annenberg Learner, n.d., p. 26).
+// 5. Narrative citations: chapter/page in the sentence, never inside (parentheses).
+// 6. The assignment must have at least 4-6 citations. If citations are missing, add them.
+
+// Fix all violations. Do NOT remove citations — correct their format.`,
+// ];
+
+// // ─── DIRECTIONS CHECKER PROMPTS ──────────────────────────────────────────────
+
+// function buildDirectionsCheckerPrompt(assignment) {
+//   return `You are checking whether a completed assignment fully covers all points
+// listed in the assignment directions. You are NOT checking citations or formatting —
+// that has already been done. You are ONLY checking content coverage.
+
+// ${"=".repeat(50)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(50)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(50)}
+// COMPLETED ASSIGNMENT TO CHECK:
+// ${"=".repeat(50)}
+// ${assignment}
+
+// ${"=".repeat(50)}
+// YOUR JOB:
+// ${"=".repeat(50)}
+// Go through every requirement in the assignment directions above.
+// For each requirement, check whether the completed assignment addresses it.
+
+// Report like this for each point:
+//   POINT: [state the requirement from the directions]
+//   STATUS: COVERED or MISSING
+//   REASON: [one sentence explaining why]
+
+// At the end give an overall verdict:
+//   DIRECTIONS RESULT: PASS   — if every point is covered
+//   DIRECTIONS RESULT: FAIL   — if any point is missing
+
+// If FAIL, list a short summary of exactly what is missing so the Worker AI
+// knows what to add.`;
+// }
+
+// function buildDirectionsRewritePrompt(checkerFeedback) {
+//   return `Your assignment is missing required content. The directions checker found gaps.
+
+// Checker feedback:
+// ${checkerFeedback}
+
+// Add the missing content now. Keep all existing citations exactly as they are —
+// do not change any citation formatting. Only add the content that is missing.
+// Rewrite the full assignment with the missing points added.`;
+// }
+
+// // ─── FIND INPUT BOX ───────────────────────────────────────────────────────────
+
+// async function findInput(page, label) {
+//   const selectors = [
+//     'rich-textarea div[contenteditable="true"]',
+//     'div[contenteditable="true"]',
+//     'div[role="textbox"]',
+//     "textarea",
+//     ".ql-editor",
+//   ];
+//   for (const sel of selectors) {
+//     try {
+//       const el = await page.$(sel);
+//       if (el) {
+//         const box = await el.boundingBox();
+//         if (box && box.width > 0) {
+//           console.log(`  [${label}] Input found: ${sel}`);
+//           return { el, sel };
+//         }
+//       }
+//     } catch (_) {}
+//   }
+//   const html = await page.evaluate(
+//     () => document.body.innerHTML.substring(0, 3000)
+//   );
+//   console.error(`  [${label}] ERROR: No input found. Page HTML:\n`, html);
+//   throw new Error(`[${label}] Input box not found.`);
+// }
+
+// // ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
+
+// async function sendMessage(page, text, label) {
+//   const { el, sel } = await findInput(page, label);
+//   await el.click();
+//   await sleep(400);
+//   await page.keyboard.down("Control");
+//   await page.keyboard.press("a");
+//   await page.keyboard.up("Control");
+//   await page.keyboard.press("Backspace");
+//   await sleep(200);
+
+//   const ok = await page.evaluate(
+//     (t, s) => {
+//       const el = document.querySelector(s);
+//       if (!el) return false;
+//       el.focus();
+//       return document.execCommand("insertText", false, t);
+//     },
+//     text,
+//     sel
+//   );
+
+//   if (!ok) {
+//     await page.evaluate(
+//       (t, s) => {
+//         const el = document.querySelector(s);
+//         if (!el) return;
+//         el.focus();
+//         if (el.contentEditable === "true") {
+//           el.innerText = t;
+//         } else {
+//           Object.getOwnPropertyDescriptor(
+//             window.HTMLTextAreaElement.prototype,
+//             "value"
+//           ).set.call(el, t);
+//         }
+//         el.dispatchEvent(new Event("input", { bubbles: true }));
+//         el.dispatchEvent(new Event("change", { bubbles: true }));
+//       },
+//       text,
+//       sel
+//     );
+//   }
+
+//   await sleep(500);
+//   const sendBtn = await page.$(
+//     'button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]'
+//   );
+//   if (sendBtn) {
+//     await sendBtn.click();
+//   } else {
+//     await page.keyboard.press("Enter");
+//   }
+//   await sleep(2000);
+// }
+
+// // ─── WAIT FOR RESPONSE ────────────────────────────────────────────────────────
+
+// async function waitForResponse(page, label, timeoutMs = 180000) {
+//   console.log(`  [${label}] Waiting for response...`);
+//   try {
+//     await page.waitForFunction(
+//       () =>
+//         !!document.querySelector(
+//           '[aria-label="Stop generating"], [aria-label="Stop response"]'
+//         ),
+//       { timeout: 15000, polling: 500 }
+//     );
+//   } catch (_) {}
+
+//   await page
+//     .waitForFunction(
+//       () =>
+//         !document.querySelector(
+//           '[aria-label="Stop generating"], [aria-label="Stop response"]'
+//         ),
+//       { timeout: timeoutMs, polling: 1000 }
+//     )
+//     .catch(() => {});
+
+//   await sleep(3000);
+
+//   const text = await page.evaluate(() => {
+//     const all = [
+//       ...document.querySelectorAll("model-response"),
+//       ...document.querySelectorAll('[data-message-author-role="model"]'),
+//       ...document.querySelectorAll(".model-response-text"),
+//       ...document.querySelectorAll("message-content"),
+//     ];
+//     return all.length ? all[all.length - 1].innerText.trim() : "";
+//   });
+
+//   if (!text) console.warn(`  [${label}] WARNING: empty response`);
+//   else console.log(`  [${label}] Response received (${text.length} chars)`);
+//   return text;
+// }
+
+// // ─── CITATION CHECK LOOP ─────────────────────────────────────────────────────
+// // Shared by both Stage 1 and the re-check inside Stage 2.
+// // Sends the given prompt to the Worker, then loops until citations pass
+// // or MAX_ATTEMPTS is reached.
+
+// async function runCitationCheckLoop(
+//   workerPage,
+//   reviewerPage,
+//   prompt,
+//   roundLabel,
+//   maxAttempts = 6
+// ) {
+//   // Send the opening prompt to the Worker
+//   await sendMessage(workerPage, prompt, "WORKER");
+//   let lastResponse = await waitForResponse(workerPage, "WORKER");
+
+//   let approved = false;
+//   let attempt  = 0;
+
+//   while (!approved && attempt < maxAttempts) {
+//     attempt++;
+//     console.log(
+//       `\n  [${roundLabel}] Citation check attempt ${attempt}/${maxAttempts}`
+//     );
+
+//     // ── Key fix: detect missing citations before running the reviewer ──
+//     const noCitations = !hasSufficientCitations(lastResponse);
+//     if (noCitations) {
+//       console.log(
+//         `  [SCANNER] ⚠️  Fewer than 3 citations found — forcing citation rewrite.`
+//       );
+//     }
+
+//     const violations = scanCitations(lastResponse);
+//     if (!violations.length && !noCitations) {
+//       console.log(`  [SCANNER] No violations found.`);
+//     } else if (violations.length) {
+//       console.log(`  [SCANNER] ${violations.length} violation(s):`);
+//       violations.forEach((v, i) =>
+//         console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad}`)
+//       );
+//     }
+
+//     // Send to Citation Reviewer
+//     await sendMessage(
+//       reviewerPage,
+//       buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)),
+//       "REVIEWER"
+//     );
+//     const feedback = await waitForResponse(reviewerPage, "REVIEWER");
+
+//     console.log(`\n  REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
+//     console.log("\n  " + "─".repeat(58));
+
+//     const passed = feedback.includes("OVERALL RESULT: PASS");
+//     const failed =
+//       feedback.includes("OVERALL RESULT: FAIL") ||
+//       feedback.toLowerCase().includes("violation") ||
+//       noCitations; // ← treat missing citations as a failure even if reviewer says PASS
+
+//     if (passed && !failed) {
+//       console.log(
+//         `\n  [${roundLabel}] Citations PASSED after ${attempt} attempt(s).\n`
+//       );
+//       approved = true;
+//     } else {
+//       console.log(
+//         `\n  [${roundLabel}] Citations FAILED — sending corrections to Worker...\n`
+//       );
+//       await sendMessage(
+//         workerPage,
+//         buildCorrectionPrompt(feedback, violations, noCitations),
+//         "WORKER"
+//       );
+//       lastResponse = await waitForResponse(workerPage, "WORKER");
+//       await sleep(2000);
+//     }
+//   }
+
+//   if (!approved) {
+//     console.warn(
+//       `  [${roundLabel}] ⚠️  Max attempts reached — proceeding with best version.`
+//     );
+//   }
+
+//   return lastResponse;
+// }
+
+// // ─── MAIN ─────────────────────────────────────────────────────────────────────
+
+// (async () => {
+//   console.log("=".repeat(60));
+//   console.log("  GEMINI THREE-AI PIPELINE");
+//   console.log("=".repeat(60));
+//   console.log("  Window 1 — WORKER            writes the assignment");
+//   console.log("  Window 2 — CITATION REVIEWER checks citation format");
+//   console.log("  Window 3 — DIRECTIONS CHECKER checks all points covered");
+//   console.log("");
+//   console.log("  FLOW:");
+//   console.log("  1.  Worker writes assignment with citations");
+//   console.log("  2.  Scanner checks for citation violations + missing citations");
+//   console.log("  3.  Citation Reviewer confirms findings");
+//   console.log("  4.  If violations OR < 3 citations → Worker fixes → repeat 2-3");
+//   console.log("  5.  Once citations PASS → Directions Checker reads it");
+//   console.log("  6.  Directions Checker checks every assignment requirement");
+//   console.log("  7.  If missing content → Worker adds it → re-check citations → repeat 5-7");
+//   console.log("  8.  Both PASS → done");
+//   console.log("");
+//   console.log("  KEY FIX: Worker cannot escape by removing all citations.");
+//   console.log("           hasSufficientCitations() enforces ≥ 3 citations always.");
+
+//   const launchOptions = {
+//     headless: false,
+//     executablePath:
+//       "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+//     slowMo: 80,
+//     args: [
+//       "--no-sandbox",
+//       "--disable-setuid-sandbox",
+//       "--disable-blink-features=AutomationControlled",
+//       "--start-maximized",
+//     ],
+//     defaultViewport: null,
+//     ignoreDefaultArgs: ["--enable-automation"],
+//   };
+
+//   console.log("\nOpening Worker browser (window 1)...");
+//   const workerBrowser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [
+//       ...launchOptions.args,
+//       "--user-data-dir=C:\\Temp\\puppeteer-worker",
+//     ],
+//   });
+
+//   console.log("Opening Citation Reviewer browser (window 2)...");
+//   const reviewerBrowser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [
+//       ...launchOptions.args,
+//       "--user-data-dir=C:\\Temp\\puppeteer-reviewer",
+//     ],
+//   });
+
+//   console.log("Opening Directions Checker browser (window 3)...");
+//   const checkerBrowser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [
+//       ...launchOptions.args,
+//       "--user-data-dir=C:\\Temp\\puppeteer-checker",
+//     ],
+//   });
+
+//   const workerPage   = await workerBrowser.newPage();
+//   const reviewerPage = await reviewerBrowser.newPage();
+//   const checkerPage  = await checkerBrowser.newPage();
+
+//   for (const p of [workerPage, reviewerPage, checkerPage]) {
+//     await p.evaluateOnNewDocument(() => {
+//       Object.defineProperty(navigator, "webdriver", { get: () => false });
+//       window.chrome = { runtime: {} };
+//     });
+//   }
+
+//   console.log("\nOpening Gemini in all three windows...");
+//   await workerPage.goto("https://gemini.google.com/app",   { waitUntil: "domcontentloaded", timeout: 60000 });
+//   await reviewerPage.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
+//   await checkerPage.goto("https://gemini.google.com/app",  { waitUntil: "domcontentloaded", timeout: 60000 });
+//   await sleep(4000);
+
+//   const needsLogin = [workerPage, reviewerPage, checkerPage].some((p) =>
+//     p.url().includes("accounts.google.com")
+//   );
+//   if (needsLogin) {
+//     console.log("\n" + "!".repeat(60));
+//     console.log("  Sign into Google in ALL THREE windows.");
+//     console.log("  Script waits until all three are on Gemini.");
+//     console.log("!".repeat(60));
+//     await Promise.all([
+//       workerPage.waitForFunction(
+//         () => location.href.includes("gemini.google.com"),
+//         { timeout: 120000, polling: 1000 }
+//       ),
+//       reviewerPage.waitForFunction(
+//         () => location.href.includes("gemini.google.com"),
+//         { timeout: 120000, polling: 1000 }
+//       ),
+//       checkerPage.waitForFunction(
+//         () => location.href.includes("gemini.google.com"),
+//         { timeout: 120000, polling: 1000 }
+//       ),
+//     ]);
+//   }
+
+//   console.log("\nWaiting for input to be ready in all three windows...");
+//   for (const [p, label] of [
+//     [workerPage,   "WORKER"],
+//     [reviewerPage, "CITATION REVIEWER"],
+//     [checkerPage,  "DIRECTIONS CHECKER"],
+//   ]) {
+//     await p
+//       .waitForFunction(
+//         () =>
+//           !!document.querySelector(
+//             'rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'
+//           ),
+//         { timeout: 30000, polling: 1000 }
+//       )
+//       .catch(() =>
+//         console.warn(`  [${label}] Input wait timed out — continuing anyway`)
+//       );
+//   }
+
+//   await sleep(2000);
+//   console.log("\nAll three windows ready. Starting...\n");
+
+//   // ── Stage 1: Initial write + follow-up citation passes ────────────────────
+//   console.log("=".repeat(60));
+//   console.log("  STAGE 1 — Write + Citation Review");
+//   console.log("=".repeat(60) + "\n");
+
+//   let lastResponse = await runCitationCheckLoop(
+//     workerPage,
+//     reviewerPage,
+//     buildFirstPrompt(),
+//     "INITIAL WRITE"
+//   );
+
+//   for (let i = 0; i < FOLLOWUP_PROMPTS.length; i++) {
+//     const label = `FOLLOW-UP ${i + 1} of ${FOLLOWUP_PROMPTS.length}`;
+//     console.log("\n" + "=".repeat(60));
+//     console.log(`  STAGE 1 — ${label}`);
+//     console.log("=".repeat(60));
+//     lastResponse = await runCitationCheckLoop(
+//       workerPage,
+//       reviewerPage,
+//       FOLLOWUP_PROMPTS[i],
+//       label
+//     );
+//     await sleep(3000);
+//   }
+
+//   // ── Stage 2: Directions Checker loop ──────────────────────────────────────
+//   console.log("\n" + "=".repeat(60));
+//   console.log("  STAGE 2 — Directions Check");
+//   console.log("=".repeat(60) + "\n");
+
+//   let directionsApproved = false;
+//   let directionsAttempt  = 0;
+//   const MAX_DIR_ATTEMPTS = 5;
+
+//   while (!directionsApproved && directionsAttempt < MAX_DIR_ATTEMPTS) {
+//     directionsAttempt++;
+//     console.log(
+//       `\n  [DIRECTIONS CHECKER] Attempt ${directionsAttempt}/${MAX_DIR_ATTEMPTS}...`
+//     );
+
+//     // Send current assignment to the Directions Checker (Window 3)
+//     await sendMessage(
+//       checkerPage,
+//       buildDirectionsCheckerPrompt(lastResponse),
+//       "DIRECTIONS CHECKER"
+//     );
+//     const checkerFeedback = await waitForResponse(
+//       checkerPage,
+//       "DIRECTIONS CHECKER"
+//     );
+
+//     console.log(`\n  DIRECTIONS CHECKER FEEDBACK:\n`);
+//     console.log("  " + checkerFeedback.split("\n").join("\n  "));
+//     console.log("\n  " + "─".repeat(58));
+
+//     const dirPass = checkerFeedback.includes("DIRECTIONS RESULT: PASS");
+//     const dirFail = checkerFeedback.includes("DIRECTIONS RESULT: FAIL");
+
+//     if (dirPass && !dirFail) {
+//       console.log(`\n  DIRECTIONS CHECK PASSED — all content requirements met.\n`);
+//       directionsApproved = true;
+//     } else {
+//       console.log(
+//         `\n  DIRECTIONS CHECK FAILED — sending gaps to Worker to fill...\n`
+//       );
+
+//       // Worker adds the missing content
+//       await sendMessage(
+//         workerPage,
+//         buildDirectionsRewritePrompt(checkerFeedback),
+//         "WORKER"
+//       );
+//       lastResponse = await waitForResponse(workerPage, "WORKER");
+//       console.log(
+//         `  [WORKER] Rewrite received — ${lastResponse.length} chars`
+//       );
+
+//       // Re-check citations on the rewritten version
+//       console.log(`\n  Re-checking citations after directions rewrite...`);
+//       const noCitations = !hasSufficientCitations(lastResponse);
+//       const rewriteViolations = scanCitations(lastResponse);
+
+//       if (!rewriteViolations.length && !noCitations) {
+//         console.log(`  [SCANNER] No citation violations in rewrite.`);
+//       } else {
+//         console.log(
+//           `  [SCANNER] ${rewriteViolations.length} violation(s) found — fixing...`
+//         );
+//         await sendMessage(
+//           reviewerPage,
+//           buildReviewerPrompt(
+//             lastResponse,
+//             buildEvidenceReport(rewriteViolations)
+//           ),
+//           "CITATION REVIEWER"
+//         );
+//         const rewriteFeedback = await waitForResponse(
+//           reviewerPage,
+//           "CITATION REVIEWER"
+//         );
+//         const rewritePassed =
+//           rewriteFeedback.includes("OVERALL RESULT: PASS") &&
+//           !rewriteFeedback.includes("OVERALL RESULT: FAIL") &&
+//           !noCitations;
+
+//         if (!rewritePassed) {
+//           await sendMessage(
+//             workerPage,
+//             buildCorrectionPrompt(
+//               rewriteFeedback,
+//               rewriteViolations,
+//               noCitations
+//             ),
+//             "WORKER"
+//           );
+//           lastResponse = await waitForResponse(workerPage, "WORKER");
+//         }
+//       }
+
+//       await sleep(2000);
+//     }
+//   }
+
+//   if (!directionsApproved) {
+//     console.warn(
+//       `  ⚠️  Directions max attempts reached — proceeding with best version.`
+//     );
+//   }
+
+//   // ── Final summary ─────────────────────────────────────────────────────────
+//   console.log("\n" + "=".repeat(60));
+//   console.log("  ALL CHECKS COMPLETE");
+//   console.log("  Citations:  PASS");
+//   console.log(
+//     "  Directions: " +
+//       (directionsApproved ? "PASS" : "MAX ATTEMPTS REACHED — review manually")
+//   );
+//   console.log("  Copy final assignment from the left window (Worker).");
+//   console.log("=".repeat(60) + "\n");
+
+//   // Uncomment to auto-close all three browsers when done:
+//   // await workerBrowser.close();
+//   // await reviewerBrowser.close();
+//   // await checkerBrowser.close();
+// })();
+
+
+
+
+
+
+
+
+
+
+
+
+
 import puppeteer from "puppeteer";
+import fs from "fs";
+import path from "path";
 
 // ╔════════════════════════════════════════════════════════════╗
-// ║   STEP 1 — PASTE YOUR ASSIGNMENT DIRECTIONS HERE          ║
+// ║   CONFIG — edit these                                     ║
 // ╚════════════════════════════════════════════════════════════╝
+
+// Name of the output file — the assignment answers go here
+const OUTPUT_FILENAME = "science_video_analysis.txt";
 
 const ASSIGNMENT_DIRECTIONS = `
- create the assigment given the SOURCE_PAGES and text make parthentical source (date) words "word for word text" (). and narrative apa 7th eddition citations source (data) metion cahpter and section or page num
-Directions: Based on your assigned readings and in-class activities, you will analyze a video to identify teaching strategies that promote oral language, comprehension, vocabulary development and home-school connections within a classroom setting.
+Directions: Based on your assigned readings and in-class activities, you will analyze a video
+to identify teaching strategies that promote oral language, comprehension, vocabulary development
+and home-school connections within a classroom setting.
 
-Click on the following link to watch the video: Case Studies in Science EducationLinks to an external site..
+The analysis table must:
+1. Examine how the teacher supported students in using science talk
+2. Determine strategies used to introduce and reinforce science vocabulary
+3. Examine how visual tools or hands-on activities contribute to student talk and understanding
+4. Determine if students were encouraged to use key terms in discussion or writing
+5. Explore how the teacher promoted speaking and listening skills
+6. Explore one way this science lesson could be extended at home
+7. Investigate how you could modify a strategy for diverse learners
 
-You will view the full video lesson, taking notes, observing instructional practices connected to course concepts for your analysis. The analysis table must:
-
-Examine how the teacher supported students in using science talk (e.g., asking questions, explaining ideas, or collaborating with peers).
-Determine the strategies the teacher used to introduce and reinforce science vocabulary.
-Examine how the use of visual tools (e.g., diagrams, anchor charts) or hands-on activities (e.g., experiments, group investigations) contribute to student talk, vocabulary use, and concept understanding.
-Determine if students were encouraged to use key terms in discussion or writing.
-Explore the ways the teacher promoted speaking and listening skills through group discussion, partner talk, or presentations during the lesson.
-Explore one way this science lesson could be extended at home, including activities involving families in supporting vocabulary or inquiry learning.
-Investigate how you could modify or extend one of these strategies to better meet the needs of  learners (e.g., Dyslexic, ELs, students with IEPs, ADHD, ASD or Gifted) for literacy instruction.
-Submission Instructions:
-
-Save your table analysis as a PDF file.
-Clearly post your analysis table with a brief summary. Your analysis table should be clear, organized, and easy to read (include 200-300 word summary).
+Include a 200-300 word summary with APA 7th Edition citations.
 `;
-
-// ╔════════════════════════════════════════════════════════════╗
-// ║   STEP 2 — PASTE YOUR SOURCE TEXT / PAGES HERE           ║
-// ╚════════════════════════════════════════════════════════════╝
 
 const SOURCE_PAGES = `
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 24
-CHAPTER: dose not have one
-SECTION: dose not have one
+CHAPTER: does not have one
+SECTION: does not have one
 
 EXACT TEXT:
-
 Case Studies in Science Education
 
 Elsa — K
 
 Teacher Profile
-
 Name | Elsa
 Experience | 15 years
 Grade & Subject(s) | Two half-day kindergarten classes; all subjects
@@ -5419,760 +6613,218 @@ School | Elementary school in an urban district
 Science Teaching | 2 days/week for 30 minutes
 Curriculum | Specified by district
 
-Contents
-
-Module 1 Introducing the Case
-
-Module 2 Trying New Ideas
-
-Module 3 Reflecting and Building on Change
-
 Module 1 - Introducing the Case
-
 Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
 ---
-
 
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 25
-CHAPTER: dose not have one
-SECTION: dose not have one
+CHAPTER: does not have one
+SECTION: does not have one
 
 EXACT TEXT:
 Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings.
 
-Seasons Study
-To initiate discussion of seasonal characteristics, Elsa reads aloud a picture book. Students are then asked to verbalize what they know about seasons. Finally, students are given paper divided into four sections and asked to draw a picture that represents each season.
-
-Discussion Questions
-Given Elsa's interest in having students "participate more" during science activities, what would you describe as the strengths and weaknesses of the seasons study?
-
-What role do you think "free exploration" of objects and phenomena should play in helping students develop basic scientific understandings?
-
-How would you design activities so that students are likely to make scientifically accurate "discoveries?"
-
 Module 2 - Trying New Ideas
-Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa
-
+Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa takes a guided discovery approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
 ---
 
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 26
-CHAPTER: dose not have one
-SECTION: dose not have one
+CHAPTER: does not have one
+SECTION: does not have one
 
 EXACT TEXT:
-
-takes a "guided discovery" approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
-
 After working in pairs, where materials are shared, each student completes a worksheet that reflects his or her findings about materials through which a magnetic force can travel. Later, the class reviews the worksheets together. Elsa believes that when students take their worksheets home, students' understandings are again reinforced when shared with family members.
-
-Magnet Study
-After a period where students find out what magnets will and will not pick up, student pairs work together in a guided discovery activity to determine whether magnetic force can travel through various substances such as water, paper, wood, and cloth. Students record their discoveries on worksheets and discuss their findings with the entire class.
-
-Discussion Questions
-In comparing the magnet study to the seasons study, what do you consider to be the most important changes with regard to getting students to be more actively engaged?
-
-What meaning does the "discovery method" have for you? How would you contrast "free exploration" with "guided discovery?"
-
-What would you do to help students reach scientific conclusions and represent their learning after a "discovery" activity?
 ---
-
-
 
 ---
 AUTHOR: Annenberg Learner
 DATE: n.d.
 PAGE: 27
-CHAPTER: dose not have one
-SECTION: dose not have one
+CHAPTER: does not have one
+SECTION: does not have one
 
 EXACT TEXT:
-
 Module 3 - Reflecting and Building on Change
-As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. This time, pairs of students each have their own materials but are encouraged to share their results.
-
-One of Elsa's goals is that students notice consistent results from mixing certain colors. Another goal is that students develop ways of expressing their findings. Overall, however, Elsa recognizes that this activity allows many different outcomes as students pose their own questions and find their own answers by mixing colors.
-
-Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge. Having never seen this before, Elsa is elated.
-
-Mixing Colors Activities
-Students mix food coloring in water to discover what happens when different colors are combined. Discoveries are shared between partners and with Elsa. Later, students use colored cellophane as overlays to see what other changes in color can result. Both activities are designed to reflect a more "open discovery" approach.
-
-Discussion Questions
-How would you compare the purposes and the outcomes of the mixing colors activity with the magnet study?
-
-In your opinion, what is the appropriate balance between free exploration, guided discovery, and open discovery in elementary science? In later grades?
+As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge.
 ---
-
-
----
-AUTHOR: Ramlal
-DATE: 2023
-PAGE: 20
-CHAPTER: Chapter 3
-SECTION: dose not have one
-
-EXACT TEXT:
-
-NOTES FROM THE FIELD ...
-I read to my students every day. I always wanted to use my read-aloud time to capture their interests and make reading fun. So, I thought it would be a good idea to allow the students to select the books we'd read. It seemed to be working just fine. Then, I had students take a practice state test. In this practice test, they scored very well when reading and writing about fictional passages. However, they struggled quite a bit with informational passages. During the first few months prior to the practice test, nearly all of the read-aloud books were fictional. This helped me see the importance of varying the genres I used in my read-alouds. It also confirmed what an important instructional tool a read-aloud can be.
-INTRODUCTION: COMPREHENSION In Chapter 2, we explored the connections accuracy, fluency, and vocabulary may have to a student's comprehension of a text. In this chapter, we will delve more deeply into the aspects we must consider when teaching reading as it relates to comprehension.
-TExT SELECTION Comprehension is how a student understands what was read. When we consider our instructional plans, it is important to think of the types of texts we expect our students to work with. As comprehension is essential for learning in all subject areas, we must ensure that our instructional plans include texts from various genres (e.g., chapter books,
----
-
----
-AUTHOR: Ramlal
-DATE: 2023
-PAGE: 21
-CHAPTER: Chapter 3
-SECTION: dose not have one
-
-EXACT TEXT:
-
-textbooks, graphic novels, poetry), in various formats (e.g., print and digital), and in various mediums (e.g., letters from teachers, newspaper advertisements, email messages, videos and images, presidential speeches). It is natural for students (and even the classroom teacher) to demonstrate a preference
-for a particular genre. However, our goal is to expose students in the upper-elementary grades to varied genres to offer an assortment of experiences to develop comprehension abilities. Table 3.1 shows an example of a checklist to keep track of the types of genres that you should incorporate into your instruction.
-Table 3.1 Read-Aloud Genre Checklist GENRE
-Drama Fairy Tale Historical Fiction Poetry Biography Narrative Nonfiction Textbook
-This checklist will allow you to determine which genres have been used and
-which genres you still need to incorporate into your classroom. This can be a valuable instructional tool to ensure that you are balancing the genres in your classroom. Table 3.2 offers a brief list of some genres typically used in an upper-elementary school classroom. When considering the genres to use in your classroom, review the standards for
-the grade to ensure you are meeting grade-level expectations. Also, be sure to vary the format of the genres used by including a mixture of print-based and digital texts. Creating such varied exposure to reading materials can have a positive impact on how students' comprehension develops. It can also promote engagement and an overall love of reading.
-
----
-
 
 ---
 AUTHOR: Ramlal
 DATE: 2023
 PAGE: 23
 CHAPTER: Chapter 3
-SECTION: dose not have one
+SECTION: does not have one
 
 EXACT TEXT:
-
-component of reading that is done automatically and is typically limited to accuracy, fluency, and vocabulary. Here are some examples of reading skills:
-• decoding words (accuracy) • reading with expression (fluency) • using affixes to determine word meaning (vocabulary)
-Thus, skills typically include the components of reading outside of comprehension. A
-strategy is a component of reading that requires the reader to have a purposeful, metacognitive plan, or to monitor their own thinking. It often solely connects to comprehension. Here are some examples of reading strategies:
-• making predictions using clues in the text (comprehension) • making an inference about the character's feelings using clues in the text (comprehension)
-Teaching a balance of skills and strategies is important to promote growth in the area
-of reading. Overtime, as students gain experience with using strategies and continue to practice reading skills, the manner in which you plan your instruction should also evolve. Chapter 6 will discuss how to assess students in these areas.
-WHOLE-CLASS METHODS When creating your instructional plans for the entire class, you should focus on the following areas: accuracy, fluency, vocabulary, and comprehension. Chapter 2 discussed activities you can implement to support students with reading skills (accuracy, fluency, and vocabulary). This section will focus on reading strategies for comprehension for the whole class.
-Read-Alouds When planning for whole-class instruction, be sure to include a daily read-aloud. Use the chart in Table 3.1 to keep track of the genres used for read-alouds to promote variety. At times, you want to ensure your read-aloud has a clear instructional purpose. Plan this purpose around the needs of the class. At other times, you want to use the read-aloud to build a love for reading. Table 3.3 lists some general read-aloud tips to consider
+Teaching a balance of skills and strategies is important to promote growth in the area of reading.
+Overtime, as students gain experience with using strategies and continue to practice reading skills,
+the manner in which you plan your instruction should also evolve.
+Read-Alouds When planning for whole-class instruction, be sure to include a daily read-aloud.
+Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension.
+Plan questions and stopping points ahead of time.
 ---
-
-
 
 ---
 AUTHOR: Ramlal
 DATE: 2023
 PAGE: 24
 CHAPTER: Chapter 3
-SECTION: dose not have one
+SECTION: does not have one
 
 EXACT TEXT:
-
-Table 3.3 Tips for Read-Alouds • Avoid using read-alouds as a behavior management tool. Implement other strategies if you need the class to sit quietly.
-• Plan read-alouds for when you have uninterrupted blocks of time. Keep the read-aloud time to 20–30 minutes. Do not attempt to start with 20 minutes on the first day. Begin with a smaller timeframe, then work your way up.
-• When setting an instructional purpose for a read aloud, consider the needs of the whole class as they relate to accuracy, fluency, vocabulary, and/or comprehension. vary the read-aloud to address both skills and strategies. However, at times, you should set no instructional purpose for the read-aloud to promote a "reading for fun" message.
-• Use a checklist or some other means to vary the genres of texts used for a read-aloud (see Table 3.1).
-• Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension. Plan questions and stopping points ahead of time.
-• Use read-alouds to make content-area connections and/or teach purposeful life skills (e.g., dealing with bullying, sharing, friendship).
-• Use read-alouds to make meaningful connections to students' lives and/or expose students to new experiences and ideas that will support their learning in the future.
-• Preview the topics in the read-aloud before reading to the class. There may be concepts or terms that are not appropriate for the grade level or individual students in the class.
-• Select read-aloud topics that consider a broad view of diversity: cultural, linguistic, or geographical, or about students with disabilities, gender stereotypes, family structures, popular culture, and so on.
-When planning for a read-aloud, follow the procedures below:
-• Before Reading: Have a discussion to introduce the book and activate prior knowledge. If you have already read part of the book, have a discussion to introduce the new section or chapter and review what was read previously. Then review key details from the previous day's read-aloud. Try to allow students to do most of the talking.
-• During Reading: Plan out stopping points to discuss the text or to ask and answer questions. Or simply use the stopping points for students to reflect on the read-aloud before continuing
-
+Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension.
+Plan questions and stopping points ahead of time.
+Select read-aloud topics that consider a broad view of diversity: cultural, linguistic, or geographical,
+or about students with disabilities, gender stereotypes, family structures, popular culture, and so on.
+Before Reading: Have a discussion to introduce the book and activate prior knowledge.
+Try to allow students to do most of the talking.
+During Reading: Plan out stopping points to discuss the text or to ask and answer questions.
 ---
 `;
 
 // ════════════════════════════════════════════════════════════
-// Everything below runs automatically — do not edit.
+// Everything below runs automatically.
 // ════════════════════════════════════════════════════════════
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// ─── PROMPT BUILDERS ─────────────────────────────────────────────────────────
+const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
-function buildFirstPrompt() {
-  return `You are completing an assignment. Here are your directions and all source material.
+const launchOptions = {
+  headless: false,
+  executablePath: CHROME_PATH,
+  slowMo: 80,
+  args: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-blink-features=AutomationControlled",
+    "--start-maximized",
+  ],
+  defaultViewport: null,
+  ignoreDefaultArgs: ["--enable-automation"],
+};
 
-${"=".repeat(50)}
-ASSIGNMENT DIRECTIONS:
-${"=".repeat(50)}
-${ASSIGNMENT_DIRECTIONS.trim()}
+// ─── OUTPUT FILE ──────────────────────────────────────────────────────────────
 
-${"=".repeat(50)}
-SOURCE TEXT — USE THIS FOR ALL CITATIONS:
-${"=".repeat(50)}
-${SOURCE_PAGES.trim()}
+const OUTPUT_PATH = path.resolve(OUTPUT_FILENAME);
 
-${"=".repeat(50)}
-CITATION RULES — FOLLOW EVERY ONE EXACTLY:
-${"=".repeat(50)}
-
-IMPORTANT: Citations are REQUIRED throughout this assignment. You must use both
-parenthetical and narrative citations from the sources above. Do NOT write plain
-text only. Every key claim must be backed by a properly formatted citation.
-
-━━ PARENTHETICAL CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Format option A: Author (date) states word "word for word text from source" (p. #).
-Format option B: word "word for word text from source" (Author, date, p. #).
-
-CORRECT EXAMPLES (use these as models):
-  Annenberg Learner (n.d.) notes that Elsa believes that for many "children, what
-  happens in kindergarten affects students' feelings" (p. 24).
-
-  Elsa takes "a guided discovery approach by getting students to work with a
-  partner" (Annenberg Learner, n.d., p. 26).
-
-  students "record their discoveries on worksheets and discuss their findings
-  with the entire class" (Annenberg Learner, n.d., p. 26).
-
-RULES:
-1. Text inside the quotes must be copied EXACTLY word for word from the EXACT TEXT
-   in the source block — nothing changed.
-
-2. The period goes AFTER the closing parenthesis — NEVER inside the quotes.
-   CORRECT: "word for word text" (p. 53).
-   WRONG:   "word for word text." (p. 53).
-   WRONG:   "word for word text."
-
-3. Every quote MUST be immediately followed by a citation.
-   WRONG: "is her literal comprehension, which scored at 82%."
-   RIGHT:  "is her literal comprehension, which scored at 82%" (p. 53).
-
-4. Do NOT use filler connector words immediately before the opening quote.
-   WRONG: such as "word for word text" (p. 53).
-   A word pulled OUT of the source text is CORRECT and encouraged:
-   CORRECT: Elsa takes "a guided discovery approach by getting students to work
-             with a partner" (Annenberg Learner, n.d., p. 26).
-
-5. No empty quotes ever.
-
-6. If the source text starts with a capital letter, pull that first word OUT of the
-   quotes, lowercase it, and blend it into your sentence.
-   SOURCE: Discoveries are shared between partners and with Elsa.
-   CORRECT: discoveries "are shared between partners and with Elsa" (Annenberg Learner, n.d., p. 27).
-   WRONG:   "Discoveries are shared between partners and with Elsa" (p. 27).
-
-7. NEVER put quotes around a word or phrase unless a citation (p. #) or
-   (Author, date, p. #) immediately follows it.
-   WRONG: educators use "guided discovery" to build skills.
-   RIGHT:  educators use guided discovery to build skills.
-   RIGHT:  Elsa takes "a guided discovery approach" (Annenberg Learner, n.d., p. 26).
-
-━━ NARRATIVE CITATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Format: According to Author (date), from Chapter X on page #, sentence continues...
-
-CORRECT EXAMPLES:
-  According to Ramlal (2023), from Chapter 3 on page 24, teachers should plan
-  questions and stopping points ahead of time to support comprehension.
-
-  According to Annenberg Learner (n.d.), on page 26, Elsa believes that when
-  students take their worksheets home, their understandings are reinforced.
-
-RULES:
-8. Author name in the sentence, date in parentheses only: Author (date).
-
-9. Chapter/section/page go NATURALLY in the sentence AFTER (date) — NEVER inside
-   the parentheses.
-   CORRECT: According to Ramlal (2023), from Chapter 3 on page 24, ...
-   WRONG:   According to Ramlal (2023, Chapter 3, p. 24), ...
-   WRONG:   sentence (Ramlal, 2023, Chapter 3).
-   WRONG:   sentence (anything except just the year or n.d.).
-
-10. Every narrative citation must mention chapter and/or page in the sentence.
-
-━━ IF IN DOUBT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-If you are unsure about a citation format, write a plain sentence instead of that
-one citation. But you MUST have citations throughout — do not write the entire
-assignment as plain prose.
-
-Now complete the full assignment. Every paragraph of the summary and every row
-of the analysis table must contain at least one properly formatted citation.`;
+function initOutputFile() {
+  const header = [
+    "=".repeat(70),
+    `  ASSIGNMENT: ${OUTPUT_FILENAME.replace(".txt", "").replace(/_/g, " ").toUpperCase()}`,
+    `  Generated: ${new Date().toLocaleString()}`,
+    "=".repeat(70),
+    "",
+  ].join("\n");
+  fs.writeFileSync(OUTPUT_PATH, header, "utf8");
+  console.log(`\n  ✓ Output file created: ${OUTPUT_PATH}\n`);
 }
 
-// ─── CITATION SCANNER ────────────────────────────────────────────────────────
-
-function scanCitations(text) {
-  const violations = [];
-  let m;
-
-  // VIOLATION 1a — period INSIDE the closing quote when citation follows
-  const r1a =
-    /"([^"]+?)\."\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\)/g;
-  while ((m = r1a.exec(text)) !== null) {
-    violations.push({
-      rule: 1,
-      bad: m[0],
-      detail: `Period is inside the closing quote — must go AFTER the closing parenthesis. CORRECT: "word for word text" (p. #).`,
-    });
-  }
-
-  // VIOLATION 1b — period INSIDE the closing quote with NO citation following
-  const r1b =
-    /"([^"]{5,}?)\."\s*(?!\s*\((?:p\.|Chapter|Section|Annenberg|Ramlal))/g;
-  while ((m = r1b.exec(text)) !== null) {
-    violations.push({
-      rule: 1,
-      bad: m[0].trim(),
-      detail: `Two violations: (1) period is inside the closing quote. (2) No citation after this quote. Fix: rewrite as "text" (p. #). or write your own plain sentence instead.`,
-    });
-  }
-
-  // VIOLATION 2 — empty quotes
-  const r2 = /""\s*\((?:p\.\s*\d+|Chapter[^)]*|Section[^)]*)?\)/g;
-  while ((m = r2.exec(text)) !== null) {
-    violations.push({
-      rule: 2,
-      bad: m[0],
-      detail: `Empty quotes — must contain real word-for-word text from the source.`,
-    });
-  }
-
-  // VIOLATION 3 — filler glue words before opening quote tied to a citation
-  const knownGlue = [
-    /\brate of\s+"/g,
-    /\bsuch as\s+"/g,
-    /\bknown as\s+"/g,
-    /\breferred to as\s+"/g,
-    /\btermed\s+"/g,
-    /\bthe concept of\s+"/g,
-  ];
-  for (const pattern of knownGlue) {
-    const glueRe = new RegExp(
-      pattern.source +
-        '([^"]{3,}?)"\\s*\\((?:p\\.\\s*\\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\\)',
-      "g"
-    );
-    while ((m = glueRe.exec(text)) !== null) {
-      violations.push({
-        rule: 3,
-        bad: m[0].trim(),
-        detail: `Filler connector word before the opening quote. Rewrite so the citation starts with a pulled-out source word or the quote begins directly.`,
-      });
-    }
-  }
-
-  // VIOLATION 4 — chapter/section/page crammed INSIDE narrative citation parens
-  const r4 =
-    /([A-Z][a-zA-Z\s]+?)\s*\((\d{4}|n\.d\.)\s*,\s*(?:Chapter|Ch\.?|chapter|Section|Sec\.?|section|p\.)\s*[\d\w]+[^)]*\)/g;
-  while ((m = r4.exec(text)) !== null) {
-    violations.push({
-      rule: 4,
-      bad: m[0],
-      detail: `Chapter/section/page must NOT go inside the parentheses. CORRECT: According to ${m[1].trim()} (${m[2]}), from Chapter X on page #, ...`,
-    });
-  }
-
-  // VIOLATION 5 — narrative citation with no chapter/section/page nearby
-  const r5 =
-    /According to ([A-Z][^(]+?)\s*\((\d{4}|n\.d\.)\)\s*,\s*(?!.*?\b(?:chapter|section|page|p\.)\b)/gi;
-  while ((m = r5.exec(text)) !== null) {
-    const after = text
-      .substring(m.index + m[0].length, m.index + m[0].length + 200)
-      .toLowerCase();
-    if (!after.match(/\b(chapter|section|page|p\.)\b/)) {
-      violations.push({
-        rule: 5,
-        bad: m[0].trim(),
-        detail: `Narrative citation has no chapter/section/page in the sentence. Add naturally: According to ${m[1].trim()} (${m[2]}), from Chapter X on page #, ...`,
-      });
-    }
-  }
-
-  // VIOLATION 6 — opening quote starts on a capitalized word (with citation after)
-  const r6 =
-    /"([A-Z][a-zA-Z']+)\s+([^"]{3,}?)"\s*\((?:p\.\s*\d+|Chapter[^)]+|Section[^)]+|Annenberg[^)]+|Ramlal[^)]+)\)/g;
-  while ((m = r6.exec(text)) !== null) {
-    violations.push({
-      rule: 6,
-      bad: m[0],
-      detail: `Opening quote starts on capital word "${m[1]}" — pull it out and lowercase it: ${m[1].toLowerCase()} "${m[2]}..." (p. #).`,
-    });
-  }
-
-  // VIOLATION 7 — quotes around a word/phrase with NO citation immediately after
-  const r7 =
-    /"([^"]{2,60})"\s*(?!\s*\((?:p\.|Chapter|Section|Annenberg|Ramlal))/g;
-  while ((m = r7.exec(text)) !== null) {
-    const inner = m[1].toLowerCase();
-    // Skip if it contains a verb (likely a legitimate sentence fragment)
-    const hasVerb =
-      /\b(is|are|was|were|has|have|must|should|will|can|does|do|reads|shows|indicates|believes|takes|invites|notes|records|mix|use|plan|select|avoid|keep|work|share|discuss|develop|encourage)\b/.test(
-        inner
-      );
-    if (!hasVerb && m[1].length < 60) {
-      violations.push({
-        rule: 7,
-        bad: m[0].trim(),
-        detail: `Quotes around "${m[1]}" with no citation after — remove quotes and write plainly, OR add (p. #) or (Author, date, p. #) immediately after the closing quote.`,
-      });
-    }
-  }
-
-  return violations;
+function appendToFile(questionNumber, questionText, answerText) {
+  const block = [
+    "",
+    "─".repeat(70),
+    `  QUESTION ${questionNumber}`,
+    "─".repeat(70),
+    questionText.trim(),
+    "",
+    "─".repeat(70),
+    `  ANSWER ${questionNumber}`,
+    "─".repeat(70),
+    answerText.trim(),
+    "",
+  ].join("\n");
+  fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+  console.log(`\n  ✓ Question ${questionNumber} appended to ${OUTPUT_PATH}`);
 }
 
-// ─── CITATION PRESENCE CHECK ─────────────────────────────────────────────────
-// Detects when the Worker has removed ALL citations to escape the loop.
-
-function hasSufficientCitations(text) {
-  const parentheticalPattern =
-    /\((?:p\.\s*\d+|Annenberg[^)]{1,60}|Ramlal[^)]{1,60})\)/g;
-  const narrativePattern =
-    /According to [A-Z][^(]+\((?:\d{4}|n\.d\.)\)/gi;
-
-  const pCount = (text.match(parentheticalPattern) || []).length;
-  const nCount = (text.match(narrativePattern) || []).length;
-
-  return pCount + nCount >= 3;
+function appendSummaryToFile(summaryText) {
+  const block = [
+    "",
+    "=".repeat(70),
+    "  SUMMARY (200-300 words)",
+    "=".repeat(70),
+    summaryText.trim(),
+    "",
+  ].join("\n");
+  fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+  console.log(`\n  ✓ Summary appended to ${OUTPUT_PATH}`);
 }
 
-function buildEvidenceReport(violations) {
-  if (!violations.length) return null;
-  let r = `Citation scanner found ${violations.length} violation(s):\n\n`;
-  violations.forEach((v, i) => {
-    r += `VIOLATION ${i + 1} — Rule ${v.rule}\n`;
-    r += `Wrong text:  ${v.bad}\n`;
-    r += `Why wrong:   ${v.detail}\n\n`;
+// ─── GEMINI WINDOW UTILITIES ──────────────────────────────────────────────────
+
+async function openGeminiBrowser(profileName, label) {
+  const browser = await puppeteer.launch({
+    ...launchOptions,
+    args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`],
   });
-  return r;
+  const page = await browser.newPage();
+  await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => false });
+    window.chrome = { runtime: {} };
+  });
+  await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
+  console.log(`  [${label}] window open.`);
+  return { browser, page };
 }
-
-// ─── REVIEWER PROMPT ─────────────────────────────────────────────────────────
-
-const buildReviewerPrompt = (assignment, evidence) =>
-  `You are a strict APA 7th Edition citation reviewer.
-
-${
-  evidence
-    ? `A scanner already found these violations. Confirm each one, explain why it is wrong, and check for anything else missed.\n\nSCANNER FINDINGS:\n${evidence}`
-    : `The scanner found no formatting violations. Do a thorough manual check yourself.`
-}
-
-━━ CRITICAL CHECK FIRST ━━
-Before checking formatting, check: does this assignment contain AT LEAST 3 citations?
-Count all parenthetical citations like (p. 24) or (Annenberg Learner, n.d., p. 26)
-AND narrative citations like "According to Ramlal (2023), from Chapter 3 on page 24..."
-If fewer than 3 citations total exist, report:
-VIOLATION: MISSING CITATIONS — assignment must have properly formatted citations throughout.
-Writing plain prose with NO citations is NOT a valid fix. The assignment requires citations.
-
-━━ PARENTHETICAL FORMAT ━━
-Correct: "word for word text" (p. #).
-Correct: "word for word text" (Author, date, p. #).
-
-  VIOLATION — period inside the closing quote:
-    WRONG: "text." (p. 53).  |  WRONG: "text."
-    RIGHT: "text" (p. 53).
-
-  VIOLATION — quote with no citation after it:
-    WRONG: Elsa "is building new knowledge."
-    RIGHT: Elsa "is building new knowledge" (Annenberg Learner, n.d., p. 27).
-
-  VIOLATION — empty quotes.
-
-  VIOLATION — filler connector words before quote (such as, a, called, of):
-    WRONG: such as "word for word text" (p. 53).
-    NOT a violation — pulled-out source word or verb before quote:
-      Elsa takes "a guided discovery approach" (Annenberg Learner, n.d., p. 26). ← CORRECT
-      students "record their discoveries on worksheets" (Annenberg Learner, n.d., p. 26). ← CORRECT
-
-  VIOLATION — opening quote starts on a capital word:
-    WRONG: "Discoveries are shared between partners" (p. 27).
-    RIGHT: discoveries "are shared between partners" (p. 27).
-
-  VIOLATION — quotes around a word/phrase with no citation:
-    WRONG: educators use "guided discovery" in class.
-    RIGHT: educators use guided discovery in class.
-    NOT a violation if a citation follows: Elsa takes "a guided approach" (p. 26). ← CORRECT
-
-━━ NARRATIVE FORMAT ━━
-Correct: According to Author (date), from Chapter X on page #, sentence...
-
-  VIOLATION — location inside the parentheses:
-    WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...
-    RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...
-
-  VIOLATION — narrative citation with no chapter/section/page in the sentence:
-    WRONG: According to Ramlal (2023), the data shows...
-    RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, the data shows...
-
-━━ IMPORTANT ━━
-The fix for a citation FORMATTING problem is to correct the format — NOT to remove the citation.
-Only tell the Worker to remove a citation if it absolutely cannot be fixed.
-Citations are REQUIRED throughout the assignment.
-
-Quote every wrong piece of text exactly. State the fix.
-
-End with exactly one of:
-OVERALL RESULT: PASS
-OVERALL RESULT: FAIL
-
-Assignment to review:
----
-${assignment}
----`;
-
-// ─── CORRECTION PROMPT ───────────────────────────────────────────────────────
-
-function buildCorrectionPrompt(feedback, violations, noCitations) {
-  let p = ``;
-
-  if (noCitations) {
-    p += `⚠️ CRITICAL: Your assignment has NO citations or almost none.
-Citations are REQUIRED — you cannot submit plain prose with no citations.
-Go back to the source text and add properly formatted citations to every
-section of the table and every paragraph of the summary.
-
-`;
-  }
-
-  p += `Your assignment has citation violations. FIX the format — do NOT simply remove citations.
-Citations from the source text are required throughout.\n\n`;
-
-  if (violations.length) {
-    p += `These exact wrong texts were found — fix each one:\n\n`;
-    violations.forEach((v, i) => {
-      p += `${i + 1}. WRONG TEXT: ${v.bad}\n`;
-      p += `   WHY WRONG:  ${v.detail}\n`;
-      p += `   FIX:        Correct the format. Only remove entirely if truly unfixable.\n\n`;
-    });
-  }
-
-  p += `Reviewer feedback:\n${feedback}\n\n`;
-  p += `${"━".repeat(50)}\n`;
-  p += `REWRITING RULES — CITATIONS ARE MANDATORY\n`;
-  p += `${"━".repeat(50)}\n\n`;
-  p += `The assignment MUST contain at least 4-6 properly formatted citations total.\n`;
-  p += `Do NOT write the assignment as plain prose with no citations.\n\n`;
-  p += `PARENTHETICAL FORMAT:\n`;
-  p += `  "word for word text" (p. #).                      ← correct\n`;
-  p += `  "word for word text" (Author, date, p. #).        ← also correct\n`;
-  p += `  Author (date) states word "word for word text" (p. #).  ← also correct\n\n`;
-  p += `- Period AFTER the closing parenthesis — NEVER inside the quotes\n`;
-  p += `- Every quote must be followed IMMEDIATELY by its citation\n`;
-  p += `- Pulled-out source word before the quote IS correct:\n`;
-  p += `  Elsa takes "a guided discovery approach by getting students to work with a partner"\n`;
-  p += `  (Annenberg Learner, n.d., p. 26).  ← CORRECT\n`;
-  p += `- If quote opens on a capital word — pull it out and lowercase it:\n`;
-  p += `  WRONG: "Discoveries are shared between partners" (p. 27).\n`;
-  p += `  RIGHT: discoveries "are shared between partners" (p. 27).\n`;
-  p += `- No quotes around a term unless a citation immediately follows.\n\n`;
-  p += `NARRATIVE FORMAT:\n`;
-  p += `  According to Author (date), from Chapter X on page #, sentence...\n`;
-  p += `- Chapter/page go in the SENTENCE — NEVER inside the parentheses:\n`;
-  p += `  WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...\n`;
-  p += `  RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...\n\n`;
-  p += `Rewrite the full assignment now. Keep all correctly formatted citations.\n`;
-  p += `Fix all violations. ADD citations where they are missing.`;
-  return p;
-}
-
-// ─── FOLLOW-UP PROMPTS ───────────────────────────────────────────────────────
-
-const FOLLOWUP_PROMPTS = [
-  `Review every citation in your assignment against the source text.
-IMPORTANT: Do NOT remove citations — fix their format.
-
-Check each one against these rules:
-1. Is the quoted text copied exactly word-for-word from the source (nothing changed)?
-2. Does the period go AFTER the closing parenthesis — never inside the quotes?
-3. If the quote opens on a capitalized word — pull that word OUT of the quotes,
-   lowercase it, and blend it into your sentence.
-   WRONG: "Discoveries are shared between partners and with Elsa" (p. 27).
-   RIGHT: discoveries "are shared between partners and with Elsa" (Annenberg Learner, n.d., p. 27).
-4. Does every narrative citation say the chapter and/or page in the sentence —
-   not inside the parentheses?
-   WRONG: According to Ramlal (2023, Chapter 3, p. 24), ...
-   RIGHT: According to Ramlal (2023), from Chapter 3 on page 24, ...
-5. Are there at least 4-6 citations total? If not, add more from the source text.
-
-Fix all violations. Keep all correctly formatted citations as-is.`,
-
-  `Final citation check — verify every quote and citation in the assignment:
-1. Every word-for-word quote must be followed IMMEDIATELY by (p. #) or (Author, date, p. #).
-2. If a quote opens on a capital word — pull it out, lowercase it, blend into sentence.
-   WRONG: "Elsa believes that for many children" (p. 24).
-   RIGHT: Elsa believes that for many "children, what happens in kindergarten" (p. 24).
-3. Period at the end of every parenthetical citation AFTER the closing parenthesis.
-4. Never put quotes around a word or phrase unless a citation immediately follows.
-   WRONG: Elsa used "guided discovery" as a strategy.
-   RIGHT: Elsa used guided discovery as a strategy.
-   OR RIGHT: Elsa took "a guided discovery approach" (Annenberg Learner, n.d., p. 26).
-5. Narrative citations: chapter/page in the sentence, never inside (parentheses).
-6. The assignment must have at least 4-6 citations. If citations are missing, add them.
-
-Fix all violations. Do NOT remove citations — correct their format.`,
-];
-
-// ─── DIRECTIONS CHECKER PROMPTS ──────────────────────────────────────────────
-
-function buildDirectionsCheckerPrompt(assignment) {
-  return `You are checking whether a completed assignment fully covers all points
-listed in the assignment directions. You are NOT checking citations or formatting —
-that has already been done. You are ONLY checking content coverage.
-
-${"=".repeat(50)}
-ASSIGNMENT DIRECTIONS:
-${"=".repeat(50)}
-${ASSIGNMENT_DIRECTIONS.trim()}
-
-${"=".repeat(50)}
-COMPLETED ASSIGNMENT TO CHECK:
-${"=".repeat(50)}
-${assignment}
-
-${"=".repeat(50)}
-YOUR JOB:
-${"=".repeat(50)}
-Go through every requirement in the assignment directions above.
-For each requirement, check whether the completed assignment addresses it.
-
-Report like this for each point:
-  POINT: [state the requirement from the directions]
-  STATUS: COVERED or MISSING
-  REASON: [one sentence explaining why]
-
-At the end give an overall verdict:
-  DIRECTIONS RESULT: PASS   — if every point is covered
-  DIRECTIONS RESULT: FAIL   — if any point is missing
-
-If FAIL, list a short summary of exactly what is missing so the Worker AI
-knows what to add.`;
-}
-
-function buildDirectionsRewritePrompt(checkerFeedback) {
-  return `Your assignment is missing required content. The directions checker found gaps.
-
-Checker feedback:
-${checkerFeedback}
-
-Add the missing content now. Keep all existing citations exactly as they are —
-do not change any citation formatting. Only add the content that is missing.
-Rewrite the full assignment with the missing points added.`;
-}
-
-// ─── FIND INPUT BOX ───────────────────────────────────────────────────────────
 
 async function findInput(page, label) {
-  const selectors = [
+  for (const sel of [
     'rich-textarea div[contenteditable="true"]',
     'div[contenteditable="true"]',
     'div[role="textbox"]',
     "textarea",
     ".ql-editor",
-  ];
-  for (const sel of selectors) {
+  ]) {
     try {
       const el = await page.$(sel);
-      if (el) {
-        const box = await el.boundingBox();
-        if (box && box.width > 0) {
-          console.log(`  [${label}] Input found: ${sel}`);
-          return { el, sel };
-        }
-      }
+      if (el && (await el.boundingBox())?.width > 0) return { el, sel };
     } catch (_) {}
   }
-  const html = await page.evaluate(
-    () => document.body.innerHTML.substring(0, 3000)
-  );
-  console.error(`  [${label}] ERROR: No input found. Page HTML:\n`, html);
-  throw new Error(`[${label}] Input box not found.`);
+  throw new Error(`[${label}] Input box not found`);
 }
-
-// ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
 
 async function sendMessage(page, text, label) {
   const { el, sel } = await findInput(page, label);
-  await el.click();
-  await sleep(400);
-  await page.keyboard.down("Control");
-  await page.keyboard.press("a");
-  await page.keyboard.up("Control");
-  await page.keyboard.press("Backspace");
-  await sleep(200);
-
-  const ok = await page.evaluate(
-    (t, s) => {
-      const el = document.querySelector(s);
-      if (!el) return false;
-      el.focus();
-      return document.execCommand("insertText", false, t);
-    },
-    text,
-    sel
-  );
-
-  if (!ok) {
-    await page.evaluate(
-      (t, s) => {
-        const el = document.querySelector(s);
-        if (!el) return;
-        el.focus();
-        if (el.contentEditable === "true") {
-          el.innerText = t;
-        } else {
-          Object.getOwnPropertyDescriptor(
-            window.HTMLTextAreaElement.prototype,
-            "value"
-          ).set.call(el, t);
-        }
-        el.dispatchEvent(new Event("input", { bubbles: true }));
-        el.dispatchEvent(new Event("change", { bubbles: true }));
-      },
-      text,
-      sel
-    );
-  }
-
+  await el.click(); await sleep(400);
+  await page.keyboard.down("Control"); await page.keyboard.press("a"); await page.keyboard.up("Control");
+  await page.keyboard.press("Backspace"); await sleep(200);
+  const ok = await page.evaluate((t, s) => {
+    const el = document.querySelector(s); if (!el) return false;
+    el.focus(); return document.execCommand("insertText", false, t);
+  }, text, sel);
+  if (!ok) await page.evaluate((t, s) => {
+    const el = document.querySelector(s); if (!el) return; el.focus();
+    if (el.contentEditable === "true") el.innerText = t;
+    else Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(el, t);
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+  }, text, sel);
   await sleep(500);
-  const sendBtn = await page.$(
-    'button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]'
-  );
-  if (sendBtn) {
-    await sendBtn.click();
-  } else {
-    await page.keyboard.press("Enter");
-  }
+  const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
+  if (btn) await btn.click(); else await page.keyboard.press("Enter");
   await sleep(2000);
 }
 
-// ─── WAIT FOR RESPONSE ────────────────────────────────────────────────────────
-
-async function waitForResponse(page, label, timeoutMs = 180000) {
-  console.log(`  [${label}] Waiting for response...`);
+async function waitForResponse(page, label, timeoutMs = 240000) {
+  console.log(`  [${label}] Waiting...`);
   try {
     await page.waitForFunction(
-      () =>
-        !!document.querySelector(
-          '[aria-label="Stop generating"], [aria-label="Stop response"]'
-        ),
-      { timeout: 15000, polling: 500 }
+      () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+      { timeout: 20000, polling: 500 }
     );
   } catch (_) {}
-
-  await page
-    .waitForFunction(
-      () =>
-        !document.querySelector(
-          '[aria-label="Stop generating"], [aria-label="Stop response"]'
-        ),
-      { timeout: timeoutMs, polling: 1000 }
-    )
-    .catch(() => {});
-
+  await page.waitForFunction(
+    () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+    { timeout: timeoutMs, polling: 1000 }
+  ).catch(() => {});
   await sleep(3000);
-
   const text = await page.evaluate(() => {
     const all = [
       ...document.querySelectorAll("model-response"),
@@ -6182,373 +6834,378 @@ async function waitForResponse(page, label, timeoutMs = 180000) {
     ];
     return all.length ? all[all.length - 1].innerText.trim() : "";
   });
-
-  if (!text) console.warn(`  [${label}] WARNING: empty response`);
-  else console.log(`  [${label}] Response received (${text.length} chars)`);
+  if (!text) console.warn(`  [${label}] Empty response`);
+  else console.log(`  [${label}] ${text.length} chars`);
   return text;
 }
 
-// ─── CITATION CHECK LOOP ─────────────────────────────────────────────────────
-// Shared by both Stage 1 and the re-check inside Stage 2.
-// Sends the given prompt to the Worker, then loops until citations pass
-// or MAX_ATTEMPTS is reached.
+// ─── AI1 PROMPT — parse directions into question array ────────────────────────
 
-async function runCitationCheckLoop(
-  workerPage,
-  reviewerPage,
-  prompt,
-  roundLabel,
-  maxAttempts = 6
-) {
-  // Send the opening prompt to the Worker
-  await sendMessage(workerPage, prompt, "WORKER");
-  let lastResponse = await waitForResponse(workerPage, "WORKER");
+function buildAI1Prompt() {
+  return `You are reading an assignment and breaking it down into individual questions or tasks.
 
-  let approved = false;
-  let attempt  = 0;
+${"=".repeat(55)}
+ASSIGNMENT DIRECTIONS:
+${"=".repeat(55)}
+${ASSIGNMENT_DIRECTIONS.trim()}
 
-  while (!approved && attempt < maxAttempts) {
-    attempt++;
-    console.log(
-      `\n  [${roundLabel}] Citation check attempt ${attempt}/${maxAttempts}`
-    );
+${"=".repeat(55)}
+YOUR JOB:
+${"=".repeat(55)}
+Read the directions carefully. Extract every numbered requirement or task as a
+separate question. Include the summary requirement as the last item.
 
-    // ── Key fix: detect missing citations before running the reviewer ──
-    const noCitations = !hasSufficientCitations(lastResponse);
-    if (noCitations) {
-      console.log(
-        `  [SCANNER] ⚠️  Fewer than 3 citations found — forcing citation rewrite.`
-      );
-    }
+Output ONLY a JSON array of strings. Each string is one question/task exactly
+as it appears in the directions. No extra text, no markdown, no explanation.
+Just the raw JSON array.
 
-    const violations = scanCitations(lastResponse);
-    if (!violations.length && !noCitations) {
-      console.log(`  [SCANNER] No violations found.`);
-    } else if (violations.length) {
-      console.log(`  [SCANNER] ${violations.length} violation(s):`);
-      violations.forEach((v, i) =>
-        console.log(`    ${i + 1}. Rule ${v.rule} — ${v.bad}`)
-      );
-    }
+Example format:
+[
+  "Examine how the teacher supported students in using science talk",
+  "Determine strategies used to introduce and reinforce science vocabulary",
+  "Include a 200-300 word summary with APA 7th Edition citations"
+]
 
-    // Send to Citation Reviewer
-    await sendMessage(
-      reviewerPage,
-      buildReviewerPrompt(lastResponse, buildEvidenceReport(violations)),
-      "REVIEWER"
-    );
-    const feedback = await waitForResponse(reviewerPage, "REVIEWER");
+Output the JSON array now:`;
+}
 
-    console.log(`\n  REVIEWER:\n  ` + feedback.split("\n").join("\n  "));
-    console.log("\n  " + "─".repeat(58));
+// ─── AI1 SELF-CHECK PROMPT ────────────────────────────────────────────────────
 
-    const passed = feedback.includes("OVERALL RESULT: PASS");
-    const failed =
-      feedback.includes("OVERALL RESULT: FAIL") ||
-      feedback.toLowerCase().includes("violation") ||
-      noCitations; // ← treat missing citations as a failure even if reviewer says PASS
+function buildAI1SelfCheckPrompt(generatedQuestions) {
+  return `You previously broke the assignment directions into this list of questions:
 
-    if (passed && !failed) {
-      console.log(
-        `\n  [${roundLabel}] Citations PASSED after ${attempt} attempt(s).\n`
-      );
-      approved = true;
-    } else {
-      console.log(
-        `\n  [${roundLabel}] Citations FAILED — sending corrections to Worker...\n`
-      );
-      await sendMessage(
-        workerPage,
-        buildCorrectionPrompt(feedback, violations, noCitations),
-        "WORKER"
-      );
-      lastResponse = await waitForResponse(workerPage, "WORKER");
-      await sleep(2000);
-    }
+${JSON.stringify(generatedQuestions, null, 2)}
+
+Now compare your list against the original directions:
+
+${"=".repeat(55)}
+ORIGINAL DIRECTIONS:
+${"=".repeat(55)}
+${ASSIGNMENT_DIRECTIONS.trim()}
+
+${"=".repeat(55)}
+YOUR JOB:
+${"=".repeat(55)}
+Check if your list covers EVERY requirement in the directions.
+For each original requirement say:
+  COVERED: [yes/no] — [requirement text]
+
+If anything is missing, output the corrected complete JSON array at the end.
+If everything is covered, output the original array unchanged at the end.
+
+End your response with the final JSON array — nothing after it.`;
+}
+
+// ─── AI2 PROMPT — answer one question ─────────────────────────────────────────
+
+function buildAI2Prompt(questionIndex, questionText, totalQuestions) {
+  return `You are answering question ${questionIndex + 1} of ${totalQuestions} for an assignment.
+Answer ONLY this one question — do not answer other questions.
+
+${"=".repeat(55)}
+QUESTION ${questionIndex + 1}:
+${"=".repeat(55)}
+${questionText}
+
+${"=".repeat(55)}
+SOURCE TEXT — use these for citations:
+${"=".repeat(55)}
+${SOURCE_PAGES.trim()}
+
+${"=".repeat(55)}
+APA 7TH EDITION CITATION RULES:
+${"=".repeat(55)}
+
+You MUST use BOTH parenthetical AND narrative citations in your answer.
+
+PARENTHETICAL FORMAT:
+  Author (date) verb "word for word text" (p. #).
+  CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+  CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+
+  WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
+  WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
+  WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
+  WRONG: such as "text" (p. #).           ← no filler words before opening quote
+
+NARRATIVE FORMAT:
+  According to Author (date), from Chapter X on page #, ...
+  As Author (date) explains on page #, ...
+
+  If the source HAS a chapter: According to Ramlal (2023), from Chapter 3 on page 23, ...
+  If NO chapter (Annenberg Learner): As Annenberg Learner (n.d.) explains on page 25, ...
+
+  WRONG: Ramlal (2023, Chapter 3, p. 23) states...  ← chapter/page inside parens
+  WRONG: According to Ramlal (2023), teaching is important.  ← no page mentioned
+
+CAPITAL FIRST WORD RULE:
+  If source starts with a capital, pull that word OUT of the quotes, lowercase it.
+  SOURCE: Students become engaged whenever they are using their senses
+  RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
+  WRONG:  Annenberg Learner (n.d.) notes "Students become engaged" (p. 24).
+
+PERIOD RULE: Period AFTER (p. #) — NEVER inside the quotes.
+NO MIXED SOURCES: Annenberg Learner text → Annenberg Learner (n.d.). Ramlal text → Ramlal (2023).
+IF IN DOUBT: drop the citation and write a plain sentence.
+
+Write a thorough answer to the question above using at least 2 citations.
+If this is the summary question, write 200-300 words.
+Output ONLY your answer — no preamble, no "here is my answer".`;
+}
+
+// ─── AI3 PROMPT — check citations ─────────────────────────────────────────────
+
+function buildAI3Prompt(questionText, answerText) {
+  return `You are a strict APA 7th Edition citation reviewer.
+
+${"=".repeat(55)}
+QUESTION BEING ANSWERED:
+${"=".repeat(55)}
+${questionText}
+
+${"=".repeat(55)}
+ANSWER TO REVIEW:
+${"=".repeat(55)}
+${answerText}
+
+${"=".repeat(55)}
+WHAT TO CHECK:
+${"=".repeat(55)}
+TWO citation formats are required — check both are present and correct.
+
+PARENTHETICAL — correct format:
+  Author (date) verb "word for word text" (p. #).
+  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+NARRATIVE — correct format:
+  According to Ramlal (2023), from Chapter 3 on page 23, ...
+  As Annenberg Learner (n.d.) explains on page 24, ...
+
+VIOLATIONS TO FLAG:
+1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
+2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
+3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
+4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
+5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
+7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
+8. Only one citation type used — both parenthetical AND narrative required.
+9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
+10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
+    The sentence must END after (p. #).
+
+For each violation: quote the exact wrong text and state the fix.
+
+End with EXACTLY one of these as the very last line:
+CITATION RESULT: PASS
+CITATION RESULT: FAIL`;
+}
+
+// ─── AI2 CORRECTION PROMPT ───────────────────────────────────────────────────
+
+function buildAI2CorrectionPrompt(questionText, currentAnswer, ai3Feedback) {
+  return `Your answer has citation violations. Fix every one now.
+
+${"=".repeat(55)}
+QUESTION:
+${"=".repeat(55)}
+${questionText}
+
+${"=".repeat(55)}
+YOUR CURRENT ANSWER WITH VIOLATIONS:
+${"=".repeat(55)}
+${currentAnswer}
+
+${"=".repeat(55)}
+REVIEWER FEEDBACK:
+${"=".repeat(55)}
+${ai3Feedback}
+
+${"=".repeat(55)}
+FIX USING THESE RULES:
+${"=".repeat(55)}
+PARENTHETICAL: Author (date) verb "word for word text" (p. #).
+  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+NARRATIVE: According to Author (date), from Chapter X on page #, ...
+  As Annenberg Learner (n.d.) explains on page 24, ...
+
+- Period AFTER (p. #) — NEVER inside quotes
+- Capital first word → pull out, lowercase, blend into sentence
+- Quote must END the sentence — never continue after (p. #) with lowercase text
+- Both parenthetical AND narrative required
+- Page always present — either as (p. #) or said naturally in the sentence
+
+Output ONLY the corrected answer — no preamble.`;
+}
+
+// ─── PARSE AI1 JSON RESPONSE ──────────────────────────────────────────────────
+
+function extractQuestionsFromResponse(raw) {
+  // Find the last JSON array in the response
+  const match = raw.match(/\[[\s\S]*\]/g);
+  if (!match) throw new Error("AI1 did not return a JSON array");
+  const lastArray = match[match.length - 1];
+  try {
+    const parsed = JSON.parse(lastArray);
+    if (!Array.isArray(parsed) || parsed.length === 0)
+      throw new Error("Empty or invalid array");
+    return parsed.map(q => String(q).trim()).filter(q => q.length > 5);
+  } catch (e) {
+    throw new Error(`Failed to parse AI1 JSON: ${e.message}\nRaw: ${lastArray.substring(0, 300)}`);
   }
-
-  if (!approved) {
-    console.warn(
-      `  [${roundLabel}] ⚠️  Max attempts reached — proceeding with best version.`
-    );
-  }
-
-  return lastResponse;
 }
 
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 (async () => {
-  console.log("=".repeat(60));
-  console.log("  GEMINI THREE-AI PIPELINE");
-  console.log("=".repeat(60));
-  console.log("  Window 1 — WORKER            writes the assignment");
-  console.log("  Window 2 — CITATION REVIEWER checks citation format");
-  console.log("  Window 3 — DIRECTIONS CHECKER checks all points covered");
-  console.log("");
-  console.log("  FLOW:");
-  console.log("  1.  Worker writes assignment with citations");
-  console.log("  2.  Scanner checks for citation violations + missing citations");
-  console.log("  3.  Citation Reviewer confirms findings");
-  console.log("  4.  If violations OR < 3 citations → Worker fixes → repeat 2-3");
-  console.log("  5.  Once citations PASS → Directions Checker reads it");
-  console.log("  6.  Directions Checker checks every assignment requirement");
-  console.log("  7.  If missing content → Worker adds it → re-check citations → repeat 5-7");
-  console.log("  8.  Both PASS → done");
-  console.log("");
-  console.log("  KEY FIX: Worker cannot escape by removing all citations.");
-  console.log("           hasSufficientCitations() enforces ≥ 3 citations always.");
+  console.log("=".repeat(70));
+  console.log("  QUESTION-BY-QUESTION PIPELINE");
+  console.log("=".repeat(70));
+  console.log("  AI1 — parses directions into question array");
+  console.log("  AI2 — answers each question with APA citations");
+  console.log("  AI3 — checks citations, sends back to AI2 if wrong");
+  console.log(`  Output file: ${OUTPUT_FILENAME}`);
+  console.log("=".repeat(70) + "\n");
 
-  const launchOptions = {
-    headless: false,
-    executablePath:
-      "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    slowMo: 80,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-blink-features=AutomationControlled",
-      "--start-maximized",
-    ],
-    defaultViewport: null,
-    ignoreDefaultArgs: ["--enable-automation"],
-  };
+  // Init output file
+  initOutputFile();
 
-  console.log("\nOpening Worker browser (window 1)...");
-  const workerBrowser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      "--user-data-dir=C:\\Temp\\puppeteer-worker",
-    ],
-  });
+  // Open three Gemini windows
+  console.log("Opening AI windows...\n");
+  const { browser: b1, page: ai1Page } = await openGeminiBrowser("ai1-parser",   "AI1 PARSER");
+  const { browser: b2, page: ai2Page } = await openGeminiBrowser("ai2-writer",   "AI2 WRITER");
+  const { browser: b3, page: ai3Page } = await openGeminiBrowser("ai3-reviewer", "AI3 REVIEWER");
 
-  console.log("Opening Citation Reviewer browser (window 2)...");
-  const reviewerBrowser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      "--user-data-dir=C:\\Temp\\puppeteer-reviewer",
-    ],
-  });
-
-  console.log("Opening Directions Checker browser (window 3)...");
-  const checkerBrowser = await puppeteer.launch({
-    ...launchOptions,
-    args: [
-      ...launchOptions.args,
-      "--user-data-dir=C:\\Temp\\puppeteer-checker",
-    ],
-  });
-
-  const workerPage   = await workerBrowser.newPage();
-  const reviewerPage = await reviewerBrowser.newPage();
-  const checkerPage  = await checkerBrowser.newPage();
-
-  for (const p of [workerPage, reviewerPage, checkerPage]) {
-    await p.evaluateOnNewDocument(() => {
-      Object.defineProperty(navigator, "webdriver", { get: () => false });
-      window.chrome = { runtime: {} };
-    });
+  // Wait for login if needed
+  const allPages = [ai1Page, ai2Page, ai3Page];
+  if (allPages.some(p => p.url().includes("accounts.google.com"))) {
+    console.log("\n  Sign into Google in ALL THREE Gemini windows.");
+    console.log("  Script waits until all three are on Gemini.\n");
+    await Promise.all(allPages.map(p =>
+      p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })
+    ));
   }
 
-  console.log("\nOpening Gemini in all three windows...");
-  await workerPage.goto("https://gemini.google.com/app",   { waitUntil: "domcontentloaded", timeout: 60000 });
-  await reviewerPage.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
-  await checkerPage.goto("https://gemini.google.com/app",  { waitUntil: "domcontentloaded", timeout: 60000 });
-  await sleep(4000);
-
-  const needsLogin = [workerPage, reviewerPage, checkerPage].some((p) =>
-    p.url().includes("accounts.google.com")
-  );
-  if (needsLogin) {
-    console.log("\n" + "!".repeat(60));
-    console.log("  Sign into Google in ALL THREE windows.");
-    console.log("  Script waits until all three are on Gemini.");
-    console.log("!".repeat(60));
-    await Promise.all([
-      workerPage.waitForFunction(
-        () => location.href.includes("gemini.google.com"),
-        { timeout: 120000, polling: 1000 }
-      ),
-      reviewerPage.waitForFunction(
-        () => location.href.includes("gemini.google.com"),
-        { timeout: 120000, polling: 1000 }
-      ),
-      checkerPage.waitForFunction(
-        () => location.href.includes("gemini.google.com"),
-        { timeout: 120000, polling: 1000 }
-      ),
-    ]);
+  for (const [p, lbl] of [[ai1Page, "AI1"], [ai2Page, "AI2"], [ai3Page, "AI3"]]) {
+    await p.waitForFunction(
+      () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
+      { timeout: 30000, polling: 1000 }
+    ).catch(() => console.warn(`  [${lbl}] Input wait timed out`));
   }
-
-  console.log("\nWaiting for input to be ready in all three windows...");
-  for (const [p, label] of [
-    [workerPage,   "WORKER"],
-    [reviewerPage, "CITATION REVIEWER"],
-    [checkerPage,  "DIRECTIONS CHECKER"],
-  ]) {
-    await p
-      .waitForFunction(
-        () =>
-          !!document.querySelector(
-            'rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'
-          ),
-        { timeout: 30000, polling: 1000 }
-      )
-      .catch(() =>
-        console.warn(`  [${label}] Input wait timed out — continuing anyway`)
-      );
-  }
-
   await sleep(2000);
-  console.log("\nAll three windows ready. Starting...\n");
+  console.log("All windows ready.\n");
 
-  // ── Stage 1: Initial write + follow-up citation passes ────────────────────
-  console.log("=".repeat(60));
-  console.log("  STAGE 1 — Write + Citation Review");
-  console.log("=".repeat(60) + "\n");
+  // ── STEP 1: AI1 parses directions into questions ───────────────────────────
+  console.log("=".repeat(70));
+  console.log("  STEP 1 — AI1 parsing directions into questions");
+  console.log("=".repeat(70) + "\n");
 
-  let lastResponse = await runCitationCheckLoop(
-    workerPage,
-    reviewerPage,
-    buildFirstPrompt(),
-    "INITIAL WRITE"
-  );
+  await sendMessage(ai1Page, buildAI1Prompt(), "AI1 PARSER");
+  const ai1Raw = await waitForResponse(ai1Page, "AI1 PARSER");
 
-  for (let i = 0; i < FOLLOWUP_PROMPTS.length; i++) {
-    const label = `FOLLOW-UP ${i + 1} of ${FOLLOWUP_PROMPTS.length}`;
-    console.log("\n" + "=".repeat(60));
-    console.log(`  STAGE 1 — ${label}`);
-    console.log("=".repeat(60));
-    lastResponse = await runCitationCheckLoop(
-      workerPage,
-      reviewerPage,
-      FOLLOWUP_PROMPTS[i],
-      label
-    );
-    await sleep(3000);
+  let questions;
+  try {
+    questions = extractQuestionsFromResponse(ai1Raw);
+  } catch (e) {
+    console.error(`  ✗ AI1 parse failed: ${e.message}`);
+    process.exit(1);
   }
 
-  // ── Stage 2: Directions Checker loop ──────────────────────────────────────
-  console.log("\n" + "=".repeat(60));
-  console.log("  STAGE 2 — Directions Check");
-  console.log("=".repeat(60) + "\n");
+  console.log(`\n  AI1 generated ${questions.length} question(s):`);
+  questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
 
-  let directionsApproved = false;
-  let directionsAttempt  = 0;
-  const MAX_DIR_ATTEMPTS = 5;
+  // ── STEP 2: AI1 self-checks its own question list ──────────────────────────
+  console.log("\n" + "=".repeat(70));
+  console.log("  STEP 2 — AI1 self-checking question coverage");
+  console.log("=".repeat(70) + "\n");
 
-  while (!directionsApproved && directionsAttempt < MAX_DIR_ATTEMPTS) {
-    directionsAttempt++;
-    console.log(
-      `\n  [DIRECTIONS CHECKER] Attempt ${directionsAttempt}/${MAX_DIR_ATTEMPTS}...`
-    );
+  await sendMessage(ai1Page, buildAI1SelfCheckPrompt(questions), "AI1 PARSER");
+  const ai1CheckRaw = await waitForResponse(ai1Page, "AI1 PARSER");
 
-    // Send current assignment to the Directions Checker (Window 3)
-    await sendMessage(
-      checkerPage,
-      buildDirectionsCheckerPrompt(lastResponse),
-      "DIRECTIONS CHECKER"
-    );
-    const checkerFeedback = await waitForResponse(
-      checkerPage,
-      "DIRECTIONS CHECKER"
-    );
-
-    console.log(`\n  DIRECTIONS CHECKER FEEDBACK:\n`);
-    console.log("  " + checkerFeedback.split("\n").join("\n  "));
-    console.log("\n  " + "─".repeat(58));
-
-    const dirPass = checkerFeedback.includes("DIRECTIONS RESULT: PASS");
-    const dirFail = checkerFeedback.includes("DIRECTIONS RESULT: FAIL");
-
-    if (dirPass && !dirFail) {
-      console.log(`\n  DIRECTIONS CHECK PASSED — all content requirements met.\n`);
-      directionsApproved = true;
+  // Try to extract a revised array from the self-check response
+  try {
+    const revised = extractQuestionsFromResponse(ai1CheckRaw);
+    if (revised.length >= questions.length) {
+      questions = revised;
+      console.log(`\n  AI1 self-check complete. Final question count: ${questions.length}`);
     } else {
-      console.log(
-        `\n  DIRECTIONS CHECK FAILED — sending gaps to Worker to fill...\n`
-      );
-
-      // Worker adds the missing content
-      await sendMessage(
-        workerPage,
-        buildDirectionsRewritePrompt(checkerFeedback),
-        "WORKER"
-      );
-      lastResponse = await waitForResponse(workerPage, "WORKER");
-      console.log(
-        `  [WORKER] Rewrite received — ${lastResponse.length} chars`
-      );
-
-      // Re-check citations on the rewritten version
-      console.log(`\n  Re-checking citations after directions rewrite...`);
-      const noCitations = !hasSufficientCitations(lastResponse);
-      const rewriteViolations = scanCitations(lastResponse);
-
-      if (!rewriteViolations.length && !noCitations) {
-        console.log(`  [SCANNER] No citation violations in rewrite.`);
-      } else {
-        console.log(
-          `  [SCANNER] ${rewriteViolations.length} violation(s) found — fixing...`
-        );
-        await sendMessage(
-          reviewerPage,
-          buildReviewerPrompt(
-            lastResponse,
-            buildEvidenceReport(rewriteViolations)
-          ),
-          "CITATION REVIEWER"
-        );
-        const rewriteFeedback = await waitForResponse(
-          reviewerPage,
-          "CITATION REVIEWER"
-        );
-        const rewritePassed =
-          rewriteFeedback.includes("OVERALL RESULT: PASS") &&
-          !rewriteFeedback.includes("OVERALL RESULT: FAIL") &&
-          !noCitations;
-
-        if (!rewritePassed) {
-          await sendMessage(
-            workerPage,
-            buildCorrectionPrompt(
-              rewriteFeedback,
-              rewriteViolations,
-              noCitations
-            ),
-            "WORKER"
-          );
-          lastResponse = await waitForResponse(workerPage, "WORKER");
-        }
-      }
-
-      await sleep(2000);
+      console.log(`\n  AI1 self-check returned fewer questions — keeping original list.`);
     }
+  } catch (_) {
+    console.log(`\n  AI1 self-check did not change the list.`);
   }
 
-  if (!directionsApproved) {
-    console.warn(
-      `  ⚠️  Directions max attempts reached — proceeding with best version.`
-    );
+  console.log(`\n  Final questions to answer (${questions.length} total):`);
+  questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+
+  // ── STEP 3: Loop through each question ────────────────────────────────────
+  console.log("\n" + "=".repeat(70));
+  console.log(`  STEP 3 — AI2 answers each question, AI3 checks citations`);
+  console.log("=".repeat(70));
+
+  for (let idx = 0; idx < questions.length; idx++) {
+    const questionText = questions[idx];
+    const qNum = idx + 1;
+    const isSummary = questionText.toLowerCase().includes("summary");
+
+    console.log(`\n${"─".repeat(70)}`);
+    console.log(`  QUESTION ${qNum} of ${questions.length}`);
+    console.log(`  ${questionText}`);
+    console.log(`${"─".repeat(70)}`);
+
+    // AI2 writes the answer
+    await sendMessage(ai2Page, buildAI2Prompt(idx, questionText, questions.length), "AI2 WRITER");
+    let answer = await waitForResponse(ai2Page, "AI2 WRITER");
+
+    // AI3 checks citations — loop until PASS
+    let citationApproved = false;
+    let citationAttempt  = 0;
+    const MAX_CITATION_ATTEMPTS = 5;
+
+    while (!citationApproved && citationAttempt < MAX_CITATION_ATTEMPTS) {
+      citationAttempt++;
+      console.log(`\n  [CITATION CHECK] Attempt ${citationAttempt}/${MAX_CITATION_ATTEMPTS} for Q${qNum}`);
+
+      await sendMessage(ai3Page, buildAI3Prompt(questionText, answer), "AI3 REVIEWER");
+      const ai3Feedback = await waitForResponse(ai3Page, "AI3 REVIEWER");
+
+      console.log(`\n  [AI3]:\n  ` + ai3Feedback.split("\n").join("\n  "));
+
+      if (ai3Feedback.includes("CITATION RESULT: PASS")) {
+        console.log(`\n  ✓ Citations PASSED for Q${qNum}`);
+        citationApproved = true;
+      } else {
+        console.log(`\n  ✗ Citations FAILED — sending back to AI2 to fix...`);
+        await sendMessage(ai2Page, buildAI2CorrectionPrompt(questionText, answer, ai3Feedback), "AI2 WRITER");
+        answer = await waitForResponse(ai2Page, "AI2 WRITER");
+        await sleep(2000);
+      }
+    }
+
+    if (!citationApproved) {
+      console.warn(`  ⚠ Max citation attempts reached for Q${qNum} — using best version.`);
+    }
+
+    // Append to output file
+    if (isSummary) {
+      appendSummaryToFile(answer);
+    } else {
+      appendToFile(qNum, questionText, answer);
+    }
+
+    console.log(`\n  ✓ Q${qNum} complete and saved.`);
+    await sleep(2000);
   }
 
-  // ── Final summary ─────────────────────────────────────────────────────────
-  console.log("\n" + "=".repeat(60));
-  console.log("  ALL CHECKS COMPLETE");
-  console.log("  Citations:  PASS");
-  console.log(
-    "  Directions: " +
-      (directionsApproved ? "PASS" : "MAX ATTEMPTS REACHED — review manually")
-  );
-  console.log("  Copy final assignment from the left window (Worker).");
-  console.log("=".repeat(60) + "\n");
+  // ── DONE ──────────────────────────────────────────────────────────────────
+  console.log("\n" + "=".repeat(70));
+  console.log("  ALL QUESTIONS COMPLETE");
+  console.log(`  Output saved to: ${OUTPUT_PATH}`);
+  console.log("=".repeat(70) + "\n");
 
-  // Uncomment to auto-close all three browsers when done:
-  // await workerBrowser.close();
-  // await reviewerBrowser.close();
-  // await checkerBrowser.close();
+  // Uncomment to close windows when done:
+  // await b1.close(); await b2.close(); await b3.close();
 })();
 
 
@@ -6562,18 +7219,4 @@ async function runCitationCheckLoop(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////every thing above this is for mod 4 chat
+// ////////every thing above this is for mod 4 chat

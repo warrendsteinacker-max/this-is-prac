@@ -1141,86 +1141,39 @@
 
 
 
-import {useState} from 'react'
+import {useState, useCallback} from 'react'
 
-const ReportBuilder = () => {
+
+
+
+
+const Comp = () => {
+
+
+  const [slope, setS] = useState(2)
+  const [b, setB] = useState(5)
+
+const FUNC = () => {
+    let vv = []
+    for(let i = 0; i < 11; i++){
+      vv[i] = [i*10, slope*i + b]
+    }
+
+    return vv
+    console.log("var cahnged")
+  }
+
   
-  const [lower, setLl] = useState([])
-  const [upper, setUl] = useState([])
-  const [nums, setN] = useState([])
-  let Pchar = [...lower, ...upper, ...nums]
-  // const [lenght, setL] = useState(Number)
-  // const [passS, setPS] = useState([])
-  const [P, setP] = useState([])
+  const v = useCallback(FUNC(), [slope, b])
 
-  function SETN (e){
-
-    if(e.target.checked){
-      setN([1,2,3,4,5,6,7,8,9,0])
-      console.log(nums)
-    }
-    else{
-      setN([])
-    }
-
-  }
-
-  function SETlL (e){
-
-    if(e.target.checked){
-      setLl(["n","m","l","c","g","i","h","g","f","e","d","c","b","a"])
-      console.log(lower)
-    }
-    else{
-      setLl([])
-    }
-
-  }
-
-  function SETUL (e){
-    if(e.target.checked){
-      setUl(["Z","X","C","B","A"])
-      console.log(upper)
-    }
-
-    else{
-      setUl([])
-    }
-  }
-
-  function ONSUBMIT (e){
-    e.preventDefault()
-
-    console.log(upper)
-
-    console.log(lower)
-
-    console.log(num)
- 
-    const V = Pchar.sort(() => Math.random() - 0.5).slice(0, 11)
-
-    setP(V)
-
-
-  }
+  return(<>
+  {v.map((item, index) => <div key={index} style={{marginLeft: `${item[0]}px`, marginTop: `${item[1]}px`, backgroundColor: "red", width: "10px", height: "10px"}}></div>)}
   
+  <input type="number" min="1" max="10" onChange={(e) => setB(e.target.value)}></input>
 
-  return (
-    
-    <>
-    <div>{P}</div>
-    <form onSubmit={ONSUBMIT}>
-      <lable for='num'>nums</lable>
-      <input type="checkbox" id='num' onChange={SETN}/>
-      <lable for='Ll'>nums</lable>
-      <input type="checkbox" id='Ll' onChange={SETlL}/>
-      <lable for='Ul'>nums</lable>
-      <input type="checkbox" id='Ul' onChange={SETUL}/>
-      <button type="submit">submit</button>
-    </form>
-    </>
+  <input type="number" min="1" max="10" onChange={(e) => setS(e.target.value)}></input>
+  
+  </>)
+} 
 
-  )
-}
-
-export default ReportBuilder
+export default Comp
