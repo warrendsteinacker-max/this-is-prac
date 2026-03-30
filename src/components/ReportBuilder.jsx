@@ -1141,39 +1141,35 @@
 
 
 
-import {useState, useCallback} from 'react'
-
+import {createContext, useContext, useState} from 'react'
 
 
 
 
 const Comp = () => {
 
+  const {FUNC} = useContext()
 
-  const [slope, setS] = useState(2)
-  const [b, setB] = useState(5)
-
-const FUNC = () => {
-    let vv = []
-    for(let i = 0; i < 11; i++){
-      vv[i] = [i*10, slope*i + b]
-    }
-
-    return vv
-    console.log("var cahnged")
-  }
-
-  
-  const v = useCallback(FUNC(), [slope, b])
 
   return(<>
-  {v.map((item, index) => <div key={index} style={{marginLeft: `${item[0]}px`, marginTop: `${item[1]}px`, backgroundColor: "red", width: "10px", height: "10px"}}></div>)}
-  
-  <input type="number" min="1" max="10" onChange={(e) => setB(e.target.value)}></input>
-
-  <input type="number" min="1" max="10" onChange={(e) => setS(e.target.value)}></input>
+    <div ref={ref1} style={{width: "50px", height: "50px", border: "5px solid black"}} id="a"></div>
+    <button onClick={FUNC}>change color</button>
   
   </>)
 } 
 
-export default Comp
+
+const CreatingCon = createContext(null)
+
+
+const ConProvider = ({children}) => {
+  
+
+  const [D, setD] = useState(0)
+
+  const FUNC = () => {
+    setD((pre) => pre + 1)
+  }
+
+  return(<CreatingCon.Provider value={{D, setD, FUNC}}>{children}</CreatingCon.Provider>)
+}
