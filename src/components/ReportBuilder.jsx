@@ -1175,27 +1175,25 @@
 // }
 
 
-const FUNC = (props) => {
-  
-  return(<><h3>props.name</h3></>)
+import {createContext} from "react"
+import C from "./Create.jsx"
+
+const Con = createContext(null)
+
+const me = "warren"
+
+const ReportBuilder = () => {
+
+  return(
+    <>
+    <Con.Provider value={{me: me}}>
+      <C />
+    </Con.Provider>
+    </>
+  )
+
 }
 
 
+export default ReportBuilder
 
-const FUNCW = (F) => {
-
-  return (props) => {
-
-    return <F {...props}/>
-  }
-}
-
-
-const OUTF = () => {
-
-  const El = FUNCW(FUNC)
-
-  return(<EL name={warren}/>)
-}
-
-export default OUTF
