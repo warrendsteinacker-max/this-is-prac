@@ -6563,32 +6563,944 @@
 
 
 
+// import puppeteer from "puppeteer";
+// import fs from "fs";
+// import path from "path";
+// import express from "express";
+
+// const app = express();
+
+// // ╔════════════════════════════════════════════════════════════╗
+// // ║   CONFIG — edit these                                     ║
+// // ╚════════════════════════════════════════════════════════════╝
+
+// // Name of the output file — the assignment answers go here
+// const OUTPUT_FILENAME = "science_video_analysis.txt";
+
+// const ASSIGNMENT_DIRECTIONS = `
+
+// complete this first use three books
+
+
+// Part A – Science Children’s Literature Review
+// ● Assignment Overview: For each selected book (3 total), include the following:
+// ● Book Details
+// ▪ Title, author, publication year, grade level, and a brief summary of the
+// content and science connection.
+// ● Literacy Integration Analysis
+// Under each of the following categories, explain:
+// ▪ Oral Language-How will students use oral language to process and
+// communicate scientific ideas during the lesson?
+// ● What structures (e.g., partner talk, science sentence stems, group
+// discussions) will you use to help students explain, justify, or reflect
+// on science concepts out loud?
+// ▪ Comprehension- How does your lesson design support students in
+// understanding scientific texts, instructions, or concepts?
+// ● What strategies will you include to build science comprehension
+// through oral reading, listening, or shared meaning-making (e.g.,
+// choral reading of procedures, acting out processes, summarizing
+// steps)?
+// ▪ Vocabulary-What science-specific or academic vocabulary will students
+// encounter in the lesson?
+// ● How will you introduce, model, and reinforce key terms before,
+// during, and after the lesson (e.g., word wall, visuals, hands-on
+// labeling, word games, sentence frames)?
+
+// -then Thoughtfully evaluate the 3 texts with clear and insightful analysis of how each supports accuracy, fluency, and vocabulary. Instructional suggestions are highly relevant, well-developed, and grounded in course concepts. 
+
+
+// then complete this and use one book from part A to complete make sure it follows these guide lines in quotes dont make qustions for these just answer them in part B
+
+// "   Checklist Instructions
+
+
+
+// 1. Choose at least one of the texts from Part A as the foundation of your science
+// lesson.
+// 2. Create a literacy-integrated lesson plan that:
+// o Targets a science standard and a literacy standard.
+// o Includes explicit strategies to build oral language, comprehension, and/or
+// vocabulary.
+// o Involves engaging activities (e.g., read-alouds, group work, performance,
+// writing tasks).
+// o Specifically creates a home-school connection.
+
+
+
+
+// 3. Use the specific Baker College Teacher Prep Lesson Plan Format (provided).   "
+
+// Baker College
+// Teacher Prep Lesson Plan Format
+// Subject Area & Grade Level: Lesson Duration:
+// Lesson Goal:
+// What do we want
+// students to learn?
+// Assessment:
+// How will we know they
+// have learned it?
+// (see guide)
+// Intervention:
+// What will we do if they
+// don’t learn it?
+// (see guide)
+// Enrichment:
+// What will we do if they
+// already know it?
+// (see guide)
+// State Standards:
+// Learning Objective:
+// Materials:
+// Select your learning strategy:
+// ● Direct Teach
+// ● Demonstration
+// ● Cooperative Learning
+// ● Differentiation
+// ● Discovery/Inquiry-Based Learning
+// ● Project-Based Learning
+// ● Reading/Writing/Math Workshop
+// ● Other
+// Activities Planned: ___ Active (Students are active participants in learning)
+// ___ Passive (Teacher led lecture/demonstration)
+// ___ Both
+// Lesson Delivery Steps:
+// Core Teaching Practices addressed in your lesson (check all that apply): (from MDE CTPs)
+// ● Leading a group discussion (CTP #1)
+// ● Explaining and modeling content, practices, and strategies (CTP #2)
+// ● Eliciting and interpreting individual students’ thinking (CTP #3)
+// ● Building respectful relationships with students (CTP #10)
+// ● Check for Understanding (CTP #15)
+// Real-world connections including attention to English language learners and culturally and historically
+// responsive practices (diversity, inclusion, equity, and social justice):
+// Technology tools (listed):
+// Collaboration opportunities (list all that are included whole group, small group, partnerships, building
+// resource personnel i.e., school social worker, special educators, parents, etc…):
+// Lesson Plan Guide
+// Assessment: Used to gather information about a student’s progress towards mastery of the learning objective,
+// help the teacher identify what instruction is working well and what needs refinement, and informs the
+// students about their learning.
+// Options to consider
+// ￿ Diagnostic/Pre-Assessment – Used to check prior knowledge before a lesson
+// ￿ Self-Assessment (Writing Prompts, Running Records, Performance Task, Other)
+// ￿ Formative – Used during a lesson to check progress, identify any misconception, and give feedback to
+// students (Learning/Response Log, Admin/Exit Ticket, Think/Pair/Share, One Minute Paper, Other)
+// ￿ Summative – Used at the end of a lesson to check student mastery of the objective (End of Unit Test,
+// Final Exams or Mid-term Exams, State Tests, Culminating Project, Portfolio, Other)
+// Intervention: How will we respond when they don’t learn?
+// ￿ Differentiated Instruction
+// ￿ Target specific skills
+// ￿ Data item analysis
+// ￿ Leveled materials (below, on level,
+// above)
+// ￿ Bloom's Taxonomy
+// ￿ Grade recovery (re-do/correct)
+// ￿ Parent contact
+// ￿ Referral to Student Support Team
+// ￿ Graphic organizers
+// ￿ Manipulatives
+// ￿ Choice boards
+// ￿ Immediate feedback
+// ￿ Flexible grouping
+// ￿ Extended responses (math/reading)
+// ￿ Journal/Reading logs
+// Responses to Intervention (RtI)
+// ￿ Small group instruction
+// ￿ Tiered group instruction (Tier I, II, III)
+// ￿ 1-1
+// ￿ Centers (leveled)
+// ￿ Re-teach in a different way
+// ￿ Modify: backtrack, build background knowledge
+// ￿ Tutoring: after or before school, lunch
+// ￿ Referral to Student Support Team
+// Enrichment: How will we respond if they already know it?
+// ￿ Choice boards
+// ￿ Use vocabulary to write sentences
+// ￿ Accelerated reader
+// ￿ Centers-High level
+// ￿ Reading buddies
+// ￿ Peer tutoring
+// ￿ Enriched-Leveled Reader-Novels
+// ￿ Picture/writing journals
+// ￿ Independent projects
+// ￿ Separate curriculum
+// ￿ Games
+// ￿ Group leader
+
+
+
+// then complete this 
+
+
+// Write a 1-page home-school connection reflection that addresses:
+// ● How does the selected science text support meaningful conversations at
+// home?
+// ● Describe how families might discuss or explore the science topic
+// introduced in the literature. What types of questions or activities
+// could encourage students to share what they learned?
+// ● What specific vocabulary or science concept could be reinforced at home,
+// and how?
+// ● Suggest a simple home-based activity (e.g., observation journal,
+// vocabulary scavenger hunt, shared reading) that helps families
+// reinforce the content or language from the lesson.
+// ● In what ways does this lesson create an opportunity for family
+// engagement in science and literacy?
+// ● Reflect on how the read-aloud, writing task, or experiment could
+// spark curiosity or participation from family members and
+// strengthen school–home connections.
+// `;
+
+// const SOURCE_PAGES = `
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 24
+// CHAPTER: does not have one
+// SECTION: does not have one
+
+// EXACT TEXT:
+// Case Studies in Science Education
+
+// Elsa — K
+
+// Teacher Profile
+// Name | Elsa
+// Experience | 15 years
+// Grade & Subject(s) | Two half-day kindergarten classes; all subjects
+// Classroom Demographics | Bilingual classroom
+// School | Elementary school in an urban district
+// Science Teaching | 2 days/week for 30 minutes
+// Curriculum | Specified by district
+
+// Module 1 - Introducing the Case
+// Elsa believes that for many children, what happens in kindergarten affects students' feelings about and learning in school for the rest of their lives. She is beginning to ask questions of herself and rethink her approach to teaching science. Knowing that her students become engaged whenever they are using their senses to explore objects and phenomena,
+// ---
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 25
+// CHAPTER: does not have one
+// SECTION: does not have one
+
+// EXACT TEXT:
+// Elsa wants to build upon her students' natural inclination to learn by making their own discoveries. She hopes to extend this type of learning to meaningful expressions of students' understandings.
+
+// Module 2 - Trying New Ideas
+// Jeff Winokur, an early childhood science educator at Wheelock College, has observed in his teaching practice that young students cherish playing with materials and that this fascination can be put to use to help them make scientific discoveries. During students' discovery of magnets, Elsa takes a guided discovery approach by getting students to work with a partner as she circulates through the classroom, helping them move toward making specific discoveries.
+// ---
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 26
+// CHAPTER: does not have one
+// SECTION: does not have one
+
+// EXACT TEXT:
+// After working in pairs, where materials are shared, each student completes a worksheet that reflects his or her findings about materials through which a magnetic force can travel. Later, the class reviews the worksheets together. Elsa believes that when students take their worksheets home, students' understandings are again reinforced when shared with family members.
+// ---
+
+// ---
+// AUTHOR: Annenberg Learner
+// DATE: n.d.
+// PAGE: 27
+// CHAPTER: does not have one
+// SECTION: does not have one
+
+// EXACT TEXT:
+// Module 3 - Reflecting and Building on Change
+// As the year progresses, Elsa is convinced that science has become her students' favorite activity period. As part of her final science unit, Elsa invites her students to mix food coloring in water to find out what happens. Elsa is learning that with discovery activities, even though a scientific concept is not necessarily being discovered, her students are making their own discoveries and beginning to build new knowledge.
+// ---
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 23
+// CHAPTER: Chapter 3
+// SECTION: does not have one
+
+// EXACT TEXT:
+// Teaching a balance of skills and strategies is important to promote growth in the area of reading.
+// Overtime, as students gain experience with using strategies and continue to practice reading skills,
+// the manner in which you plan your instruction should also evolve.
+// Read-Alouds When planning for whole-class instruction, be sure to include a daily read-aloud.
+// Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension.
+// Plan questions and stopping points ahead of time.
+// ---
+
+// ---
+// AUTHOR: Ramlal
+// DATE: 2023
+// PAGE: 24
+// CHAPTER: Chapter 3
+// SECTION: does not have one
+
+// EXACT TEXT:
+// Use read-alouds to develop vocabulary, promote student-led discussions, and encourage listening comprehension.
+// Plan questions and stopping points ahead of time.
+// Select read-aloud topics that consider a broad view of diversity: cultural, linguistic, or geographical,
+// or about students with disabilities, gender stereotypes, family structures, popular culture, and so on.
+// Before Reading: Have a discussion to introduce the book and activate prior knowledge.
+// Try to allow students to do most of the talking.
+// During Reading: Plan out stopping points to discuss the text or to ask and answer questions.
+// ---
+// `;
+
+// // ════════════════════════════════════════════════════════════
+// // Everything below runs automatically.
+// // ════════════════════════════════════════════════════════════
+
+// const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
+// const launchOptions = {
+//   headless: false,
+//   executablePath: CHROME_PATH,
+//   slowMo: 80,
+//   args: [
+//     "--no-sandbox",
+//     "--disable-setuid-sandbox",
+//     "--disable-blink-features=AutomationControlled",
+//     "--start-maximized",
+//   ],
+//   defaultViewport: null,
+//   ignoreDefaultArgs: ["--enable-automation"],
+// };
+
+// // ─── OUTPUT FILE ──────────────────────────────────────────────────────────────
+
+// const OUTPUT_PATH = path.resolve(OUTPUT_FILENAME);
+
+// function initOutputFile() {
+//   const header = [
+//     "=".repeat(70),
+//     `  ASSIGNMENT: ${OUTPUT_FILENAME.replace(".txt", "").replace(/_/g, " ").toUpperCase()}`,
+//     `  Generated: ${new Date().toLocaleString()}`,
+//     "=".repeat(70),
+//     "",
+//   ].join("\n");
+//   fs.writeFileSync(OUTPUT_PATH, header, "utf8");
+//   console.log(`\n  ✓ Output file created: ${OUTPUT_PATH}\n`);
+// }
+
+// function appendToFile(questionNumber, questionText, answerText) {
+//   const block = [
+//     "",
+//     "─".repeat(70),
+//     `  QUESTION ${questionNumber}`,
+//     "─".repeat(70),
+//     questionText.trim(),
+//     "",
+//     "─".repeat(70),
+//     `  ANSWER ${questionNumber}`,
+//     "─".repeat(70),
+//     answerText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Question ${questionNumber} appended to ${OUTPUT_PATH}`);
+// }
+
+// function appendSummaryToFile(summaryText) {
+//   const block = [
+//     "",
+//     "=".repeat(70),
+//     "  SUMMARY (200-300 words)",
+//     "=".repeat(70),
+//     summaryText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Summary appended to ${OUTPUT_PATH}`);
+// }
+
+// // ─── GEMINI WINDOW UTILITIES ──────────────────────────────────────────────────
+
+// async function openGeminiBrowser(profileName, label) {
+//   const browser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`],
+//   });
+//   const page = await browser.newPage();
+//   await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, "webdriver", { get: () => false });
+//     window.chrome = { runtime: {} };
+//   });
+//   await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
+//   console.log(`  [${label}] window open.`);
+//   return { browser, page };
+// }
+
+// async function findInput(page, label) {
+//   for (const sel of [
+//     'rich-textarea div[contenteditable="true"]',
+//     'div[contenteditable="true"]',
+//     'div[role="textbox"]',
+//     "textarea",
+//     ".ql-editor",
+//   ]) {
+//     try {
+//       const el = await page.$(sel);
+//       if (el && (await el.boundingBox())?.width > 0) return { el, sel };
+//     } catch (_) {}
+//   }
+//   throw new Error(`[${label}] Input box not found`);
+// }
+
+// async function sendMessage(page, text, label) {
+//   const { el, sel } = await findInput(page, label);
+//   await el.click(); await sleep(400);
+//   await page.keyboard.down("Control"); await page.keyboard.press("a"); await page.keyboard.up("Control");
+//   await page.keyboard.press("Backspace"); await sleep(200);
+//   const ok = await page.evaluate((t, s) => {
+//     const el = document.querySelector(s); if (!el) return false;
+//     el.focus(); return document.execCommand("insertText", false, t);
+//   }, text, sel);
+//   if (!ok) await page.evaluate((t, s) => {
+//     const el = document.querySelector(s); if (!el) return; el.focus();
+//     if (el.contentEditable === "true") el.innerText = t;
+//     else Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(el, t);
+//     el.dispatchEvent(new Event("input", { bubbles: true }));
+//     el.dispatchEvent(new Event("change", { bubbles: true }));
+//   }, text, sel);
+//   await sleep(500);
+//   const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
+//   if (btn) await btn.click(); else await page.keyboard.press("Enter");
+//   await sleep(2000);
+// }
+
+// async function waitForResponse(page, label, timeoutMs = 240000) {
+//   console.log(`  [${label}] Waiting...`);
+//   try {
+//     await page.waitForFunction(
+//       () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//       { timeout: 20000, polling: 500 }
+//     );
+//   } catch (_) {}
+//   await page.waitForFunction(
+//     () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//     { timeout: timeoutMs, polling: 1000 }
+//   ).catch(() => {});
+//   await sleep(3000);
+//   const text = await page.evaluate(() => {
+//     const all = [
+//       ...document.querySelectorAll("model-response"),
+//       ...document.querySelectorAll('[data-message-author-role="model"]'),
+//       ...document.querySelectorAll(".model-response-text"),
+//       ...document.querySelectorAll("message-content"),
+//     ];
+//     return all.length ? all[all.length - 1].innerText.trim() : "";
+//   });
+//   if (!text) console.warn(`  [${label}] Empty response`);
+//   else console.log(`  [${label}] ${text.length} chars`);
+//   return text;
+// }
+
+// // ─── AI1 PROMPT — parse directions into question array ────────────────────────
+
+// function buildAI1Prompt() {
+//   return `You are reading an assignment and breaking it down into individual questions or tasks.
+
+// ${"=".repeat(55)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(55)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(55)}
+// YOUR JOB:
+// ${"=".repeat(55)}
+// Read the directions carefully. Extract every numbered requirement or task as a
+// separate question. Include the summary requirement as the last item.
+
+// Output ONLY a JSON array of strings. Each string is one question/task exactly
+// as it appears in the directions. No extra text, no markdown, no explanation.
+// Just the raw JSON array.
+
+// Example format:
+// [
+//   "Examine how the teacher supported students in using science talk",
+//   "Determine strategies used to introduce and reinforce science vocabulary",
+//   "Include a 200-300 word summary with APA 7th Edition citations"
+// ]
+
+// Output the JSON array now:`;
+// }
+
+// // ─── AI1 SELF-CHECK PROMPT ────────────────────────────────────────────────────
+
+// function buildAI1SelfCheckPrompt(generatedQuestions) {
+//   return `You previously broke the assignment directions into this list of questions:
+
+// ${JSON.stringify(generatedQuestions, null, 2)}
+
+// Now compare your list against the original directions:
+
+// ${"=".repeat(55)}
+// ORIGINAL DIRECTIONS:
+// ${"=".repeat(55)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(55)}
+// YOUR JOB:
+// ${"=".repeat(55)}
+// Check if your list covers EVERY requirement in the directions.
+// For each original requirement say:
+//   COVERED: [yes/no] — [requirement text]
+
+// If anything is missing, output the corrected complete JSON array at the end.
+// If everything is covered, output the original array unchanged at the end.
+
+// End your response with the final JSON array — nothing after it.`;
+// }
+
+// // ─── AI2 PROMPT — answer one question ─────────────────────────────────────────
+
+// function buildAI2Prompt(questionIndex, questionText, totalQuestions) {
+//   return `You are answering question ${questionIndex + 1} of ${totalQuestions} for an assignment.
+// Answer ONLY this one question — do not answer other questions.
+
+// ${"=".repeat(55)}
+// QUESTION ${questionIndex + 1}:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// SOURCE TEXT — use these for citations:
+// ${"=".repeat(55)}
+// ${SOURCE_PAGES.trim()}
+
+// ${"=".repeat(55)}
+// APA 7TH EDITION CITATION RULES:
+// ${"=".repeat(55)}
+
+// You MUST use BOTH parenthetical AND narrative citations in your answer and at max only use 3 parthentical cittions peer answer rest narrative.
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+
+//   WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
+//   WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
+//   WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
+//   WRONG: such as "text" (p. #).           ← no filler words before opening quote
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+//   As Author (date) explains on page #, ...
+
+//   If the source HAS a chapter: According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   If NO chapter (Annenberg Learner): As Annenberg Learner (n.d.) explains on page 25, ...
+
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...  ← chapter/page inside parens
+//   WRONG: According to Ramlal (2023), teaching is important.  ← no page mentioned
+
+// CAPITAL FIRST WORD RULE:
+//   If source starts with a capital, pull that word OUT of the quotes, lowercase it.
+//   SOURCE: Students become engaged whenever they are using their senses
+//   RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
+//   WRONG:  Annenberg Learner (n.d.) notes "Students become engaged" (p. 24).
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside the quotes.
+// NO MIXED SOURCES: Annenberg Learner text → Annenberg Learner (n.d.). Ramlal text → Ramlal (2023).
+// IF IN DOUBT: drop the citation and write a plain sentence.
+
+// Write a thorough answer to the question above using at least 2 citations.
+// If this is the summary question, write 200-300 words.
+// Output ONLY your answer — no preamble, no "here is my answer".`;
+// }
+
+// // ─── AI3 PROMPT — check citations ─────────────────────────────────────────────
+
+// function buildAI3Prompt(questionText, answerText) {
+//   return `You are a strict APA 7th Edition citation reviewer.
+
+// ${"=".repeat(55)}
+// QUESTION BEING ANSWERED:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// ANSWER TO REVIEW:
+// ${"=".repeat(55)}
+// ${answerText}
+
+// ${"=".repeat(55)}
+// WHAT TO CHECK:
+// ${"=".repeat(55)}
+// TWO citation formats are required — check both are present and correct.
+
+// PARENTHETICAL — correct format:
+//   Author (date) verb "word for word text" (p. #).
+//   Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+// NARRATIVE — correct format:
+//   According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   As Annenberg Learner (n.d.) explains on page 24, ...
+
+// VIOLATIONS TO FLAG:
+// 1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
+// 2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
+// 3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
+// 4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
+// 5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+// 6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
+// 7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
+// 8. Only one citation type used — both parenthetical AND narrative required.
+// 9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
+// 10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
+//     The sentence must END after (p. #).
+
+// For each violation: quote the exact wrong text and state the fix.
+
+// End with EXACTLY one of these as the very last line:
+// CITATION RESULT: PASS
+// CITATION RESULT: FAIL`;
+// }
+
+// // ─── AI2 CORRECTION PROMPT ───────────────────────────────────────────────────
+
+// function buildAI2CorrectionPrompt(questionText, currentAnswer, ai3Feedback) {
+//   return `Your answer has citation violations. Fix every one now.
+
+// ${"=".repeat(55)}
+// QUESTION:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// YOUR CURRENT ANSWER WITH VIOLATIONS:
+// ${"=".repeat(55)}
+// ${currentAnswer}
+
+// ${"=".repeat(55)}
+// REVIEWER FEEDBACK:
+// ${"=".repeat(55)}
+// ${ai3Feedback}
+
+// ${"=".repeat(55)}
+// FIX USING THESE RULES:
+// ${"=".repeat(55)}
+// PARENTHETICAL: Author (date) verb "word for word text" (p. #).
+//   Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+// NARRATIVE: According to Author (date), from Chapter X on page #, ...
+//   As Annenberg Learner (n.d.) explains on page 24, ...
+
+// - Period AFTER (p. #) — NEVER inside quotes
+// - Capital first word → pull out, lowercase, blend into sentence
+// - Quote must END the sentence — never continue after (p. #) with lowercase text
+// - Both parenthetical AND narrative required
+// - Page always present — either as (p. #) or said naturally in the sentence
+
+// Output ONLY the corrected answer — no preamble.`;
+// }
+
+// // ─── PARSE AI1 JSON RESPONSE ──────────────────────────────────────────────────
+
+// function extractQuestionsFromResponse(raw) {
+//   // Find the last JSON array in the response
+//   const match = raw.match(/\[[\s\S]*\]/g);
+//   if (!match) throw new Error("AI1 did not return a JSON array");
+//   const lastArray = match[match.length - 1];
+//   try {
+//     const parsed = JSON.parse(lastArray);
+//     if (!Array.isArray(parsed) || parsed.length === 0)
+//       throw new Error("Empty or invalid array");
+//     return parsed.map(q => String(q).trim()).filter(q => q.length > 5);
+//   } catch (e) {
+//     throw new Error(`Failed to parse AI1 JSON: ${e.message}\nRaw: ${lastArray.substring(0, 300)}`);
+//   }
+// }
+
+// // ─── MAIN ─────────────────────────────────────────────────────────────────────
+
+// (async () => {
+//   console.log("=".repeat(70));
+//   console.log("  QUESTION-BY-QUESTION PIPELINE");
+//   console.log("=".repeat(70));
+//   console.log("  AI1 — parses directions into question array");
+//   console.log("  AI2 — answers each question with APA citations");
+//   console.log("  AI3 — checks citations, sends back to AI2 if wrong");
+//   console.log(`  Output file: ${OUTPUT_FILENAME}`);
+//   console.log("=".repeat(70) + "\n");
+
+//   // Init output file
+//   initOutputFile();
+
+//   // Open three Gemini windows
+//   console.log("Opening AI windows...\n");
+//   const { browser: b1, page: ai1Page } = await openGeminiBrowser("ai1-parser",   "AI1 PARSER");
+//   const { browser: b2, page: ai2Page } = await openGeminiBrowser("ai2-writer",   "AI2 WRITER");
+//   const { browser: b3, page: ai3Page } = await openGeminiBrowser("ai3-reviewer", "AI3 REVIEWER");
+
+//   // Wait for login if needed
+//   const allPages = [ai1Page, ai2Page, ai3Page];
+//   if (allPages.some(p => p.url().includes("accounts.google.com"))) {
+//     console.log("\n  Sign into Google in ALL THREE Gemini windows.");
+//     console.log("  Script waits until all three are on Gemini.\n");
+//     await Promise.all(allPages.map(p =>
+//       p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })
+//     ));
+//   }
+
+//   for (const [p, lbl] of [[ai1Page, "AI1"], [ai2Page, "AI2"], [ai3Page, "AI3"]]) {
+//     await p.waitForFunction(
+//       () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
+//       { timeout: 30000, polling: 1000 }
+//     ).catch(() => console.warn(`  [${lbl}] Input wait timed out`));
+//   }
+//   await sleep(2000);
+//   console.log("All windows ready.\n");
+
+//   // ── STEP 1: AI1 parses directions into questions ───────────────────────────
+//   console.log("=".repeat(70));
+//   console.log("  STEP 1 — AI1 parsing directions into questions");
+//   console.log("=".repeat(70) + "\n");
+
+//   await sendMessage(ai1Page, buildAI1Prompt(), "AI1 PARSER");
+//   const ai1Raw = await waitForResponse(ai1Page, "AI1 PARSER");
+
+//   let questions;
+//   try {
+//     questions = extractQuestionsFromResponse(ai1Raw);
+//   } catch (e) {
+//     console.error(`  ✗ AI1 parse failed: ${e.message}`);
+//     process.exit(1);
+//   }
+
+//   console.log(`\n  AI1 generated ${questions.length} question(s):`);
+//   questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+
+//   // ── STEP 2: AI1 self-checks its own question list ──────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log("  STEP 2 — AI1 self-checking question coverage");
+//   console.log("=".repeat(70) + "\n");
+
+//   await sendMessage(ai1Page, buildAI1SelfCheckPrompt(questions), "AI1 PARSER");
+//   const ai1CheckRaw = await waitForResponse(ai1Page, "AI1 PARSER");
+
+//   // Try to extract a revised array from the self-check response
+//   try {
+//     const revised = extractQuestionsFromResponse(ai1CheckRaw);
+//     if (revised.length >= questions.length) {
+//       questions = revised;
+//       console.log(`\n  AI1 self-check complete. Final question count: ${questions.length}`);
+//     } else {
+//       console.log(`\n  AI1 self-check returned fewer questions — keeping original list.`);
+//     }
+//   } catch (_) {
+//     console.log(`\n  AI1 self-check did not change the list.`);
+//   }
+
+//   console.log(`\n  Final questions to answer (${questions.length} total):`);
+//   questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+
+//   // ── STEP 3: Loop through each question ────────────────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log(`  STEP 3 — AI2 answers each question, AI3 checks citations`);
+//   console.log("=".repeat(70));
+
+//   for (let idx = 0; idx < questions.length; idx++) {
+//     const questionText = questions[idx];
+//     const qNum = idx + 1;
+//     const isSummary = questionText.toLowerCase().includes("summary");
+
+//     console.log(`\n${"─".repeat(70)}`);
+//     console.log(`  QUESTION ${qNum} of ${questions.length}`);
+//     console.log(`  ${questionText}`);
+//     console.log(`${"─".repeat(70)}`);
+
+//     // AI2 writes the answer
+//     await sendMessage(ai2Page, buildAI2Prompt(idx, questionText, questions.length), "AI2 WRITER");
+//     let answer = await waitForResponse(ai2Page, "AI2 WRITER");
+
+//     // AI3 checks citations — loop until PASS
+//     let citationApproved = false;
+//     let citationAttempt  = 0;
+//     const MAX_CITATION_ATTEMPTS = 5;
+
+//     while (!citationApproved && citationAttempt < MAX_CITATION_ATTEMPTS) {
+//       citationAttempt++;
+//       console.log(`\n  [CITATION CHECK] Attempt ${citationAttempt}/${MAX_CITATION_ATTEMPTS} for Q${qNum}`);
+
+//       await sendMessage(ai3Page, buildAI3Prompt(questionText, answer), "AI3 REVIEWER");
+//       const ai3Feedback = await waitForResponse(ai3Page, "AI3 REVIEWER");
+
+//       console.log(`\n  [AI3]:\n  ` + ai3Feedback.split("\n").join("\n  "));
+
+//       if (ai3Feedback.includes("CITATION RESULT: PASS")) {
+//         console.log(`\n  ✓ Citations PASSED for Q${qNum}`);
+//         citationApproved = true;
+//       } else {
+//         console.log(`\n  ✗ Citations FAILED — sending back to AI2 to fix...`);
+//         await sendMessage(ai2Page, buildAI2CorrectionPrompt(questionText, answer, ai3Feedback), "AI2 WRITER");
+//         answer = await waitForResponse(ai2Page, "AI2 WRITER");
+//         await sleep(2000);
+//       }
+//     }
+
+//     if (!citationApproved) {
+//       console.warn(`  ⚠ Max citation attempts reached for Q${qNum} — using best version.`);
+//     }
+
+//     // Append to output file
+//     if (isSummary) {
+//       appendSummaryToFile(answer);
+//     } else {
+//       appendToFile(qNum, questionText, answer);
+//     }
+
+//     console.log(`\n  ✓ Q${qNum} complete and saved.`);
+//     await sleep(2000);
+//   }
+
+//   // ── DONE ──────────────────────────────────────────────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log("  ALL QUESTIONS COMPLETE");
+//   console.log(`  Output saved to: ${OUTPUT_PATH}`);
+//   console.log("=".repeat(70) + "\n");
+
+//   // Uncomment to close windows when done:
+//   // await b1.close(); await b2.close(); await b3.close();
+// })();
+
+
+// app.listen(3000, () => console.log("working"))
+
+
+
+
+
+
+
+
+
+
+
+// ////////every thing above this is for mod 4 chat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 
 // ╔════════════════════════════════════════════════════════════╗
-// ║   CONFIG — edit these                                     ║
+// ║   CONFIG — edit these for each assignment                 ║
 // ╚════════════════════════════════════════════════════════════╝
 
-// Name of the output file — the assignment answers go here
-const OUTPUT_FILENAME = "science_video_analysis.txt";
+const OUTPUT_FILENAME = "assignment_output.txt";
 
 const ASSIGNMENT_DIRECTIONS = `
-Directions: Based on your assigned readings and in-class activities, you will analyze a video
-to identify teaching strategies that promote oral language, comprehension, vocabulary development
-and home-school connections within a classroom setting.
+complete this first use three books
 
-The analysis table must:
-1. Examine how the teacher supported students in using science talk
-2. Determine strategies used to introduce and reinforce science vocabulary
-3. Examine how visual tools or hands-on activities contribute to student talk and understanding
-4. Determine if students were encouraged to use key terms in discussion or writing
-5. Explore how the teacher promoted speaking and listening skills
-6. Explore one way this science lesson could be extended at home
-7. Investigate how you could modify a strategy for diverse learners
+Part A – Science Children's Literature Review
+● Assignment Overview: For each selected book (3 total), include the following:
+● Book Details
+▪ Title, author, publication year, grade level, and a brief summary of the
+content and science connection.
+● Literacy Integration Analysis
+Under each of the following categories, explain:
+▪ Oral Language-How will students use oral language to process and
+communicate scientific ideas during the lesson?
+● What structures (e.g., partner talk, science sentence stems, group
+discussions) will you use to help students explain, justify, or reflect
+on science concepts out loud?
+▪ Comprehension- How does your lesson design support students in
+understanding scientific texts, instructions, or concepts?
+● What strategies will you include to build science comprehension
+through oral reading, listening, or shared meaning-making (e.g.,
+choral reading of procedures, acting out processes, summarizing
+steps)?
+▪ Vocabulary-What science-specific or academic vocabulary will students
+encounter in the lesson?
+● How will you introduce, model, and reinforce key terms before,
+during, and after the lesson (e.g., word wall, visuals, hands-on
+labeling, word games, sentence frames)?
 
-Include a 200-300 word summary with APA 7th Edition citations.
+-then Thoughtfully evaluate the 3 texts with clear and insightful analysis of how each supports accuracy, fluency, and vocabulary. Instructional suggestions are highly relevant, well-developed, and grounded in course concepts.
+
+
+then complete this and use one book from part A to complete make sure it follows these guidelines — do not make questions for these just answer them in part B
+
+Checklist Instructions:
+1. Choose at least one of the texts from Part A as the foundation of your science lesson.
+2. Create a literacy-integrated lesson plan that:
+   - Targets a science standard and a literacy standard.
+   - Includes explicit strategies to build oral language, comprehension, and/or vocabulary.
+   - Involves engaging activities (e.g., read-alouds, group work, performance, writing tasks).
+   - Specifically creates a home-school connection.
+3. Use the specific Baker College Teacher Prep Lesson Plan Format (provided).
+
+Baker College Teacher Prep Lesson Plan Format:
+Subject Area & Grade Level:
+Lesson Duration:
+Lesson Goal (What do we want students to learn?):
+Assessment (How will we know they have learned it?):
+  Options: Diagnostic/Pre-Assessment, Self-Assessment, Formative, Summative
+Intervention (What will we do if they don't learn it?):
+  Options: Differentiated Instruction, Target specific skills, Data item analysis,
+  Leveled materials, Bloom's Taxonomy, Grade recovery, Parent contact,
+  Referral to Student Support Team, Graphic organizers, Manipulatives,
+  Choice boards, Immediate feedback, Flexible grouping, Extended responses,
+  Journal/Reading logs, Small group instruction, Tiered group instruction,
+  1-1, Centers (leveled), Re-teach in a different way, Tutoring, Modify
+Enrichment (What will we do if they already know it?):
+  Options: Choice boards, Use vocabulary to write sentences, Accelerated reader,
+  Centers-High level, Reading buddies, Peer tutoring, Enriched-Leveled Reader-Novels,
+  Picture/writing journals, Independent projects, Separate curriculum, Games, Group leader
+State Standards:
+Learning Objective:
+Materials:
+Learning Strategy (select one): Direct Teach / Demonstration / Cooperative Learning /
+  Differentiation / Discovery/Inquiry-Based Learning / Project-Based Learning /
+  Reading/Writing/Math Workshop / Other
+Activities Planned: Active / Passive / Both
+Lesson Delivery Steps:
+Core Teaching Practices addressed:
+  CTP #1 Leading a group discussion
+  CTP #2 Explaining and modeling content, practices, and strategies
+  CTP #3 Eliciting and interpreting individual students' thinking
+  CTP #10 Building respectful relationships with students
+  CTP #15 Check for Understanding
+Real-world connections including ELL and culturally responsive practices:
+Technology tools:
+Collaboration opportunities:
+
+
+then complete this
+
+Write a 1-page home-school connection reflection that addresses:
+● How does the selected science text support meaningful conversations at home?
+● Describe how families might discuss or explore the science topic introduced in the literature.
+● What specific vocabulary or science concept could be reinforced at home, and how?
+● Suggest a simple home-based activity (e.g., observation journal, vocabulary scavenger hunt, shared reading).
+● In what ways does this lesson create an opportunity for family engagement in science and literacy?
+● Reflect on how the read-aloud, writing task, or experiment could spark curiosity from family members and strengthen school-home connections.
 `;
 
 const SOURCE_PAGES = `
@@ -6689,11 +7601,10 @@ During Reading: Plan out stopping points to discuss the text or to ask and answe
 `;
 
 // ════════════════════════════════════════════════════════════
-// Everything below runs automatically.
+// Everything below — do not edit
 // ════════════════════════════════════════════════════════════
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const launchOptions = {
@@ -6717,7 +7628,7 @@ const OUTPUT_PATH = path.resolve(OUTPUT_FILENAME);
 function initOutputFile() {
   const header = [
     "=".repeat(70),
-    `  ASSIGNMENT: ${OUTPUT_FILENAME.replace(".txt", "").replace(/_/g, " ").toUpperCase()}`,
+    `  ASSIGNMENT: ${OUTPUT_FILENAME.replace(".txt","").replace(/_/g," ").toUpperCase()}`,
     `  Generated: ${new Date().toLocaleString()}`,
     "=".repeat(70),
     "",
@@ -6726,38 +7637,25 @@ function initOutputFile() {
   console.log(`\n  ✓ Output file created: ${OUTPUT_PATH}\n`);
 }
 
-function appendToFile(questionNumber, questionText, answerText) {
+function appendToFile(sectionLabel, questionText, answerText) {
   const block = [
     "",
     "─".repeat(70),
-    `  QUESTION ${questionNumber}`,
+    `  ${sectionLabel}`,
     "─".repeat(70),
     questionText.trim(),
     "",
     "─".repeat(70),
-    `  ANSWER ${questionNumber}`,
+    `  RESPONSE`,
     "─".repeat(70),
     answerText.trim(),
     "",
   ].join("\n");
   fs.appendFileSync(OUTPUT_PATH, block, "utf8");
-  console.log(`\n  ✓ Question ${questionNumber} appended to ${OUTPUT_PATH}`);
+  console.log(`\n  ✓ ${sectionLabel} written to file (${answerText.length} chars)`);
 }
 
-function appendSummaryToFile(summaryText) {
-  const block = [
-    "",
-    "=".repeat(70),
-    "  SUMMARY (200-300 words)",
-    "=".repeat(70),
-    summaryText.trim(),
-    "",
-  ].join("\n");
-  fs.appendFileSync(OUTPUT_PATH, block, "utf8");
-  console.log(`\n  ✓ Summary appended to ${OUTPUT_PATH}`);
-}
-
-// ─── GEMINI WINDOW UTILITIES ──────────────────────────────────────────────────
+// ─── GEMINI UTILITIES ─────────────────────────────────────────────────────────
 
 async function openGeminiBrowser(profileName, label) {
   const browser = await puppeteer.launch({
@@ -6770,7 +7668,7 @@ async function openGeminiBrowser(profileName, label) {
     window.chrome = { runtime: {} };
   });
   await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
-  console.log(`  [${label}] window open.`);
+  console.log(`  [${label}] window open`);
   return { browser, page };
 }
 
@@ -6780,7 +7678,6 @@ async function findInput(page, label) {
     'div[contenteditable="true"]',
     'div[role="textbox"]',
     "textarea",
-    ".ql-editor",
   ]) {
     try {
       const el = await page.$(sel);
@@ -6795,10 +7692,12 @@ async function sendMessage(page, text, label) {
   await el.click(); await sleep(400);
   await page.keyboard.down("Control"); await page.keyboard.press("a"); await page.keyboard.up("Control");
   await page.keyboard.press("Backspace"); await sleep(200);
+
   const ok = await page.evaluate((t, s) => {
     const el = document.querySelector(s); if (!el) return false;
     el.focus(); return document.execCommand("insertText", false, t);
   }, text, sel);
+
   if (!ok) await page.evaluate((t, s) => {
     const el = document.querySelector(s); if (!el) return; el.focus();
     if (el.contentEditable === "true") el.innerText = t;
@@ -6806,43 +7705,115 @@ async function sendMessage(page, text, label) {
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
   }, text, sel);
+
   await sleep(500);
   const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
   if (btn) await btn.click(); else await page.keyboard.press("Enter");
   await sleep(2000);
 }
 
-async function waitForResponse(page, label, timeoutMs = 240000) {
-  console.log(`  [${label}] Waiting...`);
+// ─── WAIT FOR RESPONSE — scrolls to bottom to force full render ───────────────
+// Gemini lazy-renders long responses. If you read innerText before scrolling,
+// you only get the visible portion and the answer is cut off.
+// Fix: wait for generation to stop, then scroll to the bottom of the response,
+// wait for any remaining content to render, then read the FULL text.
+
+async function waitForResponse(page, label, timeoutMs = 300000) {
+  console.log(`  [${label}] Waiting for response...`);
+
+  // Wait for the stop button to appear (generation started)
   try {
     await page.waitForFunction(
       () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
       { timeout: 20000, polling: 500 }
     );
   } catch (_) {}
+
+  // Wait for the stop button to disappear (generation finished)
   await page.waitForFunction(
     () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
     { timeout: timeoutMs, polling: 1000 }
-  ).catch(() => {});
-  await sleep(3000);
-  const text = await page.evaluate(() => {
-    const all = [
+  ).catch(() => console.warn(`  [${label}] Generation timeout — reading what we have`));
+
+  // Give Gemini a moment to finalize rendering
+  await sleep(4000);
+
+  // Scroll to the very bottom of the last response to force lazy-render of all content
+  await page.evaluate(() => {
+    const responses = [
       ...document.querySelectorAll("model-response"),
       ...document.querySelectorAll('[data-message-author-role="model"]'),
       ...document.querySelectorAll(".model-response-text"),
       ...document.querySelectorAll("message-content"),
     ];
-    return all.length ? all[all.length - 1].innerText.trim() : "";
+    if (!responses.length) return;
+    const last = responses[responses.length - 1];
+    last.scrollIntoView({ behavior: "instant", block: "end" });
+    // Also scroll the page itself to the bottom
+    window.scrollTo(0, document.body.scrollHeight);
   });
-  if (!text) console.warn(`  [${label}] Empty response`);
-  else console.log(`  [${label}] ${text.length} chars`);
+
+  // Wait for any lazy-rendered content to appear after scroll
+  await sleep(3000);
+
+  // Scroll again to make sure everything at the bottom is rendered
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await sleep(2000);
+
+  // Now read the FULL text of the last response
+  const text = await page.evaluate(() => {
+    const responses = [
+      ...document.querySelectorAll("model-response"),
+      ...document.querySelectorAll('[data-message-author-role="model"]'),
+      ...document.querySelectorAll(".model-response-text"),
+      ...document.querySelectorAll("message-content"),
+    ];
+    if (!responses.length) return "";
+
+    const last = responses[responses.length - 1];
+
+    // Walk every child and collect text — catches text inside nested spans/divs
+    // that innerText might miss if they're off-screen
+    function collectText(node) {
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+      if (node.nodeType !== Node.ELEMENT_NODE) return "";
+      // Skip invisible elements
+      const style = window.getComputedStyle(node);
+      if (style.display === "none" || style.visibility === "hidden") return "";
+      let out = "";
+      for (const child of node.childNodes) out += collectText(child);
+      // Add newline after block-level elements
+      const block = ["P","DIV","LI","BR","H1","H2","H3","H4","TR","SECTION","ARTICLE"];
+      if (block.includes(node.tagName)) out += "\n";
+      return out;
+    }
+
+    return collectText(last).replace(/\n{3,}/g, "\n\n").trim();
+  });
+
+  if (!text) {
+    console.warn(`  [${label}] Empty response — retrying read once...`);
+    await sleep(3000);
+    // One more attempt using plain innerText as fallback
+    const fallback = await page.evaluate(() => {
+      const all = [
+        ...document.querySelectorAll("model-response"),
+        ...document.querySelectorAll('[data-message-author-role="model"]'),
+      ];
+      return all.length ? all[all.length - 1].innerText.trim() : "";
+    });
+    console.log(`  [${label}] Fallback read: ${fallback.length} chars`);
+    return fallback;
+  }
+
+  console.log(`  [${label}] ✓ Full response captured: ${text.length} chars`);
   return text;
 }
 
-// ─── AI1 PROMPT — parse directions into question array ────────────────────────
+// ─── AI1 PROMPTS ──────────────────────────────────────────────────────────────
 
 function buildAI1Prompt() {
-  return `You are reading an assignment and breaking it down into individual questions or tasks.
+  return `You are reading a multi-part assignment and breaking it into a flat ordered list of tasks.
 
 ${"=".repeat(55)}
 ASSIGNMENT DIRECTIONS:
@@ -6852,31 +7823,34 @@ ${ASSIGNMENT_DIRECTIONS.trim()}
 ${"=".repeat(55)}
 YOUR JOB:
 ${"=".repeat(55)}
-Read the directions carefully. Extract every numbered requirement or task as a
-separate question. Include the summary requirement as the last item.
+The assignment has three major parts: Part A, Part B, and Part C.
 
-Output ONLY a JSON array of strings. Each string is one question/task exactly
-as it appears in the directions. No extra text, no markdown, no explanation.
-Just the raw JSON array.
+Part A requires 3 books. Each book needs its own entry covering Book Details,
+Oral Language, Comprehension, and Vocabulary. So Part A = 3 separate tasks,
+one per book, each containing all four sub-sections for that book.
 
-Example format:
-[
-  "Examine how the teacher supported students in using science talk",
-  "Determine strategies used to introduce and reinforce science vocabulary",
-  "Include a 200-300 word summary with APA 7th Edition citations"
-]
+Part B is ONE complete lesson plan task using the full Baker College format.
 
-Output the JSON array now:`;
+Part C is ONE home-school reflection task covering all bullet points.
+
+Output a JSON array with exactly 5 items:
+- Index 0: Full task for Part A Book 1 (Book Details + Oral Language + Comprehension + Vocabulary)
+- Index 1: Full task for Part A Book 2 (Book Details + Oral Language + Comprehension + Vocabulary)
+- Index 2: Full task for Part A Book 3 (Book Details + Oral Language + Comprehension + Vocabulary)
+- Index 3: Full Baker College lesson plan task (Part B — all fields, using one book from Part A)
+- Index 4: Full home-school connection reflection (Part C — all 6 bullet points)
+
+Each task string must be detailed enough that the writer knows exactly what to produce.
+
+Output ONLY the raw JSON array. No markdown, no explanation, nothing else.`;
 }
 
-// ─── AI1 SELF-CHECK PROMPT ────────────────────────────────────────────────────
-
 function buildAI1SelfCheckPrompt(generatedQuestions) {
-  return `You previously broke the assignment directions into this list of questions:
+  return `You previously broke the assignment into this task list:
 
 ${JSON.stringify(generatedQuestions, null, 2)}
 
-Now compare your list against the original directions:
+Compare against the original directions:
 
 ${"=".repeat(55)}
 ORIGINAL DIRECTIONS:
@@ -6884,31 +7858,39 @@ ${"=".repeat(55)}
 ${ASSIGNMENT_DIRECTIONS.trim()}
 
 ${"=".repeat(55)}
-YOUR JOB:
+CHECK:
 ${"=".repeat(55)}
-Check if your list covers EVERY requirement in the directions.
-For each original requirement say:
-  COVERED: [yes/no] — [requirement text]
+Verify:
+- Part A has exactly 3 book tasks, each covering Book Details + Oral Language + Comprehension + Vocabulary
+- Part B has exactly 1 complete lesson plan task covering ALL Baker College format fields
+- Part C has exactly 1 home-school reflection covering ALL 6 bullet points
 
-If anything is missing, output the corrected complete JSON array at the end.
-If everything is covered, output the original array unchanged at the end.
-
-End your response with the final JSON array — nothing after it.`;
+Report what is covered and what is missing.
+Then output the final corrected JSON array as the very last thing in your response — nothing after the array.`;
 }
 
-// ─── AI2 PROMPT — answer one question ─────────────────────────────────────────
+// ─── AI2 PROMPTS ──────────────────────────────────────────────────────────────
 
-function buildAI2Prompt(questionIndex, questionText, totalQuestions) {
-  return `You are answering question ${questionIndex + 1} of ${totalQuestions} for an assignment.
-Answer ONLY this one question — do not answer other questions.
-
+function buildAI2Prompt(questionIndex, questionText, totalQuestions, previousAnswers) {
+  const contextBlock = previousAnswers.length > 0
+    ? `${"=".repeat(55)}
+CONTEXT — previous sections already completed (use for continuity):
 ${"=".repeat(55)}
-QUESTION ${questionIndex + 1}:
+${previousAnswers.map((a, i) => `--- Section ${i + 1} ---\n${a.substring(0, 800)}${a.length > 800 ? "\n...[truncated for context]" : ""}`).join("\n\n")}
+
+`
+    : "";
+
+  return `You are completing section ${questionIndex + 1} of ${totalQuestions} of an assignment.
+Complete ONLY this section — do not repeat or summarize other sections.
+
+${contextBlock}${"=".repeat(55)}
+SECTION ${questionIndex + 1} TASK:
 ${"=".repeat(55)}
 ${questionText}
 
 ${"=".repeat(55)}
-SOURCE TEXT — use these for citations:
+SOURCE TEXT — cite from these sources only:
 ${"=".repeat(55)}
 ${SOURCE_PAGES.trim()}
 
@@ -6916,103 +7898,40 @@ ${"=".repeat(55)}
 APA 7TH EDITION CITATION RULES:
 ${"=".repeat(55)}
 
-You MUST use BOTH parenthetical AND narrative citations in your answer.
+Use BOTH parenthetical AND narrative citations. At most 3 parenthetical citations per answer — the rest must be narrative.
 
-PARENTHETICAL FORMAT:
+PARENTHETICAL (max 3 per answer):
   Author (date) verb "word for word text" (p. #).
   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
-  CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+  WRONG: "text" (Author, date, p. #).  WRONG: "Text capital" (p. #).
+  WRONG: "text." (p. #).               WRONG: such as "text" (p. #).
 
-  WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
-  WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
-  WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
-  WRONG: such as "text" (p. #).           ← no filler words before opening quote
-
-NARRATIVE FORMAT:
-  According to Author (date), from Chapter X on page #, ...
-  As Author (date) explains on page #, ...
-
-  If the source HAS a chapter: According to Ramlal (2023), from Chapter 3 on page 23, ...
-  If NO chapter (Annenberg Learner): As Annenberg Learner (n.d.) explains on page 25, ...
-
-  WRONG: Ramlal (2023, Chapter 3, p. 23) states...  ← chapter/page inside parens
-  WRONG: According to Ramlal (2023), teaching is important.  ← no page mentioned
+NARRATIVE (use for the majority of citations):
+  According to Ramlal (2023), from Chapter 3 on page 23, ...
+  As Annenberg Learner (n.d.) explains on page 25, ...
+  WRONG: Ramlal (2023, Chapter 3, p. 23) states...
+  WRONG: According to Ramlal (2023), teaching is important.  ← missing page
 
 CAPITAL FIRST WORD RULE:
-  If source starts with a capital, pull that word OUT of the quotes, lowercase it.
-  SOURCE: Students become engaged whenever they are using their senses
-  RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
-  WRONG:  Annenberg Learner (n.d.) notes "Students become engaged" (p. 24).
+  SOURCE: Students become engaged → RIGHT: students "become engaged..." (p. 24).
 
-PERIOD RULE: Period AFTER (p. #) — NEVER inside the quotes.
-NO MIXED SOURCES: Annenberg Learner text → Annenberg Learner (n.d.). Ramlal text → Ramlal (2023).
-IF IN DOUBT: drop the citation and write a plain sentence.
+PERIOD: After (p. #) — NEVER inside quotes.
+NO MIXED SOURCES: Ramlal text → Ramlal (2023). Annenberg text → Annenberg Learner (n.d.).
 
-Write a thorough answer to the question above using at least 2 citations.
-If this is the summary question, write 200-300 words.
-Output ONLY your answer — no preamble, no "here is my answer".`;
+Write a COMPLETE, THOROUGH response. Do not cut it short.
+Output ONLY your answer — no preamble, no labels, no "here is my answer".`;
 }
-
-// ─── AI3 PROMPT — check citations ─────────────────────────────────────────────
-
-function buildAI3Prompt(questionText, answerText) {
-  return `You are a strict APA 7th Edition citation reviewer.
-
-${"=".repeat(55)}
-QUESTION BEING ANSWERED:
-${"=".repeat(55)}
-${questionText}
-
-${"=".repeat(55)}
-ANSWER TO REVIEW:
-${"=".repeat(55)}
-${answerText}
-
-${"=".repeat(55)}
-WHAT TO CHECK:
-${"=".repeat(55)}
-TWO citation formats are required — check both are present and correct.
-
-PARENTHETICAL — correct format:
-  Author (date) verb "word for word text" (p. #).
-  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
-
-NARRATIVE — correct format:
-  According to Ramlal (2023), from Chapter 3 on page 23, ...
-  As Annenberg Learner (n.d.) explains on page 24, ...
-
-VIOLATIONS TO FLAG:
-1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
-2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
-3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
-4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
-5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
-6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
-7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
-8. Only one citation type used — both parenthetical AND narrative required.
-9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
-10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
-    The sentence must END after (p. #).
-
-For each violation: quote the exact wrong text and state the fix.
-
-End with EXACTLY one of these as the very last line:
-CITATION RESULT: PASS
-CITATION RESULT: FAIL`;
-}
-
-// ─── AI2 CORRECTION PROMPT ───────────────────────────────────────────────────
 
 function buildAI2CorrectionPrompt(questionText, currentAnswer, ai3Feedback) {
-  return `Your answer has citation violations. Fix every one now.
+  return `Your answer has citation violations. Fix every one and output the COMPLETE corrected answer.
 
 ${"=".repeat(55)}
-QUESTION:
+TASK:
 ${"=".repeat(55)}
 ${questionText}
 
 ${"=".repeat(55)}
-YOUR CURRENT ANSWER WITH VIOLATIONS:
+YOUR CURRENT ANSWER:
 ${"=".repeat(55)}
 ${currentAnswer}
 
@@ -7022,72 +7941,129 @@ ${"=".repeat(55)}
 ${ai3Feedback}
 
 ${"=".repeat(55)}
-FIX USING THESE RULES:
+FIX RULES:
 ${"=".repeat(55)}
 PARENTHETICAL: Author (date) verb "word for word text" (p. #).
-  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
-
 NARRATIVE: According to Author (date), from Chapter X on page #, ...
-  As Annenberg Learner (n.d.) explains on page 24, ...
-
-- Period AFTER (p. #) — NEVER inside quotes
+- Period AFTER (p. #) — never inside quotes
 - Capital first word → pull out, lowercase, blend into sentence
-- Quote must END the sentence — never continue after (p. #) with lowercase text
-- Both parenthetical AND narrative required
-- Page always present — either as (p. #) or said naturally in the sentence
+- Quote must END the sentence — never continue after (p. #)
+- Both types required; mostly narrative, max 3 parenthetical
+- Page always present
 
-Output ONLY the corrected answer — no preamble.`;
+Output the COMPLETE corrected answer — no preamble, no truncation.`;
 }
 
-// ─── PARSE AI1 JSON RESPONSE ──────────────────────────────────────────────────
+// ─── AI3 PROMPT ───────────────────────────────────────────────────────────────
+
+function buildAI3Prompt(questionText, answerText) {
+  return `You are a strict APA 7th Edition citation reviewer.
+
+${"=".repeat(55)}
+SECTION TASK:
+${"=".repeat(55)}
+${questionText}
+
+${"=".repeat(55)}
+ANSWER TO REVIEW:
+${"=".repeat(55)}
+${answerText}
+
+${"=".repeat(55)}
+CHECK:
+${"=".repeat(55)}
+Both parenthetical AND narrative citations must be present and correct.
+
+PARENTHETICAL correct: Author (date) verb "word for word text" (p. #).
+NARRATIVE correct: According to Author (date), from Chapter X on page #, ...
+
+VIOLATIONS:
+1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
+2. Period inside closing quote. Fix: move after (p. #).
+3. Quote with no (p. #). Fix: add or drop.
+4. Capital first word inside quote. Fix: pull out, lowercase.
+5. Empty quotes. Fix: drop.
+6. Chapter/page inside parens. Fix: write in sentence.
+7. Narrative missing page. Fix: add page naturally.
+8. Only one citation type. Fix: add the other.
+9. Sources mixed. Fix: correct attribution.
+10. Quote fragment — sentence continues after (p. #). Fix: end sentence at (p. #).
+
+NOTE: Baker College lesson plan template fields (Subject Area, Materials, etc.) do NOT
+require citations. Only fail if narrative explanation paragraphs lack citations.
+
+For each violation: quote the exact wrong text and state the fix.
+
+End with EXACTLY one of:
+CITATION RESULT: PASS
+CITATION RESULT: FAIL`;
+}
+
+// ─── PARSE AI1 JSON ───────────────────────────────────────────────────────────
 
 function extractQuestionsFromResponse(raw) {
-  // Find the last JSON array in the response
   const match = raw.match(/\[[\s\S]*\]/g);
-  if (!match) throw new Error("AI1 did not return a JSON array");
+  if (!match) throw new Error("No JSON array found");
   const lastArray = match[match.length - 1];
-  try {
-    const parsed = JSON.parse(lastArray);
-    if (!Array.isArray(parsed) || parsed.length === 0)
-      throw new Error("Empty or invalid array");
-    return parsed.map(q => String(q).trim()).filter(q => q.length > 5);
-  } catch (e) {
-    throw new Error(`Failed to parse AI1 JSON: ${e.message}\nRaw: ${lastArray.substring(0, 300)}`);
-  }
+  const parsed = JSON.parse(lastArray);
+  if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("Empty array");
+  return parsed.map(q => String(q).trim()).filter(q => q.length > 5);
+}
+
+// ─── KEEP ALIVE — blocks Node from exiting until Ctrl+C ───────────────────────
+
+function keepAliveUntilCtrlC(browsers) {
+  return new Promise(() => {
+    // This Promise NEVER resolves — Node stays alive because:
+    // 1. There is a pending Promise (this one)
+    // 2. There are active event listeners (process.on below)
+    // The only way out is Ctrl+C or SIGTERM.
+    console.log("\n" + "=".repeat(70));
+    console.log("  ✓ ALL DONE — windows stay open until you press Ctrl+C");
+    console.log("  Press Ctrl+C in this terminal when finished reviewing.");
+    console.log("=".repeat(70) + "\n");
+
+    process.on("SIGINT", async () => {
+      console.log("\n  Ctrl+C — closing all Chrome windows...");
+      for (const b of browsers) { try { await b.close(); } catch (_) {} }
+      console.log("  Done. Exiting.\n");
+      process.exit(0);
+    });
+
+    process.on("SIGTERM", async () => {
+      for (const b of browsers) { try { await b.close(); } catch (_) {} }
+      process.exit(0);
+    });
+  });
 }
 
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 (async () => {
   console.log("=".repeat(70));
-  console.log("  QUESTION-BY-QUESTION PIPELINE");
+  console.log("  ASSIGNMENT PIPELINE");
   console.log("=".repeat(70));
-  console.log("  AI1 — parses directions into question array");
-  console.log("  AI2 — answers each question with APA citations");
+  console.log("  AI1 — parses assignment into ordered task list");
+  console.log("  AI2 — completes each section with APA citations");
   console.log("  AI3 — checks citations, sends back to AI2 if wrong");
-  console.log(`  Output file: ${OUTPUT_FILENAME}`);
+  console.log(`  Output: ${OUTPUT_FILENAME}`);
   console.log("=".repeat(70) + "\n");
 
-  // Init output file
   initOutputFile();
 
-  // Open three Gemini windows
   console.log("Opening AI windows...\n");
   const { browser: b1, page: ai1Page } = await openGeminiBrowser("ai1-parser",   "AI1 PARSER");
   const { browser: b2, page: ai2Page } = await openGeminiBrowser("ai2-writer",   "AI2 WRITER");
   const { browser: b3, page: ai3Page } = await openGeminiBrowser("ai3-reviewer", "AI3 REVIEWER");
 
-  // Wait for login if needed
   const allPages = [ai1Page, ai2Page, ai3Page];
   if (allPages.some(p => p.url().includes("accounts.google.com"))) {
-    console.log("\n  Sign into Google in ALL THREE Gemini windows.");
-    console.log("  Script waits until all three are on Gemini.\n");
+    console.log("\n  Sign into Google in ALL THREE Gemini windows. Waiting...\n");
     await Promise.all(allPages.map(p =>
       p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })
     ));
   }
-
-  for (const [p, lbl] of [[ai1Page, "AI1"], [ai2Page, "AI2"], [ai3Page, "AI3"]]) {
+  for (const [p, lbl] of [[ai1Page,"AI1"],[ai2Page,"AI2"],[ai3Page,"AI3"]]) {
     await p.waitForFunction(
       () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
       { timeout: 30000, polling: 1000 }
@@ -7096,9 +8072,9 @@ function extractQuestionsFromResponse(raw) {
   await sleep(2000);
   console.log("All windows ready.\n");
 
-  // ── STEP 1: AI1 parses directions into questions ───────────────────────────
+  // ── STEP 1: AI1 parses assignment ─────────────────────────────────────────
   console.log("=".repeat(70));
-  console.log("  STEP 1 — AI1 parsing directions into questions");
+  console.log("  STEP 1 — AI1 parsing assignment into task list");
   console.log("=".repeat(70) + "\n");
 
   await sendMessage(ai1Page, buildAI1Prompt(), "AI1 PARSER");
@@ -7111,112 +8087,97 @@ function extractQuestionsFromResponse(raw) {
     console.error(`  ✗ AI1 parse failed: ${e.message}`);
     process.exit(1);
   }
+  console.log(`\n  AI1 generated ${questions.length} task(s):`);
+  questions.forEach((q, i) => console.log(`    [${i+1}] ${q.substring(0,100)}...`));
 
-  console.log(`\n  AI1 generated ${questions.length} question(s):`);
-  questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
-
-  // ── STEP 2: AI1 self-checks its own question list ──────────────────────────
+  // ── STEP 2: AI1 self-check ────────────────────────────────────────────────
   console.log("\n" + "=".repeat(70));
-  console.log("  STEP 2 — AI1 self-checking question coverage");
+  console.log("  STEP 2 — AI1 self-checking coverage");
   console.log("=".repeat(70) + "\n");
 
   await sendMessage(ai1Page, buildAI1SelfCheckPrompt(questions), "AI1 PARSER");
   const ai1CheckRaw = await waitForResponse(ai1Page, "AI1 PARSER");
 
-  // Try to extract a revised array from the self-check response
   try {
     const revised = extractQuestionsFromResponse(ai1CheckRaw);
     if (revised.length >= questions.length) {
       questions = revised;
-      console.log(`\n  AI1 self-check complete. Final question count: ${questions.length}`);
+      console.log(`\n  ✓ Self-check done. Final task count: ${questions.length}`);
     } else {
-      console.log(`\n  AI1 self-check returned fewer questions — keeping original list.`);
+      console.log(`\n  Self-check returned fewer tasks — keeping original list.`);
     }
   } catch (_) {
-    console.log(`\n  AI1 self-check did not change the list.`);
+    console.log(`\n  Self-check did not change the list.`);
   }
 
-  console.log(`\n  Final questions to answer (${questions.length} total):`);
-  questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+  const sectionLabels = [
+    "PART A — BOOK 1",
+    "PART A — BOOK 2",
+    "PART A — BOOK 3",
+    "PART B — LESSON PLAN",
+    "PART C — HOME-SCHOOL REFLECTION",
+  ];
 
-  // ── STEP 3: Loop through each question ────────────────────────────────────
+  console.log(`\n  Final tasks (${questions.length} total):`);
+  questions.forEach((q, i) => console.log(`    [${i+1}] ${sectionLabels[i] || `Section ${i+1}`}: ${q.substring(0,80)}...`));
+
+  // ── STEP 3: AI2 writes + AI3 checks each section ─────────────────────────
   console.log("\n" + "=".repeat(70));
-  console.log(`  STEP 3 — AI2 answers each question, AI3 checks citations`);
+  console.log("  STEP 3 — Writing and checking each section");
   console.log("=".repeat(70));
+
+  const completedAnswers = [];
 
   for (let idx = 0; idx < questions.length; idx++) {
     const questionText = questions[idx];
-    const qNum = idx + 1;
-    const isSummary = questionText.toLowerCase().includes("summary");
+    const qNum         = idx + 1;
+    const label        = sectionLabels[idx] || `SECTION ${qNum}`;
 
     console.log(`\n${"─".repeat(70)}`);
-    console.log(`  QUESTION ${qNum} of ${questions.length}`);
-    console.log(`  ${questionText}`);
+    console.log(`  ${label} (${qNum} of ${questions.length})`);
     console.log(`${"─".repeat(70)}`);
 
     // AI2 writes the answer
-    await sendMessage(ai2Page, buildAI2Prompt(idx, questionText, questions.length), "AI2 WRITER");
+    await sendMessage(ai2Page, buildAI2Prompt(idx, questionText, questions.length, completedAnswers), "AI2 WRITER");
     let answer = await waitForResponse(ai2Page, "AI2 WRITER");
 
     // AI3 checks citations — loop until PASS
     let citationApproved = false;
-    let citationAttempt  = 0;
-    const MAX_CITATION_ATTEMPTS = 5;
+    let attempt = 0;
+    const MAX = 5;
 
-    while (!citationApproved && citationAttempt < MAX_CITATION_ATTEMPTS) {
-      citationAttempt++;
-      console.log(`\n  [CITATION CHECK] Attempt ${citationAttempt}/${MAX_CITATION_ATTEMPTS} for Q${qNum}`);
+    while (!citationApproved && attempt < MAX) {
+      attempt++;
+      console.log(`\n  [CITATION CHECK] Attempt ${attempt}/${MAX} — ${label}`);
 
       await sendMessage(ai3Page, buildAI3Prompt(questionText, answer), "AI3 REVIEWER");
       const ai3Feedback = await waitForResponse(ai3Page, "AI3 REVIEWER");
-
       console.log(`\n  [AI3]:\n  ` + ai3Feedback.split("\n").join("\n  "));
 
       if (ai3Feedback.includes("CITATION RESULT: PASS")) {
-        console.log(`\n  ✓ Citations PASSED for Q${qNum}`);
+        console.log(`\n  ✓ Citations PASSED — ${label}`);
         citationApproved = true;
       } else {
-        console.log(`\n  ✗ Citations FAILED — sending back to AI2 to fix...`);
+        console.log(`\n  ✗ Citations FAILED — sending back to AI2...`);
         await sendMessage(ai2Page, buildAI2CorrectionPrompt(questionText, answer, ai3Feedback), "AI2 WRITER");
         answer = await waitForResponse(ai2Page, "AI2 WRITER");
         await sleep(2000);
       }
     }
 
-    if (!citationApproved) {
-      console.warn(`  ⚠ Max citation attempts reached for Q${qNum} — using best version.`);
-    }
+    if (!citationApproved) console.warn(`  ⚠ Max attempts reached — using best version.`);
 
-    // Append to output file
-    if (isSummary) {
-      appendSummaryToFile(answer);
-    } else {
-      appendToFile(qNum, questionText, answer);
-    }
-
-    console.log(`\n  ✓ Q${qNum} complete and saved.`);
+    completedAnswers.push(answer);
+    appendToFile(label, questionText, answer);
+    console.log(`\n  ✓ ${label} complete and saved.`);
     await sleep(2000);
   }
 
-  // ── DONE ──────────────────────────────────────────────────────────────────
   console.log("\n" + "=".repeat(70));
-  console.log("  ALL QUESTIONS COMPLETE");
-  console.log(`  Output saved to: ${OUTPUT_PATH}`);
-  console.log("=".repeat(70) + "\n");
+  console.log("  ALL SECTIONS COMPLETE");
+  console.log(`  Output: ${OUTPUT_PATH}`);
+  console.log("=".repeat(70));
 
-  // Uncomment to close windows when done:
-  // await b1.close(); await b2.close(); await b3.close();
+  // Block Node from exiting — windows stay open until Ctrl+C
+  await keepAliveUntilCtrlC([b1, b2, b3]);
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-// ////////every thing above this is for mod 4 chat
