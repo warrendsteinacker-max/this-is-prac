@@ -1261,28 +1261,66 @@
 
 // export default App;
 
-
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ReportBuilder  from './components/ReportBuilder';
+// import ReportBuilder  from './components/ReportBuilder';
 import DesignMatrix   from './components/DesignMatrix';
 import PdfEditor      from './components/PdfEditor';
 import StyleArchitect from './components/StyleArchitect';
 
-
+const ReportBuilder = lazy(() => import("./components/ReportBuilder"))
 
 
 function App() {
   return (
     <BrowserRouter>
+      <Suspense fallback={<div>....loading</div>}>
       <Routes>
         <Route path="/"          element={<ReportBuilder />}  />
         <Route path="/matrix"    element={<DesignMatrix />}   />
         <Route path="/editor"    element={<PdfEditor />}      />
         <Route path="/architect" element={<StyleArchitect />} />
-
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+
+//////////custom hook to test out 
+
+
+// const useFormfetch = (url, data) => {
+
+//   const [L, setL] = useState(false)
+//   const [E, setE] = useState(false)
+
+
+//   const f = async() => {
+//     try{
+//       setL(true)
+//       const res = await fetch(url, {method: "POST", headers: {"Content-Type" : "application/json"}, body: JSON.stringify(data)})
+    
+//       if(!res.ok){
+//         throw new Error("res bad")
+//       }
+
+//       setE(false)
+//     }
+//     catch(error){
+//         console.error(error.message)
+//         setE(true)
+//     }
+//     finally{
+//         setL(false)
+//     }
+
+//   }
+
+
+
+//     return{L, E, f}
+// }
