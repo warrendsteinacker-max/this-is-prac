@@ -1176,23 +1176,51 @@
 
 
 
-import {Provider} from "react-redux"
-import store from "./Defin.jsx"
+// import {Provider} from "react-redux"
+// import store from "./Defin.jsx"
+// import New from "./New.jsx"
+
+
+// const ReportBuilder = () => {
+
+//   return(
+//     <>
+//     <Provider store={store}>
+//       <New />
+//     </Provider>
+//     </>
+//   )
+
+// }
+
+
+// export default ReportBuilder
+
+
+
+
+
+
+
+
+
+
+
+
+
 import New from "./New.jsx"
+import {Provider} from "react-redux"
+import {store} from "./Defin.jsx"
+
+
 
 
 const ReportBuilder = () => {
-
-  return(
-    <>
+  return (
     <Provider store={store}>
       <New />
     </Provider>
-    </>
   )
-
 }
 
-
 export default ReportBuilder
-
