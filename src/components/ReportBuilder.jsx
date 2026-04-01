@@ -1175,20 +1175,19 @@
 // }
 
 
-import {createContext} from "react"
-import C from "./Create.jsx"
 
-export const Con = createContext(null)
+import {Provider} from "react-redux"
+import store from "./Defin.jsx"
+import New from "./New.jsx"
 
-const me = "warren"
 
 const ReportBuilder = () => {
 
   return(
     <>
-    <Con.Provider value={{me: me}}>
-      <C />
-    </Con.Provider>
+    <Provider store={store}>
+      <New />
+    </Provider>
     </>
   )
 

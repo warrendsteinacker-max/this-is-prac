@@ -1,17 +1,11 @@
-const Istate = {count: 0, name: "John"}
+import {configureStore} from "@reduxjs/toolkit"
+import C from "./Create.jsx"
 
-
-function reducer(state = Istate, action){
-    switch(action.type){
-        case "+":
-            return{...state, count: state.count + 1}
-        case "-":
-            return{...state, count: state.count - 1}
-        case "name":
-            return{...state, name: action.payload}
-        default:
-            return state
+const store = configureStore({
+    reducer: {
+        counter: C
     }
-}
+})
 
-export default reducer
+
+export default store
