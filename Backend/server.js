@@ -7429,6 +7429,7 @@ const app = express();
 // Name of the output file — the assignment answers go here
 const OUTPUT_FILENAME = "science_video_analysis.txt";
 
+const SEC_OUTPUT_FILENAME = `FINAL ${OUTPUT_FILENAME}`
 const ASSIGNMENT_DIRECTIONS = `
 `;
 
@@ -7459,6 +7460,7 @@ const launchOptions = {
 // ─── OUTPUT FILE ──────────────────────────────────────────────────────────────
 
 const OUTPUT_PATH = path.resolve(OUTPUT_FILENAME);
+CONST
 
 function initOutputFile() {
   const header = [
@@ -7951,7 +7953,8 @@ function extractQuestionsFromResponse(raw) {
 
 for (let idx = 0; idx < questions.length; idx++) {
 
-  
+
+
 }
 
 
