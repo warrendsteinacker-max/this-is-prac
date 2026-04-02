@@ -28,8 +28,11 @@ body,
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  display: block; /* Prevents the flexbox "top-clipping" trap */
+  /* display: block; Prevents the flexbox "top-clipping" trap */
   background-color: #0d0d1a;
+  justify-content: "center";
+  align-items: "center";
+  display: "grid";
 }
 
 /* Base Link Styles */

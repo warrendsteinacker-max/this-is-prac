@@ -225,18 +225,57 @@
 
 // export default New
 
-
+import {fetchD, AlphS} from "./Create.jsx"
+import {useDispatch, useSelector} from "react-redux"
+import {useEffect} from "react"
+import {filterData} from "./Create.jsx"
 
 const DogSearch = () => {
-
+    const dis = useDispatch()
+    const D = useSelector((state) => state.counter.filterD)
+    useEffect(() => {
+        dis(fetchD())
+    }, [])
 
     return(<>
-    
-            <h1 style={{textDecoration: "underline", fontSize: "20px"}}>Dog Seach</h1>
-            <form>
-                <input type="text" placeholder="search for dog type"/>
-            </form>
-    
+            <h1 style={{marginLeft: "10px"}}>Search By Alphabetic Order</h1>
+            <div style={{display: "flex", flexDirection: "row", backgroundColor: "lightgray", height: "120px", color: "black", gap: "10px", alignItems: "center", justifyContent: "center", padding: "10px", flexWrap: "wrap", flexShrink: "5", flexGrow: "1"}}>
+                <button onClick={() => dis(AlphS("all"))}>Get All</button>
+                <button onClick={() => dis(AlphS("a"))}>A</button>
+                <button onClick={() => dis(AlphS("b"))}>B</button>
+                <button onClick={() => dis(AlphS("c"))}>C</button>
+                <button onClick={() => dis(AlphS("d"))}>D</button>
+                <button onClick={() => dis(AlphS("e"))}>E</button>
+                <button onClick={() => dis(AlphS("f"))}>F</button>
+                <button onClick={() => dis(AlphS("g"))}>G</button>
+                <button onClick={() => dis(AlphS("h"))}>H</button>
+                <button onClick={() => dis(AlphS("i"))}>I</button>
+                <button onClick={() => dis(AlphS("j"))}>J</button>
+                <button onClick={() => dis(AlphS("k"))}>K</button>
+                <button onClick={() => dis(AlphS("l"))}>L</button>
+                <button onClick={() => dis(AlphS("m"))}>M</button>
+                <button onClick={() => dis(AlphS("n"))}>N</button>
+                <button onClick={() => dis(AlphS("o"))}>O</button>
+                <button onClick={() => dis(AlphS("p"))}>P</button>
+                <button onClick={() => dis(AlphS("q"))}>Q</button>
+                <button onClick={() => dis(AlphS("r"))}>R</button>
+                <button onClick={() => dis(AlphS("s"))}>S</button>
+                <button onClick={() => dis(AlphS("t"))}>T</button>
+                <button onClick={() => dis(AlphS("u"))}>U</button>
+                <button onClick={() => dis(AlphS("v"))}>V</button>
+                <button onClick={() => dis(AlphS("w"))}>W</button>
+                <button onClick={() => dis(AlphS("x"))}>X</button>
+                <button onClick={() => dis(AlphS("y"))}>Y</button>
+                <button onClick={() => dis(AlphS("z"))}>Z</button>
+            </div>
+            <div className="DogSearch" style={{display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", flexDirection: "column", backgroundColor: "brown"}}>
+            <h1 style={{textDecoration: "underline", fontSize: "20px"}} >Dog Seach</h1>
+            
+                <input type="text" placeholder="Search for dog type" onChange={(e) => dis(filterData(e.target.value))}/>
+                
+           
+            </div>
+            {D.map((item) => <div key={item.id} style={{marginLeft: "25%"}}><h1>{item.name}</h1><img src={item.image.url} style={{borderRadius: "10px", width: "500px", height: "500px"}}/></div>)}
             </>)
 }
 

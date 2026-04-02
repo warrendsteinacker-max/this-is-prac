@@ -1260,7 +1260,7 @@
 // }
 
 // export default App;
-
+import "./App.css";
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import ReportBuilder  from './components/ReportBuilder';

@@ -34,12 +34,14 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 export const fetchD = createAsyncThunk(
     "data f",
     async() => {
-        const res = await fetch("https://jsonplaceholder.typicode.com/posts")
-        
+        const res = await fetch("https://api.thedogapi.com/v1/breeds", {method: "GET", headers: {"x-api-key" : "live_WQSPyRX2bHJaUvdSgSc0k15mJLDqd0AUoYILOrB479WhXwcZQkv4uqgAtZWiFdVN", "Content-Type": "application/json"}})
+
         if(!res.ok){
             return true
         }
         const DD = await res.json()
+
+        console.log(DD)
 
         return DD
     }
@@ -56,12 +58,17 @@ const Slice = createSlice({
     },
     reducers: {
         filterData: (state, action) => {
-            const newD = state.data.filter((item) => item.userId === Number(action.payload))
-            console.log(newD)
-            console.log(Object)
+            const newD = state.data.filter((item) => item.name.toLowerCase().includes(action.payload.toLowerCase()))
             console.log(action.payload)
             console.log(typeof(action.payload))
             state.filterD = newD
+        },
+        AlphS: (state, action) => {
+            const newd = state.data.filter((item) => item.name.split("")[0].toLowerCase() === action.payload)
+            state.filterD = newd
+            if(action.payload === "all"){
+                state.filterD = state.data
+            }
         }
     },
     extraReducers:
@@ -77,7 +84,7 @@ const Slice = createSlice({
     
 })
 
-export const {filterData} = Slice.actions
+export const {filterData, AlphS} = Slice.actions
 export default Slice.reducer
 
 
