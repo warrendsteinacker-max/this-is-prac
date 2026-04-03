@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-</html>
+</html> -->
 
 
 
@@ -1645,3 +1645,58 @@ pas.addEventListener("change", PASCHANGE)
   </script>
 </body>
 </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+
+  <script>
+
+    let win = []
+
+    const col = 5
+    const row = 5
+
+    ////////horizantal
+    for(let r = 0; r < row; r++){
+      for(let c = 0; c < col - 3; c++) {
+        const index = r*col+c
+        win.push([index, index + 1, index + 2, index + 3])
+      }
+    }
+
+    ///////vertical
+
+    for(let r = 0; r < row - 3; r++){
+      for(let c = 0; c < col; c++){
+        const index = r*col+c
+        win.push([index, index+col, index+col*2, index+col*3])
+      }
+    }
+
+
+    ///////// this way \\\\\
+
+    for(let r = 0; r< row - 3; r++){
+      for(let c = 0; c < col - 3; c++){
+        const index = r*col+c
+        win.push([index, index*(col + 1), index + 2*(col+1), index + 3*(col+1)])
+      }
+    }
+
+
+    //////// this way /////
+    for(let r = 0; r < row - 3 ; r++){
+      for(let c = 3; c < col; c++){
+        const index = r*col+c
+        win.push([index, index*(col-1), index*2*(col-1), index*3*(col-1)])
+      }
+    }
+
+
+  </script>
+</body>
+</html>
