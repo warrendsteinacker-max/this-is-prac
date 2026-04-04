@@ -7416,8 +7416,81 @@
 
 
 
+// ////////build ai 2 prompt
+
+// You MUST only make narrative citations in your answer and mention chapter page section or nnumber were cited from in citations what every you can find.
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+
+//   WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
+//   WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
+//   WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
+//   WRONG: such as "text" (p. #).           ← no filler words before opening quote
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+//   As Author (date) explains on page #, ...
+
+//   If the source HAS a chapter: According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   If NO chapter (Annenberg Learner): As Annenberg Learner (n.d.) explains on page 25, ...
+
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...  ← chapter/page inside parens
+//   WRONG: According to Ramlal (2023), teaching is important.  ← no page mentioned
+
+// CAPITAL FIRST WORD RULE:
+//   If source starts with a capital, pull that word OUT of the quotes, lowercase it.
+//   SOURCE: Students become engaged whenever they are using their senses
+//   RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
+//   WRONG:  Annenberg Learner (n.d.) notes "Students become engaged" (p. 24).
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside the quotes.
+// NO MIXED SOURCES: Annenberg Learner text → Annenberg Learner (n.d.). Ramlal text → Ramlal (2023).
+// IF IN DOUBT: drop the citation and write a plain sentence.
+
+// Write a thorough answer to the question above using at least 2 citations.
+// If this is the summary question, write 200-300 words.
+// Output ONLY your answer — no preamble, no "here is my answer".
 
 
+
+
+
+
+////////build ai3 prompt 
+
+
+
+// TWO citation formats are required — check both are present and correct.
+
+// PARENTHETICAL — correct format:
+//   Author (date) verb "word for word text" (p. #).
+//   Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+// NARRATIVE — correct format:
+//   According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   As Annenberg Learner (n.d.) explains on page 24, ...
+
+// VIOLATIONS TO FLAG:
+// 1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
+// 2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
+// 3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
+// 4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
+// 5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+// 6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
+// 7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
+// 8. Only one citation type used — both parenthetical AND narrative required.
+// 9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
+// 10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
+//     The sentence must END after (p. #).
+
+// For each violation: quote the exact wrong text and state the fix.
+
+// End with EXACTLY one of these as the very last line:
+// CITATION RESULT: PASS
+// CITATION RESULT: FAIL
 
 
 
@@ -7593,185 +7666,79 @@ Enrichment: How will we respond if they already know it?
 const SOURCE_PAGES = `
 
 
-
-
-
-
-
 ---
-AUTHOR: Rubric 3
-DATE: dose not have one dont include
-PAGE: dose not have one dont include
+AUTHOR: Michigan Department of Education
+DATE: n.d. 
+PAGE: 44 
 CHAPTER: does not have one
 SECTION: does not have one
-
+Note: use this state standard for lesson
 EXACT TEXT:
 
-as noted in the chat for this
 
-Bad
-This is rubric is bad. It states expectations for student work; however, rating scales are not the most affective. Rating scales require decisions across a scale that does not grade the performance. To add on, this rubric does not provide students with feedback to improve in future work. This can be improved by having specific guidelines for every number (1-4).
-Think back to various rubrics you have seen in your educational career. What was the difference between a useful rubric and unuseful rubric as a student?
+Apply and extend previous understandings of multiplication and
+division to divide fractions by fractions.
+1.	 Interpret and compute quotients of fractions, and solve word
+problems involving division of fractions by fractions, e.g., by using
+visual fraction models and equations to represent the problem. For
+example, create a story context for (2/3)
+÷ (3/4) and use a visual fraction
+model to show the quotient; use the relationship between multiplication
+and division to explain that (2/3)
+÷ (3/4) = 8/9 because 3/4 of 8/9 is 2/3.
+(In general, (a/b)
+÷ (c/d) = ad/bc.) How much chocolate will each person
+get if 3 people share 1/2 lb of chocolate equally? How many 3/4-cup
+servings are in 2/3 of a cup of yogurt? How wide is a rectangular strip of
+land with length 3/4 mi and area 1/2 square mi?
 
 
 ---
 
 
 
+
 ---
-AUTHOR: Rubric 5
-DATE: dose not have one dont include
-PAGE: dose not have one dont include
+AUTHOR: Michigan Department of Education
+DATE: n.d. 
+PAGE: 44
 CHAPTER: does not have one
 SECTION: does not have one
-
+Note: use this state standard for lesson
 EXACT TEXT:
 
-as noted in the chat for this
-
-Good
-This rubric is very clear in what is expected, specific enough to guide students in the right direction, and aligns well with the objectives.
-
-
-Art Project Rubric
-1. Planning
-Level 4: Student utilized planning time and materials to create a rough sketch or sketches of final product.
-
-Level 3: Student utilized planning time to sketch. Student may not have used planning materials correctly to benefit their final product, or did not complete the correct number of sketches.
-
-Level 2: Student utilized planning time to sketch, however, they drew whatever they wanted and did not use the planning materials.
-
-Level 1: Student did not utilize planning time, and/or does not have any planning sketches.
-
-2. Time and Effort
-Level 4: Class time was used wisely. Artwork shows lots of detail and it is clear the student put forth effort.
-
-Level 3: Class time was mostly used wisely. Artwork shows detail and student put forth effort.
-
-Level 2: Class time was not always used wisely. The amount of detail in the artwork shows little effort. Artwork incomplete, or has visible mistakes.
-
-Level 1: Class time was not used wisely. Artwork shows little effort. Artwork incomplete or not turned in.
-
-3. Creative Thinking
-Level 4: Student thought outside of the box to come up with a unique artistic idea, and was able to realize this idea within their final art piece.
-
-Level 3: Student came up with an interesting artistic idea and was able to use that idea in their final art piece.
-
-Level 2: Student's idea was predictable or copied from another student or artist.
-
-Level 1: Student's idea was copied, or there is no clear concept within any of the artwork.
-
-4. Craftsmanship
-Level 4: Artwork is clean, neat and the student followed the directions.
-
-Level 3: Artwork is neat, but shows some carelessness. Student followed directions.
-
-Level 2: Artwork is not neat. Directions were not followed properly.
-
-Level 1: Artwork is sloppy and/or dirty. Directions were not followed.
-
-5. Artist Statement
-Level 4: Artist statement is complete and fully explains artistic choices and the process of completing artwork. Minimum of 4 sentences.
-
-Level 3: Artist statement is complete; however, some aspects of explaining artistic choices or process are unclear. 3-4 sentences.
-
-Level 2: Artist statement is mostly complete, but may be missing an explanation of artistic choices or process. Writing may be difficult to understand. Under 3 sentences.
-
-Level 1: No artist statement.
+Understand ratio concepts and use ratio reasoning to solve
+problems.
+1.	 Understand the concept of a ratio and use ratio language to describe
+a ratio relationship between two quantities. For example, “The ratio of wings to beaks in the bird house at the zoo was 2:1, because for every 2 wings there was 1 beak.” “For every vote candidate A received,
+candidate C received nearly three votes.
+”
+2.	 Understand the concept of a unit rate
+a
+/b associated with a ratio a:b
+with b
+≠ 0, and use rate language in the context of a ratio relationship.
+For example, “This recipe has a ratio of 3 cups of flour to 4 cups of sugar,
+so there is 3/4 cup of flour for each cup of sugar.” “We paid $75 for 15
+hamburgers, which is a rate of $5 per hamburger.”1
+3.	 Use ratio and rate reasoning to solve real-world and mathematical
+problems, e.g., by reasoning about tables of equivalent ratios, tape
+diagrams, double number line diagrams, or equations.
+a.	 Make tables of equivalent ratios relating quantities with wholenumber measurements, find missing values in the tables, and plot
+the pairs of values on the coordinate plane. Use tables to compare
+ratios.
+b.	 Solve unit rate problems including those involving unit pricing and
+constant speed. For example, if it took 7 hours to mow 4 lawns, then
+at that rate, how many lawns could be mowed in 35 hours? At what
+rate were lawns being mowed?
+c.	 Find a percent of a quantity as a rate per 100 (e.g., 30% of a
+quantity means 30/100 times the quantity); solve problems
+involving finding the whole, given a part and the percent.
+d.	 Use ratio reasoning to convert measurement units; manipulate
+and transform units appropriately when multiplying or dividing
+quantities.
 ---
 
-
-
----
-AUTHOR: Rubric 4
-DATE: dose not have one dont include
-PAGE: dose not have one dont include
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-as noted in the chat for this
-Good
-This rubric is good. It states specific expectations for student work, ensuring that they will succeed. They can self-assess their work. It is fair for all students. This is an effective rubric, as it will make it simple for the teacher to grade student work. To add on, it provides students with feedback to improve in future work.
-
-Designing a Musical Instrument Rubric
-1. Understanding Basic Concepts
-Level 1: The student demonstrates limited understanding of some of the properties of sound.
-
-Level 2: The student demonstrates some understanding of the properties of sound.
-
-Level 3: The student demonstrates general understanding of some of the properties of sound.
-
-Level 4: The student demonstrates thorough understanding of some of the properties of sound.
-
-2. Design Skills
-Level 1: The student:
-
-Demonstrates limited understanding of the task, with limited reference to the specified criteria.
-
-Creates a limited plan/sketch that meets a few of the criteria.
-
-Creates an instrument that works and meets a few of the criteria.
-
-Provides a limited reflection about how the model could be improved.
-
-Level 2: The student:
-
-Demonstrates some understanding of the problem, with some reference to the specified criteria.
-
-Creates a somewhat organized plan/sketch that meets some of the specified criteria.
-
-Creates an instrument that works and meets some of the criteria.
-
-Provides a somewhat reasonable reflection about how the model could be improved.
-
-Level 3: The student:
-
-Demonstrates general understanding of the problem, with reference to the specified criteria.
-
-Creates an organized, labeled plan/sketch that meets most of the specified criteria.
-
-Creates an instrument that works and meets most of the criteria.
-
-Provides a reasonable reflection about how the model could be improved.
-
-Level 4: The student:
-
-Demonstrates thorough understanding of the problem, with reference to the specified criteria as well as additional criteria and implications.
-
-Creates a highly organized, labeled plan/sketch that meets all or almost all of the specified criteria.
-
-Creates an instrument that works and meets all or almost all of the criteria in logical ways.
-
-Provides a detailed and extensive reflection about how the model could be improved.
-
-3. Communication of Required Knowledge
-Level 1: The student:
-
-Provides a limited explanation of the instrument and of how certain materials or actions affect its sound.
-
-Makes limited use of appropriate science and technology vocabulary.
-
-Level 2: The student:
-
-Provides some explanation of the instrument and of how certain materials and actions affect its sound.
-
-Makes some use of appropriate science and technology vocabulary.
-
-Level 3: The student:
-
-Provides a complete explanation of the instrument and how certain materials and actions affect its sound.
-
-Makes general use of appropriate science and technology vocabulary.
-
-Level 4: The student:
-
-Provides a detailed and complete explanation of the instrument and how certain materials and actions affect its sound.
-
-Makes extensive use of appropriate science and technology vocabulary.
-
----
 
 
 ---
@@ -7959,157 +7926,6 @@ Teacher Talk Moves to Encourage Questioning
   Can you say that again in a different way?
 PRAISE
 As teachers, we know that our students will do anything and everything to please, so creating a classroom culture that encourages questions relies heavily on positive praise. We jump for joy when our students ask a clear and meaningful mathematical question. The excitement may be a bit over the top, but it is a huge motivator for all your students to ask questions. We make sure that we are specifically praising the questions and not the answers: “I love how ______ asked ______ because it lets us ______.” Then we soon hear students repeating those same questions in future lessons. When a student asks us a question while working with us one-on-one, we often say, “What a great question! Can we ask that to the class?” You can also create a public record of the mathematical questions the kids ask. After praising a student for asking a question, say, “Can we write that down so we remember to use it again?” Be sure to use and refer to the chart often so that students begin using it on their own.
-
----
-
-
-
----
-AUTHOR: Rubric 2
-DATE: dose not have one dont include
-PAGE: dose not have one
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-this rubric is ugly as mentioned in the chat
-Ugly
-This rubric is ugly. It does not state specific expectations for student work; therefore, they cannot self-assess their work to ensure they will succeed. This is an ineffective rubric, as it will make it difficult for the teacher to grade student work. To add on, this rubric does not provide students with feedback to improve in future work
-MATH RUBRIC
-Performance Levels:
-
-4 - Demonstrates
-
-3 - Mostly Demonstrates
-
-2 - Some Improvement Needed
-
-1 - Much Improvement Needed
-
-Assessment Criteria:
-| Category | 4 | 3 | 2 | 1 |
-| :--- | :---: | :---: | :---: | :---: |
-| Skills | 4 | 3 | 2 | 1 |
-| Accuracy | 4 | 3 | 2 | 1 |
-| Application | 4 | 3 | 2 | 1 |
-| Neatness | 4 | 3 | 2 | 1 |
-| Participation | 4 | 3 | 2 | 1 |
-
-Grade: ___________
----
-
-
-
----
-AUTHOR: Rubric 1
-DATE: dose not have one dont include
-PAGE: dose not have one
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-as mentioned in the chat for this
-This rubric is good. It is clear, specific, and fair. There is some weakness in the actionability of this rubric. It fails to provide actionable feedback for students to improve their work.
-note this one is not the most visulay appeling 
-Classroom Participation Rubric
-1. Participation in classroom discussion
-Level	Description
-Excellent (4)	The student actively participates in class by asking questions and contributing to classroom discussions more than once.
-Satisfactory (3)	The student actively participates in class by asking questions and contributing to classroom discussions at least once.
-Fair (2)	The student actively participates in class by asking questions and occasionally contributing to classroom discussion.
-Needs Improvement (1)	The student is not actively engaged in class and does not ask questions or contribute to classroom discussion.
-2. Respect for peers
-Level	Description
-Excellent (4)	The student listens when others are speaking in both small group and whole group settings. The student encourages his/her peers to be respectful of others.
-Satisfactory (3)	The student listens when others are speaking in both small group and whole group settings.
-Fair (2)	The student listens when others are speaking most of the time but needs occasional prompting.
-Needs Improvement (1)	The student does not listen when others are speaking, interrupts frequently, or makes negative comments about peers' ideas.
-3. Behavior
-Level	Description
-Excellent (4)	The student is well behaved and almost never displays disruptive behavior.
-Satisfactory (3)	The student is well behaved and sometimes displays disruptive or off-task behavior.
-Fair (2)	The student is mostly well behaved, sometimes displays disruptive or off-task behavior that requires redirection.
-Needs Improvement (1)	The student is not well behaved and frequently displays disruptive or off-task behavior that requires redirection or intervention.
----
-
----
-AUTHOR: Virtual Gallery Walk Rubric Slideshow
-DATE: dose not have one dont include
-PAGE: 2
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-Quality Criterion
-Comes from the Learning Target
-
-Is written in student-friendly language
-
-Makes assignment expectations explicit
-
-Examples: Has strong introduction, clearly explains thinking, uses multiple parts of speech, uses correct punctuation.
-
----
-
-
-
-
----
-AUTHOR: Virtual Gallery Walk Rubric Slideshow
-DATE: dose not have one dont include
-PAGE: 4
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-Effective rubrics
-Criteria
-Expresses what the educator is looking for in the work
-
-Explicitly expresses the major components they are assessing
-
-This helps the educator focus on the essential skills of the assignment rather than getting "bogged down" in the details
-
-Breaks LT (Learning Targets) down into smaller chunks
-
-Performance level criteria
-Describes what the criteria will look like in the work at varying quality levels
-
-Uses clear, student friendly language
-
-Clearly describes exceptional-below average work
-
----
-
-
-
----
-AUTHOR: Virtual Gallery Walk Rubric Slideshow
-DATE: dose not have one dont include
-PAGE: 3
-CHAPTER: does not have one
-SECTION: does not have one
-
-EXACT TEXT:
-
-Why use rubrics?
-*Bonus* it makes grading for teachers easier.
-
-01: Clearly states the expectations for student work
-
-02: Clearly describes what the learning looks like and how to show learning
-
-03: Plays a pivotal role in the learning cycle (Where am I going? Where am I now? Where to next?)
-
-04: Supports student autonomy (independence, freedom, decide for oneself and pursue a course of action)
-
-05: Provides a guide for student regulation (student ownership of learning)
-
-06: Helps students self assess learning and creates reflective learners
 
 ---
 
