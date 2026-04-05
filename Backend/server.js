@@ -7494,7 +7494,58 @@
 
 
 
+//////build ai 4 prompt
 
+
+
+
+// =======================================================
+// 1. RELEVANCE: Compare this answer to ALL other answers.
+//    - Remove any content that duplicates what another answer already covers.
+//    - Remove any content that has no relevance to the assignment's overall topic.
+//    - If the answer is missing relevant context that ties it to the assignment, add it.
+
+// 2. FLOW: Add a natural transition sentence at the START that connects from the previous answer.
+//    Add a natural transition sentence at the END that leads into the next answer.
+//    If this is the first or last answer, only add one transition where applicable.
+
+// 3. APA 7TH REPAIR: Fix every citation violation using the rules below.
+
+// =======================================================
+// APA 7TH EDITION CITATION RULES:
+// =======================================================
+// You MUST use BOTH parenthetical AND narrative citations. Max 3 parenthetical per answer, rest narrative.
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   WRONG: "text" (Author, date, p. #).
+//   WRONG: "Text starts capital" (p. #).
+//   WRONG: "text." (p. #).
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+//   As Author (date) explains on page #, ...
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...
+//   WRONG: According to Ramlal (2023), teaching is important.
+
+// CAPITAL FIRST WORD RULE:
+//   Pull capital word OUT of quotes, lowercase it, blend into sentence.
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside quotes.
+// NO MIXED SOURCES. IF IN DOUBT: drop citation, write plain sentence.
+
+// =======================================================
+// OUTPUT:
+// =======================================================
+// Output ONLY the final polished answer — no preamble, no labels.
+
+
+
+
+
+
+///////with only narrative 
 
 import puppeteer from "puppeteer";
 import fs from "fs";
@@ -7507,7 +7558,7 @@ const app = express();
 // ║   CONFIG — edit these                                     ║
 // ╚════════════════════════════════════════════════════════════╝
 
-const OUTPUT_FILENAME = "math_lesson_mod4.txt";
+const OUTPUT_FILENAME = "math";
 const SEC_OUTPUT_FILENAME = `FINAL ${OUTPUT_FILENAME}`;
 
 const ASSIGNMENT_DIRECTIONS = `
@@ -7698,54 +7749,13 @@ land with length 3/4 mi and area 1/2 square mi?
 
 
 
----
-AUTHOR: Michigan Department of Education
-DATE: n.d. 
-PAGE: 44
-CHAPTER: does not have one
-SECTION: does not have one
-Note: use this state standard for lesson
-EXACT TEXT:
-
-Understand ratio concepts and use ratio reasoning to solve
-problems.
-1.	 Understand the concept of a ratio and use ratio language to describe
-a ratio relationship between two quantities. For example, “The ratio of wings to beaks in the bird house at the zoo was 2:1, because for every 2 wings there was 1 beak.” “For every vote candidate A received,
-candidate C received nearly three votes.
-”
-2.	 Understand the concept of a unit rate
-a
-/b associated with a ratio a:b
-with b
-≠ 0, and use rate language in the context of a ratio relationship.
-For example, “This recipe has a ratio of 3 cups of flour to 4 cups of sugar,
-so there is 3/4 cup of flour for each cup of sugar.” “We paid $75 for 15
-hamburgers, which is a rate of $5 per hamburger.”1
-3.	 Use ratio and rate reasoning to solve real-world and mathematical
-problems, e.g., by reasoning about tables of equivalent ratios, tape
-diagrams, double number line diagrams, or equations.
-a.	 Make tables of equivalent ratios relating quantities with wholenumber measurements, find missing values in the tables, and plot
-the pairs of values on the coordinate plane. Use tables to compare
-ratios.
-b.	 Solve unit rate problems including those involving unit pricing and
-constant speed. For example, if it took 7 hours to mow 4 lawns, then
-at that rate, how many lawns could be mowed in 35 hours? At what
-rate were lawns being mowed?
-c.	 Find a percent of a quantity as a rate per 100 (e.g., 30% of a
-quantity means 30/100 times the quantity); solve problems
-involving finding the whole, given a part and the percent.
-d.	 Use ratio reasoning to convert measurement units; manipulate
-and transform units appropriately when multiplying or dividing
-quantities.
----
-
 
 
 ---
 AUTHOR: Dance and Kaplan 
 DATE: 2018
-PAGE: 2
-CHAPTER: does not have one
+PAGE: dose not have one
+CHAPTER: 5
 SECTION: refrence the sections throught the text what ever section you get the text from ref it wit citation only use narrative
 
 EXACT TEXT:
@@ -8212,15 +8222,6 @@ ${"=".repeat(55)}
 
 You MUST only make narrative citations in your answer and mention chapter page section or nnumber were cited from in citations what every you can find.
 
-PARENTHETICAL FORMAT:
-  Author (date) verb "word for word text" (p. #).
-  CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
-  CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
-
-  WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
-  WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
-  WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
-  WRONG: such as "text" (p. #).           ← no filler words before opening quote
 
 NARRATIVE FORMAT:
   According to Author (date), from Chapter X on page #, ...
@@ -8265,28 +8266,18 @@ ${answerText}
 ${"=".repeat(55)}
 WHAT TO CHECK:
 ${"=".repeat(55)}
-TWO citation formats are required — check both are present and correct.
-
-PARENTHETICAL — correct format:
-  Author (date) verb "word for word text" (p. #).
-  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+You MUST only make narrative citations in your answer and mention chapter page section or nnumber were cited from in citations what every you can find.
 
 NARRATIVE — correct format:
   According to Ramlal (2023), from Chapter 3 on page 23, ...
   As Annenberg Learner (n.d.) explains on page 24, ...
 
 VIOLATIONS TO FLAG:
-1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
-2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
-3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
-4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
-5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+3. Quote with no (p. #) after it. Fix: drop quote.
+4. Empty quotes "" (p. #). Fix: drop and write plain sentence.
 6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
-7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
-8. Only one citation type used — both parenthetical AND narrative required.
+7. Narrative missing page: According to Author (date), teaching is important. Fix: add page if there is one or section what ever it can find in text.
 9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
-10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
-    The sentence must END after (p. #).
 
 For each violation: quote the exact wrong text and state the fix.
 
@@ -8318,17 +8309,19 @@ ${ai3Feedback}
 ${"=".repeat(55)}
 FIX USING THESE RULES:
 ${"=".repeat(55)}
-PARENTHETICAL: Author (date) verb "word for word text" (p. #).
-  Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+You MUST only make narrative citations in your answer and mention chapter page section or nnumber were cited from in citations what every you can find.
+
 
 NARRATIVE: According to Author (date), from Chapter X on page #, ...
   As Annenberg Learner (n.d.) explains on page 24, ...
 
-- Period AFTER (p. #) — NEVER inside quotes
-- Capital first word → pull out, lowercase, blend into sentence
-- Quote must END the sentence — never continue after (p. #) with lowercase text
-- Both parenthetical AND narrative required
-- Page always present — either as (p. #) or said naturally in the sentence
+VIOLATIONS:
+3. Quote with no (p. #) after it. Fix: drop quote.
+4. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
+7. Narrative missing page: According to Author (date), teaching is important. Fix: add page if there is one or section what ever it can find in text.
+9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
+
 
 Output ONLY the corrected answer — no preamble.`;
 }
@@ -8390,26 +8383,17 @@ YOUR TASKS:
 =======================================================
 APA 7TH EDITION CITATION RULES:
 =======================================================
-You MUST use BOTH parenthetical AND narrative citations. Max 3 parenthetical per answer, rest narrative.
+You MUST use narrative citations. 
 
-PARENTHETICAL FORMAT:
-  Author (date) verb "word for word text" (p. #).
-  CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
-  WRONG: "text" (Author, date, p. #).
-  WRONG: "Text starts capital" (p. #).
-  WRONG: "text." (p. #).
+
 
 NARRATIVE FORMAT:
   According to Author (date), from Chapter X on page #, ...
   As Author (date) explains on page #, ...
+  As Author (date) explains on page or what ever you can find like chapter or section #, ...
   WRONG: Ramlal (2023, Chapter 3, p. 23) states...
   WRONG: According to Ramlal (2023), teaching is important.
 
-CAPITAL FIRST WORD RULE:
-  Pull capital word OUT of quotes, lowercase it, blend into sentence.
-
-PERIOD RULE: Period AFTER (p. #) — NEVER inside quotes.
-NO MIXED SOURCES. IF IN DOUBT: drop citation, write plain sentence.
 
 =======================================================
 OUTPUT:
@@ -8650,6 +8634,1167 @@ function extractQuestionsFromResponse(raw) {
 })();
 
 app.listen(3000, () => console.log("working"));
+
+
+
+
+
+
+/////////with parthentical and narrative
+// import puppeteer from "puppeteer";
+// import fs from "fs";
+// import path from "path";
+// import express from "express";
+
+// const app = express();
+
+// // ╔════════════════════════════════════════════════════════════╗
+// // ║   CONFIG — edit these                                     ║
+// // ╚════════════════════════════════════════════════════════════╝
+
+// const OUTPUT_FILENAME = "math_lesson_mod4.txt";
+// const SEC_OUTPUT_FILENAME = `FINAL ${OUTPUT_FILENAME}`;
+
+// const ASSIGNMENT_DIRECTIONS = `
+
+// Mathematical Standards and Practices
+// Purpose:
+// For this checkpoint, you will analyze the mathematical standards and practices and integrate
+// with an engaging activity.
+// Directions:
+// Evidence Expectation
+// Naming Standards and
+// Diversifying Instruction:
+// Mathematical Standards and
+// Practices
+// 1. Use the link to go to the Michigan K-12 Standards - Mathematics.
+// 2. Read through the 5th and 6th grade overview and standards.
+// 3. Choose one standard, from 5th or 6th grade, to focus on for this
+// activity. Copy and paste the Common Core State Standard into
+// your Baker College Teacher Prep Lesson Plan Format.
+// 4. Under the learning objective, rewrite this standard in your own
+// words that makes sense for 5th or 6th grade students.
+// 5. Choose one mathematical practice that integrates well with the
+// standard.
+// 6. Create an engaging activity that integrates the standard and the
+// mathematical practice. Use the Baker College Teacher Prep
+// Lesson Plan Format in Canvas to document all parts of the plan.
+// Leave the grayed-out sections as it is, and complete the
+// remaining sections.
+
+
+
+
+// Baker College Teacher Prep Lesson Plan Format
+// Subject Area & Grade Level:
+// Lesson Duration:
+// Lesson Goal: What do
+// we want students to
+// learn?
+// Assessment: How will
+// we know if they have
+// learned it? (see guide)
+// Intervention: What will
+// we do if they don’t
+// learn it? (see guide)
+// Enrichment: What will
+// we do if they already
+// know it? (see guide)
+// Common Core State
+// Standard: use these for 6th grade page 44
+
+// Apply and extend previous understandings of multiplication and
+// division to divide fractions by fractions.
+
+// Compute fluently with multi-digit numbers and find common factors
+// and multiples. 
+
+// Example:
+// operations and algebraic
+// thinking
+// 4.OA.1 Use the four
+// operations with whole
+// numbers to solve problems.
+// 1. Interpret a
+// multiplication equation
+// as a comparison, e.g.,
+// interpret 35 = 5 × 7 as a
+// statement that 35 is 5
+// times as many as 7 and 7
+// times as many as 5.
+// Represent verbal
+// statements of
+// multiplicative
+// comparisons as
+// multiplication equations.
+// Learning Objective:
+// (In words that your students would
+// understand)
+// Materials:
+// Select your learning strategy:
+// ● Direct Teach
+// ● Demonstration
+// ● Cooperative Learning
+// ● Discovery/Inquiry-Based Learning
+// ● Project-Based Learning
+// ● Reading/Writing/Math Workshop
+// ● Other
+// Activities Planned: ☐Active (Students are active participants in learning)
+// ☐Passive (Teacher led lecture/demonstration)
+// ☐Both
+// Lesson Delivery Steps:
+// Check the Core Teaching Practices addressed in your lesson: (from MDE CTPs)
+// • Leading a group discussion (CTP #1)
+// • Explaining and modeling content, practices, and strategies (CTP #2)
+// • Eliciting and interpreting individual students’ thinking (CTP #3)
+// • Building respectful relationships with students (CTP #10)
+// • Check for Understanding (CTP #15)
+// List real-world connections including attention to English language learners and culturally and historically
+// responsive practices (diversity, inclusion, equity, and social justice):
+// List technology tools:
+// List collaboration opportunities (whole group, small group, partnerships, building resource personnel i.e.,
+// school social worker, special educators, parents, etc.):
+// Lesson Plan Guide
+// Assessment: Used to gather information about a student’s progress towards mastery of the learning objective,
+// help the teacher identify what instruction is working well and what needs refinement, and informs the
+// students about their learning.
+// Options to consider
+// ☐Diagnostic/Pre-Assessment – Used to check prior knowledge before a lesson
+// ☐Self-Assessment (Writing Prompts, Running Records, Performance Task, Other)
+// ☐Formative – Used during a lesson to check progress, identify any misconception, and give feedback to
+// students (Learning/Response Log, Admin/Exit Ticket, Think/Pair/Share, One Minute Paper, Other)
+// ☐Summative – Used at the end of a lesson to check student mastery of the objective (End of Unit Test,
+// Final Exams or Mid-term Exams, State Tests, Culminating Project, Portfolio, Other)
+// Intervention: How will we respond when they don’t learn?
+// ☐Differentiated Instruction
+// ☐Target specific skills
+// ☐Data item analysis
+// ☐Leveled materials (below, on level,
+// above)
+// ☐Bloom's Taxonomy
+// ☐Grade recovery (re-do/correct)
+// ☐Parent contact
+// ☐Referral to Student Support Team
+// ☐Graphic organizers
+// ☐Manipulatives
+// ☐Choice boards
+// ☐Immediate feedback
+// ☐Flexible grouping
+// ☐Extended responses (math/reading)
+// ☐Journal/Reading logs
+// Responses to Intervention (RtI)
+// ☐Small group instruction
+// ☐Tiered group instruction (Tier I, II, III)
+// ☐1-1
+// ☐Centers (leveled)
+// ☐Re-teach in a different way
+// ☐Modify: backtrack, build background knowledge
+// ☐Tutoring: after or before school, lunch
+// ☐Referral to Student Support Team
+// Enrichment: How will we respond if they already know it?
+// ☐Choice boards
+// ☐Use vocabulary to write sentences
+// ☐Accelerated reader
+// ☐Centers-High level
+// ☐Reading buddies
+// ☐Peer tutoring
+// ☐Enriched-Leveled Reader-Novels
+// ☐Picture/writing journals
+// ☐Independent projects
+// ☐Separate curriculum
+// ☐Games
+// ☐Group leader
+
+
+// `;
+
+// const SOURCE_PAGES = `
+
+
+// ---
+// AUTHOR: Michigan Department of Education
+// DATE: n.d. 
+// PAGE: 44 
+// CHAPTER: does not have one
+// SECTION: does not have one
+// Note: use this state standard for lesson
+// EXACT TEXT:
+
+
+// Apply and extend previous understandings of multiplication and
+// division to divide fractions by fractions.
+// 1.	 Interpret and compute quotients of fractions, and solve word
+// problems involving division of fractions by fractions, e.g., by using
+// visual fraction models and equations to represent the problem. For
+// example, create a story context for (2/3)
+// ÷ (3/4) and use a visual fraction
+// model to show the quotient; use the relationship between multiplication
+// and division to explain that (2/3)
+// ÷ (3/4) = 8/9 because 3/4 of 8/9 is 2/3.
+// (In general, (a/b)
+// ÷ (c/d) = ad/bc.) How much chocolate will each person
+// get if 3 people share 1/2 lb of chocolate equally? How many 3/4-cup
+// servings are in 2/3 of a cup of yogurt? How wide is a rectangular strip of
+// land with length 3/4 mi and area 1/2 square mi?
+
+
+// ---
+
+
+
+
+// ---
+// AUTHOR: Michigan Department of Education
+// DATE: n.d. 
+// PAGE: 44
+// CHAPTER: does not have one
+// SECTION: does not have one
+// Note: use this state standard for lesson
+// EXACT TEXT:
+
+// Understand ratio concepts and use ratio reasoning to solve
+// problems.
+// 1.	 Understand the concept of a ratio and use ratio language to describe
+// a ratio relationship between two quantities. For example, “The ratio of wings to beaks in the bird house at the zoo was 2:1, because for every 2 wings there was 1 beak.” “For every vote candidate A received,
+// candidate C received nearly three votes.
+// ”
+// 2.	 Understand the concept of a unit rate
+// a
+// /b associated with a ratio a:b
+// with b
+// ≠ 0, and use rate language in the context of a ratio relationship.
+// For example, “This recipe has a ratio of 3 cups of flour to 4 cups of sugar,
+// so there is 3/4 cup of flour for each cup of sugar.” “We paid $75 for 15
+// hamburgers, which is a rate of $5 per hamburger.”1
+// 3.	 Use ratio and rate reasoning to solve real-world and mathematical
+// problems, e.g., by reasoning about tables of equivalent ratios, tape
+// diagrams, double number line diagrams, or equations.
+// a.	 Make tables of equivalent ratios relating quantities with wholenumber measurements, find missing values in the tables, and plot
+// the pairs of values on the coordinate plane. Use tables to compare
+// ratios.
+// b.	 Solve unit rate problems including those involving unit pricing and
+// constant speed. For example, if it took 7 hours to mow 4 lawns, then
+// at that rate, how many lawns could be mowed in 35 hours? At what
+// rate were lawns being mowed?
+// c.	 Find a percent of a quantity as a rate per 100 (e.g., 30% of a
+// quantity means 30/100 times the quantity); solve problems
+// involving finding the whole, given a part and the percent.
+// d.	 Use ratio reasoning to convert measurement units; manipulate
+// and transform units appropriately when multiplying or dividing
+// quantities.
+// ---
+
+
+
+// ---
+// AUTHOR: Dance and Kaplan 
+// DATE: 2018
+// PAGE: 2
+// CHAPTER: does not have one
+// SECTION: refrence the sections throught the text what ever section you get the text from ref it wit citation only use narrative
+
+// EXACT TEXT:
+
+// As teachers, we encourage students to think deeply as they read, questioning an author’s reasoning and motivations. We must encourage them to do the same with math. The Common Core State Standards for Mathematical Practice encourage students to provide evidence of their thinking and evaluate the evidence provided by others. One of the best ways to help students accomplish these goals is through deliberate and direct questioning, both from the teacher and by the students themselves.
+// Questioning: Why It Matters
+// Being able to ask specific, targeted questions is a skill that must be learned and practiced by both the teacher and the students. When we as teachers question students, we must learn how to ask the specific types of questions that pull out the information we are looking for from our students. As we question our students, we are also modeling effective questioning techniques. Students will learn to ask the same types of targeted questions of each other as they learn to analyze and compare their classmates’ mathematical reasoning. Questioning is crucial to our math instruction.
+// TYPES OF QUESTIONS
+// Questions are one of the most valuable tools we have as teachers. Strategic, deliberate questions can push student thinking to deeper levels and open up opportunities for quick formative assessment. With every math problem we give our students, we think about which questions will allow us to formatively assess student understandings and/or misconceptions. We think about which questions will push students’ thinking, allowing them to extend their understanding of mathematical concepts and ideas. As students answer questions and discuss mathematical concepts and ideas, they are able to develop a metacognitive awareness of their own understanding and thought processes.
+// It is also important for us as teachers to be flexible with our questioning. Even with the best-planned lesson, we can never quite know which direction a conversation may flow. Teachers must be able to adapt their questioning to the conversation as it happens. Doing this requires us to truly listen to our students and be responsive to where they are in their understanding. It requires patience and practice to become artful, thoughtful questioners.
+// Teacher questions generally fit into three categories:
+// 1.  questions that clarify and probe for justification
+// 2.  questions that guide, challenge, and extend thinking
+// 3.  questions that assess understanding
+// You will notice that these question types often overlap, but here we will explain the general purpose for asking each type of question. Skilled teachers must be able to choose which questions to use based on the students they are working with. In one conversation, a teacher may fluidly move back and forth between all three question purposes and types, and an individual question may address two or more purposes at once.
+// Questions That Clarify and Probe Thinking
+// Clarification questions help students understand a task, make sense of a problem, and explain their thinking more clearly. Clarification may be necessary as they solve a problem or share their thinking with others. When introducing a problem task or new idea, we use clarification questions to ensure that students understand the problem, or to help them visualize the context of the problem and help them see what the problem is asking them to figure out. Clarifying questions can also help highlight and define any new or unfamiliar vocabulary that may interfere with student understanding. Finally, clarifying questions can help ensure that the rest of the class is following along with the presenter’s line of thinking during a share.
+// A probing question encourages students to think about the problem at a deeper level. Probing questions can also help us better understand student thinking. Both probing and clarifying questions allow us to guide students through misconceptions and help decrease obstacles that get in the way of mathematical thinking, such as reading comprehension issues or a lack of language skills. These are generally open-ended questions, allowing for multiple responses, and they should not give any clues or hints as to how to solve the problem.
+// The following vignette shows how we launch a problem in our classrooms and highlights the clarifying and probing questions used while introducing the task. Mrs. Dance begins by attempting to engage the students in the problem.
+// Students have been taught that calling out the answer goes against the classroom expectation that everyone has the right to learn (discussed in Chapter 2). One way to prevent those who want to jump right in and answer is by leaving out the numbers in the problem or covering them with a sticky note until the problem has been discussed and visualized.
+// Mrs. Dance: I need your help today, boys and girls. I’m having trouble with a deer in my garden and I don’t know what to do. Does anybody think they know what my problem may be?
+// Delaney: The deer is eating your garden.
+// Mrs. Dance: Delaney, great prediction. Show me a private thumb if your thinking was similar to Delaney’s. Well, I need you to figure out how many strawberries this deer ended up eating out of my garden. Do you think you can help me with this?
+// Mrs. Dance reads the following problem at least twice: “Mrs. Dance had 19 strawberries in her garden, but a deer came and gobbled up some strawberries. Now she has 8 strawberries left in her garden. How many strawberries did the deer eat?”
+// Mrs. Dance: What do we know about my garden?
+// Julien: The deer gobbled 8 strawberries.
+// Mrs. Dance: William, I see you’re pointing to your brain, giving the “I’m thinking something different” signal. Why is that?
+// William: The deer didn’t eat 8 strawberries, but that’s how many strawberries are left.
+// Mrs. Dance: Let’s go back and reread the problem.
+// The class chorally rereads the problem together.
+// Mrs. Dance: What do we think? Did the deer eat 8 strawberries, or do I have 8 strawberries left?
+// Class: You have 8 strawberries left.
+// Mrs. Dance: What other information do we know?
+// Samantha: You had 19 strawberries at first.
+// The class gives the “I agree” signal.
+// Mrs. Dance: I want you to turn and talk with your math partner. What are we trying to figure out?
+// Students sit knee to knee and eye to eye with their partners and discuss the question in the problem. Students are careful not to talk about how they will solve the problem or what the answer is.
+// Mrs. Dance [restating the task]: What are we trying to figure out?
+// Reese: How many strawberries did the deer eat?
+// Mrs. Dance: Do we agree on the key question?
+// Class: Yes!
+// Mrs. Dance: You may use any tools you would like as you try and figure out how many strawberries this pesky deer ended up eating. I can’t wait to see what you come up with as you work to solve this problem.
+// Notice that during this task introduction, Mrs. Dance gave very little information to the students, other than reading and rereading the problem. She asked questions to pull the important information from the students and also encouraged the students to question one another’s thinking.
+// Clarifying and probing questions are also used as students work to solve a problem or as they share their thinking. When one student shares, the teacher may ask questions to clarify the steps a student used in solving a problem. Clarifying questions may help students restate ideas in their own words as they listen to the thinking of their classmates.
+
+// Questions That Guide, Challenge, and Extend
+// Questions that guide, challenge, and extend are used to push student thinking, often while creating cognitive dissonance, which increases the learning. These types of questions allow students to deepen their own reasoning as they justify their thinking. Guiding questions are also used to navigate students through misconceptions as they explain their reasoning. Additionally, they may be used to help a student get started or facilitate strategy use as students solve a problem.
+// Let’s step back into Mrs. Dance’s classroom as the kids begin to work on solving the problem introduced earlier. The students have been released from the carpet area to return to their tables and begin solving the problem. Some students go straight to their table and begin working on the problem, while others go to the math center to grab number lines, hundred charts, cubes, or another tool of their choice. Mrs. Dance walks around the room with the goal of initially targeting students who are having trouble getting started.
+// Marty: I’m stuck.
+// Mrs. Dance: That’s great, our brains are not working when something is easy. What are you stuck on?
+// Marty: I don’t get it.
+// Mrs. Dance: Well, let’s see what we know. Can you circle or underline important information as I read the problem?
+// As Mrs. Dance rereads, Marty circles the 19 and the 8.
+// Mrs. Dance: What did you circle?
+// Marty: 19 strawberries.
+// Mrs. Dance: What does the 19 mean in the problem?
+// Marty: The strawberries you had in the beginning.
+// Mrs. Dance: What else did you circle?
+// Marty: 8, because that is how many strawberries are left.
+// Mrs. Dance: Can you underline the question?
+// Marty underlines the question.
+// Mrs. Dance: Would you like to draw a picture of what we know or use cubes to show what is happening in the problem?
+// Marty: I want to draw a picture.
+// Mrs. Dance: I’ll let you get started on your picture and come back in a few minutes to see your great work.
+// Mrs. Dance continues to circle the room.
+// Mrs. Dance: Julia, I see you have an 11 on your paper. What does the 11 mean?
+// Julia: That’s how many the deer gobbled?
+// Mrs. Dance: How do you know it’s 11? Can you tell me what you did?
+// Julia: I know you had 19 strawberries at first and then there were 8 left, so I started at 19 on the number line and hopped back to 8 and that was 11 hops.
+// Mrs. Dance: Why did you hop back on the number line?
+// Julia: Because the deer was eating your strawberries, so it’s like a takeaway problem.
+// Mrs. Dance: Do you think you could show all of that work on your paper and explain why you stopped at the number 8? I wonder if you could write a number sentence that matches this problem. I’ll come back to see how you showed your work in a little bit.
+// Mrs. Dance moves on to another student.
+// Mrs. Dance: Delaney, I see you drew a picture and did a number line. Do you think one strategy is more efficient for this task?
+// Delaney: The number line because it took less time. It took me a while to draw 19 circles for the strawberries.
+// Mrs. Dance: Can you explain these two strategies to me, please?
+// Delaney: I knew it was a mystery box problem because it said “some” and we don’t know how many “some” is, so I wrote 19 minus blank equals 8. First I drew 19 circles and then I crossed them out until there were 8 left like the problem said. On my number line, I started at 19 and counted back to 8 because it was subtraction and I got 11 both times.
+// Mrs. Dance: Let’s pretend I had 37 strawberries. How many did the deer eat?
+// During this work time, Mrs. Dance asked questions to guide students toward a strategy, to evaluate strategy efficiency, and to extend thinking. In her conversation with Marty, she used questioning to guide him toward the important information in the problem and help him choose a strategy to use. With Julia, she asked questions to push her to more clearly justify her thinking on her paper. With Delaney, she asked questions to push her thinking beyond the context of the problem by evaluating efficiency and extending her thinking with more difficult numbers.
+// These types of questions may also be used during whole-group discussions to guide, challenge, and extend the thinking of the class as a group. Through formative assessments, the teacher can make judgments as to which line of questioning (clarifying and probing or guiding and extending) may be best during each whole-group lesson.
+// Questions That Assess Understanding
+// Questions can be a powerful, daily formative assessment tool. By intentionally questioning students, teachers can gather important evidence of student understanding and strategy use and make informed instructional decisions about where to go next, what may need revisiting, and how to further challenge our learners.
+// Let’s visit Mrs. Dance’s room again as students are back on the carpet, sharing their thinking with the whole group. She begins by asking students to think about the problem they just solved and show a secret silent signal that reflects how they feel about their understanding of the problem. Students place a thumb down, sideways, or up on their tummies to show how solving the problem felt. A thumbs-down signal means the problem was too tricky, sideways means “I understood but didn’t finish,” and thumbs-up means the problem felt just right. This quick self-assessment both promotes metacognitive reflection and gives the teacher a quick overview of how students feel they understood the problem at hand.
+// Mrs. Dance: I’m seeing some sideways thumbs, which is awesome because our brains really had to work and grow while solving this problem. Delaney is going to share today, and I want you to pay close attention to what she says. While she is talking, decide if you agree or disagree. Please be thinking of what you did and figure out if your strategy is different from or similar to Delaney’s strategies. Think of questions you might ask her about her mathematical thinking. Remember, questions show we care about her thinking and questions help our brain grow.
+
+// Questions
+// That Guide, Challenge, and Extend
+//    How can we get started on this problem?
+//    Let’s reread the problem. What do we know? [When students seem to be missing information or are having trouble getting started]
+//    I saw you use a 100 chart yesterday. Do you think that would help you today?
+//    Can you tell me more about this?
+//    Why did you______?
+//    What does the number___mean in your number sentence?
+//    Can you use a second strategy to prove your thinking?
+//    What if there were 20 instead of 10?
+//    Does that strategy always work?
+//    Would this work if the numbers were different?
+//    What strategy is most efficient?
+//    Can you create a similar problem that I could give to the class?
+//    Why did you use________to solve this problem? [To guide students toward clearer justification or help them analyze why they chose a particular tool/strategy]
+//    How is your strategy similar to_____’s strategy?
+//    How is your strategy different?
+// Delaney shares her work under the document camera while Mrs. Dance records it onto the chart paper to make a public record documenting her strategy. This will be posted on the class’s math wall with other previous shares that have taken place.
+// Mrs. Dance: Does anyone have questions for Delaney so far?
+// Jacob: Why did you cross out the circles?
+// Mrs. Dance: Great question, Jacob!
+// Delaney: The problem said that the deer was eating the strawberries, so I wanted to cross them off.
+// Mrs. Dance: Any other questions?
+// Max: I disagree with Delaney. I got 27 strawberries.
+// Mrs. Dance: Did anyone else get 27? Turn and talk.
+// Mrs. Dance: I’m hearing that a few of you got 27. Can someone who got 27 justify their thinking, please?
+// Aaliyah: I know that 19 plus 8 is 27, so the answer is 27.
+// Mrs. Dance: Thank you, Aaliyah. Can you call on someone who is thinking something different?
+// Aaliyah calls on Jayden, who is giving a silent signal to show she is thinking differently.
+// Jayden: The problem said that you had 19 and then 8 left, so 27 would not make sense for the problem.
+// Mrs. Dance: Delaney, can you explain the number sentence you have on your paper and why you wrote that?
+// Delaney: I put 19 first because that is how many strawberries were in your garden at first, and then I put a subtraction symbol because the problem said that the deer gobbled up your strawberries and so I knew it was minus. I have “blank” because I didn’t know how many were gobbled by the deer, but I knew you had 8 strawberries left, so I wrote it equals 8. Then I found out that the deer had eaten 11 after I drew my picture and did my number line.
+// Mrs. Dance: Can we have two different answers for this problem? Do addition and subtraction both work? I want you to turn and talk about this.
+// The students then discuss this with their partners.
+// Mrs. Dance: What are we thinking?
+// Aaliyah: I revised my thinking and I don’t agree with my 27 anymore; I agree with Delaney.
+// Mrs. Dance: Why?
+// Aaliyah: The deer didn’t eat 19 plus 8 more strawberries, so 27 doesn’t make sense.
+// As Mrs. Dance facilitated this share, she was able to assess through questioning that her students were experiencing a common misconception. In this missing-part problem, many of her students were adding the two numbers together. She used questioning to guide them through this misconception and help them come to the conclusion that addition did not make sense for this problem. She listened in during turn and talks to assess what students were misunderstanding in the problem and then was able to directly address the misconception within the share.
+// Note that many good probing and challenging questions in this example came from students! We’ll discuss the important role of student questions shortly.
+// This type of questioning can also be used as students explore a problem on their own. You might start with questions for assessment and then choose which types of questions to ask next based on that assessment.
+// Questions
+// That Assess
+//    Why did you start at 7?
+//    Tell me what this means.
+//    What makes you think that?
+//    What does the number___represent in the problem?
+//    How do you know that this works?
+//    Why did you use that operation?
+//    I saw that some of our friends had___as their answer. What do you think they did to get that answer?
+//    Why did you choose this [tool/strategy]? [To determine whether or not a student is thinking critically about their choice of tool or strategy]
+//    Which part of the problem gave you that information?
+// STUDENT QUESTIONING
+// Student questioning is just as important as teacher questioning. It enables students to advocate for their own learning and develop their own understanding
+// Children by nature are always asking questions, and it is our job to create an environment that nurtures and encourages these questions. Asking questions is a skill that all students need to develop to be critical, metacognitive mathematicians. In order to skillfully ask their own questions, students must be able to assess their own understanding, pinpoint where any confusions may exist or where they are feeling a lack of clarity, and choose the right question to ask in order to gather the information they need to deepen their learning. Teaching students to question themselves and one another takes time, patience, and much praise. We instill the belief in students that they learn the most by asking questions. We stress that it is very important to ask a question when there is something you don’t understand, something you don’t agree with, or something you are curious about.
+// Young learners often feel uncomfortable with the idea of questioning and feel that asking questions shows a lack of understanding, which means they are not smart. For this reason, not only must we directly teach students about the importance of asking questions, but we must also teach them how to ask meaningful questions. In the next few sections, we will first return briefly to teacher questioning, and then focus on student questioning for the rest of the chapter.
+// Effective Teacher Questioning
+// In order to be deliberate about asking meaningful questions, it is very important to think through the lesson. Solve the problem or complete the task yourself and do the math before you give it to your students. Consider the misconceptions students will have and predict the variety of strategies students will use. You will also want to think about what your students may say and plan questions to either clarify, guide, or extend their thinking. Appendix B shows the template we use when thinking through our lessons, but you may play around to find one that works best for you. Appendix C is this same template with guiding questions to help you as you plan a lesson. The more you think through each lesson, planning the questions you might ask, the more meaningful your questions will be and this process will soon become natural.
+// BUILDING STUDENTS’ WILLINGNESS TO ANSWER
+// Not all students are immediately comfortable when a teacher questions their thinking. Some come to the classroom with the preconceived notion that when a teacher questions their work or thinking, it must mean that they are wrong. At the beginning of the year, students will often erase whatever it is they have on their paper as soon as any question is asked. When asked questions such as, “How do you know?” or “Why did you subtract?” they begin erasing away. Over the first months of the school year, it is important to emphasize the purpose of our questioning and to explain to students that when we as teachers ask questions it is because we want to understand or deepen their thinking. We must continually reassure our students that just because we are asking a question, it does not mean that they are wrong. It takes time, constant reassurance, and many reminders before students will learn to grow comfortable with teacher questioning. As with any new learning, some students take longer than others to become comfortable with this kind of questioning. However, it is worth the time, effort, and patience it takes to develop a relationship with these students so that they can trust that our questioning is not a negative judgment but simply what it is: a question.
+// We also encourage comfort with questioning by explaining to our students that answering and asking questions makes their brains grow stronger in math by getting them to think beyond just the correct answer. When students become more used to our questioning, they often begin to anticipate questions, answering them before they are asked. They know that when you ask them about their thinking, answers aren’t enough and justification is always expected. The need to ask “How do you know?” slowly dissipates throughout the year.
+// Effective Student Questioning
+// Teaching questioning skills is not an easy process. It involves patience, scaffolding, and focused instruction.
+// QUESTIONS VERSUS STATEMENTS
+// Asking a question is not something that a lot of our students know how to do innately, especially at the primary level. At the beginning of the year, our youngest learners will often confuse statements with questions. It is important to start the year by teaching the difference between a question and a statement.
+// One way we do this is through the use of a question/statement T-chart. Find an engaging or interesting photograph that you know will spark the interest of your students. Show it to the class and tell them you’d like them to work with a partner to ask questions or talk about what they notice in the picture.
+// As a whole group, provide students with definitions of a question and a statement. A statement can be defined as something we observe, notice, or feel. A question is something that can be answered to gain more information. Make a question/statement T-chart as students share about the discussion they had with their partners. When someone shares a statement or question about the photograph, ask students to choose which column the sentence belongs in. Facilitate a discussion as students decide which sentences belong where on the chart, asking students to justify their thoughts. By charting the examples, students are able to see clearly how questions and statements differ. Leave this chart posted in the room and refer back to it as necessary throughout the year.
+// ACCEPT ALL QUESTIONS … AT FIRST
+// Nonmathematical questions like, “Why did you color the tree blue?” or “Why is your 9 backwards?” are not uncommon at the beginning of the year, especially in the primary grades. As students are just beginning to understand how to ask questions, it is important to accept these questions and praise students for asking them. If you begin limiting question types too soon, students may be hesitant to ask questions at all. However, as they progress in their understanding of questioning, you will eventually need to discourage this type of questioning. Explain the difference between a “mathematical question,” or one that asks about the mathematical strategy or model, and a “nonmathematical question,” or one that asks about spelling, handwriting, or other unrelated topics. Encourage students to ask only mathematical questions during share times.
+// NOTICING AND WONDERING
+// Another way to encourage students to ask questions is through the classroom routine “I Notice, I Wonder” suggested by the Math Forum (2017). In this routine, students are given a math problem or scenario and encouraged to first talk about what they notice in the problem. These noticings can be charted as a whole class, discussed with partners, or discussed in a small group. Then students are asked, “What do you wonder?” They should be encouraged to discuss all the things they wonder about the math problem or scenario. In this routine, students feel comfortable asking questions because they are encouraged to think about the problem in a low-stress way. They are being asked not to solve the problem but simply to wonder about it.
+// Once students are comfortable with this routine, teachers can take it a step further by asking students to analyze the types of noticings and wonderings they are having. Teachers can ask questions such as, “Which of our wonderings help us to understand the problem mathematically?” or “Which of the things we noticed give us information we need to solve the problem, and which do not?” By analyzing what they notice and wonder, students begin to think metacognitively about the kinds of questions they are asking.
+// TEACHER MODELING
+// Modeling is crucial when promoting student questioning. Just as we deliberately model kind and polite words with our students to encourage respectful behavior, we need to deliberately model questioning to encourage students to begin asking their own questions. During the beginning of the year, most of the questioning in math will come from the teacher. As students share thinking during daily lessons, teachers need to be intentional in asking all types of questions. After a while, encourage your students to ask questions of one another. When you begin to hear them mimicking the types of questions you ask, use specific praise to talk about why those questions are important. As you strategically praise students for asking focused questions, more students will begin to follow suit, trying their best to ask deep-level questions. You will soon hear students using those same questions with their peers, and they will begin developing their own questions instead of just mimicking your modeled questions.
+// You can push the level of questioning in your classroom throughout the year by scaffolding the types of questions that you model. At the beginning of the year, ask straightforward questions such as, “Why did you choose that strategy?” or “How did that tool help you solve the problem?” Once students begin asking these questions on their own, increase the complexity of the questions you are modeling. Ask, “Why did using a number line make sense for this problem?” or “How did using an area model help you make sense of the problem?” As you increase the complexity of the questions you model, students will increase the complexity of their own questioning.
+// QUESTION AND CONVERSATION STEMS
+// Question and conversation stems can be extremely helpful in getting students, especially English learners, to ask questions and discuss mathematical concepts. Create sentence stems for students to use and post them in your room to help guide student questioning (see Figure 5.1). As students come up with other questions, add stems for them to your collection. One way to encourage students to use the stems is by writing a student’s name on a sticky note and placing it on a stem when they use it (or letting them do so). The kids love to see their name up there, and you will find that kids often notice when others in the class use a stem they added.
+// TEACHER TALK MOVES
+// While there are a variety of talk moves you can use to promote mathematical discussions, a few specific moves help students develop their ability to ask questions.
+// Questions like, “Can you tell me more about that?” or “What did you mean when you said _______?” or “Can you say that again in a different way?” help students see that elaboration is sometimes necessary for better understanding. Directly modeling these types of talk moves helps them become part of the math language in your classroom, and students will begin using them during group discussions and with their peers.
+
+// Figure 5.1: Questions and Conversation Stems
+// During discussions, we often ask students to rephrase one another’s thinking to ensure understanding and keep them engaged in the discussion. When students struggle to rephrase their classmates, encourage them to think of a question they can ask to help clarify what the student sharing is trying to say. Ask, “What questions can we ask ______ to better understand [his/her] thinking?” (For more on rephrasing, see Chapter 2.)
+// Another talk move that you can use frequently is simply asking students if they have any questions. You can keep it simple, asking, “Does anyone have any questions for ______?” Or you can narrow the focus by asking question like, “Does anyone have any questions for ______ about how [he/she] used the doubling and halving strategy to solve this multiplication problem?”
+// Teacher Talk Moves to Encourage Questioning
+//    Does anyone have any questions for________?
+//    Does anyone have any questions about________’s strategy?
+//    What questions can you ask________to help yourself better understand [his/her] thinking?
+//    Talk moves to model in order to encourage student use:
+//   Can you tell me more about that?
+//   What did you mean when you said_________?
+//   I heard you say_________. Is that correct?
+//   Can you say that again in a different way?
+// PRAISE
+// As teachers, we know that our students will do anything and everything to please, so creating a classroom culture that encourages questions relies heavily on positive praise. We jump for joy when our students ask a clear and meaningful mathematical question. The excitement may be a bit over the top, but it is a huge motivator for all your students to ask questions. We make sure that we are specifically praising the questions and not the answers: “I love how ______ asked ______ because it lets us ______.” Then we soon hear students repeating those same questions in future lessons. When a student asks us a question while working with us one-on-one, we often say, “What a great question! Can we ask that to the class?” You can also create a public record of the mathematical questions the kids ask. After praising a student for asking a question, say, “Can we write that down so we remember to use it again?” Be sure to use and refer to the chart often so that students begin using it on their own.
+
+// ---
+
+// `;
+
+// // ════════════════════════════════════════════════════════════
+// // Everything below runs automatically.
+// // ════════════════════════════════════════════════════════════
+
+// const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
+// const launchOptions = {
+//   headless: false,
+//   executablePath: CHROME_PATH,
+//   slowMo: 80,
+//   args: [
+//     "--no-sandbox",
+//     "--disable-setuid-sandbox",
+//     "--disable-blink-features=AutomationControlled",
+//     "--start-maximized",
+//   ],
+//   defaultViewport: null,
+//   ignoreDefaultArgs: ["--enable-automation"],
+// };
+
+// // ─── ROUGH DRAFT ANSWER STORAGE ───────────────────────────────────────────────
+// // Populated during Step 3, consumed by Step 4 (AI4)
+// const roughDraftAnswers = []; // { qNum, questionText, answer }
+
+// // ─── OUTPUT FILE PATHS ────────────────────────────────────────────────────────
+// const OUTPUT_PATH       = path.resolve(OUTPUT_FILENAME);
+// const FINAL_OUTPUT_PATH = path.resolve(SEC_OUTPUT_FILENAME);
+
+// // ─── ROUGH DRAFT FILE HELPERS ─────────────────────────────────────────────────
+
+// function initOutputFile() {
+//   const header = [
+//     "=".repeat(70),
+//     `  ASSIGNMENT: ${OUTPUT_FILENAME.replace(".txt", "").replace(/_/g, " ").toUpperCase()}`,
+//     `  Generated: ${new Date().toLocaleString()}`,
+//     "=".repeat(70),
+//     "",
+//   ].join("\n");
+//   fs.writeFileSync(OUTPUT_PATH, header, "utf8");
+//   console.log(`\n  ✓ Rough draft file created: ${OUTPUT_PATH}\n`);
+// }
+
+// function appendToFile(questionNumber, questionText, answerText) {
+//   const block = [
+//     "",
+//     "─".repeat(70),
+//     `  QUESTION ${questionNumber}`,
+//     "─".repeat(70),
+//     questionText.trim(),
+//     "",
+//     "─".repeat(70),
+//     `  ANSWER ${questionNumber}`,
+//     "─".repeat(70),
+//     answerText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Question ${questionNumber} appended to ${OUTPUT_PATH}`);
+// }
+
+// function appendSummaryToFile(summaryText) {
+//   const block = [
+//     "",
+//     "=".repeat(70),
+//     "  SUMMARY (200-300 words)",
+//     "=".repeat(70),
+//     summaryText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Summary appended to ${OUTPUT_PATH}`);
+// }
+
+// // ─── FINAL DRAFT FILE HELPERS ─────────────────────────────────────────────────
+
+// function initFinalOutputFile() {
+//   const header = [
+//     "=".repeat(70),
+//     `  FINAL DRAFT: ${SEC_OUTPUT_FILENAME.replace(".txt", "").replace(/_/g, " ").toUpperCase()}`,
+//     `  Generated: ${new Date().toLocaleString()}`,
+//     "=".repeat(70),
+//     "",
+//   ].join("\n");
+//   fs.writeFileSync(FINAL_OUTPUT_PATH, header, "utf8");
+//   console.log(`\n  ✓ Final draft file created: ${FINAL_OUTPUT_PATH}\n`);
+// }
+
+// function appendFinalAnswerToFile(questionNumber, questionText, answerText) {
+//   const block = [
+//     "",
+//     "─".repeat(70),
+//     `  QUESTION ${questionNumber}`,
+//     "─".repeat(70),
+//     questionText.trim(),
+//     "",
+//     "─".repeat(70),
+//     `  ANSWER ${questionNumber}`,
+//     "─".repeat(70),
+//     answerText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(FINAL_OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Final Q${questionNumber} appended to ${FINAL_OUTPUT_PATH}`);
+// }
+
+// function appendFinalSummaryToFile(summaryText) {
+//   const block = [
+//     "",
+//     "=".repeat(70),
+//     "  SUMMARY (200-300 words)",
+//     "=".repeat(70),
+//     summaryText.trim(),
+//     "",
+//   ].join("\n");
+//   fs.appendFileSync(FINAL_OUTPUT_PATH, block, "utf8");
+//   console.log(`\n  ✓ Final summary appended to ${FINAL_OUTPUT_PATH}`);
+// }
+
+// // ─── GEMINI WINDOW UTILITIES ──────────────────────────────────────────────────
+
+// async function openGeminiBrowser(profileName, label) {
+//   const browser = await puppeteer.launch({
+//     ...launchOptions,
+//     args: [...launchOptions.args, `--user-data-dir=C:\\Temp\\puppeteer-${profileName}`],
+//   });
+//   const page = await browser.newPage();
+//   await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, "webdriver", { get: () => false });
+//     window.chrome = { runtime: {} };
+//   });
+//   await page.goto("https://gemini.google.com/app", { waitUntil: "domcontentloaded", timeout: 60000 });
+//   console.log(`  [${label}] window open.`);
+//   return { browser, page };
+// }
+
+// async function findInput(page, label) {
+//   for (const sel of [
+//     'rich-textarea div[contenteditable="true"]',
+//     'div[contenteditable="true"]',
+//     'div[role="textbox"]',
+//     "textarea",
+//     ".ql-editor",
+//   ]) {
+//     try {
+//       const el = await page.$(sel);
+//       if (el && (await el.boundingBox())?.width > 0) return { el, sel };
+//     } catch (_) {}
+//   }
+//   throw new Error(`[${label}] Input box not found`);
+// }
+
+// async function sendMessage(page, text, label) {
+//   const { el, sel } = await findInput(page, label);
+//   await el.click(); await sleep(400);
+//   await page.keyboard.down("Control"); await page.keyboard.press("a"); await page.keyboard.up("Control");
+//   await page.keyboard.press("Backspace"); await sleep(200);
+//   const ok = await page.evaluate((t, s) => {
+//     const el = document.querySelector(s); if (!el) return false;
+//     el.focus(); return document.execCommand("insertText", false, t);
+//   }, text, sel);
+//   if (!ok) await page.evaluate((t, s) => {
+//     const el = document.querySelector(s); if (!el) return; el.focus();
+//     if (el.contentEditable === "true") el.innerText = t;
+//     else Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(el, t);
+//     el.dispatchEvent(new Event("input", { bubbles: true }));
+//     el.dispatchEvent(new Event("change", { bubbles: true }));
+//   }, text, sel);
+//   await sleep(500);
+//   const btn = await page.$('button[aria-label="Send message"], button[aria-label="Submit"], button[jsname="Qx7uuf"]');
+//   if (btn) await btn.click(); else await page.keyboard.press("Enter");
+//   await sleep(2000);
+// }
+
+// async function waitForResponse(page, label, timeoutMs = 240000) {
+//   console.log(`  [${label}] Waiting...`);
+//   try {
+//     await page.waitForFunction(
+//       () => !!document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//       { timeout: 20000, polling: 500 }
+//     );
+//   } catch (_) {}
+//   await page.waitForFunction(
+//     () => !document.querySelector('[aria-label="Stop generating"], [aria-label="Stop response"]'),
+//     { timeout: timeoutMs, polling: 1000 }
+//   ).catch(() => {});
+//   await sleep(3000);
+//   const text = await page.evaluate(() => {
+//     const all = [
+//       ...document.querySelectorAll("model-response"),
+//       ...document.querySelectorAll('[data-message-author-role="model"]'),
+//       ...document.querySelectorAll(".model-response-text"),
+//       ...document.querySelectorAll("message-content"),
+//     ];
+//     return all.length ? all[all.length - 1].innerText.trim() : "";
+//   });
+//   if (!text) console.warn(`  [${label}] Empty response`);
+//   else console.log(`  [${label}] ${text.length} chars`);
+//   return text;
+// }
+
+// // ─── AI1 PROMPT — parse directions into question array ────────────────────────
+
+// function buildAI1Prompt() {
+//   return `You are reading an assignment and breaking it down into individual questions or tasks.
+
+// ${"=".repeat(55)}
+// ASSIGNMENT DIRECTIONS:
+// ${"=".repeat(55)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(55)}
+// YOUR JOB:
+// ${"=".repeat(55)}
+// Read the directions carefully. Extract every numbered requirement or task as a
+// separate question. Include the summary requirement as the last item.
+
+// Output ONLY a JSON array of strings. Each string is one question/task exactly
+// as it appears in the directions. No extra text, no markdown, no explanation.
+// Just the raw JSON array.
+
+// Example format:
+// [
+//   "Examine how the teacher supported students in using science talk",
+//   "Determine strategies used to introduce and reinforce science vocabulary",
+//   "Include a 200-300 word summary with APA 7th Edition citations"
+// ]
+
+// Output the JSON array now:`;
+// }
+
+// // ─── AI1 SELF-CHECK PROMPT ────────────────────────────────────────────────────
+
+// function buildAI1SelfCheckPrompt(generatedQuestions) {
+//   return `You previously broke the assignment directions into this list of questions:
+
+// ${JSON.stringify(generatedQuestions, null, 2)}
+
+// Now compare your list against the original directions:
+
+// ${"=".repeat(55)}
+// ORIGINAL DIRECTIONS:
+// ${"=".repeat(55)}
+// ${ASSIGNMENT_DIRECTIONS.trim()}
+
+// ${"=".repeat(55)}
+// YOUR JOB:
+// ${"=".repeat(55)}
+// Check if your list covers EVERY requirement in the directions.
+// For each original requirement say:
+//   COVERED: [yes/no] — [requirement text]
+
+// If anything is missing, output the corrected complete JSON array at the end.
+// If everything is covered, output the original array unchanged at the end.
+
+// End your response with the final JSON array — nothing after it.`;
+// }
+
+// // ─── AI2 PROMPT — answer one question ─────────────────────────────────────────
+
+// function buildAI2Prompt(questionIndex, questionText, totalQuestions) {
+//   return `You are answering question ${questionIndex + 1} of ${totalQuestions} for an assignment.
+// Answer ONLY this one question — do not answer other questions.
+
+// ${"=".repeat(55)}
+// QUESTION ${questionIndex + 1}:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// SOURCE TEXT — use these for citations:
+// ${"=".repeat(55)}
+// ${SOURCE_PAGES.trim()}
+
+// ${"=".repeat(55)}
+// APA 7TH EDITION CITATION RULES:
+// ${"=".repeat(55)}
+
+// You MUST only make narrative citations in your answer and mention chapter page section or nnumber were cited from in citations what every you can find.
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   CORRECT: Annenberg Learner (n.d.) notes "students become engaged whenever they are using their senses" (p. 24).
+
+//   WRONG: "text" (Author, date, p. #).     ← author/date must be in the sentence
+//   WRONG: "Text starts capital" (p. #).    ← pull capital word out, lowercase it
+//   WRONG: "text." (p. #).                  ← period goes AFTER (p. #) never inside quotes
+//   WRONG: such as "text" (p. #).           ← no filler words before opening quote
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+//   As Author (date) explains on page #, ...
+
+//   If the source HAS a chapter: According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   If NO chapter (Annenberg Learner): As Annenberg Learner (n.d.) explains on page 25, ...
+
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...  ← chapter/page inside parens
+//   WRONG: According to Ramlal (2023), teaching is important.  ← no page mentioned
+
+// CAPITAL FIRST WORD RULE:
+//   If source starts with a capital, pull that word OUT of the quotes, lowercase it.
+//   SOURCE: Students become engaged whenever they are using their senses
+//   RIGHT:  Annenberg Learner (n.d.) notes that students "become engaged whenever they are using their senses" (p. 24).
+//   WRONG:  Annenberg Learner (n.d.) notes "Students become engaged" (p. 24).
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside the quotes.
+// NO MIXED SOURCES: Annenberg Learner text → Annenberg Learner (n.d.). Ramlal text → Ramlal (2023).
+// IF IN DOUBT: drop the citation and write a plain sentence.
+
+// Write a thorough answer to the question above using at least 2 citations.
+// If this is the summary question, write 200-300 words.
+// Output ONLY your answer — no preamble, no "here is my answer".`;
+// }
+
+// // ─── AI3 PROMPT — check citations ─────────────────────────────────────────────
+
+// function buildAI3Prompt(questionText, answerText) {
+//   return `You are a strict APA 7th Edition citation reviewer.
+
+// ${"=".repeat(55)}
+// QUESTION BEING ANSWERED:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// ANSWER TO REVIEW:
+// ${"=".repeat(55)}
+// ${answerText}
+
+// ${"=".repeat(55)}
+// WHAT TO CHECK:
+// ${"=".repeat(55)}
+// TWO citation formats are required — check both are present and correct.
+
+// PARENTHETICAL — correct format:
+//   Author (date) verb "word for word text" (p. #).
+//   Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+// NARRATIVE — correct format:
+//   According to Ramlal (2023), from Chapter 3 on page 23, ...
+//   As Annenberg Learner (n.d.) explains on page 24, ...
+
+// VIOLATIONS TO FLAG:
+// 1. "text" (Author, date, p. #) — WRONG. Fix: Author (date) verb "text" (p. #).
+// 2. Period inside closing quote: "text." (p. #) — WRONG. Fix: "text" (p. #).
+// 3. Quote with no (p. #) after it. Fix: add (p. #) or drop quote.
+// 4. Capital first word inside opening quote. Fix: pull out, lowercase, blend into sentence.
+// 5. Empty quotes "" (p. #). Fix: drop and write plain sentence.
+// 6. Chapter/page inside narrative parens: Author (2023, Chapter 3). Fix: write in sentence.
+// 7. Narrative missing page: According to Author (date), teaching is important. Fix: add page.
+// 8. Only one citation type used — both parenthetical AND narrative required.
+// 9. Sources mixed — Ramlal text cited as Annenberg Learner or vice versa.
+// 10. Quote fragment mid-sentence: Author (n.d.) notes a "short term" (p. #) feels... WRONG.
+//     The sentence must END after (p. #).
+
+// For each violation: quote the exact wrong text and state the fix.
+
+// End with EXACTLY one of these as the very last line:
+// CITATION RESULT: PASS
+// CITATION RESULT: FAIL`;
+// }
+
+// // ─── AI2 CORRECTION PROMPT ────────────────────────────────────────────────────
+
+// function buildAI2CorrectionPrompt(questionText, currentAnswer, ai3Feedback) {
+//   return `Your answer has citation violations. Fix every one now.
+
+// ${"=".repeat(55)}
+// QUESTION:
+// ${"=".repeat(55)}
+// ${questionText}
+
+// ${"=".repeat(55)}
+// YOUR CURRENT ANSWER WITH VIOLATIONS:
+// ${"=".repeat(55)}
+// ${currentAnswer}
+
+// ${"=".repeat(55)}
+// REVIEWER FEEDBACK:
+// ${"=".repeat(55)}
+// ${ai3Feedback}
+
+// ${"=".repeat(55)}
+// FIX USING THESE RULES:
+// ${"=".repeat(55)}
+// PARENTHETICAL: Author (date) verb "word for word text" (p. #).
+//   Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+
+// NARRATIVE: According to Author (date), from Chapter X on page #, ...
+//   As Annenberg Learner (n.d.) explains on page 24, ...
+
+// - Period AFTER (p. #) — NEVER inside quotes
+// - Capital first word → pull out, lowercase, blend into sentence
+// - Quote must END the sentence — never continue after (p. #) with lowercase text
+// - Both parenthetical AND narrative required
+// - Page always present — either as (p. #) or said naturally in the sentence
+
+// Output ONLY the corrected answer — no preamble.`;
+// }
+
+// // ─── AI4 PROMPT — cohesion + transitions + APA on final draft ─────────────────
+
+// function buildAI4MasterEditorPrompt(targetIdx, roughDraftAnswers) {
+//   const target = roughDraftAnswers[targetIdx];
+
+//   const allOthers = roughDraftAnswers
+//     .filter((_, i) => i !== targetIdx)
+//     .map(a => `--- Q${a.qNum}: ${a.questionText}\n${a.answer}`)
+//     .join("\n\n");
+
+//   const prevAnswer = targetIdx > 0
+//     ? `--- Q${roughDraftAnswers[targetIdx - 1].qNum}: ${roughDraftAnswers[targetIdx - 1].questionText}\n${roughDraftAnswers[targetIdx - 1].answer}`
+//     : "None — this is the first answer.";
+
+//   const nextAnswer = targetIdx < roughDraftAnswers.length - 1
+//     ? `--- Q${roughDraftAnswers[targetIdx + 1].qNum}: ${roughDraftAnswers[targetIdx + 1].questionText}\n${roughDraftAnswers[targetIdx + 1].answer}`
+//     : "None — this is the last answer.";
+
+//   return `You are the Lead Editor for a Baker College assignment final draft.
+
+// =======================================================
+// YOUR TARGET: Q${target.qNum} — ${target.questionText}
+// =======================================================
+// ${target.answer}
+
+// =======================================================
+// ALL OTHER ANSWERS IN THE ASSIGNMENT (for relevance check):
+// =======================================================
+// ${allOthers}
+
+// =======================================================
+// IMMEDIATELY PREVIOUS ANSWER (transition context):
+// =======================================================
+// ${prevAnswer}
+
+// =======================================================
+// IMMEDIATELY NEXT ANSWER (transition context):
+// =======================================================
+// ${nextAnswer}
+
+// =======================================================
+// YOUR TASKS:
+// =======================================================
+// 1. RELEVANCE: Compare this answer to ALL other answers.
+//    - Remove any content that duplicates what another answer already covers.
+//    - Remove any content that has no relevance to the assignment's overall topic.
+//    - If the answer is missing relevant context that ties it to the assignment, add it.
+
+// 2. FLOW: Add a natural transition sentence at the START that connects from the previous answer.
+//    Add a natural transition sentence at the END that leads into the next answer.
+//    If this is the first or last answer, only add one transition where applicable.
+
+// 3. APA 7TH REPAIR: Fix every citation violation using the rules below.
+
+// =======================================================
+// APA 7TH EDITION CITATION RULES:
+// =======================================================
+// You MUST use BOTH parenthetical AND narrative citations. Max 3 parenthetical per answer, rest narrative.
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   WRONG: "text" (Author, date, p. #).
+//   WRONG: "Text starts capital" (p. #).
+//   WRONG: "text." (p. #).
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+//   As Author (date) explains on page #, ...
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...
+//   WRONG: According to Ramlal (2023), teaching is important.
+
+// CAPITAL FIRST WORD RULE:
+//   Pull capital word OUT of quotes, lowercase it, blend into sentence.
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside quotes.
+// NO MIXED SOURCES. IF IN DOUBT: drop citation, write plain sentence.
+
+// =======================================================
+// OUTPUT:
+// =======================================================
+// Output ONLY the final polished answer — no preamble, no labels.`;
+// }
+
+// // ─── PARSE AI1 JSON RESPONSE ──────────────────────────────────────────────────
+
+// function extractQuestionsFromResponse(raw) {
+//   const match = raw.match(/\[[\s\S]*\]/g);
+//   if (!match) throw new Error("AI1 did not return a JSON array");
+//   const lastArray = match[match.length - 1];
+//   try {
+//     const parsed = JSON.parse(lastArray);
+//     if (!Array.isArray(parsed) || parsed.length === 0)
+//       throw new Error("Empty or invalid array");
+//     return parsed.map(q => String(q).trim()).filter(q => q.length > 5);
+//   } catch (e) {
+//     throw new Error(`Failed to parse AI1 JSON: ${e.message}\nRaw: ${lastArray.substring(0, 300)}`);
+//   }
+// }
+
+// // ─── MAIN ─────────────────────────────────────────────────────────────────────
+
+// (async () => {
+//   console.log("=".repeat(70));
+//   console.log("  QUESTION-BY-QUESTION PIPELINE");
+//   console.log("=".repeat(70));
+//   console.log("  AI1 — parses directions into question array");
+//   console.log("  AI2 — answers each question with APA citations");
+//   console.log("  AI3 — checks citations, sends back to AI2 if wrong");
+//   console.log("  AI4 — cohesion pass on all answers, AI3 re-checks before final save");
+//   console.log(`  Rough draft:  ${OUTPUT_FILENAME}`);
+//   console.log(`  Final draft:  ${SEC_OUTPUT_FILENAME}`);
+//   console.log("=".repeat(70) + "\n");
+
+//   initOutputFile();
+
+//   // ── Open all four Gemini windows ────────────────────────────────────────────
+//   console.log("Opening AI windows...\n");
+//   const { browser: b1, page: ai1Page } = await openGeminiBrowser("ai1-parser",    "AI1 PARSER");
+//   const { browser: b2, page: ai2Page } = await openGeminiBrowser("ai2-writer",    "AI2 WRITER");
+//   const { browser: b3, page: ai3Page } = await openGeminiBrowser("ai3-reviewer",  "AI3 REVIEWER");
+//   const { browser: b4, page: ai4Page } = await openGeminiBrowser("ai4-draft",     "AI4 FINAL-DRAFT");
+
+//   // Wait for login if needed
+//   const allPages = [ai1Page, ai2Page, ai3Page, ai4Page];
+//   if (allPages.some(p => p.url().includes("accounts.google.com"))) {
+//     console.log("  Waiting for all windows to reach Gemini...\n");
+//     await Promise.all(allPages.map(p =>
+//       p.waitForFunction(() => location.href.includes("gemini.google.com"), { timeout: 180000, polling: 1000 })
+//     ));
+//   }
+
+//   for (const [p, lbl] of [[ai1Page, "AI1"], [ai2Page, "AI2"], [ai3Page, "AI3"], [ai4Page, "AI4"]]) {
+//     await p.waitForFunction(
+//       () => !!document.querySelector('rich-textarea div[contenteditable="true"], div[contenteditable="true"], div[role="textbox"], textarea'),
+//       { timeout: 30000, polling: 1000 }
+//     ).catch(() => console.warn(`  [${lbl}] Input wait timed out`));
+//   }
+//   await sleep(2000);
+//   console.log("All windows ready.\n");
+
+//   // ── STEP 1: AI1 parses directions into questions ───────────────────────────
+//   console.log("=".repeat(70));
+//   console.log("  STEP 1 — AI1 parsing directions into questions");
+//   console.log("=".repeat(70) + "\n");
+
+//   await sendMessage(ai1Page, buildAI1Prompt(), "AI1 PARSER");
+//   const ai1Raw = await waitForResponse(ai1Page, "AI1 PARSER");
+
+//   let questions;
+//   try {
+//     questions = extractQuestionsFromResponse(ai1Raw);
+//   } catch (e) {
+//     console.error(`  ✗ AI1 parse failed: ${e.message}`);
+//     process.exit(1);
+//   }
+
+//   console.log(`\n  AI1 generated ${questions.length} question(s):`);
+//   questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+
+//   // ── STEP 2: AI1 self-checks its own question list ──────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log("  STEP 2 — AI1 self-checking question coverage");
+//   console.log("=".repeat(70) + "\n");
+
+//   await sendMessage(ai1Page, buildAI1SelfCheckPrompt(questions), "AI1 PARSER");
+//   const ai1CheckRaw = await waitForResponse(ai1Page, "AI1 PARSER");
+
+//   try {
+//     const revised = extractQuestionsFromResponse(ai1CheckRaw);
+//     if (revised.length >= questions.length) {
+//       questions = revised;
+//       console.log(`\n  AI1 self-check complete. Final question count: ${questions.length}`);
+//     } else {
+//       console.log(`\n  AI1 self-check returned fewer questions — keeping original list.`);
+//     }
+//   } catch (_) {
+//     console.log(`\n  AI1 self-check did not change the list.`);
+//   }
+
+//   console.log(`\n  Final questions to answer (${questions.length} total):`);
+//   questions.forEach((q, i) => console.log(`    [${i + 1}] ${q}`));
+
+//   // ── STEP 3: AI2 answers, AI3 checks citations ──────────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log(`  STEP 3 — AI2 answers each question, AI3 checks citations`);
+//   console.log("=".repeat(70));
+
+//   for (let idx = 0; idx < questions.length; idx++) {
+//     const questionText = questions[idx];
+//     const qNum = idx + 1;
+//     const isSummary = questionText.toLowerCase().includes("summary");
+
+//     console.log(`\n${"─".repeat(70)}`);
+//     console.log(`  QUESTION ${qNum} of ${questions.length}`);
+//     console.log(`  ${questionText}`);
+//     console.log(`${"─".repeat(70)}`);
+
+//     // AI2 writes the answer
+//     await sendMessage(ai2Page, buildAI2Prompt(idx, questionText, questions.length), "AI2 WRITER");
+//     let answer = await waitForResponse(ai2Page, "AI2 WRITER");
+
+//     // AI3 checks citations — loop until PASS or max attempts
+//     let citationApproved = false;
+//     let citationAttempt  = 0;
+//     const MAX_CITATION_ATTEMPTS = 5;
+
+//     while (!citationApproved && citationAttempt < MAX_CITATION_ATTEMPTS) {
+//       citationAttempt++;
+//       console.log(`\n  [CITATION CHECK] Attempt ${citationAttempt}/${MAX_CITATION_ATTEMPTS} for Q${qNum}`);
+
+//       await sendMessage(ai3Page, buildAI3Prompt(questionText, answer), "AI3 REVIEWER");
+//       const ai3Feedback = await waitForResponse(ai3Page, "AI3 REVIEWER");
+
+//       console.log(`\n  [AI3]:\n  ` + ai3Feedback.split("\n").join("\n  "));
+
+//       if (ai3Feedback.includes("CITATION RESULT: PASS")) {
+//         console.log(`\n  ✓ Citations PASSED for Q${qNum}`);
+//         citationApproved = true;
+//       } else {
+//         console.log(`\n  ✗ Citations FAILED — sending back to AI2 to fix...`);
+//         await sendMessage(ai2Page, buildAI2CorrectionPrompt(questionText, answer, ai3Feedback), "AI2 WRITER");
+//         answer = await waitForResponse(ai2Page, "AI2 WRITER");
+//         await sleep(2000);
+//       }
+//     }
+
+//     if (!citationApproved) {
+//       console.warn(`  ⚠ Max citation attempts reached for Q${qNum} — using best version.`);
+//     }
+
+//     // Save to rough draft file
+//     if (isSummary) {
+//       appendSummaryToFile(answer);
+//     } else {
+//       appendToFile(qNum, questionText, answer);
+//     }
+
+//     // Store for AI4 cohesion pass
+//     roughDraftAnswers.push({ qNum, questionText, answer });
+
+//     console.log(`\n  ✓ Q${qNum} complete and saved to rough draft.`);
+//     await sleep(2000);
+//   }
+
+//   // ── STEP 4: AI4 cohesion pass + AI3 final APA check → Final Draft ──────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log("  STEP 4 — AI4 cohesion + transition pass, AI3 re-checks → Final Draft");
+//   console.log("=".repeat(70));
+
+//   initFinalOutputFile();
+
+//   for (let idx = 0; idx < roughDraftAnswers.length; idx++) {
+//     const { qNum, questionText } = roughDraftAnswers[idx];
+//     const isSummary = questionText.toLowerCase().includes("summary");
+
+//     console.log(`\n${"─".repeat(70)}`);
+//     console.log(`  AI4 PASS — Q${qNum} of ${roughDraftAnswers.length}`);
+//     console.log(`  ${questionText}`);
+//     console.log(`${"─".repeat(70)}`);
+
+//     // AI4 rewrites for cohesion, relevance, transitions, and APA
+//     await sendMessage(ai4Page, buildAI4MasterEditorPrompt(idx, roughDraftAnswers), "AI4 FINAL-DRAFT");
+//     let finalAnswer = await waitForResponse(ai4Page, "AI4 FINAL-DRAFT");
+
+//     // AI3 re-checks the AI4 output — loop until PASS or max attempts
+//     let finalCitationApproved = false;
+//     let finalCitationAttempt  = 0;
+//     const MAX_FINAL_CITATION_ATTEMPTS = 5;
+
+//     while (!finalCitationApproved && finalCitationAttempt < MAX_FINAL_CITATION_ATTEMPTS) {
+//       finalCitationAttempt++;
+//       console.log(`\n  [FINAL CITATION CHECK] Attempt ${finalCitationAttempt}/${MAX_FINAL_CITATION_ATTEMPTS} for Q${qNum}`);
+
+//       await sendMessage(ai3Page, buildAI3Prompt(questionText, finalAnswer), "AI3 REVIEWER");
+//       const ai3FinalFeedback = await waitForResponse(ai3Page, "AI3 REVIEWER");
+
+//       console.log(`\n  [AI3 on AI4 output]:\n  ` + ai3FinalFeedback.split("\n").join("\n  "));
+
+//       if (ai3FinalFeedback.includes("CITATION RESULT: PASS")) {
+//         console.log(`\n  ✓ Final citations PASSED for Q${qNum}`);
+//         finalCitationApproved = true;
+//       } else {
+//         console.log(`\n  ✗ Final citations FAILED — sending back to AI4 to fix...`);
+//         await sendMessage(ai4Page, buildAI2CorrectionPrompt(questionText, finalAnswer, ai3FinalFeedback), "AI4 FINAL-DRAFT");
+//         finalAnswer = await waitForResponse(ai4Page, "AI4 FINAL-DRAFT");
+//         await sleep(2000);
+//       }
+//     }
+
+//     if (!finalCitationApproved) {
+//       console.warn(`  ⚠ Max final citation attempts reached for Q${qNum} — using best version.`);
+//     }
+
+//     // Write to final draft file
+//     if (isSummary) {
+//       appendFinalSummaryToFile(finalAnswer);
+//     } else {
+//       appendFinalAnswerToFile(qNum, questionText, finalAnswer);
+//     }
+
+//     console.log(`\n  ✓ Final Q${qNum} complete and saved to final draft.`);
+//     await sleep(2000);
+//   }
+
+//   // ── DONE ──────────────────────────────────────────────────────────────────
+//   console.log("\n" + "=".repeat(70));
+//   console.log("  ALL QUESTIONS COMPLETE");
+//   console.log(`  Rough draft saved to: ${OUTPUT_PATH}`);
+//   console.log(`  Final draft saved to: ${FINAL_OUTPUT_PATH}`);
+//   console.log("=".repeat(70) + "\n");
+
+//   // Uncomment to auto-close all windows when done:
+//   // await b1.close(); await b2.close(); await b3.close(); await b4.close();
+// })();
+
+// app.listen(3000, () => console.log("working"));
 
 
 

@@ -36,10 +36,12 @@ export const fetchD = createAsyncThunk(
     async() => {
         const res = await fetch("https://api.thedogapi.com/v1/breeds", {method: "GET", headers: {"x-api-key" : "live_WQSPyRX2bHJaUvdSgSc0k15mJLDqd0AUoYILOrB479WhXwcZQkv4uqgAtZWiFdVN", "Content-Type": "application/json"}})
 
+
         if(!res.ok){
             return true
         }
         const DD = await res.json()
+
 
         console.log(DD)
 

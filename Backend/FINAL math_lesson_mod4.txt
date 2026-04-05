@@ -1,4 +1,410 @@
 ======================================================================
   FINAL DRAFT: FINAL MATH LESSON MOD4
-  Generated: 4/2/2026, 8:08:12 PM
+  Generated: 4/4/2026, 10:24:50 AM
 ======================================================================
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 1
+──────────────────────────────────────────────────────────────────────
+Use the link to go to the Michigan K-12 Standards - Mathematics.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 1
+──────────────────────────────────────────────────────────────────────
+This lesson plan establishes a foundation for 6th-grade mathematics by aligning Michigan state benchmarks with strategic pedagogical practices focused on division. According to the Michigan Department of Education (n.d.), as stated on page 44, the focus of this lesson is to apply and extend previous understandings of multiplication and division to divide fractions by fractions. Students will work toward interpreting and computing quotients of fractions and solving word problems using visual models and equations.
+
+Instructional Approach: The Power of Questioning
+
+As Dance and Kaplan (2018) describe from Chapter 5, it is essential to encourage students to think deeply as they read, questioning an author’s reasoning and motivations, and to apply that same level of inquiry to mathematics. To guide students through the complexities of dividing fractions, the teacher will employ three specific categories of questioning:
+
+Questions that Clarify and Probe Thinking
+To ensure students understand the context of a word problem—such as how many 3/4-cup servings are in 2/3 of a cup of yogurt—Dance and Kaplan (2018) explain from Chapter 5 that clarification questions help students visualize the context of the problem.
+
+Example Question: "What do we know about the amount of yogurt we are starting with?"
+
+Probing Question: "Can you explain what a 'serving' represents in this situation?"
+
+Questions that Guide, Challenge, and Extend
+As Dance and Kaplan (2018) describe from Chapter 5, these questions create cognitive dissonance to increase learning. In this lesson, they will be used to help students connect the relationship between multiplication and division.
+
+Example Question: "Why did you choose to use a visual area model to represent 2/3?"
+
+Extension Question: "How does your model prove that 3/4 of 8/9 is actually 2/3?"
+
+Questions that Assess Understanding
+Dance and Kaplan (2018) state from Chapter 5 that questioning serves as a powerful, daily formative assessment tool. These questions will help determine if students have mastered the general algorithm
+
+b
+a
+	​
+
+÷
+d
+c
+	​
+
+=
+bc
+ad
+	​
+
+
+or if they are simply following a procedure without conceptual understanding.
+
+Example Question: "What does the number 8/9 represent in the context of our yogurt servings?"
+
+Example Question: "Why did you use division instead of multiplication to solve for the width of the rectangular strip of land?"
+
+Developing Student Agency
+
+Beyond teacher-led inquiries, Dance and Kaplan (2018) argue from Chapter 5 that an environment should be fostered where student questioning is just as important as teacher questioning. By modeling specific talk moves, students will be encouraged to advocate for their own learning and challenge the mathematical reasoning of their peers, creating a direct link to the broader expectations found in the 5th and 6th-grade standards overview.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 2
+──────────────────────────────────────────────────────────────────────
+Read through the 5th and 6th grade overview and standards.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 2
+──────────────────────────────────────────────────────────────────────
+Building upon the initial overview of dividing fractions, a deeper examination of the state framework reveals the structural expectations for middle school learners. According to the Michigan Department of Education (n.d.), as stated on page 44, the transition into 6th-grade mathematics requires students to build upon their 5th-grade foundations by applying and extending previous understandings of multiplication and division to divide fractions by fractions. As the Michigan Department of Education (n.d.) explains on page 44, this progression ensures that students move from dividing unit fractions by whole numbers to more complex operations involving any two fractions.
+
+Core Standards and Expectations
+
+As the Michigan Department of Education (n.d.) describes on page 44, students must reach several key milestones to achieve mastery of this content:
+
+Computation and Interpretation: Students are expected to interpret and compute quotients of fractions accurately.
+
+Contextual Problem Solving: Learners must solve word problems involving the division of fractions by fractions, such as determining how many 3/4-cup servings are found in 2/3 of a cup of yogurt.
+
+Representation: As the Michigan Department of Education (n.d.) emphasizes on page 44, the standards require the use of visual fraction models and equations to represent and solve problems.
+
+Mathematical Reasoning: Students must use the relationship between multiplication and division to explain their results, such as proving that 
+3
+2
+	​
+
+÷
+4
+3
+	​
+
+=
+9
+8
+	​
+
+ because 
+4
+3
+	​
+
+×
+9
+8
+	​
+
+=
+3
+2
+	​
+
+.
+
+Instructional Implementation through Questioning
+
+To meet these standards, teachers must utilize strategic questioning to push student thinking. As Dance and Kaplan (2018) explain from Chapter 5, the Common Core State Standards for Mathematical Practice encourage students to provide evidence of their thinking and evaluate the evidence provided by others. This is achieved through specific types of teacher-led inquiries:
+
+Clarification: According to Dance and Kaplan (2018) from Chapter 5, clarification questions help students understand a task, make sense of a problem, and explain their thinking more clearly.
+
+Probing: As Dance and Kaplan (2018) describe from Chapter 5, a probing question encourages students to think about the problem at a deeper level and helps teachers better understand student thinking.
+
+Assessment: As Dance and Kaplan (2018) explain from Chapter 5, by intentionally questioning students, teachers can gather important evidence of student understanding and strategy use to make informed instructional decisions.
+
+Challenge: According to Dance and Kaplan (2018) from Chapter 5, questions that guide, challenge, and extend are used to push student thinking, often while creating cognitive dissonance, which increases the learning.
+
+By understanding these broad expectations for the 6th-grade year, educators can more effectively select a specific standard to anchor their daily instructional goals.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 3
+──────────────────────────────────────────────────────────────────────
+Choose one standard, from 5th or 6th grade, to focus on for this activity.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 3
+──────────────────────────────────────────────────────────────────────
+While the broader curriculum provides a comprehensive roadmap for 5th and 6th-grade mathematics, selecting a singular focal point allows for the deep, conceptual exploration necessary for mastery. For this activity, the focus will be on the 6th-grade mathematics standard regarding the division of fractions. As the Michigan Department of Education (n.d.) explains on page 44, students must be able to interpret and compute quotients of fractions and solve word problems involving the division of fractions by fractions.
+
+This standard requires students to apply and extend their previous understandings of multiplication and division. According to the Michigan Department of Education (n.d.) on page 44, students should be able to represent these problems using visual fraction models and equations. For example, learners may create a story context for a division problem and use the inverse relationship between multiplication and division to explain why their results are mathematically sound.
+
+Implementing this standard successfully involves the use of strategic instruction that moves beyond rote memorization. As Dance and Kaplan (2018) explain from Chapter 5, deliberate and direct questioning is one of the best ways to help students provide evidence of their thinking and evaluate the evidence of others. By using clarification and probing questions, teachers can help students visualize the context of division problems, ensuring they understand the underlying logic before attempting to apply a formal algorithm. This specific standard and the accompanying instructional strategies will now be formally integrated into the Baker College Teacher Prep Lesson Plan format.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 4
+──────────────────────────────────────────────────────────────────────
+Copy and paste the Common Core State Standard into your Baker College Teacher Prep Lesson Plan Format.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 4
+──────────────────────────────────────────────────────────────────────
+To bridge the gap between selecting a target standard and formalizing it within a classroom setting, the following section integrates the requirements into the Baker College Teacher Prep Lesson Plan format.
+
+Baker College Teacher Prep Lesson Plan: Standards Section
+
+Common Core State Standard(s):
+As the Michigan Department of Education (n.d.) describes on page 44, students are required to apply and extend previous understandings of multiplication and division to divide fractions by fractions. Specifically, the Michigan Department of Education (n.d.) explains on page 44 that learners must be able to interpret and compute quotients of fractions and solve word problems involving the division of fractions by fractions, e.g., by using visual fraction models and equations to represent the problem.
+
+Instructional Integration
+To support the mastery of this standard, the lesson will incorporate strategic questioning. As Dance and Kaplan (2018) describe from Chapter 5, the Common Core State Standards for Mathematical Practice encourage students to provide evidence of their thinking and evaluate the evidence provided by others. This is facilitated through deliberate and direct questioning, both from the teacher and by the students themselves, as noted by Dance and Kaplan (2018) from Chapter 5.
+
+With the official standards established, the next priority is translating this technical language into a student-friendly objective that clarifies expectations for 6th-grade learners.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 5
+──────────────────────────────────────────────────────────────────────
+Under the learning objective, rewrite this standard in your own words that makes sense for 5th or 6th grade students.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 5
+──────────────────────────────────────────────────────────────────────
+With the official standards established, the next priority is translating this technical language into a student-friendly objective that clarifies expectations for 6th-grade learners.
+
+Learning Objective
+
+Student-Friendly Standard:
+In this lesson, we will learn how to divide one fraction by another fraction to solve real-world problems. As the Michigan Department of Education (n.d.) explains on page 44, you will be able to show your work by drawing pictures (visual models) and writing math sentences (equations). To help us understand why our answers make sense, we will use what we already know about multiplication to explain our division, as described by the Michigan Department of Education (n.d.) on page 44.
+
+Instructional Focus:
+To help you reach this goal, we will use different types of questions to explore the math. According to Dance and Kaplan (2018), from Chapter 5, we will use clarification questions to make sure we understand the problem and probing questions to look deeper at our math thinking. As Dance and Kaplan (2018) explain from Chapter 5, these questions are designed to help your brain grow and allow you to show exactly how you solved a problem.
+
+By establishing these clear objectives, students are better prepared to engage in specific mathematical practices that require them to defend their work and analyze the logic used by their peers.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 6
+──────────────────────────────────────────────────────────────────────
+Choose one mathematical practice that integrates well with the standard.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 6
+──────────────────────────────────────────────────────────────────────
+By establishing these clear objectives, students are better prepared to engage in specific mathematical practices that require them to defend their work and analyze the logic used by their peers.
+
+The mathematical practice that integrates most effectively with the 6th-grade standard for dividing fractions is Construct Viable Arguments and Critique the Reasoning of Others. As Dance and Kaplan (2018) describe from Chapter 5, the Common Core State Standards for Mathematical Practice encourage students to provide evidence of their thinking and evaluate the evidence provided by others. This practice is essential when students apply and extend previous understandings of multiplication and division. According to the Michigan Department of Education (n.d.) on page 44, students must be able to use the relationship between multiplication and division to explain their results, such as justifying that
+
+3
+2
+	​
+
+÷
+4
+3
+	​
+
+=
+9
+8
+	​
+
+
+because
+
+4
+3
+	​
+
+×
+9
+8
+	​
+
+=
+3
+2
+	​
+
+
+.
+
+By engaging in this practice, students develop a deeper metacognitive awareness of their own thought processes. As Dance and Kaplan (2018) explain from Chapter 5, utilizing deliberate questioning allows students to analyze and compare their classmates’ mathematical reasoning. This integration ensures that learners are not just performing a computation but are also using mathematical reasoning to justify their strategies and understand the context of the problem, as emphasized by the Michigan Department of Education (n.d.) on page 44.
+
+This commitment to evidence-based reasoning and peer critique is best brought to life through a collaborative classroom activity that transforms abstract division into a shared investigative process.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 7
+──────────────────────────────────────────────────────────────────────
+Create an engaging activity that integrates the standard and the mathematical practice.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 7
+──────────────────────────────────────────────────────────────────────
+This commitment to evidence-based reasoning and peer critique is best brought to life through a collaborative classroom activity that transforms abstract division into a shared investigative process.
+
+Engaging Activity: "The Great Fraction Storyboard Critique"
+
+To integrate the standard for dividing fractions by fractions, which the Michigan Department of Education (n.d.) describes on page 44, with the practice of constructing arguments and questioning, as Dance and Kaplan (2018) discuss in Chapter 5, students will participate in a Storyboard Critique.
+
+Part 1: The Creation (Small Groups)
+Groups are assigned a division expression, such as 2/3÷3/4. Their task is to:
+
+Create a Story Context: Write a word problem that matches the expression, such as the example provided by the Michigan Department of Education (n.d.) on page 44 regarding servings of yogurt.
+
+Develop a Visual Model: Use a visual fraction model to show the quotient.
+
+Prove with Multiplication: Write an equation using the relationship between multiplication and division to justify their answer, as the Michigan Department of Education (n.d.) requires on page 44.
+
+Part 2: The Gallery Walk & Critique (Whole Class)
+Students rotate to different storyboards. Following the guidance of Dance and Kaplan (2018), from Chapter 5, they must not just look at the answers but evaluate the evidence provided by their peers. Students will use sticky notes to leave strategic questions based on the three categories described by Dance and Kaplan (2018) in Chapter 5:
+
+Clarification Questions: "What did you mean when you labeled this part of your model?"
+
+Probing Questions: "Why did you choose this specific visual model to represent the division?"
+
+Challenge Questions: "How would your model change if the divisor was 1/2 instead of 3/4?"
+
+Part 3: The Response (Metacognitive Reflection)
+Groups return to their storyboards to read the questions. As Dance and Kaplan (2018) emphasize in Chapter 5, this allows students to develop a metacognitive awareness of their own understanding. Groups must choose one question left by a peer and present a "justification defense" to the class, explaining how they revised their thinking or why their evidence supports their original conclusion, a process that Dance and Kaplan (2018) suggest in Chapter 5 helps students analyze mathematical reasoning.
+
+Once this activity has been successfully designed, the final step is to organize these components into the structured Baker College Teacher Prep Lesson Plan format.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 8
+──────────────────────────────────────────────────────────────────────
+Use the Baker College Teacher Prep Lesson Plan Format in Canvas to document all parts of the plan.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 8
+──────────────────────────────────────────────────────────────────────
+Once this activity has been successfully designed, the final step is to organize these components into the structured Baker College Teacher Prep Lesson Plan format.
+
+Baker College Teacher Prep Lesson Plan
+
+Subject: Mathematics
+
+Grade Level: 6th Grade
+
+Lesson Duration: 60 Minutes
+
+1. Standards and Objectives
+
+State Standard: According to the Michigan Department of Education (n.d.), on page 44, students must apply and extend previous understandings of multiplication and division to divide fractions by fractions. This includes interpreting and computing quotients and solving word problems using visual models and equations.
+
+Learning Objective: Students will be able to compute quotients of fractions and justify their reasoning using visual models and the relationship between multiplication and division. As the Michigan Department of Education (n.d.) explains on page 44, students will demonstrate this by creating story contexts for division expressions.
+
+2. Mathematical Practices
+
+Focus Practice: Construct viable arguments and critique the reasoning of others. As Dance and Kaplan (2018) describe from Chapter 5, the Common Core Standards encourage students to provide evidence of their thinking and evaluate the evidence provided by others through deliberate questioning.
+
+3. Instructional Materials and Resources
+
+Fraction tiles and grid paper.
+
+"Storyboard Critique" templates.
+
+Sticky notes for student questioning.
+
+Sentence stems for mathematical discourse, as suggested by Dance and Kaplan (2018) from Figure 5.1 in Chapter 5.
+
+4. Lesson Procedure
+
+Introduction (10 Minutes):
+
+The teacher will launch a problem task by providing a scenario without numbers initially, which is a technique Dance and Kaplan (2018) discuss from Chapter 5 to prevent students from rushing to an answer. The class will use "I Notice, I Wonder" routines to analyze the problem context.
+
+Guided Practice (15 Minutes):
+
+The teacher will model how to represent 2/3÷3/4 using a visual model. During this time, the teacher will use clarification questions to ensure students understand the task, as Dance and Kaplan (2018) recommend from Chapter 5.
+
+Independent/Collaborative Activity (25 Minutes):
+
+Students work in small groups to complete "The Great Fraction Storyboard."
+
+Solve: Groups compute an assigned quotient of fractions.
+
+Model: Groups create a visual representation and a story context, following the examples provided by the Michigan Department of Education (n.d.) on page 44.
+
+Critique: Students engage in a Gallery Walk. As Dance and Kaplan (2018) explain from Chapter 5, students will use sticky notes to ask probing and challenging questions of their peers to deepen mathematical reasoning.
+
+Closure (10 Minutes):
+
+Groups return to their boards to address peer questions. The teacher will facilitate a final share where students use talk moves, such as rephrasing a classmate's strategy, which Dance and Kaplan (2018) discuss from Chapter 5 as a way to ensure whole-group understanding.
+
+5. Assessment and Evaluation
+
+Formative Assessment: The teacher will circulate during work time to ask questions that assess understanding. As Dance and Kaplan (2018) suggest from Chapter 5, these questions help gather evidence of student strategy use.
+
+Summative Assessment: Successful completion of the storyboard, including an accurate visual model and a multiplication-based justification as required by the Michigan Department of Education (n.d.) on page 44.
+
+This comprehensive plan ensures all instructional elements are aligned, providing a clear roadmap for both the teacher and the students.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 9
+──────────────────────────────────────────────────────────────────────
+Leave the grayed-out sections as it is, and complete the remaining sections.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 9
+──────────────────────────────────────────────────────────────────────
+This comprehensive plan ensures all instructional elements are aligned, providing a clear roadmap for both the teacher and the students through the following summary of lesson components.
+
+Section	Description
+Lesson Title	Fraction Action: Storyboards and Strategic Questioning
+Subject/Grade	Mathematics / 6th Grade
+Standards	According to the Michigan Department of Education (n.d.), on page 44, students are expected to interpret and compute quotients of fractions and solve word problems involving division of fractions by fractions.
+Mathematical Practices	As Dance and Kaplan (2018) describe from Chapter 5, students should provide evidence of their thinking and evaluate the evidence of others through deliberate and direct questioning.
+Objective	Students will compute quotients of fractions and justify their reasoning by creating visual models and story contexts, then evaluate peer work using strategic questions as outlined by Dance and Kaplan (2018) from Chapter 5.
+Materials	Fraction tiles, grid paper, sticky notes, and the question stems suggested by Dance and Kaplan (2018) from Figure 5.1 in Chapter 5.
+Grayed Out	This section is intentionally left blank.
+Anticipated Misconceptions	A common misconception is adding instead of subtracting or dividing in missing-part problems, which Dance and Kaplan (2018) discuss from Chapter 5. Teachers can use guiding questions to navigate students through these errors.
+Lesson Introduction	The teacher will launch the task by reading a scenario without numbers to encourage visualization, a technique Dance and Kaplan (2018) discuss from Chapter 5.
+Instructional Strategy	The teacher will model "Teacher Talk Moves" to encourage student use, as listed by Dance and Kaplan (2018) from Chapter 5, such as asking, "Can you say that again in a different way?"
+Collaborative Activity	Groups will create a story context for a division problem, like the chocolate or yogurt examples provided by the Michigan Department of Education (n.d.) on page 44.
+Peer Critique	Students will leave clarification, probing, and challenging questions on peer storyboards. Dance and Kaplan (2018) explain from Chapter 5 that these questions help students develop metacognitive awareness.
+Differentiation	For students who are stuck, the teacher will use guiding questions to help them identify important information, as Dance and Kaplan (2018) illustrate from the vignette in Chapter 5.
+Formative Assessment	The teacher will circulate and ask "Questions That Assess," such as "Why did you use that operation?" as recommended by Dance and Kaplan (2018) from Chapter 5.
+Grayed Out	This section is intentionally left blank.
+Summative Assessment	Students must successfully use the relationship between multiplication and division to explain their quotient, as required by the Michigan Department of Education (n.d.) on page 44.
+Export to Sheets
+
+By consolidating these instructional strategies into a unified table, it becomes evident how the 6th-grade standards and the practice of critiquing mathematical reasoning function as a single, integrated learning experience.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 10
+──────────────────────────────────────────────────────────────────────
+For this checkpoint, you will analyze the mathematical standards and practices and integrate with an engaging activity.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 10
+──────────────────────────────────────────────────────────────────────
+Building upon the structured components outlined in the lesson plan table, this final analysis explores how the synthesis of these elements creates a cohesive learning experience. To integrate the 6th-grade standard for dividing fractions with the practice of critiquing mathematical reasoning, students will participate in an activity called "The Fraction Gallery Walk: Defend and Question."
+
+Standards and Practice Integration
+
+According to the Michigan Department of Education (n.d.), on page 44, students must interpret and compute quotients of fractions and solve word problems using visual fraction models and equations. This standard is paired with the practice of providing evidence of thinking and evaluating the evidence provided by others, which Dance and Kaplan (2018) describe from Chapter 5 as a core goal of the Common Core Standards.
+
+Activity: The Fraction Gallery Walk
+
+Part 1: The Storyboard Creation
+
+Students work in small groups to solve a division problem. They must create a storyboard that includes:
+
+A Story Context: Creating a word problem, such as the yogurt serving example suggested by the Michigan Department of Education (n.d.) from page 44.
+
+A Visual Model: Drawing a fraction model to represent the quotient.
+
+A Multiplication Proof: Using the relationship between multiplication and division to justify the answer, as the Michigan Department of Education (n.d.) requires on page 44.
+
+Part 2: The Critique and Questioning
+
+Students rotate to different storyboards to evaluate their peers' work. Following the guidance of Dance and Kaplan (2018) from Chapter 5, students must go beyond looking at the answer and instead focus on the reasoning. They will use sticky notes to leave specific types of questions:
+
+Clarification Questions: As Dance and Kaplan (2018) explain from Chapter 5, these help students explain their thinking more clearly.
+
+Probing and Challenging Questions: These encourage students to think at a deeper level or evaluate strategy efficiency, which Dance and Kaplan (2018) describe from Chapter 5.
+
+Part 3: Metacognitive Reflection
+
+Groups return to their original storyboards to read the peer feedback. As Dance and Kaplan (2018) emphasize from Chapter 5, answering questions allows students to develop a metacognitive awareness of their own understanding. Each group must choose one question and present a "justification defense" to the class.
+
+Teacher Support and Assessment
+
+During the activity, the teacher will circulate to provide "Questions That Guide, Challenge, and Extend," such as asking why a specific strategy was used to navigate through misconceptions—a move Dance and Kaplan (2018) illustrate from the vignette in Chapter 5. Formative assessment is gathered by observing the quality of the student questions and the accuracy of the multiplication proofs described by the Michigan Department of Education (n.d.) on page 44.

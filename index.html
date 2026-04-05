@@ -1646,7 +1646,14 @@ pas.addEventListener("change", PASCHANGE)
 </body>
 </html> -->
 
-<!DOCTYPE html>
+
+
+
+<!-- 
+/////////work on this later -->
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -1683,7 +1690,7 @@ pas.addEventListener("change", PASCHANGE)
     for(let r = 0; r< row - 3; r++){
       for(let c = 0; c < col - 3; c++){
         const index = r*col+c
-        win.push([index, index*(col + 1), index + 2*(col+1), index + 3*(col+1)])
+        win.push([index, index + (col + 1), index + 2*(col+1), index + 3*(col+1)])
       }
     }
 
@@ -1692,11 +1699,46 @@ pas.addEventListener("change", PASCHANGE)
     for(let r = 0; r < row - 3 ; r++){
       for(let c = 3; c < col; c++){
         const index = r*col+c
-        win.push([index, index*(col-1), index*2*(col-1), index*3*(col-1)])
+        win.push([index, index + (col-1), index + 2*(col-1), index + 3*(col-1)])
       }
     }
 
 
   </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="1" style="display: flex; flex-direction: row; gap: 0; width: fit-content; height: fit-content"></div>
+<script>
+
+
+
+const words = ["cat", "fart", "hall", "dog", "fan", "am", "sad"]
+let word = words.at(Math.floor(Math.random() * 7))
+
+
+
+for(let i = 0; i < word.length; i++){
+  const el = document.createElement("div")
+  const ell = document.getElementById("1")
+
+
+  el.style.width = "100px"
+  el.style.height = "100px"
+  el.style.border = "5px solid black"
+
+  ell.appendChild(el)
+}
+</script>
 </body>
 </html>
