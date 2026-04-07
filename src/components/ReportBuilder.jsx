@@ -1206,20 +1206,60 @@
 
 
 
+////////redux context
+
+// import New from "./New.jsx"
+// import {Provider} from "react-redux"
+// import {store} from "./Defin.jsx"
 
 
-import New from "./New.jsx"
-import {Provider} from "react-redux"
-import {store} from "./Defin.jsx"
 
 
+// const ReportBuilder = () => {
+//   return (
+//     <Provider store={store}>
+//       <New />
+//     </Provider>
+//   )
+// }
 
+// export default ReportBuilder
+
+////////redux context
+
+
+import {useEffect} from 'react'
+import React from 'react'
 
 const ReportBuilder = () => {
+
+
+function FUNC() {
+  const el = document.getElementById("1")
+
+  console.log(el)
+  console.log(el.style.color)
+
+  if(el.style.color === "white"){
+    el.style.color === "red"
+  }
+  else{
+    el.style.color === "white"
+  }
+}
+
+  useEffect(() => {
+    window.addEventListener("click", FUNC)
+
+    return () => window.removeEventListener("click", FUNC)
+  }, [])
+
+
+
   return (
-    <Provider store={store}>
-      <New />
-    </Provider>
+  <div style={{justifyContent: "center", alignItems: "center", display: "flex", height: "100vh", flexDirection: "column", gap: "20px"}}>
+  <div style={{border: "5px solid black", width: "50px", height: "50px", color: "white"}} id="1">hello</div>    
+  </div>
   )
 }
 
