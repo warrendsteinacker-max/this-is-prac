@@ -1228,24 +1228,16 @@
 ////////redux context
 
 
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import React from 'react'
 
 const ReportBuilder = () => {
-
+const [color, setC] = useState("white")
 
 function FUNC() {
-  const el = document.getElementById("1")
 
-  console.log(el)
-  console.log(el.style.color)
 
-  if(el.style.color === "white"){
-    el.style.color === "red"
-  }
-  else{
-    el.style.color === "white"
-  }
+setC((pre) => pre === "white" ? "red" : "white")
 }
 
   useEffect(() => {
@@ -1258,7 +1250,7 @@ function FUNC() {
 
   return (
   <div style={{justifyContent: "center", alignItems: "center", display: "flex", height: "100vh", flexDirection: "column", gap: "20px"}}>
-  <div style={{border: "5px solid black", width: "50px", height: "50px", color: "white"}} id="1">hello</div>    
+  <div style={{border: "5px solid black", width: "50px", height: "50px", color: color}} id="1">hello</div>    
   </div>
   )
 }
