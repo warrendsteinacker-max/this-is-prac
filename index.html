@@ -1718,27 +1718,46 @@ pas.addEventListener("change", PASCHANGE)
 </head>
 <body>
   
-<div id="1" style="display: flex; flex-direction: row; gap: 0; width: fit-content; height: fit-content"></div>
+<div id="1a" style="display: flex; flex-direction: row; gap: 0; width: fit-content; height: fit-content"></div>
 <script>
 
 
 
 const words = ["cat", "fart", "hall", "dog", "fan", "am", "sad"]
 let word = words.at(Math.floor(Math.random() * 7))
+let count = 0
 
 
 
 for(let i = 0; i < word.length; i++){
   const el = document.createElement("div")
-  const ell = document.getElementById("1")
+  const ell = document.getElementById("1a")
 
-
+  el.id = i
   el.style.width = "100px"
   el.style.height = "100px"
   el.style.border = "5px solid black"
+  el.style.display = "grid"
+  el.style.justifyContent = "center"
+  el.style.alignItems = "center"
 
   ell.appendChild(el)
 }
+
+
+function FUNC(e) {
+  if(e.key === word.charAt(count)){
+    const el = document.getElementById(count)
+    el.textContent = word.charAt(count)
+    count = count + 1
+    if(count === word.length - 1){
+      window.location.reload()
+    }
+
+  }
+}
+
+window.addEventListener("keydown", FUNC)
 </script>
 </body>
 </html>
