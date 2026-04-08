@@ -1228,30 +1228,57 @@
 ////////redux context
 
 
-import {useEffect, useState} from 'react'
-import React from 'react'
+
+
+
+import {useEffect, useState, useCallback} from 'react'
+
 
 const ReportBuilder = () => {
-const [color, setC] = useState("white")
 
-function FUNC() {
+const data = [];
 
-
-setC((pre) => pre === "white" ? "red" : "white")
+for (let i = 1; i <= 150; i++) {
+  data.push({
+    id: i
+  });
 }
 
-  useEffect(() => {
-    window.addEventListener("click", FUNC)
+const [off, setOff] = useState(5)
+const [D, setC] = useState([data[off - 5], data[off - 4], data[off - 3], data[off - 2], data[off - 1]])
 
-    return () => window.removeEventListener("click", FUNC)
-  }, [])
+
+useEffect(() => {
+  setC((pre) => [...pre, data[off - 5], data[off - 4], data[off - 3], data[off - 2], data[off - 1]])
+}, [off])
+
+
+
+const FUNC = useCallback(() => {
+
+  const {scrollHeight, scrollTop, clientHeight} = document.documentElement
+
+  if(off === 150){
+    return 150
+  }
+
+  if(scrollTop + clientHeight >= scrollHeight - 10){
+    setOff((pre) => pre + 5)
+      }
+}, [])
+
+  useEffect(() => {
+    window.addEventListener("scroll", FUNC)
+
+    return () => window.removeEventListener("scroll", FUNC)
+  }, [FUNC])
 
 
 
   return (
-  <div style={{justifyContent: "center", alignItems: "center", display: "flex", height: "100vh", flexDirection: "column", gap: "20px"}}>
-  <div style={{border: "5px solid black", width: "50px", height: "50px", color: color}} id="1">hello</div>    
-  </div>
+    <>
+    {D.map((item, index) => <div key={index}>{item.id}</div>)}
+    </>
   )
 }
 
