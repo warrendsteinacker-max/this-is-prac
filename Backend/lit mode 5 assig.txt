@@ -1,0 +1,563 @@
+======================================================================
+  ASSIGNMENT: LIT MODE 5 ASSIG
+  Generated: 4/8/2026, 2:23:36 PM
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 1
+──────────────────────────────────────────────────────────────────────
+Select 2-3 educational math tools or platforms appropriate for students in Grades 3–6 (e.g., DreamBox, Prodigy, IXL, Zearn, Freckle, Khan Academy).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 1
+──────────────────────────────────────────────────────────────────────
+Three highly effective educational math platforms for students in Grades 3–6 are Zearn, DreamBox, and Khan Academy. These digital tools provide interactive environments that help students master complex mathematical concepts through adaptive learning paths and visual models.
+
+As Ramlal (2023) explains on page 20, instructional plans must include various genres because comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+According to Michigan Department of Education (n.d.), from the Grades 6–8 students column and Integration of Knowledge and Ideas section on page 62, students should learn to integrate technical information with visual versions such as flowcharts, diagrams, or tables. Michigan Department of Education (n.d.) states that students should "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 2
+──────────────────────────────────────────────────────────────────────
+Create a table with the following columns: Tool Name, Grade Level Target (3, 4, 5, or 6), Accuracy, Fluency, Vocabulary, Oral Language, Reading Comprehension, Scaffolding.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 2
+──────────────────────────────────────────────────────────────────────
+Tool Name	Grade Level Target	Accuracy	Fluency	Vocabulary	Oral Language	Reading Comprehension	Scaffolding
+DreamBox	3–6	Yes	Yes	Yes	No	Yes	Adaptive
+Prodigy	3–6	Yes	No	Yes	No	No	Low
+Zearn	3–6	Yes	Yes	Yes	Yes	Yes	High
+Khan Academy	3–6	Yes	No	Yes	No	Yes	Moderate
+Export to Sheets
+
+The integration of these digital platforms into classroom instruction allows teachers to support the foundational reading and technical skills necessary for student success. According to Ramlal (2023), from Chapter 2 on page 13, fluency involves how a student reads with automaticity and prosody. Ramlal (2023) explains that fluency "is how a student reads a text with automaticity (accuracy and speed) and prosody, or expression" (p. 13). Tools like Zearn and DreamBox facilitate this automaticity by providing repetitive, timed practices that build the speed necessary for higher-level task processing.
+
+Furthermore, as Michigan Department of Education (n.d.) explains on page 62, students should be able to integrate technical information expressed in words with visual versions. Michigan Department of Education (n.d.) notes that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62). By utilizing digital tools that offer scaffolding through diagrams and models, educators help students bridge the gap between abstract word problems and technical comprehension. These platforms ensure that students are not only calculating correctly but also accurately interpreting the various genres of technical text they encounter.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 3
+──────────────────────────────────────────────────────────────────────
+For each literacy skill, rate the tool as High, Moderate, or Low in terms of support, and include 1–2 brief notes or examples that justify each rating.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 3
+──────────────────────────────────────────────────────────────────────
+To support students in Grades 3–6, the platform Zearn is rated based on its integration of essential literacy and technical skills.
+
+Zearn Literacy Support Ratings
+
+Accuracy: High
+The tool requires students to input exact numerical and verbal answers, providing immediate feedback for correction. Ramlal (2023) explains that accuracy "involves how a student reads a text aloud" (p. 9).
+
+Fluency: Moderate
+Zearn includes timed practice to build speed and automaticity. As Ramlal (2023) explains on page 13, fluency is how a student reads a text with automaticity and prosody.
+
+Vocabulary: High
+Lessons introduce and define mathematical terminology within the context of word problems. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+Reading Comprehension: High
+Students solve multi-step problems that require deep text understanding. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is how a student understands what was read.
+
+Technical Integration: High
+The platform uses digital manipulatives to represent text-based data visually. Michigan Department of Education (n.d.) states that students should "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62).
+
+Oral Language: Low
+Zearn is primarily an individual digital experience with limited built-in opportunities for peer-to-peer discussion. While teachers can facilitate discussion during small group lessons, the software itself does not capture or rate oral production.
+
+According to Michigan Department of Education (n.d.), from the Grades 6–8 students column and Craft and Structure section on page 62, students must analyze the structure an author uses to organize a text. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 4
+──────────────────────────────────────────────────────────────────────
+Review your completed table and consider which tool offers the most balanced or targeted literacy support for math instruction.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 4
+──────────────────────────────────────────────────────────────────────
+Based on the review of the evaluated tools, Zearn offers the most balanced literacy support for math instruction in Grades 3–6. Unlike platforms that focus solely on procedural drills, Zearn integrates structured digital lessons that mirror classroom instruction. This requires students to engage deeply with mathematical text and visual representations.
+
+According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Zearn supports this by embedding word problems and conceptual explanations that require students to decode and understand specific terminology to progress. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+Furthermore, Zearn excels at helping students bridge the gap between abstract numbers and visual data. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions like diagrams and models. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 5
+──────────────────────────────────────────────────────────────────────
+Use this analysis to guide your selection of one tool to feature in Part B of the assignment (lesson plan and reflection).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 5
+──────────────────────────────────────────────────────────────────────
+I have selected Zearn as the featured tool for Part B of this assignment because it provides a comprehensive digital environment that addresses both mathematical proficiency and critical literacy skills. Zearn's structured lessons require students to engage with technical texts and complex word problems, ensuring that students do not struggle with the underlying message of the content.
+
+According to Ramlal (2023), from Chapter 2 on page 13, fluency is how a student reads a text with automaticity and prosody. Zearn directly supports this by utilizing timed "Sprints" and interactive digital lessons that build student speed and accuracy. Ramlal (2023) explains that fluency "is how a student reads a text with automaticity (accuracy and speed) and prosody, or expression" (p. 13).
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate quantitative information with visual versions like diagrams or models. Zearn's consistent use of digital manipulatives and tape diagrams alongside word problems provides the necessary scaffolding to help students understand how major sections of a problem contribute to the whole. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 6
+──────────────────────────────────────────────────────────────────────
+Develop a detailed lesson plan on the thematic unit communities and change that incorporates at least 2 -3 of the key components of effective literacy instruction, specifically focused on: Accuracy, Fluency, Vocabulary, Oral Language, Reading Comprehension, Scaffolding.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 6
+──────────────────────────────────────────────────────────────────────
+Lesson Plan: Communities and Change
+
+Grade Level: 6
+
+Topic: Analyzing Transformations in Local Communities
+
+Thematic Unit: Communities and Change
+
+Overview and Objectives
+
+In this lesson, students will analyze how communities change over time by examining informational texts and visual data.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Key Literacy Components
+1. Vocabulary Acquisition
+
+Students will identify Tier 2 and Tier 3 words related to community development, such as urbanization and demographics. According to Ramlal (2023), from Chapter 2 on page 15, interactive word walls should be used to develop vocabulary in a meaningful way. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+2. Fluency Practice
+
+To ensure students process technical text effectively, the teacher will lead a choral reading of a community case study. According to Ramlal (2023), from Chapter 2 on page 13, choral reading builds fluency by offering students a model of what fluent reading should sound like. Ramlal (2023) explains that fluency "is how a student reads a text with automaticity (accuracy and speed) and prosody, or expression" (p. 13).
+
+3. Reading Comprehension and Scaffolding
+
+Students will work in pairs to analyze a text describing population shifts alongside a corresponding demographic table. According to Ramlal (2023), from Chapter 3 on page 20, instructional plans must include texts from various genres to ensure comprehension. Ramlal (2023) states that comprehension "is how a student understands what was read" (p. 20).
+
+Instructional Sequence
+
+Introduction (10 mins): Introduce the "Communities and Change" interactive word wall to build background knowledge and support student vocabulary development.
+
+Guided Practice (15 mins): Conduct a choral reading of the primary text to model appropriate pacing, expression, and pronunciation for the class.
+
+Independent Activity (20 mins): Students complete a graphic organizer to integrate text-based population data into a visual flowchart or table.
+
+Conclusion (10 mins): Students share observations about local changes using new vocabulary during an oral language sharing session.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 7
+──────────────────────────────────────────────────────────────────────
+Ensure your lesson is research-informed and responsive to student needs.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 7
+──────────────────────────────────────────────────────────────────────
+To ensure the lesson plan for the unit on "Communities and Change" is research-informed and responsive to student needs, the instruction incorporates evidence-based strategies for accuracy, fluency, and comprehension. By implementing choral reading and interactive word walls, the lesson addresses the foundational gaps that often prevent students from accessing complex thematic content.
+
+According to Ramlal (2023), from Chapter 2 on page 9, the ability to read a text accurately can greatly contribute to a student's comprehension. To respond to this need, the lesson includes explicit modeling of pronunciation for technical terms related to community change. Ramlal (2023) explains that accuracy "involves how a student reads a text aloud" (p. 9).
+
+Furthermore, the lesson is designed to meet rigorous state expectations by requiring students to synthesize different forms of information. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate quantitative or technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 8
+──────────────────────────────────────────────────────────────────────
+Ensure your lesson is part of the theme you selected during module 1, as this is a thematic unit.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 8
+──────────────────────────────────────────────────────────────────────
+This lesson plan is a direct continuation of the thematic unit "Communities and Change" established in Module 1. By focusing on how local environments evolve over time, the lesson ensures that students engage with meaningful content that connects their personal experiences to broader historical and social transformations. This thematic consistency allows for a deeper exploration of various genres of text, which is a critical component of sophisticated reading instruction.
+
+According to Ramlal (2023), from Chapter 3 on page 20, instructional plans must include texts from various genres to support learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). By using diverse materials such as maps, historical narratives, and demographic charts within this unit, the lesson helps students build a comprehensive understanding of community shifts.
+
+The thematic focus also provides a purposeful context for meeting rigorous state standards regarding the analysis of text structures. As Michigan Department of Education (n.d.) explains on page 62, students must analyze the structure an author uses to organize a text and how sections contribute to the whole. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62). Within the theme of "Communities and Change," students will specifically examine how authors organize descriptions of chronological developments and the resulting social impacts. This approach ensures the literacy skills are not taught in isolation but are integrated into a cohesive, research-informed thematic study.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 9
+──────────────────────────────────────────────────────────────────────
+Use the Baker College Teacher Prep Lesson Plan Format.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 9
+──────────────────────────────────────────────────────────────────────
+Baker College Teacher Prep Lesson Plan
+
+Subject: English Language Arts/Social Studies
+Grade Level: 6
+Thematic Unit: Communities and Change
+Lesson Title: Analyzing Community Transformations through Text and Data
+
+1. Standards
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+2. Learning Objectives
+
+Students will identify key vocabulary related to urbanization using interactive word walls.
+
+Students will improve reading fluency through choral reading of historical community narratives.
+
+Students will synthesize text-based population data into visual models.
+
+3. Assessment
+
+Formative: Observation of oral language during word wall development and accuracy during choral reading.
+
+Summative: Completion of a community growth flowchart based on textual evidence.
+
+4. Instructional Procedure
+
+Anticipatory Set: Discussion on local changes. According to Ramlal (2023), from Chapter 2 on page 15, vocabulary skills should strongly connect to the content areas. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+Direct Instruction: Model the "Communities and Change" word wall. As Ramlal (2023) explains on page 15, interactive word walls should be used to develop vocabulary in a meaningful way.
+
+Guided Practice: Conduct choral reading of a community case study. According to Ramlal (2023), from Chapter 2 on page 13, choral reading builds fluency by providing a model of what fluent reading should sound like.
+
+Independent Practice: Students read a demographic text and create a diagram. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is how a student understands what was read. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+Closure: Oral sharing of community observations.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 10
+──────────────────────────────────────────────────────────────────────
+Choose at least one of the digital software/digital tools from Part A as the foundation of your math lesson.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 10
+──────────────────────────────────────────────────────────────────────
+I have selected Zearn as the digital foundation for this math lesson because of its targeted ability to bridge the gap between technical word problems and visual representations. Zearn provides a scaffolded environment where students must decode mathematical text while simultaneously interacting with digital manipulatives, which directly supports the literacy requirements of modern state standards.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions like diagrams and models. Zearn’s digital platform facilitates this by requiring students to build tape diagrams and number lines to represent the quantitative data found in word problems. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+The use of Zearn also ensures that the lesson is responsive to the foundational literacy needs that impact mathematical success. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Zearn’s embedded explanations and interactive feedback ensure that students are not just performing calculations but are truly understanding the "why" behind the numbers. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 11
+──────────────────────────────────────────────────────────────────────
+Targets a math standard and a literacy standard.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 11
+──────────────────────────────────────────────────────────────────────
+The integrated lesson plan targets both mathematical and literacy proficiency by requiring students to synthesize technical data. The math standard is addressed through the application of quantitative reasoning to solve real-world community growth problems, while the literacy standard focuses on the visual representation of that data.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By converting textual descriptions of community changes into graphs or tables, students demonstrate a dual mastery of mathematical modeling and technical reading.
+
+The instructional approach is further supported by research emphasizing the cross-curricular nature of reading skills. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). This lesson ensures that students do not simply calculate numbers in isolation but use literacy strategies to extract and understand the technical data necessary for mathematical success.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 12
+──────────────────────────────────────────────────────────────────────
+Includes explicit strategies to build Accuracy, Fluency, Vocabulary, Oral Language, Reading Comprehension, Scaffolding.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 12
+──────────────────────────────────────────────────────────────────────
+This lesson plan includes explicit strategies to support student development in accuracy, fluency, vocabulary, oral language, reading comprehension, and scaffolding. By integrating these research-based components, the instruction ensures that students can access and understand complex technical texts.
+
+To build accuracy, the teacher provides explicit modeling of the pronunciation of technical terms. According to Ramlal (2023), from Chapter 2 on page 9, the ability to read accurately is a major contributor to a student's understanding of a text. Ramlal (2023) explains that accuracy "involves how a student reads a text aloud" (p. 9).
+
+To support fluency, the lesson utilizes choral reading to model appropriate pace and expression. According to Ramlal (2023), from Chapter 2 on page 13, choral reading offers students a model of what fluent reading should sound like. Ramlal (2023) explains that fluency "is how a student reads a text with automaticity (accuracy and speed) and prosody, or expression" (p. 13).
+
+For vocabulary and oral language, students create interactive word walls and participate in group discussions. As Ramlal (2023) explains on page 15, vocabulary skills should be incorporated into daily reading instruction and strongly connect to the content areas. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+Reading comprehension and scaffolding are addressed through the use of graphic organizers that help students synthesize data. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). These visual aids scaffold the learning process, allowing students to better comprehend how different sections of a problem or text contribute to the whole.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 13
+──────────────────────────────────────────────────────────────────────
+Involves engaging activities (e.g., read-alouds, group work, performance, writing tasks).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 13
+──────────────────────────────────────────────────────────────────────
+The lesson plan incorporates a variety of engaging activities, such as choral reading, collaborative group work, and visual data synthesis, to ensure students remain active participants in their learning. These activities are purposefully selected to bridge the gap between abstract concepts of community change and concrete literacy skills.
+
+To support active participation in reading, the class will participate in a unison reading exercise. According to Ramlal (2023), from Chapter 2 on page 13, choral reading requires students to read the text in unison with the teacher. Ramlal (2023) explains that choral reading "builds fluency because it offers students a model of what fluent reading should sound like using a predetermined text" (p. 13). This performance-based task allows students to practice prosody and speed in a low-stakes, social environment before transitioning to independent analysis.
+
+The lesson also features a hands-on writing and modeling task where students translate technical descriptions into visual tools. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate quantitative or technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By working in groups to create these flowcharts, students engage in high-level discussion and collaborative problem-solving, which reinforces their understanding of the unit theme.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 14
+──────────────────────────────────────────────────────────────────────
+Specifically integrates the software/digital tool you evaluated and selected.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 14
+──────────────────────────────────────────────────────────────────────
+This lesson plan specifically integrates Zearn as the digital foundation for mathematical and literacy instruction. By using this software, students engage in interactive lessons that require them to parse technical word problems while utilizing digital tools to build visual representations of their mathematical thinking. This integration serves as a primary scaffold for achieving complex state standards.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). Within the Zearn platform, students are prompted to translate the quantitative data found in community-themed word problems into digital tape diagrams and models, ensuring they move beyond simple calculation to full visual synthesis.
+
+The digital tool also supports the essential link between reading comprehension and subject-area mastery. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Zearn provides immediate, scaffolded feedback that helps students navigate the "Communities and Change" unit by ensuring they comprehend the technical language before proceeding. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 15
+──────────────────────────────────────────────────────────────────────
+Complete the Subject Area & Grade Level and Lesson Duration.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 15
+──────────────────────────────────────────────────────────────────────
+Subject Area & Grade Level: Mathematics/Literacy (Integrated) – Grade 6
+Lesson Duration: 60 Minutes
+
+The duration and grade level of this lesson are designed to support the development of complex comprehension skills across different subject areas. According to Ramlal (2023), from Chapter 3 on page 20, instructional plans must include various genres because comprehension is essential for learning in all subjects. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+The 60-minute timeframe allows for the integration of technical literacy standards as required by state guidelines. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate quantitative information expressed in words with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By dedicating this time, the lesson ensures students can accurately decode word problems and synthesize them into visual models.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 16
+──────────────────────────────────────────────────────────────────────
+Define the Lesson Goal: What do we want students to learn?
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 16
+──────────────────────────────────────────────────────────────────────
+The primary goal of this lesson is for students to synthesize technical information by translating textual data into visual models. Students will learn to extract quantitative details from a text and represent those findings through charts or diagrams to demonstrate a holistic understanding of the topic. This goal ensures that students master the ability to bridge the gap between abstract written information and concrete visual synthesis.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate quantitative or technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By achieving this goal, students move beyond rote calculation to a higher level of analytical literacy.
+
+Furthermore, this goal is designed to strengthen reading comprehension across subject areas. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). By requiring students to visually model what they have read, the lesson provides a measurable way to verify that students truly understand the technical content provided in the text.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 17
+──────────────────────────────────────────────────────────────────────
+Define the Assessment: How will we know they have learned it? (include Diagnostic/Pre-Assessment, Formative, or Summative options).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 17
+──────────────────────────────────────────────────────────────────────
+To ensure student mastery of both mathematical and literacy standards, the lesson utilizes a comprehensive assessment plan consisting of diagnostic, formative, and summative measures. These assessments track how students process technical data and convert it into visual representations.
+
+Diagnostic and Formative Assessment
+
+The teacher will begin with a diagnostic check of prior knowledge regarding community data and word wall terms to determine the level of support needed. During the lesson, formative assessment occurs through the observation of oral language and reading accuracy. As Ramlal (2023) explains on page 9, reading accuracy is a significant contributor to how well a student understands a text. Ramlal (2023) notes that accuracy "involves how a student reads a text aloud" (p. 9). Additionally, the teacher will monitor the development of interactive word walls to assess vocabulary acquisition.
+
+Summative Assessment
+
+The summative assessment requires students to demonstrate their ability to synthesize written technical information into a visual format. As Michigan Department of Education (n.d.) explains on page 62, students must be able to integrate technical information with a visual version of that data. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). Students will be graded on a final project where they create a population growth flowchart based on a technical case study.
+
+Comprehension Verification
+
+The final assessment ensures that the student has not only performed calculations but has achieved full comprehension of the source material. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is the foundation for learning across all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). Success is measured by the student's ability to accurately represent the author's quantitative findings within their visual model.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 18
+──────────────────────────────────────────────────────────────────────
+Define the Intervention: What will we do if they don’t learn it? (consider Differentiated Instruction or RtI strategies).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 18
+──────────────────────────────────────────────────────────────────────
+If students struggle to meet the lesson objectives, a multi-tiered intervention and differentiated instruction approach will be implemented. This intervention focuses on breaking down technical barriers to ensure all students can synthesize data as required by state standards.
+
+For students struggling with the literacy demands of the math task, the teacher will provide targeted support in reading accuracy and fluency. According to Ramlal (2023), from Chapter 2 on page 9, students who cannot read accurately often struggle to understand what they have read. Ramlal (2023) explains that accuracy "involves how a student reads a text aloud" (p. 9). To differentiate, these students may work in small groups using choral reading to build confidence and automaticity. According to Ramlal (2023), from Chapter 2 on page 13, choral reading builds fluency by providing a model of fluent reading.
+
+If the struggle lies in the synthesis of data, the intervention will involve more explicit scaffolding of the visual components. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). In this case, the teacher will provide partially completed templates or flowcharts to help students organize their thoughts while still requiring them to extract the final technical data from the text.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 19
+──────────────────────────────────────────────────────────────────────
+Define the Enrichment: What will we do if they already know it?
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 19
+──────────────────────────────────────────────────────────────────────
+For students who have already mastered the foundational goals, enrichment will focus on a more sophisticated analysis of technical texts and the creation of original visual models. These students will transition from simply interpreting provided data to critiquing the structural choices made by authors in technical genres.
+
+As Michigan Department of Education (n.d.) explains on page 62, students should be challenged to analyze how an author organizes a text. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+Enrichment students will also explore the connection between technical vocabulary and high-quality production by examining how word choice impacts their own technical briefs. As Ramlal (2023) explains on page 15, advanced vocabulary skills greatly impact the quality of writing produced. Ramlal (2023) notes that vocabulary "can also have an impact on the quality of writing that is produced" (p. 15).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 20
+──────────────────────────────────────────────────────────────────────
+List State Standards and Learning Objective.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 20
+──────────────────────────────────────────────────────────────────────
+State Standards
+
+As Michigan Department of Education (n.d.) explains on page 62, students in grades 6–8 must be able to analyze how a text is organized by an author. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+Additionally, students are expected to bridge the gap between written descriptions and visual data. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Learning Objective
+
+The objective of this lesson is for students to demonstrate deep reading comprehension by synthesizing technical text into a visual model. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). By the end of the lesson, students will be able to extract quantitative data from a text and represent it accurately in a flowchart or diagram.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 21
+──────────────────────────────────────────────────────────────────────
+List Materials.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 21
+──────────────────────────────────────────────────────────────────────
+The following materials are required to facilitate the integration of technical literacy and mathematical modeling within this lesson:
+
+Zearn Digital Platform: This software is used for interactive, scaffolded math and literacy instruction.
+
+Technical Information Text: A variety of genres including community population reports and technical case studies. According to Ramlal (2023), from Chapter 3 on page 20, instructional plans must include texts from various genres. Ramlal (2023) explains that comprehension "is essential for learning in all subject areas" (p. 20).
+
+Interactive Word Wall Supplies: Sentence strips, large index cards, and visual aids for vocabulary development. As Ramlal (2023) explains on page 15, creating word walls of key concepts can support students with a need to work on vocabulary. Ramlal (2023) notes that a goal for word walls is to "develop students’ vocabulary in a meaningful way" (p. 15).
+
+Visual Representation Tools: Graph paper, flowchart templates, and digital modeling software. As Michigan Department of Education (n.d.) explains on page 62, students must integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Classroom Audio/Visual Equipment: For displaying models and conducting choral reading exercises to support fluency.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 22
+──────────────────────────────────────────────────────────────────────
+Select a learning strategy (e.g., Direct Teach, Cooperative Learning, Project-Based Learning, etc.).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 22
+──────────────────────────────────────────────────────────────────────
+The selected learning strategy for this lesson is Direct Instruction, which provides the explicit modeling and structure necessary for students to master technical synthesis. This strategy allows the teacher to model the precise steps of analyzing a technical text and translating that data into a visual format before students attempt the task independently.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By using direct instruction, the teacher can provide a "think-aloud" that demonstrates how to identify key quantitative data and select the most appropriate visual model to represent it.
+
+This structured approach also ensures that students maintain high levels of comprehension across various subjects. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). Through direct instruction, the teacher can explicitly bridge the gap between reading accuracy and subject-matter understanding, ensuring students have the foundational comprehension needed to create accurate visual representations of technical content.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 23
+──────────────────────────────────────────────────────────────────────
+Identify if Activities Planned are Active, Passive, or Both.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 23
+──────────────────────────────────────────────────────────────────────
+The selected learning strategy for this lesson is Direct Instruction, which provides the explicit modeling and structure necessary for students to master technical synthesis. This strategy allows the teacher to model the precise steps of analyzing a technical text and translating that data into a visual format before students attempt the task independently.
+
+As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). By using direct instruction, the teacher can provide a "think-aloud" that demonstrates how to identify key quantitative data and select the most appropriate visual model to represent it.
+
+This structured approach also ensures that students maintain high levels of comprehension across various subjects. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20). Through direct instruction, the teacher can explicitly bridge the gap between reading accuracy and subject-matter understanding, ensuring students have the foundational comprehension needed to create accurate visual representations of technical content.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 24
+──────────────────────────────────────────────────────────────────────
+Outline Lesson Delivery Steps.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 24
+──────────────────────────────────────────────────────────────────────
+The delivery of this lesson is structured through a systematic approach that bridges the gap between technical reading and mathematical modeling. The following steps outline the instructional sequence:
+
+Step 1: Introduction and Vocabulary Priming
+
+The teacher introduces the lesson goal by connecting mathematical concepts to the interactive word wall. This stage focuses on identifying technical terms that might hinder understanding. As Ramlal (2023) explains on page 15, vocabulary skills must be incorporated into daily instruction and strongly connect to content areas. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+Step 2: Explicit Modeling (Direct Teach)
+
+The teacher performs a "think-aloud" while reading a technical text, specifically demonstrating how to identify quantitative data. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Step 3: Guided Practice and Fluency Check
+
+Students engage in a choral reading of a brief technical passage to ensure accuracy before attempting to model the data. According to Ramlal (2023), from Chapter 2 on page 13, choral reading offers students a model of fluent reading. Ramlal (2023) explains that choral reading "builds fluency because it offers students a model of what fluent reading should sound like using a predetermined text" (p. 13).
+
+Step 4: Independent Synthesis
+
+Students independently analyze a new technical text to identify its structure and create a corresponding visual diagram. As Michigan Department of Education (n.d.) explains on page 62, students must analyze the structure an author uses to organize a text. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+Step 5: Review and Assessment
+
+The lesson concludes with a review of the created models to verify that the visual representation accurately reflects the technical information provided in the written text. Success is determined by the student's ability to demonstrate comprehension through their final visual product.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 25
+──────────────────────────────────────────────────────────────────────
+Check all applicable Core Teaching Practices (CTPs) addressed in the lesson.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 25
+──────────────────────────────────────────────────────────────────────
+Based on the lesson design, the following Core Teaching Practices (CTPs) are addressed:
+
+Explaining and modeling content, practices, and strategies: The teacher uses direct instruction to show students how to convert technical text into visual models. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Teaching academic vocabulary: The lesson utilizes interactive word walls to support students' understanding of technical terms. As Ramlal (2023) explains on page 15, vocabulary skills should be incorporated into daily reading instruction. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15).
+
+Checking for student understanding during and at the conclusion of lessons: The assessment plan includes formative checks and a summative visual project to ensure comprehension. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) notes that comprehension "is how a student understands what was read" (p. 20).
+
+Analyzing instruction for the purpose of improving it: The use of diagnostic assessments and choral reading allows the teacher to adjust instruction based on student needs in accuracy and fluency.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 26
+──────────────────────────────────────────────────────────────────────
+Describe real-world connections including attention to English language learners and culturally and historically responsive practices (diversity, inclusion, equity, and social justice).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 26
+──────────────────────────────────────────────────────────────────────
+This lesson connects technical literacy to the real world by utilizing community-based data that reflects the diverse lived experiences of the students. By selecting texts that explore local demographic shifts or social issues, the curriculum becomes a mirror of the students' own environments, promoting a social justice lens through data analysis.
+
+For English language learners (ELLs) and diverse populations, the focus on visual integration and vocabulary development ensures equitable access to complex content. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). Providing visual scaffolds like diagrams and flowcharts reduces the linguistic load for ELLs while allowing them to demonstrate high-level cognitive understanding of technical structures.
+
+Furthermore, the use of interactive word walls and choral reading supports inclusive practices by building foundational literacy within the context of the subject matter. As Ramlal (2023) explains on page 15, vocabulary development should strongly connect to content areas to improve overall understanding. Ramlal (2023) notes that vocabulary "relates to the understanding a student demonstrates when they read a text" (p. 15). By centering the lesson on culturally relevant texts and providing multi-modal pathways for comprehension, the lesson ensures that all students, regardless of linguistic background, can engage meaningfully with the academic standards.
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 27
+──────────────────────────────────────────────────────────────────────
+List Technology tools used.
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 27
+──────────────────────────────────────────────────────────────────────
+The following technology tools are utilized in this lesson to facilitate student mastery of technical literacy and data integration:
+
+Zearn Digital Platform: This interactive software is used to provide scaffolded instruction in mathematics and reading comprehension. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) explains that comprehension "is how a student understands what was read" (p. 20).
+
+Digital Modeling and Flowchart Software: Tools such as Lucidchart or Google Drawings are used to help students visualize quantitative data extracted from text. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Projector and Document Camera: These tools are used for the "Direct Teach" portion of the lesson, allowing the teacher to model the structural analysis of a text. As Michigan Department of Education (n.d.) explains on page 62, students need to analyze the structure an author uses to organize a text. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+Audio Recording Tools: These are used to support students who need to practice reading accuracy and fluency. As Ramlal (2023) explains on page 9, the ability to read accurately contributes greatly to comprehension. Ramlal (2023) notes that accuracy "involves how a student reads a text aloud" (p. 9).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 28
+──────────────────────────────────────────────────────────────────────
+List all Collaboration opportunities (whole group, small group, partnerships, etc.).
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 28
+──────────────────────────────────────────────────────────────────────
+Collaboration is structured to move students from teacher-supported modeling to peer-driven synthesis through the following opportunities:
+
+Whole Group Collaboration: The teacher facilitates a "Direct Teach" segment where the class collectively analyzes a technical report to identify its organizational structure. During this time, students engage in choral reading to ensure everyone can access the text accurately. According to Ramlal (2023), from Chapter 2 on page 13, choral reading offers students a model of fluent reading. Ramlal (2023) explains that choral reading "builds fluency because it offers students a model of what fluent reading should sound like using a predetermined text" (p. 13).
+
+Partnerships: Students work in pairs to explore the interactive word wall, discussing the etymology and definitions of new technical terms. As Ramlal (2023) explains on page 15, asking questions and having discussions can help identify how much assistance students require with developing vocabulary. Ramlal (2023) notes that a goal for word walls is to "develop students’ vocabulary in a meaningful way" (p. 15).
+
+Small Group Collaboration: Students form "modeling teams" to convert quantitative data from a text into a visual representation. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Peer Review Teams: After creating their visual models, groups swap their work to critique how effectively the structure conveys the author's topic. As Michigan Department of Education (n.d.) explains on page 62, students should analyze how the major sections of a text contribute to the whole. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 29
+──────────────────────────────────────────────────────────────────────
+Write a 1-page reflection that addresses: How does this lesson build both math understanding and support literacy development?
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 29
+──────────────────────────────────────────────────────────────────────
+Collaboration is structured to move students from teacher-supported modeling to peer-driven synthesis through the following opportunities:
+
+Whole Group Collaboration: The teacher facilitates a "Direct Teach" segment where the class collectively analyzes a technical report to identify its organizational structure. During this time, students engage in choral reading to ensure everyone can access the text accurately. According to Ramlal (2023), from Chapter 2 on page 13, choral reading offers students a model of fluent reading. Ramlal (2023) explains that choral reading "builds fluency because it offers students a model of what fluent reading should sound like using a predetermined text" (p. 13).
+
+Partnerships: Students work in pairs to explore the interactive word wall, discussing the etymology and definitions of new technical terms. As Ramlal (2023) explains on page 15, asking questions and having discussions can help identify how much assistance students require with developing vocabulary. Ramlal (2023) notes that a goal for word walls is to "develop students’ vocabulary in a meaningful way" (p. 15).
+
+Small Group Collaboration: Students form "modeling teams" to convert quantitative data from a text into a visual representation. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62).
+
+Peer Review Teams: After creating their visual models, groups swap their work to critique how effectively the structure conveys the author's topic. As Michigan Department of Education (n.d.) explains on page 62, students should analyze how the major sections of a text contribute to the whole. Michigan Department of Education (n.d.) states that students must "analyze the structure an author uses to organize a text, including how the major sections contribute to the whole and to an understanding of the topic" (p. 62).
+
+──────────────────────────────────────────────────────────────────────
+  QUESTION 30
+──────────────────────────────────────────────────────────────────────
+Write a 1-page reflection that addresses: In what ways does the selected digital tool help scaffold instruction or promote student engagement?
+
+──────────────────────────────────────────────────────────────────────
+  ANSWER 30
+──────────────────────────────────────────────────────────────────────
+The integration of digital tools like the Zearn platform and collaborative flowcharting software serves as a vital scaffold for students as they navigate the complexities of technical reading and data synthesis. These tools promote student engagement by transforming abstract textual information into concrete visual models, allowing for a more interactive and accessible learning experience. By using digital platforms to break down content into manageable increments, educators can ensure that students remain focused and motivated while mastering rigorous state standards.
+
+A primary benefit of these digital tools is their ability to help students meet high expectations for technical literacy. As Michigan Department of Education (n.d.) explains on page 62, students must learn to integrate technical information with visual versions. Michigan Department of Education (n.d.) states that students must "integrate quantitative or technical information expressed in words in a text with a version of that information expressed visually (e.g., in a flowchart, diagram, model, graph, or table)" (p. 62). Digital tools provide the necessary canvas for this integration, allowing students to drag, drop, and manipulate data points in real-time, which promotes a deeper understanding of how quantitative information translates into visual models.
+
+Furthermore, these tools scaffold the comprehension process by addressing foundational literacy needs within a digital environment. According to Ramlal (2023), from Chapter 3 on page 20, comprehension is essential for learning in all subject areas. Ramlal (2023) explains that comprehension "is how a student understands what was read" (p. 20). Digital platforms often include features such as text-to-speech or interactive definitions that support reading accuracy and vocabulary development. As Ramlal (2023) explains on page 9, reading accuracy can contribute greatly to a student's comprehension. Ramlal (2023) notes that accuracy "involves how a student reads a text aloud" (p. 9). By providing these digital supports, the tools ensure that students can accurately decode technical passages, thereby freeing up cognitive resources for the higher-level task of structural analysis and visual synthesis. Ultimately, these tools empower students to engage deeply with various genres and complex data sets.
