@@ -1,4 +1,7 @@
 import puppeteer from "puppeteer";
+import path from "path"
+import { fileURLToPath } from "url";
+import {writeFile, appendFile} from "fs/promises"
 
 // ╔══════════════════════════════════════════════════════════════════╗
 // ║  pipeline.js  —  run with:  node pipeline.js                    ║
@@ -14,7 +17,12 @@ import puppeteer from "puppeteer";
 
 // ── CONFIGURATION ────────────────────────────────────────────────────────────
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+console.log(__dirname)
+
 const CHROME = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
 
 const ASSIGNMENTS = [
   {
@@ -127,6 +135,7 @@ async function getPageNum(page) {
     // 1. The Go-to-Page input at the bottom bar
     for (const inp of document.querySelectorAll("input")) {
       const v = parseInt(inp.value, 10);
+      console.log(typeof(v))
       if (!isNaN(v) && v > 0 && v < 5000) return v;
     }
     // 2. The progress slider: aria-valuetext="Page 22"
@@ -281,12 +290,18 @@ async function readYuzuBook(source, idx) {
     let emptyRun = 0;
     let dupRun = 0;
 
+    await writeFile(path.join(__dirname, `${chapterName} of ${chapters}.txt`), "")
+
     for (let i = 0; i < max; i++) {
       await sleep(2800);
       const pn = await getPageNum(page);
       const text = await copyText(page);
 
       console.log(`  [${tag}] Page ${pn ?? "?"}: ${text.length} chars`);
+
+      console.log(text)
+
+      await appendFile(path.join(__dirname, `${chapterName} of ${chapters}.txt`), `\n${text}`)
 
       // Stuck detection
       if (pn && pn === prevPage && i > 1) {

@@ -1,3 +1,159 @@
+
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+
+puppeteer.use(StealthPlugin());
+
+// ── CONFIGURATION ────────────────────────────────────────────────────────────
+const BOOK_URL = 'https://reader.yuzu.com/reader/books/826802A';
+const GOAL = "Extract Chapter 3 text using smartCopy and navigate to the end.";
+const MAX_LOOPS = 25; 
+
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function startOrchestrator() {
+    const browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+        userDataDir: './automation_session',
+        args: ['--start-maximized', '--no-sandbox']
+    });
+
+    const [yuzuPage] = await browser.pages();
+    const geminiPage = await browser.newPage();
+
+    // Injects tools that survive page reloads
+    const injectTools = async (page) => {
+        await page.evaluateOnNewDocument(() => {
+            window.smartCopy = () => {
+                const range = document.createRange();
+                range.selectNode(document.body);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy'); 
+                const text = selection.toString();
+                selection.removeAllRanges();
+                return `SUCCESS_EXTRACT: ${text.substring(0, 100)}...`;
+            };
+        });
+    };
+
+    await injectTools(yuzuPage);
+    
+    console.log(">> Opening Pages...");
+    await yuzuPage.goto(BOOK_URL);
+    await geminiPage.goto('https://gemini.google.com/app');
+
+    console.log(">> WAITING FOR MANUAL LOGIN...");
+    await yuzuPage.waitForSelector('body', { timeout: 0 });
+    await geminiPage.waitForSelector('div[role="textbox"]', { timeout: 0 });
+
+    for (let i = 1; i <= MAX_LOOPS; i++) {
+        console.log(`\n--- ORCHESTRATOR LOOP ${i} ---`);
+
+        // 1. FRESH UI CAPTURE
+        await yuzuPage.bringToFront();
+        await sleep(3000); 
+
+        const semanticUI = await yuzuPage.evaluate(() => {
+            const selectors = 'button, a, h1, h2, h3, p, .epub-content, .reader-content';
+            const elements = document.querySelectorAll(selectors);
+            return Array.from(elements)
+                .map(el => {
+                    const tag = el.tagName.toLowerCase();
+                    const text = el.innerText.replace(/\s+/g, ' ').trim().substring(0, 60);
+                    const id = el.id ? `#${el.id}` : '';
+                    if (!text && !id) return null;
+                    return `[${tag}${id}] "${text}"`;
+                })
+                .filter(item => item !== null)
+                .join('\n');
+        });
+
+        // 2. STABILIZED SENDING TO GEMINI
+        await geminiPage.bringToFront();
+        
+        // Step A: Clear the box
+        await geminiPage.click('div[role="textbox"]');
+        await geminiPage.keyboard.down('Control');
+        await geminiPage.keyboard.press('A');
+        await geminiPage.keyboard.up('Control');
+        await geminiPage.keyboard.press('Backspace');
+        
+        console.log(">> Textbox cleared. Waiting 10s before pasting...");
+        await sleep(10000); // 10-second pause as requested
+
+        // Step B: Type the prompt with a human-like delay
+        const orchestratorPrompt = `ACT AS A PUPPETEER ORCHESTRATOR. GOAL: ${GOAL}\nTOOLS: window.smartCopy(); | document.querySelector('SELECTOR').click();\n\nUI STATE:\n${semanticUI.substring(0, 8000)}\n\nSTRICT RULES: Output ONLY raw JS code. No markdown. If done, return: console.log("GOAL_REACHED");`;
+        
+        await geminiPage.keyboard.type(orchestratorPrompt, { delay: 10 }); 
+        
+        console.log(">> Text entered. Waiting 10s before pressing Enter...");
+        await sleep(10000); // 10-second pause before hitting Enter
+        await geminiPage.keyboard.press('Enter');
+
+        console.log(">> Prompt sent. Waiting 20.5s for Gemini to process...");
+        await sleep(20500); 
+
+        // 3. GET GEMINI'S CODE
+        const rawResponse = await geminiPage.evaluate(() => {
+            const bubbles = document.querySelectorAll('.message-content, .markdown, model-response');
+            return bubbles.length ? bubbles[bubbles.length - 1].innerText : null;
+        });
+
+        if (rawResponse) {
+            const nextCommand = rawResponse.replace(/```javascript|```js|```/g, '').trim();
+
+            if (nextCommand.includes("GOAL_REACHED")) {
+                console.log(">> SUCCESS: Goal reached.");
+                break;
+            }
+
+            console.log(`>> GEMINI ACTION: ${nextCommand}`);
+            await yuzuPage.bringToFront();
+            try {
+                const result = await yuzuPage.evaluate((cmd) => eval(cmd), nextCommand);
+                if (result) console.log(`>> OUTPUT: ${result}`);
+            } catch (err) {
+                console.error(`>> ERROR: ${err.message}`);
+            }
+        }
+        
+        await sleep(5000); // Let everything settle
+    }
+}
+
+startOrchestrator().catch(console.error);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////this is code get working for ai to navigate websites via puppeter and do task get working
 
 
@@ -140,132 +296,7 @@
 
 
 
-// import puppeteer from 'puppeteer-extra';
-// import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
-// puppeteer.use(StealthPlugin());
-
-// // ── CONFIGURATION ────────────────────────────────────────────────────────────
-// const BOOK_URL = 'https://reader.yuzu.com/reader/books/826802A';
-// const GOAL = "Extract Chapter 3 text using smartCopy and navigate to the end.";
-// const MAX_LOOPS = 25; 
-
-// const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-// async function startOrchestrator() {
-//     const browser = await puppeteer.launch({
-//         headless: false,
-//         defaultViewport: null,
-//         userDataDir: './automation_session',
-//         args: ['--start-maximized', '--no-sandbox']
-//     });
-
-//     const [yuzuPage] = await browser.pages();
-//     const geminiPage = await browser.newPage();
-
-//     // Injects tools that survive page reloads
-//     const injectTools = async (page) => {
-//         await page.evaluateOnNewDocument(() => {
-//             window.smartCopy = () => {
-//                 const range = document.createRange();
-//                 range.selectNode(document.body);
-//                 const selection = window.getSelection();
-//                 selection.removeAllRanges();
-//                 selection.addRange(range);
-//                 document.execCommand('copy'); 
-//                 const text = selection.toString();
-//                 selection.removeAllRanges();
-//                 return `SUCCESS_EXTRACT: ${text.substring(0, 100)}...`;
-//             };
-//         });
-//     };
-
-//     await injectTools(yuzuPage);
-    
-//     console.log(">> Opening Pages...");
-//     await yuzuPage.goto(BOOK_URL);
-//     await geminiPage.goto('https://gemini.google.com/app');
-
-//     console.log(">> WAITING FOR MANUAL LOGIN...");
-//     await yuzuPage.waitForSelector('body', { timeout: 0 });
-//     await geminiPage.waitForSelector('div[role="textbox"]', { timeout: 0 });
-
-//     for (let i = 1; i <= MAX_LOOPS; i++) {
-//         console.log(`\n--- ORCHESTRATOR LOOP ${i} ---`);
-
-//         // 1. FRESH UI CAPTURE
-//         await yuzuPage.bringToFront();
-//         await sleep(3000); 
-
-//         const semanticUI = await yuzuPage.evaluate(() => {
-//             const selectors = 'button, a, h1, h2, h3, p, .epub-content, .reader-content';
-//             const elements = document.querySelectorAll(selectors);
-//             return Array.from(elements)
-//                 .map(el => {
-//                     const tag = el.tagName.toLowerCase();
-//                     const text = el.innerText.replace(/\s+/g, ' ').trim().substring(0, 60);
-//                     const id = el.id ? `#${el.id}` : '';
-//                     if (!text && !id) return null;
-//                     return `[${tag}${id}] "${text}"`;
-//                 })
-//                 .filter(item => item !== null)
-//                 .join('\n');
-//         });
-
-//         // 2. STABILIZED SENDING TO GEMINI
-//         await geminiPage.bringToFront();
-        
-//         // Step A: Clear the box
-//         await geminiPage.click('div[role="textbox"]');
-//         await geminiPage.keyboard.down('Control');
-//         await geminiPage.keyboard.press('A');
-//         await geminiPage.keyboard.up('Control');
-//         await geminiPage.keyboard.press('Backspace');
-        
-//         console.log(">> Textbox cleared. Waiting 10s before pasting...");
-//         await sleep(10000); // 10-second pause as requested
-
-//         // Step B: Type the prompt with a human-like delay
-//         const orchestratorPrompt = `ACT AS A PUPPETEER ORCHESTRATOR. GOAL: ${GOAL}\nTOOLS: window.smartCopy(); | document.querySelector('SELECTOR').click();\n\nUI STATE:\n${semanticUI.substring(0, 8000)}\n\nSTRICT RULES: Output ONLY raw JS code. No markdown. If done, return: console.log("GOAL_REACHED");`;
-        
-//         await geminiPage.keyboard.type(orchestratorPrompt, { delay: 10 }); 
-        
-//         console.log(">> Text entered. Waiting 10s before pressing Enter...");
-//         await sleep(10000); // 10-second pause before hitting Enter
-//         await geminiPage.keyboard.press('Enter');
-
-//         console.log(">> Prompt sent. Waiting 20.5s for Gemini to process...");
-//         await sleep(20500); 
-
-//         // 3. GET GEMINI'S CODE
-//         const rawResponse = await geminiPage.evaluate(() => {
-//             const bubbles = document.querySelectorAll('.message-content, .markdown, model-response');
-//             return bubbles.length ? bubbles[bubbles.length - 1].innerText : null;
-//         });
-
-//         if (rawResponse) {
-//             const nextCommand = rawResponse.replace(/```javascript|```js|```/g, '').trim();
-
-//             if (nextCommand.includes("GOAL_REACHED")) {
-//                 console.log(">> SUCCESS: Goal reached.");
-//                 break;
-//             }
-
-//             console.log(`>> GEMINI ACTION: ${nextCommand}`);
-//             await yuzuPage.bringToFront();
-//             try {
-//                 const result = await yuzuPage.evaluate((cmd) => eval(cmd), nextCommand);
-//                 if (result) console.log(`>> OUTPUT: ${result}`);
-//             } catch (err) {
-//                 console.error(`>> ERROR: ${err.message}`);
-//             }
-//         }
-        
-//         await sleep(5000); // Let everything settle
-//     }
-// }
-
-// startOrchestrator().catch(console.error);
 
 
 
