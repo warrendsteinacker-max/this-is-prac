@@ -1231,54 +1231,188 @@
 
 
 
-import {useEffect, useState, useCallback} from 'react'
+// import {useEffect, useState, useCallback} from 'react'
 
+
+// const ReportBuilder = () => {
+
+// const data = [];
+
+// for (let i = 1; i <= 150; i++) {
+//   data.push({
+//     id: i
+//   });
+// }
+
+// const [off, setOff] = useState(5)
+// const [D, setC] = useState(data.slice(0, off))
+
+
+// useEffect(() => {
+//   setC(data.slice(0, off))
+// }, [off])
+
+
+
+// const FUNC = useCallback(() => {
+
+//   const {scrollHeight, scrollTop, clientHeight} = document.documentElement
+
+//   if(off === 150){
+//     return 150
+//   }
+
+//   if(scrollTop + clientHeight >= scrollHeight - 0.001){
+//     setOff((pre) => pre + 5)
+//       }
+// }, [])
+
+//   useEffect(() => {
+//     window.addEventListener("scroll", FUNC)
+
+//     return () => window.removeEventListener("scroll", FUNC)
+//   }, [FUNC])
+
+
+
+//   return (
+//     <>
+//     {D.map((item, index) => <div key={index}>{item.id}</div>)}
+//     </>
+//   )
+// }
+
+// export default ReportBuilder
+
+
+
+
+
+// import {useState} from "react"
+
+
+// const ReportBuilder = () => {
+
+// const [off, setF] = useState(5)
+
+
+// const data = [];
+
+// for (let i = 1; i <= 150; i++) {
+//   data.push({
+//     id: i
+//   });
+// }
+
+
+// const [D, setD] = useState(data.slice(0, off))
+
+// function NEXT(){
+
+
+//   if(off === 155){
+//     return
+//   }
+
+//   setF((pre) => pre + 5)
+
+//   setD(data.slice(off - 5, off))
+
+// }
+
+// function BACK(){
+
+
+//   if(off === 0){
+//     return
+//   }
+
+//   setF((pre) => pre - 5)
+
+//   setD(data.slice(off - 5, off))
+
+// }
+
+
+
+
+//   return (<>
+//     {D.map((item, index) => <div key={index}>{item.id}</div>)}
+//     <button onClick={BACK}>back</button>
+//     <button onClick={NEXT}>next</button>
+//     </>
+//   )
+// }
+
+// export default ReportBuilder
+
+
+
+import {useState} from "react"
+
+
+  const data = [1,2,3,4,5,6,7,8,9,0]
+
+  let datar = data.sort(() => Math.random() - 0.5)
+
+  let pas = datar.slice(0, 3)
+
+
+
+
+
+  
 
 const ReportBuilder = () => {
-
-const data = [];
-
-for (let i = 1; i <= 150; i++) {
-  data.push({
-    id: i
-  });
-}
-
-const [off, setOff] = useState(5)
-const [D, setC] = useState([data[off - 5], data[off - 4], data[off - 3], data[off - 2], data[off - 1]])
+  
+  const [display, setD] = useState([])
 
 
-useEffect(() => {
-  setC((pre) => [...pre, data[off - 5], data[off - 4], data[off - 3], data[off - 2], data[off - 1]])
-}, [off])
+  let count = 0
+
+  console.log(pas)
+  
+  function FUNC1(e) {
+
+    
+
+    if(e.key === "Backspace"){
+      newD = display.slice(0, count)
+      setD(newD)
+      return
+    }
+
+    count = count + 1
+
+    
+      const newD = [...display]
+      newD[count] = e.key
+      setD(newD)
+    
 
 
 
-const FUNC = useCallback(() => {
 
-  const {scrollHeight, scrollTop, clientHeight} = document.documentElement
 
-  if(off === 150){
-    return 150
   }
 
-  if(scrollTop + clientHeight >= scrollHeight - 10){
-    setOff((pre) => pre + 5)
-      }
-}, [])
-
-  useEffect(() => {
-    window.addEventListener("scroll", FUNC)
-
-    return () => window.removeEventListener("scroll", FUNC)
-  }, [FUNC])
-
-
+  function FUNC2() {
+    if(Number(display.join("")) === Number(pas.join(""))){
+      alert("correct")
+    }
+    else{
+      alert("wrong")
+    }
+  }
 
   return (
-    <>
-    {D.map((item, index) => <div key={index}>{item.id}</div>)}
-    </>
+  <>
+  {display.length > 0 ? display.map((item, index) => <div key={index}>{item}</div>) : ""}
+  <form onSubmit={FUNC2}>
+  <input onChange={FUNC1}/>
+  <button type="submit">submit</button>
+  </form>
+  </>  
   )
 }
 
