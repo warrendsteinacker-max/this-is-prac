@@ -1368,26 +1368,36 @@ const ReportBuilder = () => {
   const [display, setD] = useState([])
 
 
-  let count = 0
-
   console.log(pas)
+
+
+
+
   
   function FUNC1(e) {
 
-    
+    let newD = []
+
+    console.log(e.key.length)
+
 
     if(e.key === "Backspace"){
-      newD = display.slice(0, count)
+      newD = display.slice(0, display.lenght)
       setD(newD)
+      console.log(display)
       return
     }
 
-    count = count + 1
+    if(e.key.length == 1){
+
+      setD(pre => [...pre, e.key])
+      console.log(display)
+
+
+    }  
 
     
-      const newD = [...display]
-      newD[count] = e.key
-      setD(newD)
+
     
 
 
@@ -1409,7 +1419,7 @@ const ReportBuilder = () => {
   <>
   {display.length > 0 ? display.map((item, index) => <div key={index}>{item}</div>) : ""}
   <form onSubmit={FUNC2}>
-  <input onChange={FUNC1}/>
+  <input onKeyDown={(e) => FUNC1(e)}/>
   <button type="submit">submit</button>
   </form>
   </>  
