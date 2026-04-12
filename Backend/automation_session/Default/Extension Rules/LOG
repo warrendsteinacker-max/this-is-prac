@@ -1,2 +1,3 @@
-2026/03/25-14:17:01.533 3fec Creating DB C:\Users\User\p\vite-project\Backend\automation_session\Default\Extension Rules since it was missing.
-2026/03/25-14:17:01.554 3fec Reusing MANIFEST C:\Users\User\p\vite-project\Backend\automation_session\Default\Extension Rules/MANIFEST-000001
+2026/04/11-16:51:40.818 2584 Reusing MANIFEST C:\Users\User\p\vite-project\Backend\automation_session\Default\Extension Rules/MANIFEST-000001
+2026/04/11-16:51:40.819 2584 Recovering log #3
+2026/04/11-16:51:40.820 2584 Reusing old log C:\Users\User\p\vite-project\Backend\automation_session\Default\Extension Rules/000003.log 
