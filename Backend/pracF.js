@@ -357,124 +357,124 @@
 
 
 
-///////remeber new copy meth ctrl a then c
+// ///////remeber new copy meth ctrl a then c
 
 
 
 
 
 
-// Book info Author(s) Sasha R. Ramlal Publisher Cognella Academic Publishing Copyright 2023 Format pdf VBID 826802A
+// // Book info Author(s) Sasha R. Ramlal Publisher Cognella Academic Publishing Copyright 2023 Format pdf VBID 826802A
 
 
 
-/**
- * PREREQUISITES:
- * npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer
- */
+// /**
+//  * PREREQUISITES:
+//  * npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer
+//  */
 
-import puppeteer from 'puppeteer-extra';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+// import puppeteer from 'puppeteer-extra';
+// import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
-// Apply stealth plugin to help bypass bot detection
-puppeteer.use(StealthPlugin());
+// // Apply stealth plugin to help bypass bot detection
+// puppeteer.use(StealthPlugin());
 
-(async () => {
-    console.log("Initializing Self-Driving Browser...");
+// (async () => {
+//     console.log("Initializing Self-Driving Browser...");
     
-    const browser = await puppeteer.launch({ 
-        headless: false, 
-        defaultViewport: null,
-        args: [
-            '--start-maximized',
-            '--disable-blink-features=AutomationControlled'
-        ] 
-    });
+//     const browser = await puppeteer.launch({ 
+//         headless: false, 
+//         defaultViewport: null,
+//         args: [
+//             '--start-maximized',
+//             '--disable-blink-features=AutomationControlled'
+//         ] 
+//     });
 
-    // Initialize both pages simultaneously
-    const [page, page2] = await Promise.all([
-        browser.newPage(),
-        browser.newPage()
-    ]);
+//     // Initialize both pages simultaneously
+//     const [page, page2] = await Promise.all([
+//         browser.newPage(),
+//         browser.newPage()
+//     ]);
 
-    console.log("Loading interfaces...");
-    // Note: You must be logged into Google in this browser instance for Gemini to work
-    await page.goto('https://gemini.google.com', { waitUntil: 'networkidle2' });
-    await page2.goto('https://www.webmd.com/', { waitUntil: 'networkidle2' });
+//     console.log("Loading interfaces...");
+//     // Note: You must be logged into Google in this browser instance for Gemini to work
+//     await page.goto('https://gemini.google.com', { waitUntil: 'networkidle2' });
+//     await page2.goto('https://www.webmd.com/', { waitUntil: 'networkidle2' });
 
-    // CSS selectors for Gemini's UI (these may change if Google updates the site)
-    const promptSelector = 'div[contenteditable="true"]'; 
-    const visitedUrls = new Set();
+//     // CSS selectors for Gemini's UI (these may change if Google updates the site)
+//     const promptSelector = 'div[contenteditable="true"]'; 
+//     const visitedUrls = new Set();
 
-    console.log("System Active. Monitoring WebMD...");
+//     console.log("System Active. Monitoring WebMD...");
 
-    while (true) {
-        try {
-            const currentHtml = await page2.content();
-            const currentUrl = page2.url();
-            visitedUrls.add(currentUrl);
+//     while (true) {
+//         try {
+//             const currentHtml = await page2.content();
+//             const currentUrl = page2.url();
+//             visitedUrls.add(currentUrl);
 
-            // 1. Prepare the prompt
-            // We limit HTML to 5000 chars to avoid hitting LLM context limits or slowing down the UI
-            const myPrompt = `The current URL is ${currentUrl}. 
-            Based on this HTML snippet: ${currentHtml.substring(0, 5000)}, 
-            find a link or anything to a different internal page, article or to just do ssomething on current page. 
-            Provide ONLY a JSON object: {"selector": "CSS_SELECTOR_HERE", "reason": "SHORT_REASON"}. 
-            Avoid these recently visited URLs: ${Array.from(visitedUrls).slice(-5).join(', ')}.`;
+//             // 1. Prepare the prompt
+//             // We limit HTML to 5000 chars to avoid hitting LLM context limits or slowing down the UI
+//             const myPrompt = `The current URL is ${currentUrl}. 
+//             Based on this HTML snippet: ${currentHtml.substring(0, 5000)}, 
+//             find a link or anything to a different internal page, article or to just do ssomething on current page. 
+//             Provide ONLY a JSON object: {"selector": "CSS_SELECTOR_HERE", "reason": "SHORT_REASON"}. 
+//             Avoid these recently visited URLs: ${Array.from(visitedUrls).slice(-5).join(', ')}.`;
 
-            // 2. Interact with Gemini
-            await page.waitForSelector(promptSelector);
-            await page.click(promptSelector);
+//             // 2. Interact with Gemini
+//             await page.waitForSelector(promptSelector);
+//             await page.click(promptSelector);
             
-            // Clear existing text
-            await page.keyboard.down('Control');
-            await page.keyboard.press('A');
-            await page.keyboard.up('Control');
-            await page.keyboard.press('Backspace');
+//             // Clear existing text
+//             await page.keyboard.down('Control');
+//             await page.keyboard.press('A');
+//             await page.keyboard.up('Control');
+//             await page.keyboard.press('Backspace');
 
-            // Type the prompt and send
-            await page.type(promptSelector, myPrompt, { delay: 10 });
-            await page.keyboard.press('Enter');
+//             // Type the prompt and send
+//             await page.type(promptSelector, myPrompt, { delay: 10 });
+//             await page.keyboard.press('Enter');
 
-            console.log("Waiting for AI to decide next move...");
-            // Adjust wait time based on AI response speed
-            await new Promise(r => setTimeout(r, 15000)); 
+//             console.log("Waiting for AI to decide next move...");
+//             // Adjust wait time based on AI response speed
+//             await new Promise(r => setTimeout(r, 15000)); 
 
-            // 3. Extract the response
-            const aiResponse = await page.evaluate(() => {
-                const messages = document.querySelectorAll('div[data-message-author-role="assistant"]');
-                return messages.length > 0 ? messages[messages.length - 1].innerText : null; 
-            });
+//             // 3. Extract the response
+//             const aiResponse = await page.evaluate(() => {
+//                 const messages = document.querySelectorAll('div[data-message-author-role="assistant"]');
+//                 return messages.length > 0 ? messages[messages.length - 1].innerText : null; 
+//             });
 
-            if (aiResponse) {
-                try {
-                    // Regex to find the JSON object in the AI's message
-                    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        const decision = JSON.parse(jsonMatch[0]);
-                        console.log(`AI Decision: ${decision.reason}`);
-                        console.log(`Clicking selector: ${decision.selector}`);
+//             if (aiResponse) {
+//                 try {
+//                     // Regex to find the JSON object in the AI's message
+//                     const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+//                     if (jsonMatch) {
+//                         const decision = JSON.parse(jsonMatch[0]);
+//                         console.log(`AI Decision: ${decision.reason}`);
+//                         console.log(`Clicking selector: ${decision.selector}`);
                         
-                        // 4. Execute the action on page2
-                        await page2.waitForSelector(decision.selector, { timeout: 5000 });
-                        await page2.click(decision.selector);
+//                         // 4. Execute the action on page2
+//                         await page2.waitForSelector(decision.selector, { timeout: 5000 });
+//                         await page2.click(decision.selector);
                         
-                        // Wait for navigation but don't crash if it's just a partial update
-                        await page2.waitForNavigation({ waitUntil: 'networkidle2', timeout: 8000 }).catch(() => {});
-                    }
-                } catch (e) {
-                    console.warn("Could not parse AI JSON or find selector. Retrying...");
-                }
-            }
+//                         // Wait for navigation but don't crash if it's just a partial update
+//                         await page2.waitForNavigation({ waitUntil: 'networkidle2', timeout: 8000 }).catch(() => {});
+//                     }
+//                 } catch (e) {
+//                     console.warn("Could not parse AI JSON or find selector. Retrying...");
+//                 }
+//             }
 
-            // Cool-down to mimic human browsing behavior
-            await new Promise(r => setTimeout(r, 5000));
-        } catch (err) {
-            console.error("Loop Error:", err.message);
-            await new Promise(r => setTimeout(r, 10000));
-        }
-    }
-})();
+//             // Cool-down to mimic human browsing behavior
+//             await new Promise(r => setTimeout(r, 5000));
+//         } catch (err) {
+//             console.error("Loop Error:", err.message);
+//             await new Promise(r => setTimeout(r, 10000));
+//         }
+//     }
+// })();
 
 
 
@@ -571,3 +571,102 @@ puppeteer.use(StealthPlugin());
 // }
 
 // automateWithFeedback('https://example.com', 'Find the "More Information" link and click it.');
+
+
+
+import puppeteer from "puppeteer"
+
+
+
+// --- CONFIGURATION AREA ---
+const SELECTORS = {
+  // Using the unique class and role you provided for the input
+  promptInput: 'div.ql-editor.textarea[contenteditable="true"]', 
+  
+  // The container for the markdown response content
+  // Note: I removed the ID since 'r_ae38...' looks like a dynamic session ID
+  responseBlock: 'div.markdown.markdown-main-panel', 
+  
+  // The actual text within that markdown container
+  responseText: 'p' 
+};
+
+const promptsArray = [
+  "Explain quantum physics like I'm five.",
+  "What are the best toppings for a pizza?",
+  "Write a haiku about a robot."
+];
+// -------------------------
+
+async function runAutomation() {
+  const browser = await puppeteer.launch({ 
+    headless: false, 
+    defaultViewport: null,
+    args: ['--start-maximized'] 
+  });
+  
+  const page = await browser.newPage();
+
+  try {
+    console.log('Navigating to Gemini...');
+    await page.goto('https://gemini.google.com/', { waitUntil: 'networkidle2' });
+
+    console.log('Please log in manually if prompted. Waiting for input field...');
+    await page.waitForSelector(SELECTORS.promptInput, { timeout: 60000 });
+
+    const results = [];
+
+    for (let i = 0; i < promptsArray.length; i++) {
+      const currentPrompt = promptsArray[i];
+      console.log(`Processing: "${currentPrompt}"`);
+
+      // 1. Click and Focus the contenteditable div
+      await page.click(SELECTORS.promptInput);
+      
+      // 2. Clear any existing text (just in case)
+      await page.keyboard.down('Control');
+      await page.keyboard.press('A');
+      await page.keyboard.up('Control');
+      await page.keyboard.press('Backspace');
+
+      // 3. Type the prompt
+      await page.type(SELECTORS.promptInput, currentPrompt, { delay: 20 });
+
+      // 4. Press Enter to submit
+      console.log('Pressing Enter...');
+      await page.keyboard.press('Enter');
+
+      // 5. Wait for the new response to start appearing
+      // We look for the specific markdown panel
+      await page.waitForSelector(SELECTORS.responseBlock);
+      
+      // 6. Brief pause to let the "streaming" text finish rendering
+      await new Promise(r => setTimeout(r, 5000)); 
+
+      // 7. Extract the latest response
+      const outputText = await page.evaluate((selectors) => {
+        const blocks = document.querySelectorAll(selectors.responseBlock);
+        const lastBlock = blocks[blocks.length - 1];
+        return lastBlock ? lastBlock.innerText : 'Content not found';
+      }, SELECTORS);
+
+      results.push({ prompt: currentPrompt, response: outputText });
+      console.log('Stored.');
+      
+      // Optional: slight wait between prompts to look less like a bot
+      await new Promise(r => setTimeout(r, 2000));
+    }
+
+    console.log('--- RESULTS ---');
+    console.log(results);
+
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Keep browser open for a few seconds so you can see the result
+    await new Promise(r => setTimeout(r, 5000));
+    await browser.close();
+  }
+}
+
+runAutomation();
