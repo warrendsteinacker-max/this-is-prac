@@ -1417,20 +1417,25 @@ function FUNC(index){
     window.location.reload()
   }
 
+
+
+  for(let i = 0; i < win.length; i++){
+    let winstat = win[i]
+    if(D[winstat[0]] && D[winstat[0]] === D[winstat[1]] && D[winstat[1]] === D[winstat[2]] && D[winstat[2]] === D[winstat[3]]){
+      T ? alert("O won") : alert("X won")
+      window.location.reload()
+    }
+  }
+
   const newD = [...D]
   const S = T ? "X" : "O"
   newD[index] = S
   setD(newD)
   
 
-  for(let i = 0; i < win.length; i++){
-    let winstat = win[i]
-    if(D[winstat[0]] && D[winstat[0]] === D[winstat[1]] && D[winstat[1]] === D[winstat[2]]){
-      T ? alert("X won") : alert("O won")
-      window.location.reload()
-    }
+
   setT(!T)
-  }
+  
 
 
 
