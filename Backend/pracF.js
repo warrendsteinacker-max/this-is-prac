@@ -368,73 +368,116 @@
 
 
 
+/**
+ * PREREQUISITES:
+ * npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer
+ */
 
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
-
-
-import puppeteer from "puppeteer";
+// Apply stealth plugin to help bypass bot detection
+puppeteer.use(StealthPlugin());
 
 (async () => {
-    const browser = await puppeteer.launch({ 
-        headless: false,
-        defaultViewport: null // Opens at full screen size
-    });
-    const page = await browser.newPage();
+    console.log("Initializing Self-Driving Browser...");
     
-    try {
-        await page.goto('https://gemini.google.com', { 
-            waitUntil: 'networkidle2',
-            timeout: 60000 
-        });
-    } catch (e) {
-        console.log("Navigation timeout, proceeding anyway...");
-    }
+    const browser = await puppeteer.launch({ 
+        headless: false, 
+        defaultViewport: null,
+        args: [
+            '--start-maximized',
+            '--disable-blink-features=AutomationControlled'
+        ] 
+    });
 
-    // 1. Updated Selector from your HTML snippet
-    const promptSelector = 'div.ql-editor.textarea'; 
+    // Initialize both pages simultaneously
+    const [page, page2] = await Promise.all([
+        browser.newPage(),
+        browser.newPage()
+    ]);
 
-    try {
-        // 2. Wait for it to exist
-        await page.waitForSelector(promptSelector, { timeout: 15000 });
+    console.log("Loading interfaces...");
+    // Note: You must be logged into Google in this browser instance for Gemini to work
+    await page.goto('https://gemini.google.com', { waitUntil: 'networkidle2' });
+    await page2.goto('https://www.webmd.com/', { waitUntil: 'networkidle2' });
 
-        // 3. Click it first to ensure the cursor is active
-        await page.click(promptSelector);
+    // CSS selectors for Gemini's UI (these may change if Google updates the site)
+    const promptSelector = 'div[contenteditable="true"]'; 
+    const visitedUrls = new Set();
 
-        // 4. Type the prompt
-        const myPrompt = "Write a short poem about coding.";
-        await page.type(promptSelector, myPrompt, { delay: 20 }); // Slight delay mimics human typing
-        
-        // 5. Submit
-        await page.keyboard.press('Enter');
-        console.log("Prompt sent! Waiting for response...");
+    console.log("System Active. Monitoring WebMD...");
 
-        // 6. Wait for the AI assistant to start generating
-        const responseSelector = 'div[data-message-author-role="assistant"]';
-        await page.waitForSelector(responseSelector, { timeout: 30000 });
+    while (true) {
+        try {
+            const currentHtml = await page2.content();
+            const currentUrl = page2.url();
+            visitedUrls.add(currentUrl);
 
-        // 7. Wait for the text to finish streaming
-        await new Promise(r => setTimeout(r, 7000)); 
+            // 1. Prepare the prompt
+            // We limit HTML to 5000 chars to avoid hitting LLM context limits or slowing down the UI
+            const myPrompt = `The current URL is ${currentUrl}. 
+            Based on this HTML snippet: ${currentHtml.substring(0, 5000)}, 
+            find a link or anything to a different internal page, article or to just do ssomething on current page. 
+            Provide ONLY a JSON object: {"selector": "CSS_SELECTOR_HERE", "reason": "SHORT_REASON"}. 
+            Avoid these recently visited URLs: ${Array.from(visitedUrls).slice(-5).join(', ')}.`;
 
-        // 8. Extraction and Console Log Line
-        const extractedText = await page.evaluate(() => {
-            const elements = document.querySelectorAll('div[data-message-author-role="assistant"]');
-            const data = Array.from(elements).map(el => el.innerText).join('\n\n---\n\n');
+            // 2. Interact with Gemini
+            await page.waitForSelector(promptSelector);
+            await page.click(promptSelector);
             
-            // This is the specific line you asked for to run in the Gemini browser
-            console.log("--- EXTRACTED TEXT START ---");
-            console.log(data);
-            console.log("--- EXTRACTED TEXT END ---");
-            
-            return data;
-        });
+            // Clear existing text
+            await page.keyboard.down('Control');
+            await page.keyboard.press('A');
+            await page.keyboard.up('Control');
+            await page.keyboard.press('Backspace');
 
-        console.log("Successfully extracted text from Gemini.");
+            // Type the prompt and send
+            await page.type(promptSelector, myPrompt, { delay: 10 });
+            await page.keyboard.press('Enter');
 
-    } catch (err) {
-        console.error("FAILED: Could not find the div. Check if you are logged in or if a popup is blocking the screen.");
-        console.log("Error details:", err.message);
+            console.log("Waiting for AI to decide next move...");
+            // Adjust wait time based on AI response speed
+            await new Promise(r => setTimeout(r, 15000)); 
+
+            // 3. Extract the response
+            const aiResponse = await page.evaluate(() => {
+                const messages = document.querySelectorAll('div[data-message-author-role="assistant"]');
+                return messages.length > 0 ? messages[messages.length - 1].innerText : null; 
+            });
+
+            if (aiResponse) {
+                try {
+                    // Regex to find the JSON object in the AI's message
+                    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const decision = JSON.parse(jsonMatch[0]);
+                        console.log(`AI Decision: ${decision.reason}`);
+                        console.log(`Clicking selector: ${decision.selector}`);
+                        
+                        // 4. Execute the action on page2
+                        await page2.waitForSelector(decision.selector, { timeout: 5000 });
+                        await page2.click(decision.selector);
+                        
+                        // Wait for navigation but don't crash if it's just a partial update
+                        await page2.waitForNavigation({ waitUntil: 'networkidle2', timeout: 8000 }).catch(() => {});
+                    }
+                } catch (e) {
+                    console.warn("Could not parse AI JSON or find selector. Retrying...");
+                }
+            }
+
+            // Cool-down to mimic human browsing behavior
+            await new Promise(r => setTimeout(r, 5000));
+        } catch (err) {
+            console.error("Loop Error:", err.message);
+            await new Promise(r => setTimeout(r, 10000));
+        }
     }
 })();
+
+
+
 // import puppeteer from 'puppeteer';
 
 // async function automateWithFeedback(targetUrl, instructions) {
