@@ -1351,78 +1351,99 @@
 import {useState} from "react"
 
 
-  const data = [1,2,3,4,5,6,7,8,9,0]
-
-  let datar = data.sort(() => Math.random() - 0.5)
-
-  let pas = datar.slice(0, 3)
 
 
-
-
-
-  
 
 const ReportBuilder = () => {
-  
-  const [display, setD] = useState([])
-
-
-  console.log(pas)
 
 
 
 
-  
-  function FUNC1(e) {
+let win = [];
 
-    let newD = []
+let col = 5
 
-    console.log(e.key.length)
+let row = 5
 
-
-    if(e.key === "Backspace"){
-      newD = display.slice(0, display.lenght)
-      setD(newD)
-      console.log(display)
-      return
-    }
-
-    if(e.key.length == 1){
-
-      setD(pre => [...pre, e.key])
-      console.log(display)
+let len = col*row
 
 
-    }  
+for(let r = 0; r < row; r++){
+  for(let c = 0; c < col-3; c++){
+    let index = r*col+c
+    win.push([index, index+1, index+2, index+3])
+  }
+}
 
-    
+for(let r = 0; r < row-3; r++){
+  for(let c=0; c<col; c++){
+    let index = r*col+c
+    win.push([index, index+col, index+ col*2, index+col*3])
+  }
+}
 
-    
+for(let r = 0; r<row-3; r++){
+  for(let c = 0; c<col-3; c++){
+    let index = r*col+c
+    win.push([index, index + col + 1, index + 2*(col + 1), index + 3*(col+1)])
+  }
+}
+
+for(let r = 0; r<row-3; r++){
+  for(let c = 3; c<col; c++){
+    let index = r*col+c
+    win.push([index, index + (col - 1), index + 2*(col - 1), index + 3*(col-1)])
+  }
+}
 
 
+const [D, setD] = useState(Array(len).fill(null))
+const [T, setT] = useState(false)
+
+let count = 0
 
 
+function FUNC(index){
 
+
+  if(D[index]){
+    return
   }
 
-  function FUNC2() {
-    if(Number(display.join("")) === Number(pas.join(""))){
-      alert("correct")
-    }
-    else{
-      alert("wrong")
-    }
+  count = count + 1
+
+  if(count === len){
+    alert("there has been a draw")
+    window.location.reload()
   }
+
+  const newD = [...D]
+  const S = T ? "X" : "O"
+  newD[index] = S
+  setD(newD)
+  
+
+  for(let i = 0; i < win.length; i++){
+    let winstat = win[i]
+    if(D[winstat[0]] && D[winstat[0]] === D[winstat[1]] && D[winstat[1]] === D[winstat[2]]){
+      T ? alert("X won") : alert("O won")
+      window.location.reload()
+    }
+  setT(!T)
+  }
+
+
+
+}
+
+
+
+
 
   return (
-  <>
-  {display.length > 0 ? display.map((item, index) => <div key={index}>{item}</div>) : ""}
-  <form onSubmit={FUNC2}>
-  <input onKeyDown={(e) => FUNC1(e)}/>
-  <button type="submit">submit</button>
-  </form>
-  </>  
+    <div style={{display: "grid", gridTemplateColumns: `repeat(${col}, 1fr)`, gridTemplateRows: `repeat(${row}, 1fr)`, width: "fit-content", height: "fit-content"}}>
+      {D.map((item, index) => <div onClick={() => FUNC(index)} key={index} style={{border: "5px solid black", width: "50px", height: "50px", color: "red"}}>{item === null ? "" : item}</div>)}
+    </div>
   )
 }
 
