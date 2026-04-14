@@ -1,3 +1,37 @@
+apa notes
+
+// PARENTHETICAL FORMAT:
+//   Author (date) verb "word for word text" (p. #).
+//   CORRECT: Ramlal (2023) explains "vocabulary relates to understanding" (p. 23).
+//   WRONG: "text" (Author, date, p. #).
+//   WRONG: "Text starts capital" (p. #).
+//   WRONG: "text." (p. #).
+
+// NARRATIVE FORMAT:
+//   According to Author (date), from Chapter X on page #, ...
+// //   As Author (date) explains on page #, ...
+// CORRECT As Author (date) explains on Chapter num from section somthing  #, ...
+//   WRONG: Ramlal (2023, Chapter 3, p. 23) states...
+//   WRONG: According to Ramlal (2023), teaching is important.
+
+// CAPITAL FIRST WORD RULE:
+//   Pull capital word OUT of quotes, lowercase it, blend into sentence.
+
+// PERIOD RULE: Period AFTER (p. #) — NEVER inside quotes.
+// NO MIXED SOURCES. IF IN DOUBT: drop citation, write plain sentence.
+
+
+
+
+
+
+
+
+
+
+
+
+
 look I puppeter to copy the outer html of each page that loads and from that send it to ai to create func to naviget to the next part that will load and then puppeter will do the same thing copy the outerhtml again and then send it to ai for it to create the next func dose this till the task is complet 
 
 

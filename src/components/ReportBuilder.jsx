@@ -1348,106 +1348,34 @@
 
 
 
-import {useState} from "react"
-
-
-
-
+import {useEffect, useState} from 'react'
 
 const ReportBuilder = () => {
-
-
-
-
-let win = [];
-
-let col = 5
-
-let row = 5
-
-let len = col*row
-
-
-for(let r = 0; r < row; r++){
-  for(let c = 0; c < col-3; c++){
-    let index = r*col+c
-    win.push([index, index+1, index+2, index+3])
-  }
-}
-
-for(let r = 0; r < row-3; r++){
-  for(let c=0; c<col; c++){
-    let index = r*col+c
-    win.push([index, index+col, index+ col*2, index+col*3])
-  }
-}
-
-for(let r = 0; r<row-3; r++){
-  for(let c = 0; c<col-3; c++){
-    let index = r*col+c
-    win.push([index, index + col + 1, index + 2*(col + 1), index + 3*(col+1)])
-  }
-}
-
-for(let r = 0; r<row-3; r++){
-  for(let c = 3; c<col; c++){
-    let index = r*col+c
-    win.push([index, index + (col - 1), index + 2*(col - 1), index + 3*(col-1)])
-  }
-}
-
-
-const [D, setD] = useState(Array(len).fill(null))
-const [T, setT] = useState(false)
-
-let count = 0
-
-
-function FUNC(index){
-
-
-  if(D[index]){
-    return
-  }
-
-  count = count + 1
-
-  if(count === len){
-    alert("there has been a draw")
-    window.location.reload()
-  }
-
-
-
-  for(let i = 0; i < win.length; i++){
-    let winstat = win[i]
-    if(D[winstat[0]] && D[winstat[0]] === D[winstat[1]] && D[winstat[1]] === D[winstat[2]] && D[winstat[2]] === D[winstat[3]]){
-      T ? alert("O won") : alert("X won")
-      window.location.reload()
-    }
-  }
-
-  const newD = [...D]
-  const S = T ? "X" : "O"
-  newD[index] = S
-  setD(newD)
   
 
+  const [WORDS, setW] = useState([])
 
-  setT(!T)
+  const words = [["c", "a", "t"], ["h", "a", "t"], ["f", "a", "t"]]
+
+  const sortW = words.sort(() => Math.random() - 0.5)
+
+  setW(sortW)
+
+
+
+
+  // const FUNC = (e) => {
+
+  // }
+
+
+  // usEffect(() => {
+  //   window.addEventListener("keydown", )
+  // }, [])
   
-
-
-
-}
-
-
-
-
-
   return (
-    <div style={{display: "grid", gridTemplateColumns: `repeat(${col}, 1fr)`, gridTemplateRows: `repeat(${row}, 1fr)`, width: "fit-content", height: "fit-content"}}>
-      {D.map((item, index) => <div onClick={() => FUNC(index)} key={index} style={{border: "5px solid black", width: "50px", height: "50px", color: "red"}}>{item === null ? "" : item}</div>)}
+    <div style={{display: "grid", gridTemplateColumns: `repeat(${WORDS.length}, 1fr)`, gridTemplateRows: `repeat(${WORDS.length}, 1fr)`, width: "fit-content", height: "fit-content"}}>
+      {WORDS.map((item, index) => <><div style={{width: "50px", height: "50px", border: "5px solid red"}}>{item[0]}</div><div style={{width: "50px", height: "50px", border: "5px solid red"}}>{item[0]}</div>)<div style={{width: "50px", height: "50px", border: "5px solid red"}}>{item[1]}></div></>}
     </div>
   )
 }
